@@ -3,7 +3,7 @@ import type { Config } from "tailwindcss";
 const config: {
   plugins: any[];
   theme: { extend: { backgroundImage: { banner: string }; colors: {} } };
-  content: string[]
+  content: string[];
 } = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,7 +14,7 @@ const config: {
   theme: {
     extend: {
       backgroundImage: {
-        "banner": "url('/banner.jpeg')",
+        banner: "url('/banner.jpeg')",
       },
       colors: {},
     },

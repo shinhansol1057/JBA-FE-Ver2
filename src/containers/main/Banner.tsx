@@ -1,11 +1,11 @@
-import React from "react";
+import BannerCarousel from "@/containers/main/bannerCarousel";
 
 const Banner = () => {
   return (
     <div>
       <div
         className={
-          "bg-banner bg-center bg-cover h-48 sm:h-96 md:h-[600px] text-white flex flex-col items-end pt-[20px] sm:pt-[70px] md:pt-[140px] pr-[20px] sm:pr-[70px] md:pr-[140px]"
+          "bg-banner bg-center bg-cover h-60 sm:h-96 md:h-[600px] text-white flex flex-col items-end pt-[20px] sm:pt-[70px] md:pt-[140px] pr-[20px] sm:pr-[70px] md:pr-[140px]"
         }
       >
         <div className="flex justify-end mt-[30px] sm:mt-[50px]">
@@ -37,9 +37,12 @@ const Banner = () => {
       </div>
       <div
         className={
-          "bg-gradient-to-b from-black from-5% to-white to-85% h-48 sm:h-96 md:h-[600px]"
+          "bg-gradient-to-b from-black from-5% to-white to-85% h-96 sm:h-96 md:h-[600px] flex flex-col items-center"
         }
-      ></div>
+      >
+        <BannerCarousel />
+        {/*<BannerCarousel />*/}
+      </div>
     </div>
   );
 };
