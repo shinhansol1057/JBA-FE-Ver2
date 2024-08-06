@@ -1,9 +1,10 @@
-import {IoMenu} from "react-icons/io5";
+import { Metadata } from "next";
+import Main from "@/containers/main/Main";
 
-export default function Home() {
-  return (
-      <div>
+export const metadata: Metadata = {};
 
-      </div>
-  );
-}
+const Page = () => {
+  return <Main />;
+};
+
+export default Page;

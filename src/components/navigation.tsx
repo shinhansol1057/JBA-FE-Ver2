@@ -1,16 +1,30 @@
-import React from "react";
+"use client";
 import { IoMenu } from "react-icons/io5";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navigation = () => {
   const router = useRouter();
+  const path = usePathname();
+
   return (
-    <div className={"flex items-center justify-between bg-black px-5"}>
-      <h1 lang={"en"} className={"text-lg text-white cursor-pointer"}>
+    <nav
+      className={
+        "flex items-center justify-between px-5 h-[30px] sm:h-[50px] relative " +
+        (path === "/" ? "bg-[rgba(212,212,212,0.4)]" : "bg-[rgba(0,0,0,0.3)]")
+      }
+    >
+      <h1
+        lang={"en"}
+        className={"text-[lg] sm:text-2xl text-white cursor-pointer "}
+        onClick={() => router.push("/")}
+      >
         JBA
       </h1>
-      <IoMenu size={26} color={"white"} className={"cursor-pointer"} />
-    </div>
+      <IoMenu
+        color={"white"}
+        className={"cursor-pointer text-2xl sm:text-4xl"}
+      />
+    </nav>
   );
 };
 

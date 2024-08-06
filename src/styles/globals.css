@@ -88,6 +88,9 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
+
+
+/*font*/
 html, body {
     font-family: 'Pretendard Variable', Pretendard, sans-serif;
 
