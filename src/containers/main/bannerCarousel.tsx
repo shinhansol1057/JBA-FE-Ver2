@@ -46,9 +46,18 @@ const BannerCarousel = () => {
   return (
     <SliderContainer>
       <StyledSlider {...settings}>
-        {announcements?.map((item) => {
-          return <BannerCarouselCard key={item?.postId} data={item} />;
-        })}
+        {announcements?.map(
+          (item: {
+            postId: number;
+            title: string;
+            writer: string;
+            isAnnouncement: boolean;
+            viewCount: number;
+            createAt: Date;
+          }) => {
+            return <BannerCarouselCard key={item?.postId} data={item} />;
+          },
+        )}
       </StyledSlider>
     </SliderContainer>
   );
