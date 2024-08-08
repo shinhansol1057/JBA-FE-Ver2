@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   ],
   description: "제주특별자치도 농구협회 홈페이지입니다.",
   icons: {
-    icon: "/logo.jpeg",
+    icon: "/image/logo.jpeg",
   },
 };
 

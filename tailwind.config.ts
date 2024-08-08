@@ -2,7 +2,12 @@ import type { Config } from "tailwindcss";
 
 const config: {
   plugins: any[];
-  theme: { extend: { backgroundImage: { banner: string }; colors: {} } };
+  theme: {
+    extend: {
+      backgroundImage: { banner: string; mainAnnouncement: string };
+      colors: {};
+    };
+  };
   content: string[];
 } = {
   content: [
@@ -14,7 +19,8 @@ const config: {
   theme: {
     extend: {
       backgroundImage: {
-        banner: "url('/banner.jpeg')",
+        banner: "url('/image/mainPage/banner.jpeg')",
+        mainAnnouncement: "url('/image/mainPage/announcementImage.png')",
       },
       colors: {},
     },

@@ -15,6 +15,7 @@ const getCompetitions = async () => {
 const Banner = async () => {
   const announcements = await getAnnouncements();
   const competitions = await getCompetitions();
+  console.log(competitions);
   return (
     <div>
       <div
@@ -56,7 +57,7 @@ const Banner = async () => {
       >
         <BannerCarousel data={announcements?.data?.posts} />
         <div className={"h-2.5"}></div>
-        <BannerCarousel data={competitions?.data.slice(0, 3)} />
+        <BannerCarousel data={competitions?.data?.slice(0, 3)} />
       </div>
     </div>
   );
