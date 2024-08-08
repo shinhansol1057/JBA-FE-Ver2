@@ -1,6 +1,20 @@
 import BannerCarousel from "@/containers/main/bannerCarousel";
 
-const Banner = () => {
+const getAnnouncements = async () => {
+  const url = process.env.REACT_APP_SERVER_URL + "/v1/api/post/notice?size=3";
+  const res = await fetch(url, { cache: "no-store" });
+  return await res.json();
+};
+
+const getCompetitions = async () => {
+  const url = process.env.REACT_APP_SERVER_URL + "/v1/api/main/competition";
+  const res = await fetch(url, { cache: "no-store" });
+  return await res.json();
+};
+
+const Banner = async () => {
+  const announcements = await getAnnouncements();
+  const competitions = await getCompetitions();
   return (
     <div>
       <div
@@ -9,9 +23,9 @@ const Banner = () => {
         }
       >
         <div className="flex justify-end mt-[30px] sm:mt-[50px]">
-          <h1 lang={"en"} className={"text-xl sm:text-5xl md:text-[112px]"}>
+          <title lang={"en"} className={"text-xl sm:text-5xl md:text-[112px]"}>
             JBA
-          </h1>
+          </title>
         </div>
         <div className="flex justify-end ">
           <h2 lang={"en"} className={"text-xs sm:text-xl md:text-[26px]"}>
@@ -23,7 +37,7 @@ const Banner = () => {
         </div>
         <div
           className={
-            "flex flex-col items-end text-[9px] leading-normal sm:text-xs w-[60%] md:text-xl"
+            "flex flex-col items-end text-[9px] leading-normal sm:text-xs w-[50%] md:text-xl"
           }
         >
           <p className={"mb-2"}>
@@ -37,11 +51,12 @@ const Banner = () => {
       </div>
       <div
         className={
-          "bg-gradient-to-b from-black from-5% to-white to-85% h-96 sm:h-96 md:h-[600px] flex flex-col items-center"
+          "bg-gradient-to-b from-black from-5% to-white to-100% h-[310px] sm:h-[410px] md:h-[510px] flex flex-col items-center"
         }
       >
-        <BannerCarousel />
-        {/*<BannerCarousel />*/}
+        <BannerCarousel data={announcements?.data?.posts} />
+        <div className={"h-2.5"}></div>
+        <BannerCarousel data={competitions?.data.slice(0, 3)} />
       </div>
     </div>
   );

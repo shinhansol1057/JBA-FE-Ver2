@@ -4,24 +4,18 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import BannerCarouselCard from "@/containers/main/BannerCarouselCard";
+import { bannerAnnouncement, bannerCompetition } from "@/types/MainPageType";
 
-const BannerCarousel = () => {
-  const [announcements, setAnnouncements] = useState([]);
-  const getAnnouncements = async () => {
-    const url = "https://jbaserver.shop/v1/api/post/notice?size=3";
-    const res = await fetch(url);
-    const data = await res.json();
-    return data;
-  };
-
-  console.log(announcements);
-
+type Props = {
+  data: bannerAnnouncement[] | bannerCompetition[];
+};
+const BannerCarousel = ({ data }: Props) => {
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -39,25 +33,17 @@ const BannerCarousel = () => {
     dotsClass: "dots_custom",
   };
 
-  useEffect(() => {
-    getAnnouncements().then((res) => setAnnouncements(res?.data?.posts));
-  }, []);
-
   return (
-    <SliderContainer>
+    <SliderContainer display={data?.length === 0 ? "none" : "block"}>
       <StyledSlider {...settings}>
-        {announcements?.map(
-          (item: {
-            postId: number;
-            title: string;
-            writer: string;
-            isAnnouncement: boolean;
-            viewCount: number;
-            createAt: Date;
-          }) => {
-            return <BannerCarouselCard key={item?.postId} data={item} />;
-          },
-        )}
+        {data?.map((item: bannerAnnouncement | bannerCompetition) => {
+          return (
+            <BannerCarouselCard
+              key={"postId" in item ? item?.postId : item?.competitionId}
+              data={item}
+            />
+          );
+        })}
       </StyledSlider>
     </SliderContainer>
   );
@@ -74,7 +60,7 @@ const CustomPrevArrow = ({ onClick, style }: any) => {
         display: "block",
         position: "absolute",
       }}
-      className={"top-[78%] md:top-[70%] left-[-50px]"}
+      className={"top-[65%] md:top-[60%] left-[-40px] md:left-[-55px]"}
     >
       <IoIosArrowBack
         className={"hidden sm:block sm:size-8 md:size-14"}
@@ -93,7 +79,7 @@ const CustomNextArrow = ({ onClick, style }: any) => {
         display: "block",
         position: "absolute",
       }}
-      className={"top-[78%] md:top-[70%] right-[-50px]"}
+      className={"top-[65%] md:top-[60%] right-[-40px] md:right-[-55px]"}
     >
       <IoIosArrowForward
         className={"hidden sm:block sm:size-8 md:size-14"}
@@ -103,9 +89,16 @@ const CustomNextArrow = ({ onClick, style }: any) => {
   );
 };
 
-const SliderContainer = styled.div`
+const SliderContainer = styled.div<{ display: string }>`
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(245, 245, 245, 0.2);
+  }
   position: relative;
-
+  display: ${(props) => props.display};
+  background-color: rgba(245, 245, 245, 0.12);
+  border-radius: 8px;
+  border: 1px solid rgba(115, 115, 115, 0.2);
   .dots_custom {
     position: absolute;
     vertical-align: middle;
@@ -137,9 +130,6 @@ const SliderContainer = styled.div`
   @media screen and (max-width: 640px) {
     width: 280px;
     height: 100px; /* 높이를 높여 카드 간의 간격을 반영 */
-    background-color: rgba(245, 245, 245, 0.12);
-    border-radius: 8px;
-    border: 1px solid rgba(115, 115, 115, 0.2);
     .dots_custom {
       top: 80px;
       left: 100px;
@@ -153,9 +143,6 @@ const SliderContainer = styled.div`
   @media screen and (min-width: 640px) and (max-width: 768px) {
     width: 400px;
     height: 150px; /* 높이를 높여 카드 간의 간격을 반영 */
-    background-color: rgba(245, 245, 245, 0.12);
-    border-radius: 8px;
-    border: 1px solid rgba(115, 115, 115, 0.2);
     .dots_custom {
       top: 120px;
       left: 154px;
@@ -169,9 +156,6 @@ const SliderContainer = styled.div`
   @media screen and (min-width: 768px) {
     width: 600px;
     height: 200px; /* 높이를 높여 카드 간의 간격을 반영 */
-    background-color: rgba(245, 245, 245, 0.12);
-    border-radius: 8px;
-    border: 1px solid rgba(115, 115, 115, 0.2);
     .dots_custom {
       top: 160px;
       left: 250px;
