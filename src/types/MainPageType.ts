@@ -14,3 +14,11 @@ export type bannerCompetition = {
   endDate: Date;
   places: string[];
 };
+
+export type gallery = {
+  galleryId: number;
+  title: string;
+  fileName: string;
+  imgUrl: string;
+  createAt: string;
+};

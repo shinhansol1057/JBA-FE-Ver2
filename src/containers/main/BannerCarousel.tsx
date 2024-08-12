@@ -94,6 +94,7 @@ const SliderContainer = styled.div<{ display: string }>`
     cursor: pointer;
     background-color: rgba(245, 245, 245, 0.2);
   }
+  margin: 0 auto;
   position: relative;
   display: ${(props) => props.display};
   background-color: rgba(245, 245, 245, 0.12);
