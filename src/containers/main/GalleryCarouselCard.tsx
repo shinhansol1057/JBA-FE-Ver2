@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
-import { Props } from "next/script";
 import { gallery } from "@/types/MainPageType";
 import Image from "next/image";
 
 type Props = {
   data: gallery;
+  key: number;
 };
-const GalleryCarouselCard = ({ data }: Props) => {
+const GalleryCarouselCard = ({ data, key }: Props) => {
   return (
     <div
       className={

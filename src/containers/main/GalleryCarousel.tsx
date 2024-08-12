@@ -1,6 +1,5 @@
 "use client";
 
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import styled from "styled-components";
 import Slider from "react-slick";
 import GalleryCarouselCard from "@/containers/main/GalleryCarouselCard";
