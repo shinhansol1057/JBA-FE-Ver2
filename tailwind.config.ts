@@ -4,8 +4,13 @@ const config: {
   plugins: any[];
   theme: {
     extend: {
-      backgroundImage: { banner: string; mainAnnouncement: string };
-      colors: {};
+      keyframes: {
+        rightSlide: {
+          "100%": { transform: string; opacity: string };
+          "0%": { transform: string; opacity: string };
+        };
+      };
+      backgroundImage: { mainAnnouncement: string; banner: string };
     };
   };
   content: string[];
@@ -22,7 +27,18 @@ const config: {
         banner: "url('/image/mainPage/banner.jpeg')",
         mainAnnouncement: "url('/image/mainPage/announcementImage.png')",
       },
-      colors: {},
+      keyframes: {
+        rightSlide: {
+          "0%": {
+            transform: "translateX(100%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateX(0)",
+            opacity: "1",
+          },
+        },
+      },
     },
   },
   plugins: [],

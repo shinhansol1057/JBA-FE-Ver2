@@ -19,8 +19,7 @@ const BannerCarousel = ({ data }: Props) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    nextArrow: <CustomNextArrow />,
-    prevArrow: <CustomPrevArrow />,
+    arrows: false,
     appendDots: (dots: any) => (
       <div
         className={
@@ -50,44 +49,6 @@ const BannerCarousel = ({ data }: Props) => {
 };
 
 export default BannerCarousel;
-
-const CustomPrevArrow = ({ onClick, style }: any) => {
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        ...style,
-        display: "block",
-        position: "absolute",
-      }}
-      className={"top-[65%] md:top-[60%] left-[-40px] md:left-[-55px]"}
-    >
-      <IoIosArrowBack
-        className={"hidden sm:block sm:size-8 md:size-14"}
-        color={"#FFFFFF"}
-      />
-    </button>
-  );
-};
-
-const CustomNextArrow = ({ onClick, style }: any) => {
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        ...style,
-        display: "block",
-        position: "absolute",
-      }}
-      className={"top-[65%] md:top-[60%] right-[-40px] md:right-[-55px]"}
-    >
-      <IoIosArrowForward
-        className={"hidden sm:block sm:size-8 md:size-14"}
-        color={"#FFFFFF"}
-      />
-    </button>
-  );
-};
 
 const SliderContainer = styled.div<{ display: string }>`
   &:hover {

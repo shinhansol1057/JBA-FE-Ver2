@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import "../../styles/globals.css";
-import Navigation from "@/containers/navigation";
+import "../styles/globals.css";
+import Navigation from "@/containers/navigation/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,16 +30,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="kr">
       <body className={inter.className}>
-        <Navigation />
-        {children}
+        <div className={"min-h-[100vh]"}>
+          <Navigation />
+          {children}
+        </div>
       </body>
     </html>
   );

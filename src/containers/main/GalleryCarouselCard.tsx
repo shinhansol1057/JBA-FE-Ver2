@@ -16,8 +16,8 @@ const GalleryCarouselCard = ({ data, key }: Props) => {
       }
     >
       <Image
-        src={data?.imgUrl}
-        alt={data?.title}
+        src={data.imgUrl}
+        alt={data.title}
         width={500}
         height={500}
         className={

@@ -14,6 +14,7 @@ const GalleryCarousel = ({ galleries }: Props) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
     appendDots: (dots: any) => (
       <div
         className={
@@ -29,9 +30,7 @@ const GalleryCarousel = ({ galleries }: Props) => {
     <SliderContainer display={galleries?.length === 0 ? "none" : "block"}>
       <StyledSlider {...settings}>
         {galleries?.map((gallery) => {
-          return (
-            <GalleryCarouselCard data={gallery} key={gallery?.galleryId} />
-          );
+          return <GalleryCarouselCard data={gallery} key={gallery.galleryId} />;
         })}
       </StyledSlider>
     </SliderContainer>
