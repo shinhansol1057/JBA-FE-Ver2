@@ -11,16 +11,14 @@ import fetchLogin from "@/services/user/LoginApi";
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isChecked, setIsChecked] = useState<boolean>(
-    !!getCookie("savedEmail"),
-  );
+  const [isChecked, setIsChecked] = useState<boolean>(false);
   const [emailMessage, setEmailMessage] = useState<string>("");
   const { AccessToken, setAccessToken } = useUserStore();
   const router = useRouter();
 
   const loginHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (window !== undefined) {
+    if (typeof window !== "undefined") {
+      e.preventDefault();
       setEmailMessage("");
       fetchLogin(
         email,
@@ -37,7 +35,10 @@ const Login = () => {
     if (AccessToken) {
       window.location.href = "/";
     }
-  }, []);
+    if (typeof window !== "undefined") {
+      setIsChecked(!!getCookie("savedEmail"));
+    }
+  }, [AccessToken]);
 
   return (
     <div
