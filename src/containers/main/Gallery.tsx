@@ -3,7 +3,6 @@ import { getGalleries } from "@/services/mainPageApi";
 
 const Gallery = async () => {
   const galleries = await getGalleries();
-  console.log(galleries.data.galleries);
 
   return (
     <div

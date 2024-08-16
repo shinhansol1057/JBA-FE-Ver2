@@ -2,16 +2,26 @@
 import React from "react";
 import { menuList } from "@/constants/navigation";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/states/UserStore";
+import { JwtDecoder } from "@/utils/JwtDecoder";
+import fetchLogout from "@/services/user/LogoutApi";
 
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
 };
 const MenuModal = ({ setModalOpen }: Props) => {
   const router = useRouter();
+  const { AccessToken, setAccessToken } = useUserStore();
+  console.log(JwtDecoder(AccessToken));
   function loginButtonHandler() {
     setModalOpen(false);
     router.push("/login");
   }
+
+  const logoutHandler = () => {
+    setModalOpen(false);
+    fetchLogout(AccessToken, setAccessToken, router);
+  };
 
   return (
     <div
@@ -28,9 +38,14 @@ const MenuModal = ({ setModalOpen }: Props) => {
             "flex flex-row leading-[18px] sm:leading-[22px] md:leading-[28px]"
           }
         >
-          <p>비회원 상태</p>
-          {/*<p className={"font-bold"}>신한솔</p>*/}
-          {/*<p>님</p>*/}
+          {AccessToken ? (
+            <div className={"flex"}>
+              <p className={"font-bold"}>{JwtDecoder(AccessToken).aud}</p>
+              <p>님</p>
+            </div>
+          ) : (
+            <p>비회원 상태</p>
+          )}
         </div>
         <p
           className={
@@ -39,23 +54,36 @@ const MenuModal = ({ setModalOpen }: Props) => {
         >
           JBA 방문을 환영합니다.
         </p>
-        <button
-          className={
-            "w-[40px] sm:w-[60px] md:w-[80px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
-          }
-          onClick={() => {
-            loginButtonHandler();
-          }}
-        >
-          로그인
-        </button>
-        {/*<button*/}
-        {/*  className={*/}
-        {/*    "w-[60px] sm:w-[80px] md:w-[100px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"*/}
-        {/*  }*/}
-        {/*>*/}
-        {/*  MY PAGE*/}
-        {/*</button>*/}
+        {AccessToken ? (
+          <div className={"flex justify-between"}>
+            <button
+              className={
+                "w-[60px] sm:w-[80px] md:w-[100px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
+              }
+            >
+              마이페이지
+            </button>
+            <button
+              className={
+                "w-[60px] sm:w-[80px] md:w-[100px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
+              }
+              onClick={() => logoutHandler()}
+            >
+              로그아웃
+            </button>
+          </div>
+        ) : (
+          <button
+            className={
+              "w-[40px] sm:w-[60px] md:w-[80px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
+            }
+            onClick={() => {
+              loginButtonHandler();
+            }}
+          >
+            로그인
+          </button>
+        )}
       </div>
       <div className={"border-t border-[#D9D9D9] border-solid"}>
         {menuList.map(

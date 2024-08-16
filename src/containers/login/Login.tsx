@@ -1,20 +1,43 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import LoginInputBox from "@/containers/login/LoginInputBox";
 import { CheckBox } from "@/components/checkbox/CheckBox";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/states/UserStore";
+import { getCookie, setCookie } from "@/utils/Cookie";
+import fetchLogin from "@/services/user/LoginApi";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(
+    !!getCookie("savedEmail"),
+  );
+  const [emailMessage, setEmailMessage] = useState<string>("");
+  const { AccessToken, setAccessToken } = useUserStore();
   const router = useRouter();
 
   const loginHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(email, password);
+    if (window !== undefined) {
+      setEmailMessage("");
+      fetchLogin(
+        email,
+        password,
+        setEmailMessage,
+        setAccessToken,
+        isChecked,
+        setCookie,
+      );
+    }
   };
+
+  useEffect(() => {
+    if (AccessToken) {
+      window.location.href = "/";
+    }
+  }, []);
 
   return (
     <div
@@ -30,6 +53,7 @@ const Login = () => {
         로그인
       </h1>
       <form
+        noValidate
         className={"w-[280px] text-[12px] flex flex-col"}
         onSubmit={(e) => loginHandler(e)}
       >
@@ -37,6 +61,9 @@ const Login = () => {
           이메일
         </label>
         <LoginInputBox type={"email"} id={"email"} setValue={setEmail} />
+        <div>
+          <p>{emailMessage}</p>
+        </div>
         <label className={"ml-[20px] leading-[16px]"} htmlFor={"password"}>
           비밀번호
         </label>
@@ -72,7 +99,7 @@ const Login = () => {
         className={"text-[12px] text-[#8E8E8E] mt-[10px]"}
         onClick={() => console.log("비번찾기")}
       >
-        계정 찾기 | 비밀번호
+        계정 찾기 | 비밀번호 찾기
       </button>
     </div>
   );
