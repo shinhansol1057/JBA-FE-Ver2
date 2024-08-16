@@ -32,11 +32,11 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (AccessToken) {
-      window.location.href = "/";
-    }
     if (typeof window !== "undefined") {
       setIsChecked(!!getCookie("savedEmail"));
+      if (AccessToken) {
+        window.location.href = "/";
+      }
     }
   }, [AccessToken]);
 
