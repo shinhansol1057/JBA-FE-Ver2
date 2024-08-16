@@ -28,7 +28,7 @@ const useAxiosInterceptor = (): void => {
             null,
             {
               // const res = await axios.post("http://localhost:8080/v1/api/sign/refresh-token-cookie", null, {
-              header: {
+              headers: {
                 Authorization: AccessToken,
               },
               withCredentials: true,
