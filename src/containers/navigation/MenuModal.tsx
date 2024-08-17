@@ -12,11 +12,10 @@ type Props = {
 const MenuModal = ({ setModalOpen }: Props) => {
   const router = useRouter();
   const { AccessToken, setAccessToken } = useUserStore();
-  console.log(JwtDecoder(AccessToken));
-  function loginButtonHandler() {
+  const loginButtonHandler = () => {
     setModalOpen(false);
     router.push("/login");
-  }
+  };
 
   const logoutHandler = () => {
     setModalOpen(false);
@@ -73,16 +72,26 @@ const MenuModal = ({ setModalOpen }: Props) => {
             </button>
           </div>
         ) : (
-          <button
-            className={
-              "w-[40px] sm:w-[60px] md:w-[80px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
-            }
-            onClick={() => {
-              loginButtonHandler();
-            }}
-          >
-            로그인
-          </button>
+          <div className={"flex justify-between"}>
+            <button
+              className={
+                "w-[40px] sm:w-[60px] md:w-[80px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
+              }
+              onClick={() => {
+                loginButtonHandler();
+              }}
+            >
+              로그인
+            </button>
+            <button
+              className={
+                "w-[60px] sm:w-[80px] md:w-[100px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
+              }
+              onClick={() => router.push("/sign-up")}
+            >
+              회원가입
+            </button>
+          </div>
         )}
       </div>
       <div className={"border-t border-[#D9D9D9] border-solid"}>

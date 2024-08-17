@@ -22,7 +22,6 @@ export default function fetchLogin(
         } else {
           setCookie("savedEmail", "", -1);
         }
-        console.log(res.data.data);
         setAccessToken(res.data.data);
         window.location.href = "/";
       }

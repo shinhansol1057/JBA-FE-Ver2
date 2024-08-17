@@ -37,6 +37,7 @@ const Login = () => {
       if (AccessToken) {
         window.location.href = "/";
       }
+      getCookie("savedEmail") && setEmail(getCookie("savedEmail"));
     }
   }, [AccessToken]);
 
@@ -61,9 +62,14 @@ const Login = () => {
         <label className={"ml-[20px] leading-[16px]"} htmlFor={"email"}>
           이메일
         </label>
-        <LoginInputBox type={"email"} id={"email"} setValue={setEmail} />
+        <LoginInputBox
+          type={"email"}
+          id={"email"}
+          value={email}
+          setValue={setEmail}
+        />
         <div>
-          <p>{emailMessage}</p>
+          <p className={"ml-[20px] mb-[10px] text-[#DF1A1A]"}>{emailMessage}</p>
         </div>
         <label className={"ml-[20px] leading-[16px]"} htmlFor={"password"}>
           비밀번호
@@ -71,6 +77,7 @@ const Login = () => {
         <LoginInputBox
           type={"password"}
           id={"password"}
+          value={password}
           setValue={setPassword}
         />
         <div className={"mt-[40px] mb-[10px] pl-[20px]"}>

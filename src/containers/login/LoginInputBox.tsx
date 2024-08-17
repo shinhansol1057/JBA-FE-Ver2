@@ -4,13 +4,15 @@ import React from "react";
 type Props = {
   type: string;
   id: string;
+  value: string;
   setValue: (value: ((prevState: string) => string) | string) => void;
 };
-const LoginInputBox = ({ type, id, setValue }: Props) => {
+const LoginInputBox = ({ type, id, setValue, value }: Props) => {
   return (
     <input
       id={id}
       type={type}
+      value={value}
       autoComplete={type === "password" ? "off" : "on"}
       onChange={(e) => setValue(e.target.value)}
       className={
