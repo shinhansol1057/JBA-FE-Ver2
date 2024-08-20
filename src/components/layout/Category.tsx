@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  usePathname,
-  useRouter,
-  useSelectedLayoutSegment,
-  useSelectedLayoutSegments,
-} from "next/navigation";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 
 type Props = {
   category1: string;
