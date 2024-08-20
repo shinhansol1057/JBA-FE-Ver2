@@ -28,7 +28,7 @@ const ShortCuts = () => {
             alt="공지사항 이미지"
             content="안내, 개최, 합격자 발표 등의 정보를 만나볼 수 있습니다."
             backgroundImageUrl="/image/mainPage/announcement.jpg"
-            navUrl="url"
+            navUrl="/post/announcement"
           />
           <ShortCutCard
             title="대회정보"
@@ -36,7 +36,7 @@ const ShortCuts = () => {
             alt="대회정보 이미지"
             content="대회 현황, 종별, 기간 등의 정보를 만나볼 수 있습니다."
             backgroundImageUrl="/image/mainPage/competition.jpeg"
-            navUrl="url"
+            navUrl="/competition"
           />
         </div>
         <div className={"flex justify-between"}>
@@ -46,7 +46,7 @@ const ShortCuts = () => {
             alt="자료실 이미지"
             content="협회 또는 농구와 관련된 자료를 만나볼 수 있습니다."
             backgroundImageUrl="/image/mainPage/library.jpeg"
-            navUrl="url"
+            navUrl="/post/library"
           />
           <ShortCutCard
             title="FAQ"
@@ -54,7 +54,7 @@ const ShortCuts = () => {
             alt="FAQ 이미지"
             content="자주 묻곤하는 사항들에 대한 답변을 만나볼 수 있습니다."
             backgroundImageUrl="/image/mainPage/faq.jpeg"
-            navUrl="url"
+            navUrl="/faq"
           />
         </div>
       </div>

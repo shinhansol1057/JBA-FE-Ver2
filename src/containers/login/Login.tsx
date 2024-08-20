@@ -80,7 +80,7 @@ const Login = () => {
           value={password}
           setValue={setPassword}
         />
-        <div className={"mt-[40px] mb-[10px] pl-[20px]"}>
+        <div className={"mt-[20px] mb-[10px] pl-[20px]"}>
           <CheckBox
             isChecked={isChecked}
             setIsChecked={setIsChecked}

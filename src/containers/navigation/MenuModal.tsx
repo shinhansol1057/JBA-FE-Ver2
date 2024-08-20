@@ -96,7 +96,10 @@ const MenuModal = ({ setModalOpen }: Props) => {
       </div>
       <div className={"border-t border-[#D9D9D9] border-solid"}>
         {menuList.map(
-          (menu: { title: string; item: string[] }, menuIndex: number) => {
+          (
+            menu: { title: string; item: { menu: string; link: string }[] },
+            menuIndex: number,
+          ) => {
             return (
               <div
                 className={" flex flex-row pt-[10px] sm:pt-[15px] md:pt-[20px]"}
@@ -113,16 +116,22 @@ const MenuModal = ({ setModalOpen }: Props) => {
                       : "border-b border-solid border-[#D9D9D9]")
                   }
                 >
-                  {menu.item.map((i: string, itemIndex: number) => {
-                    return (
-                      <button
-                        key={itemIndex}
-                        className={"mb-[10px] sm:mb-[15px] md:mb-[20px]"}
-                      >
-                        {i}
-                      </button>
-                    );
-                  })}
+                  {menu.item.map(
+                    (i: { menu: string; link: string }, itemIndex: number) => {
+                      return (
+                        <button
+                          key={itemIndex}
+                          className={"mb-[10px] sm:mb-[15px] md:mb-[20px]"}
+                          onClick={() => {
+                            setModalOpen(false);
+                            router.push(i.link);
+                          }}
+                        >
+                          {i.menu}
+                        </button>
+                      );
+                    },
+                  )}
                 </div>
               </div>
             );
