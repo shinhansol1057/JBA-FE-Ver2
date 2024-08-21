@@ -2,6 +2,7 @@
 
 import { bannerAnnouncement, bannerCompetition } from "@/types/MainPageType";
 import { FormDate } from "@/utils/FormDate";
+import Link from "next/link";
 
 type Props = {
   data: bannerAnnouncement | bannerCompetition;
@@ -10,9 +11,13 @@ type Props = {
 const BannerCarouselCard = ({ data }: Props) => {
   return (
     // TODO: Link 연결 필요
-    <div
+    <Link
       className={"flex flex-col items-center text-center"}
-      onClick={() => console.log("나중에 개발")}
+      href={
+        "postId" in data
+          ? `/association/announcement/${data.postId}`
+          : `/jeju-competition/info/${data.competitionId}`
+      }
     >
       <h2
         className={
@@ -33,7 +38,7 @@ const BannerCarouselCard = ({ data }: Props) => {
           ? FormDate(data.createAt)
           : FormDate(data.startDate) + " ~ " + FormDate(data.endDate)}
       </p>
-    </div>
+    </Link>
   );
 };
 

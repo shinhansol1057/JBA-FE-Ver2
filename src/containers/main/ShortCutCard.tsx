@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 
 type Props = {
   title: string;
@@ -18,7 +19,7 @@ const ShortCutCard = ({
   navUrl,
 }: Props) => {
   return (
-    <div
+    <Link
       className={
         "w-[135px] sm:w-[195px] md:w-[295px] h-[100px] sm:h-[130px] md:h-[160px] " +
         "cursor-pointer rounded-[8px] bg-cover bg-center relative grayscale-[100%] flex flex-col justify-between"
@@ -26,7 +27,7 @@ const ShortCutCard = ({
       style={{
         backgroundImage: `url(${backgroundImageUrl})`,
       }}
-      onClick={() => (window.location.href = navUrl)}
+      href={navUrl}
     >
       <div
         className={
@@ -58,7 +59,7 @@ const ShortCutCard = ({
           {content}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 

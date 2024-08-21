@@ -13,9 +13,11 @@ const Banner = async () => {
           "bg-gradient-to-b from-black from-5% to-[#F5F5F5] to-100% h-[310px] sm:h-[410px] md:h-[510px] flex flex-col "
         }
       >
-        <BannerCarousel data={announcements?.data?.posts} />
+        {announcements && <BannerCarousel data={announcements?.data?.posts} />}
         <div className={"h-2.5"}></div>
-        <BannerCarousel data={competitions?.data?.slice(0, 3)} />
+        {competitions && (
+          <BannerCarousel data={competitions?.data?.slice(0, 3)} />
+        )}
       </div>
     </div>
   );
