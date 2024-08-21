@@ -1,5 +1,7 @@
+import CompetitionList from "@/containers/jejuCompetition/CompetitionList";
+
 const Page = () => {
-  return <div>대회정보</div>;
+  return <CompetitionList />;
 };
 
 export default Page;

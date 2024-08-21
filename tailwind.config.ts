@@ -10,6 +10,7 @@ const config: {
           "0%": { transform: string; opacity: string };
         };
       };
+      colors: { borderColor: string };
       backgroundImage: { mainAnnouncement: string; banner: string };
     };
   };
@@ -26,6 +27,9 @@ const config: {
       backgroundImage: {
         banner: "url('/image/mainPage/banner.jpeg')",
         mainAnnouncement: "url('/image/mainPage/announcementImage.png')",
+      },
+      colors: {
+        borderColor: "rgba(115,115,115,0.2)",
       },
       keyframes: {
         rightSlide: {

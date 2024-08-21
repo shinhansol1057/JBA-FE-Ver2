@@ -1,5 +1,5 @@
 import BannerCarousel from "@/containers/main/BannerCarousel";
-import { getAnnouncements, getCompetitions } from "@/services/mainPageApi";
+import { getAnnouncements, getCompetitions } from "@/services/MainPageApi";
 import BannerTop from "@/containers/main/BannerTop";
 
 const Banner = async () => {
@@ -10,7 +10,7 @@ const Banner = async () => {
       <BannerTop />
       <div
         className={
-          "bg-gradient-to-b from-black from-5% to-white to-100% h-[310px] sm:h-[410px] md:h-[510px] flex flex-col "
+          "bg-gradient-to-b from-black from-5% to-[#F5F5F5] to-100% h-[310px] sm:h-[410px] md:h-[510px] flex flex-col "
         }
       >
         <BannerCarousel data={announcements?.data?.posts} />

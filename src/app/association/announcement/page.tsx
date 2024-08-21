@@ -1,5 +1,7 @@
+import Post from "@/containers/post/Post";
+
 const Page = () => {
-  return <div>공지사항</div>;
+  return <Post />;
 };
 
 export default Page;

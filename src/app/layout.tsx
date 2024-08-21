@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import Navigation from "@/containers/navigation/navigation";
+import ReactQueryProviders from "@/hooks/useReactQuery";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <body className={inter.className}>
         <div className={"min-h-[100vh]"}>
           <Navigation />
-          {children}
+          <ReactQueryProviders>{children}</ReactQueryProviders>
         </div>
       </body>
     </html>
