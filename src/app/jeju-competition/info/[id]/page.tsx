@@ -1,4 +1,4 @@
-import CompetitionDetailPage from "@/containers/jejuCompetition/CompetitionDetailPage";
+import CompetitionDetailPage from "@/containers/jejuCompetition/detail/CompetitionDetailPage";
 
 type Props = {
   params: {

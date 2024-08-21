@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import CompetitionStatus from "@/containers/jejuCompetition/CompetitionStatus";
+import CompetitionStatus from "@/containers/jejuCompetition/list/CompetitionStatus";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCompetitionList } from "@/services/CompetitionApi";
-import CompetitionListCard from "@/containers/jejuCompetition/CompetitionListCard";
+import CompetitionListCard from "@/containers/jejuCompetition/list/CompetitionListCard";
 import { useObserver } from "@/hooks/useObserver";
 import LoadingText from "@/components/loading/LoadingText";
 import { useCompetitionStore } from "@/states/CompetitionStore";
@@ -18,11 +18,11 @@ const CompetitionList = () => {
     queryFn: getCompetitionList,
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.data.last) {
+      if (lastPage?.data?.last) {
         // lastPage 가 마지막 페이지였다면 api 호출을 하지 않는다.
         return undefined;
       } else {
-        return lastPage.data.pageable.pageNumber + 1; // 다음 페이지 리턴
+        return lastPage?.data?.pageable.pageNumber + 1; // 다음 페이지 리턴
       }
     },
   });
@@ -43,6 +43,15 @@ const CompetitionList = () => {
     <div className={"flex flex-col items-center"}>
       <CompetitionStatus />
       <LoadingText loading={status === "pending"} />
+      {data?.pages[0].data.totalElements === 0 && (
+        <p
+          className={
+            "text-red-500 mt-[20px] text-[12px] sm:text-[14px] md:text-[20px]"
+          }
+        >
+          대회가 없습니다.
+        </p>
+      )}
       {status === "success" &&
         data?.pages.map((group: any, i: number) => (
           <React.Fragment key={i}>

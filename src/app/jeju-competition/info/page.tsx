@@ -1,4 +1,4 @@
-import CompetitionList from "@/containers/jejuCompetition/CompetitionList";
+import CompetitionList from "@/containers/jejuCompetition/list/CompetitionList";
 
 const Page = () => {
   return <CompetitionList />;
