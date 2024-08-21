@@ -8,7 +8,7 @@ type Props = {
   data: any;
 };
 const CompetitionListCard = ({ data }: Props) => {
-  const [setScrollY] = useLocalStorage<number>("competitionListScroll", 0);
+  const [scrollY, setScrollY] = useLocalStorage("competitionListScroll", 0);
   const startDate: string = moment(data.startDate).format("YYYY-MM-DD");
   const endDate: string = moment(data.endDate).format("YYYY-MM-DD");
   const status: string = competitionStatusCalculator(
