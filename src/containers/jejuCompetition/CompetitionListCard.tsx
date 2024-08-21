@@ -40,7 +40,7 @@ const CompetitionListCard = ({ data }: Props) => {
               ? "text-[#DF1A1A] "
               : status === "진행중"
                 ? "text-[#5B6BFF] "
-                : "text-black ") + "font-bold mb-[10px]"
+                : "text-black ") + "font-bold mb-[5px]"
           }
         >
           {status}
