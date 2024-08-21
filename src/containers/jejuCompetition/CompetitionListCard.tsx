@@ -1,7 +1,7 @@
 import React from "react";
-import { paginationResponse } from "@/types/CommonType";
 import { competitionStatusCalculator } from "@/utils/CompetitionStatusCalculator";
 import moment from "moment";
+import Link from "next/link";
 
 type Props = {
   data: any;
@@ -14,12 +14,13 @@ const CompetitionListCard = ({ data }: Props) => {
     data.endDate,
   );
   return (
-    <div
+    <Link
       key={data.competitionId}
       className={
         "cursor-pointer w-[280px] h-[100px] rounded-[8px] mt-[10px] shadow-xl flex flex-col justify-between py-[15px] pl-[15px] " +
         (status === "진행중" ? "bg-black" : "bg-white")
       }
+      href={`/jeju-competition/info/${data.competitionId}`}
     >
       <div className={"text-[12px]"}>
         <p
@@ -44,7 +45,7 @@ const CompetitionListCard = ({ data }: Props) => {
       >
         {startDate} ~ {endDate}
       </p>
-    </div>
+    </Link>
   );
 };
 

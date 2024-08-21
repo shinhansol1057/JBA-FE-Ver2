@@ -12,7 +12,6 @@ import {
 } from "@/services/user/SignUpApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { Simulate } from "react-dom/test-utils";
-import abort = Simulate.abort;
 
 const SignUp = () => {
   const [certificating, setCertificating] = useState<boolean>(false);
@@ -237,7 +236,7 @@ const SignUp = () => {
         </div>
 
         <button
-          onSubmit={() => onSubmit}
+          type={"submit"}
           className={
             "w-[280px] h-[40px] text-white text-[14px] font-bold bg-black mt-[10px] rounded-[50px]"
           }

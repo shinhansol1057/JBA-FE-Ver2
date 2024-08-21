@@ -7,7 +7,7 @@ const Post = () => {
   const [searchKey, setSearchKey] = useState<string>("");
   const OFFSET = 5;
 
-  const getPostList = async ({ pageParam }) => {
+  const getPostList = async ({ pageParam }: { pageParam: number }) => {
     const res = await fetch(
       process.env.NEXT_PUBLIC_API_KEY +
         `/v1/api/competition?status=ALL&year=2024&page=${pageParam}&size=${OFFSET}`,
@@ -39,11 +39,11 @@ const Post = () => {
   return (
     <div>
       <SearchBar searchKey={searchKey} setSearchKey={setSearchKey} />
-      {status === "loading" && <p>불러오는 중</p>}
+      {status === "pending" && <p>불러오는 중</p>}
       {status === "success" &&
-        data?.pages.map((group, i) => (
+        data?.pages.map((group: any, i: number) => (
           <React.Fragment key={i}>
-            {group.data?.content.map((item) => (
+            {group.data?.content.map((item: any) => (
               <p key={item.postId}>{item.title}</p>
             ))}
           </React.Fragment>

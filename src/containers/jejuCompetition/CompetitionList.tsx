@@ -32,7 +32,7 @@ const CompetitionList = () => {
     },
   });
 
-  const onIntersect = ([entry]) => entry.isIntersecting && fetchNextPage();
+  const onIntersect = ([entry]: any) => entry.isIntersecting && fetchNextPage();
 
   useObserver({
     target: bottom,
@@ -46,11 +46,11 @@ const CompetitionList = () => {
         competitionStatus={competitionStatus}
         setCompetitionStatus={setCompetitionStatus}
       />
-      {status === "loading" && <p>불러오는 중</p>}
+      {status === "pending" && <p>불러오는 중</p>}
       {status === "success" &&
         data?.pages.map((group, i) => (
           <React.Fragment key={i}>
-            {group.data?.content.map((item, i) => (
+            {group.data?.content.map((item: any, i: number) => (
               <CompetitionListCard data={item} key={i} />
             ))}
           </React.Fragment>
