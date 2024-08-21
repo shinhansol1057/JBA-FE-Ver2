@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import CompetitionStatus from "@/containers/jejuCompetition/CompetitionStatus";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPostList } from "@/services/CompetitionApi";
@@ -52,7 +52,7 @@ const CompetitionList = () => {
       <CompetitionStatus />
       <LoadingText loading={status === "pending"} />
       {status === "success" &&
-        data?.pages.map((group, i) => (
+        data?.pages.map((group: any, i: number) => (
           <React.Fragment key={i}>
             {group.data?.content.map((item: any, i: number) => (
               <CompetitionListCard data={item} key={i} />
