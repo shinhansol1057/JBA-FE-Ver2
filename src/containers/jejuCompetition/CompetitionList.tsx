@@ -1,15 +1,18 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CompetitionStatus from "@/containers/jejuCompetition/CompetitionStatus";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPostList } from "@/services/CompetitionApi";
 import CompetitionListCard from "@/containers/jejuCompetition/CompetitionListCard";
 import { useObserver } from "@/hooks/useObserver";
+import LoadingText from "@/components/loading/LoadingText";
+import { useCompetitionStore } from "@/states/CompetitionStore";
 
 const CompetitionList = () => {
-  const [competitionStatus, setCompetitionStatus] = useState<string>("ALL");
   const bottom = useRef(null);
+  const { competitionStatusMenu, setCompetitionStatusMenu } =
+    useCompetitionStore();
   const {
     data,
     error,
@@ -19,7 +22,7 @@ const CompetitionList = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["getPostList", competitionStatus],
+    queryKey: ["getPostList", competitionStatusMenu],
     queryFn: getPostList,
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
@@ -40,13 +43,14 @@ const CompetitionList = () => {
     threshold: 0.1,
   });
 
+  useEffect(() => {
+    if (scrollY !== 0) window.scrollTo(0, scrollY);
+  }, []);
+
   return (
     <div className={"flex flex-col items-center"}>
-      <CompetitionStatus
-        competitionStatus={competitionStatus}
-        setCompetitionStatus={setCompetitionStatus}
-      />
-      {status === "pending" && <p>불러오는 중</p>}
+      <CompetitionStatus />
+      <LoadingText loading={status === "pending"} />
       {status === "success" &&
         data?.pages.map((group, i) => (
           <React.Fragment key={i}>
@@ -55,11 +59,8 @@ const CompetitionList = () => {
             ))}
           </React.Fragment>
         ))}
-      <button onClick={() => fetchNextPage()} className={"mt-[5px]"}>
-        더보기
-      </button>
       <div ref={bottom} />
-      {isFetchingNextPage && <p>게속 불러오는중</p>}
+      <LoadingText loading={isFetchingNextPage} />
     </div>
   );
 };

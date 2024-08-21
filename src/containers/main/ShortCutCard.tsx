@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { useCompetitionStore } from "@/states/CompetitionStore";
 
 type Props = {
   title: string;
@@ -18,6 +19,7 @@ const ShortCutCard = ({
   backgroundImageUrl,
   navUrl,
 }: Props) => {
+  const { setCompetitionStatusMenu } = useCompetitionStore();
   return (
     <Link
       className={
@@ -26,6 +28,9 @@ const ShortCutCard = ({
       }
       style={{
         backgroundImage: `url(${backgroundImageUrl})`,
+      }}
+      onClick={() => {
+        if (title === "대회정보") setCompetitionStatusMenu("ALL");
       }}
       href={navUrl}
     >

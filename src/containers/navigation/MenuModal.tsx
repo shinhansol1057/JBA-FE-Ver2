@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useUserStore } from "@/states/UserStore";
 import { JwtDecoder } from "@/utils/JwtDecoder";
 import fetchLogout from "@/services/user/LogoutApi";
+import { useCompetitionStore } from "@/states/CompetitionStore";
 
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
@@ -12,6 +13,7 @@ type Props = {
 const MenuModal = ({ setModalOpen }: Props) => {
   const router = useRouter();
   const { AccessToken, setAccessToken } = useUserStore();
+  const { setCompetitionStatusMenu } = useCompetitionStore();
   const loginButtonHandler = () => {
     setModalOpen(false);
     router.push("/login");
@@ -125,6 +127,8 @@ const MenuModal = ({ setModalOpen }: Props) => {
                           onClick={() => {
                             setModalOpen(false);
                             router.push(i.link);
+                            if (i.menu === "대회정보")
+                              setCompetitionStatusMenu("ALL");
                           }}
                         >
                           {i.menu}
