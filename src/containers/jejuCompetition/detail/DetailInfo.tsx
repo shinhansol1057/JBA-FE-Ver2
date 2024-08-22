@@ -2,10 +2,11 @@ import React from "react";
 import { competitionDetail, competitionPlace } from "@/types/CompetitionType";
 import { competitionStatusCalculator } from "@/utils/CompetitionStatusCalculator";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import CompetitionLabel from "@/components/CompetitionLabel";
+import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import moment from "moment/moment";
 import DOMPurify from "dompurify";
-import GetFileBox from "@/components/GetFileBox";
+import GetFileBox from "@/components/common/GetFileBox";
+import { useUserStore } from "@/states/UserStore";
 
 type Props = {
   data: competitionDetail;
@@ -15,6 +16,7 @@ const DetailInfo = ({ data }: Props) => {
   const startDate: string = moment(data.startDate).format("YYYY-MM-DD");
   const endDate: string = moment(data.endDate).format("YYYY-MM-DD");
   const cleanHtml = DOMPurify.sanitize(data.content);
+  const { AccessToken } = useUserStore();
   return (
     <div className={"w-[280px] sm:w-[400px] md:w-[800px]"}>
       <div
@@ -42,7 +44,7 @@ const DetailInfo = ({ data }: Props) => {
           <HiOutlineDotsHorizontal
             color={"#4B4B4B"}
             size={25}
-            className={"mr-[3px]"}
+            className={"mr-[3px] " + (!AccessToken ? "hidden" : "")}
           />
         </div>
         <div
@@ -70,7 +72,12 @@ const DetailInfo = ({ data }: Props) => {
             "min-h-[30px] sm:min-h-[40px] md:min-h-[50px] "
           }
         >
-          <CompetitionLabel content={"대회기간"} color={""} bold={true} />
+          <CompetitionLabel
+            content={"대회기간"}
+            color={""}
+            bold={true}
+            long={true}
+          />
           <p className={"text-[10px] sm:text-[12px] md:text-[16px]"}>
             {startDate} ~ {endDate}
           </p>
@@ -81,7 +88,12 @@ const DetailInfo = ({ data }: Props) => {
             "min-h-[30px] sm:min-h-[40px] md:min-h-[50px]"
           }
         >
-          <CompetitionLabel content={"대회장소"} color={""} bold={true} />
+          <CompetitionLabel
+            content={"대회장소"}
+            color={""}
+            bold={true}
+            long={true}
+          />
           <div
             className={
               "flex flex-col text-[10px] sm:text-[12px] md:text-[16px] pt-[5px]"

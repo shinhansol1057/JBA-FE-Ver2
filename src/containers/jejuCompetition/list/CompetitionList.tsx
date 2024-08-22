@@ -6,7 +6,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCompetitionList } from "@/services/CompetitionApi";
 import CompetitionListCard from "@/containers/jejuCompetition/list/CompetitionListCard";
 import { useObserver } from "@/hooks/useObserver";
-import LoadingText from "@/components/loading/LoadingText";
+import LoadingText from "@/components/common/LoadingText";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 
 const CompetitionList = () => {

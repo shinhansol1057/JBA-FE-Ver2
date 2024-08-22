@@ -4,12 +4,15 @@ type Props = {
   content: string;
   color: string;
   bold: boolean;
+  long?: boolean;
 };
-const CompetitionLabel = ({ content, color, bold }: Props) => {
+const CompetitionLabel = ({ content, color, bold, long }: Props) => {
   return (
     <p
       className={
-        "w-[45px] sm:w-[55px] md:w-[70px] " +
+        (long
+          ? "w-[45px] sm:w-[55px] md:w-[70px] "
+          : "w-[25px] sm:w-[35px] md:w-[50px] ") +
         "text-[10px] sm:text-[12px] md:text-[16px] " +
         "ml-[3px] " +
         (bold && "font-bold ") +

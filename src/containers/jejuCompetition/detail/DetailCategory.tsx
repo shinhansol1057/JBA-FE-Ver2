@@ -1,10 +1,23 @@
 import React from "react";
+import confirmAlert from "@/libs/alert/ConfirmAlert";
+import { competitionResult } from "@/types/CompetitionType";
 
 type Props = {
   selectInfo: boolean;
   setSelectInfo: (value: ((prevState: boolean) => boolean) | boolean) => void;
+  phase: string;
+  resultData: competitionResult[];
 };
-const DetailCategory = ({ selectInfo, setSelectInfo }: Props) => {
+const DetailCategory = ({
+  selectInfo,
+  setSelectInfo,
+  phase,
+  resultData,
+}: Props) => {
+  let resultCount: number = 0;
+  resultData.forEach((result) => {
+    resultCount += result.getResultResponseRows.length;
+  });
   return (
     <div
       className={
@@ -23,9 +36,20 @@ const DetailCategory = ({ selectInfo, setSelectInfo }: Props) => {
       </button>
       <button
         className={selectInfo ? "" : "rounded-[8px] bg-black text-white"}
-        onClick={() => setSelectInfo(false)}
+        onClick={() => {
+          if (phase === "INFO" || resultCount === 0) {
+            confirmAlert(
+              "error",
+              "대회일정 없음",
+              "대회일정이 아직 등록되지 않았습니다.",
+            );
+            setSelectInfo(true);
+          } else {
+            setSelectInfo(false);
+          }
+        }}
       >
-        대회일정
+        {phase === "FINISH" ? "대회결과" : "대회일정"}
       </button>
     </div>
   );

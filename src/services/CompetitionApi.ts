@@ -37,3 +37,13 @@ export const getCompetitionDetail = (id: string) => {
       });
   });
 };
+
+export const getCompetitionResult = (id: string) => {
+  return NormalApi.get(`v1/api/competition/result/${id}`).catch((err) => {
+    if (err.response.data.detailMessage === "대회를 찾을 수 없습니다.") {
+      confirmAlert("error", "대회를 찾을 수 없습니다.").then((res) => {
+        if (res.isConfirmed) window.location.href = "/jeju-competition/info";
+      });
+    }
+  });
+};

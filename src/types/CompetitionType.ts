@@ -25,3 +25,23 @@ export type competitionFile = {
   filePath: string;
   fileName: string;
 };
+
+export type competitionResult = {
+  division: string;
+  getResultResponseRows: competitionResultRow[];
+};
+
+export type competitionResultRow = {
+  competitionResultId: number;
+  gameNumber: number;
+  startDate: Date;
+  floor: string;
+  place: string;
+  homeName: string;
+  homeScore: number;
+  awayName: string;
+  awayScore: number;
+  fileName: string;
+  filePath: string | null;
+  state5x5: boolean;
+};

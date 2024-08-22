@@ -1,10 +1,15 @@
 "use client";
-import PostTitle from "@/components/PostTitle";
-import { getCompetitionDetail } from "@/services/CompetitionApi";
+import PostTitle from "@/components/common/PostTitle";
+import {
+  getCompetitionDetail,
+  getCompetitionResult,
+} from "@/services/CompetitionApi";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import DetailCategory from "@/containers/jejuCompetition/detail/DetailCategory";
 import DetailInfo from "@/containers/jejuCompetition/detail/DetailInfo";
+import DetailResult from "@/containers/jejuCompetition/detail/DetailResult";
+import detailResult from "@/containers/jejuCompetition/detail/DetailResult";
 
 const CompetitionDetailPage = ({ id }: { id: string }) => {
   const [selectInfo, setSelectInfo] = useState<boolean>(true);
@@ -13,11 +18,29 @@ const CompetitionDetailPage = ({ id }: { id: string }) => {
     queryFn: () => getCompetitionDetail(id),
     select: (result) => result?.data.data,
   });
+  const { data: resultData } = useQuery({
+    queryKey: ["competitionResult", id],
+    queryFn: () => getCompetitionResult(id),
+    select: (result) => result?.data.data,
+  });
+  console.log(resultData);
   return (
     <div className={"my-[10px] md:my-[20px] "}>
       <PostTitle title={detailData?.title} />
-      <DetailCategory selectInfo={selectInfo} setSelectInfo={setSelectInfo} />
-      {detailData && selectInfo && <DetailInfo data={detailData} />}
+      {detailData && resultData && (
+        <DetailCategory
+          selectInfo={selectInfo}
+          setSelectInfo={setSelectInfo}
+          phase={detailData?.phase}
+          resultData={resultData}
+        />
+      )}
+      {detailData && resultData && selectInfo && (
+        <DetailInfo data={detailData} />
+      )}
+      {detailData && resultData && !selectInfo && (
+        <DetailResult detailData={detailData} resultData={resultData} />
+      )}
     </div>
   );
 };

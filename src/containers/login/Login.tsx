@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import LoginInputBox from "@/containers/login/LoginInputBox";
-import { CheckBox } from "@/components/checkbox/CheckBox";
+import { CheckBox } from "@/components/common/checkbox/CheckBox";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/states/UserStore";
 import { getCookie, setCookie } from "@/utils/Cookie";
