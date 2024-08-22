@@ -9,7 +9,7 @@ import DetailInfo from "@/containers/jejuCompetition/detail/DetailInfo";
 const CompetitionDetailPage = ({ id }: { id: string }) => {
   const [selectInfo, setSelectInfo] = useState<boolean>(true);
   const { data: detailData } = useQuery({
-    queryKey: ["competitionDetail"],
+    queryKey: ["competitionDetail", id],
     queryFn: () => getCompetitionDetail(id),
     select: (result) => result?.data.data,
   });
