@@ -36,13 +36,22 @@ const DetailResult = ({ detailData, resultData }: Props) => {
       {filteredResultData.map((result: competitionResult, i: number) => {
         return (
           <div key={i} className={"mt-[50px]"}>
-            <p
+            {/*<p*/}
+            {/*  className={*/}
+            {/*    "font-bold text-[12px] sm:text-[14px] md:text-[20px] ml-[10px] mb-[5px]"*/}
+            {/*  }*/}
+            {/*>*/}
+            {/*  {result.division}*/}
+            {/*</p>*/}
+            <div
               className={
-                "font-bold text-[12px] sm:text-[14px] md:text-[20px] ml-[10px] mb-[5px]"
+                "flex justify-center items-center bg-amber-400 mb-[5px] rounded-[8px] " +
+                "text-[12px] sm:text-[14px] md:text-[20px] " +
+                "h-[30px] sm:h-[40px] md:h-[50px] "
               }
             >
-              {result.division}
-            </p>
+              <p>{result.division}</p>
+            </div>
             {result.getResultResponseRows.map((row: competitionResultRow) => {
               return (
                 <CompetitionResultRowBox
