@@ -4,7 +4,7 @@ import { getCompetitionDetail } from "@/services/CompetitionApi";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import DetailCategory from "@/containers/jejuCompetition/detail/DetailCategory";
-import DetailContainer from "@/containers/jejuCompetition/detail/DetailContainer";
+import DetailInfo from "@/containers/jejuCompetition/detail/DetailInfo";
 
 const CompetitionDetailPage = ({ id }: { id: string }) => {
   const [selectInfo, setSelectInfo] = useState<boolean>(true);
@@ -17,7 +17,7 @@ const CompetitionDetailPage = ({ id }: { id: string }) => {
     <div className={"my-[10px] md:my-[20px] "}>
       <PostTitle title={detailData?.title} />
       <DetailCategory selectInfo={selectInfo} setSelectInfo={setSelectInfo} />
-      {detailData && <DetailContainer data={detailData} />}
+      {detailData && selectInfo && <DetailInfo data={detailData} />}
     </div>
   );
 };
