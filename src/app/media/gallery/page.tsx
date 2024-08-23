@@ -1,5 +1,7 @@
+import GalleryList from "@/containers/gallery/GalleryList";
+
 const Page = () => {
-  return <div>갤러리</div>;
+  return <GalleryList />;
 };
 
 export default Page;

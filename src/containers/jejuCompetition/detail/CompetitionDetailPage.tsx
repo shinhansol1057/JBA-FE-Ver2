@@ -23,7 +23,6 @@ const CompetitionDetailPage = ({ id }: { id: string }) => {
     queryFn: () => getCompetitionResult(id),
     select: (result) => result?.data.data,
   });
-  console.log(resultData);
   return (
     <div className={"my-[10px] md:my-[20px] "}>
       <PostTitle title={detailData?.title} />

@@ -14,7 +14,7 @@ const CompetitionList = () => {
   const { competitionStatusMenu, setCompetitionStatusMenu } =
     useCompetitionStore();
   const { data, fetchNextPage, isFetchingNextPage, status } = useInfiniteQuery({
-    queryKey: ["getPostList", competitionStatusMenu],
+    queryKey: ["getCompetitionList", competitionStatusMenu],
     queryFn: getCompetitionList,
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
