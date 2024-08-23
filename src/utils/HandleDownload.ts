@@ -3,7 +3,7 @@ export const handleDownload = async (fileUrl: string, name: string) => {
     const response = await fetch(fileUrl);
     const blob = await response.blob();
     const url = window.URL.createObjectURL(
-      new Blob([blob], { type: blob.type || "application/octet-stream" }),
+      new Blob([blob], { type: "application/octet-stream" }),
     );
     const a = document.createElement("a");
     a.href = url;
