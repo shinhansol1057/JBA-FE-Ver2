@@ -21,8 +21,8 @@ const GalleryDetailCard = ({ data }: Props) => {
       <Image
         src={data.fileUrl}
         alt={data.fileName}
-        width={500}
-        height={500}
+        width={300}
+        height={300}
         className={"w-full h-full object-cover"}
         onClick={() => setModalOpen(true)}
       />
@@ -46,7 +46,7 @@ const customModalStyles: ReactModal.Styles = {
     height: "100vh",
     zIndex: "50",
     position: "fixed",
-    top: typeof window !== "undefined" ? window.scrollY : 0,
+    top: 0,
     left: "0",
     backgroundColor: "rgba(0,0,0,0.8)",
   },
