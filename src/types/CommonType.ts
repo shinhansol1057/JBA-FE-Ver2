@@ -1,7 +1,7 @@
 export type paginationResponse = {
   code: number;
   message: string;
-  data: paginationType;
+  data: any;
 };
 
 export type paginationType = {

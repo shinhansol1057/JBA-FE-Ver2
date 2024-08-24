@@ -14,7 +14,7 @@ const Navigation = () => {
   return (
     <nav
       className={
-        "flex items-center justify-between px-5 h-[30px] sm:h-[50px] relative " +
+        "flex items-center justify-between px-5 h-[30px] sm:h-[50px] relative z-10 " +
         (path === "/" ? "bg-[rgba(212,212,212,0.4)]" : "bg-[rgba(0,0,0,0.3)]")
       }
     >

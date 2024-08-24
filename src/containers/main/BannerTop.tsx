@@ -1,11 +1,22 @@
+import Image from "next/image";
+
 const BannerTop = () => {
   return (
     <div
       className={
-        "bg-banner bg-center bg-cover h-60 sm:h-96 md:h-[600px] text-white flex flex-col " +
+        " h-60 sm:h-96 md:h-[600px] text-white flex flex-col relative " +
         "items-end pt-[20px] sm:pt-[70px] md:pt-[140px] pr-[20px] sm:pr-[70px] md:pr-[140px]"
       }
     >
+      <Image
+        src={"/image/mainPage/banner.jpeg"}
+        alt={"bannerImage"}
+        width={1000}
+        height={1000}
+        className={
+          "absolute top-0 left-0 w-full h-60 sm:h-96 md:h-[700px] -z-10 object-cover"
+        }
+      />
       <div className="flex justify-end mt-[30px] sm:mt-[50px]">
         <h1 lang={"en"} className={"text-xl sm:text-5xl md:text-[112px]"}>
           JBA
