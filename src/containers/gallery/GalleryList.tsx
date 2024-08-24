@@ -37,7 +37,7 @@ const GalleryList = () => {
   // 스크롤이 없을때 자동으로 다음 페이지 호출하는 로직
   useEffect(() => {
     if (status === "success" && data?.pages[0].data.totalGalleries > 0) {
-      const contentHeight = document.documentElement.scrollHeight;
+      const contentHeight = document.body.scrollHeight;
       const windowHeight = window.innerHeight;
 
       if (contentHeight <= windowHeight && hasNextPage) {
