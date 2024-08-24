@@ -6,6 +6,7 @@ import { useUserStore } from "@/states/UserStore";
 import { JwtDecoder } from "@/utils/JwtDecoder";
 import fetchLogout from "@/services/user/LogoutApi";
 import { useCompetitionStore } from "@/states/CompetitionStore";
+import { IoClose } from "react-icons/io5";
 
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
@@ -31,7 +32,10 @@ const MenuModal = ({ setModalOpen }: Props) => {
       }
     >
       <div className={"flex flex-row justify-end text-[#9B9B9B]"}>
-        <button onClick={() => setModalOpen(false)}>X</button>
+        <IoClose
+          onClick={() => setModalOpen(false)}
+          className={"text-[15px] sm:text-[20px] md:text-[25px] cursor-pointer"}
+        />
       </div>
       <div className={"mb-[35px]"}>
         <div
