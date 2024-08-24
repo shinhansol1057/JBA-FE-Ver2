@@ -1,6 +1,7 @@
 import { getGalleryDetail } from "@/services/GalleryApi";
 import PostTitle from "@/components/common/PostTitle";
 import GalleryDetailCard from "@/containers/gallery/GalleryDetailCard";
+import { getGalleryDetailType } from "@/types/GalleryType";
 
 const GalleryDetail = async ({ id }: { id: string }) => {
   const data = await getGalleryDetail(id);
@@ -13,7 +14,7 @@ const GalleryDetail = async ({ id }: { id: string }) => {
           "mt-[30px] sm:mt-[40px] md:mt-[50px]"
         }
       >
-        {data?.data.files.map((photo) => {
+        {data?.data.files.map((photo: getGalleryDetailType) => {
           return <GalleryDetailCard key={photo.fileId} data={photo} />;
         })}
       </div>

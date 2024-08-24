@@ -6,7 +6,7 @@ import SearchBar from "@/components/common/SearchBar";
 import { useObserver } from "@/hooks/useObserver";
 import LoadingText from "@/components/common/LoadingText";
 import { paginationResponse, paginationType } from "@/types/CommonType";
-import { getGallery } from "@/types/GalleryType";
+import { getGalleryType } from "@/types/GalleryType";
 import GalleryCard from "@/containers/gallery/GalleryCard";
 
 const GalleryList = () => {
@@ -72,7 +72,7 @@ const GalleryList = () => {
       <div className={"grid grid-cols-2 gap-[10px] md:gap-[20px] mt-[30px]"}>
         {status === "success" &&
           data?.pages.map((group: paginationResponse) => {
-            return group?.data.galleries.map((gallery: getGallery) => {
+            return group?.data.galleries.map((gallery: getGalleryType) => {
               return <GalleryCard key={gallery.galleryId} data={gallery} />;
             });
           })}

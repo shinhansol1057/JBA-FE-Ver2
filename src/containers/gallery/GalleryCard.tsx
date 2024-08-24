@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import { getGallery } from "@/types/GalleryType";
+import { getGalleryType } from "@/types/GalleryType";
 import Link from "next/link";
 
-const GalleryCard = ({ data }: { data: getGallery }) => {
+const GalleryCard = ({ data }: { data: getGalleryType }) => {
   return (
     <Link
       className={

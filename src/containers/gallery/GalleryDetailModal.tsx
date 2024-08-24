@@ -2,11 +2,11 @@ import React from "react";
 import { AiOutlineDownload } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import Image from "next/image";
-import { getGalleryDetail } from "@/types/GalleryType";
+import { getGalleryDetailType } from "@/types/GalleryType";
 import { handleDownload } from "@/utils/HandleDownload";
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
-  data: getGalleryDetail;
+  data: getGalleryDetailType;
 };
 const GalleryDetailModal = ({ setModalOpen, data }: Props) => {
   return (

@@ -4,7 +4,7 @@ const BannerTop = () => {
   return (
     <div
       className={
-        " h-60 sm:h-96 md:h-[600px] text-white flex flex-col relative " +
+        " h-60 sm:h-96 md:h-[800px] text-white flex flex-col relative " +
         "items-end pt-[20px] sm:pt-[70px] md:pt-[140px] pr-[20px] sm:pr-[70px] md:pr-[140px]"
       }
     >
@@ -14,7 +14,7 @@ const BannerTop = () => {
         width={1000}
         height={1000}
         className={
-          "absolute top-0 left-0 w-full h-60 sm:h-96 md:h-[700px] -z-10 object-cover"
+          "absolute top-0 left-0 w-full h-60 sm:h-96 md:h-[800px] -z-10 object-cover"
         }
       />
       <div className="flex justify-end mt-[30px] sm:mt-[50px]">

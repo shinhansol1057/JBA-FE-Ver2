@@ -1,10 +1,10 @@
-export type getGalleryList = {
+export type getGalleryListType = {
   totalPages: number;
   totalGalleries: number;
-  galleries: getGallery[];
+  galleries: getGalleryType[];
 };
 
-export type getGallery = {
+export type getGalleryType = {
   galleryId: number;
   title: string;
   fileName: string;
@@ -12,7 +12,7 @@ export type getGallery = {
   createAt: string;
 };
 
-export type getGalleryDetail = {
+export type getGalleryDetailType = {
   fileId: number;
   fileName: string;
   fileUrl: string;

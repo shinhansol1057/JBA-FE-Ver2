@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getGalleryDetail } from "@/types/GalleryType";
+import { getGalleryDetailType } from "@/types/GalleryType";
 import Image from "next/image";
 import Modal from "react-modal";
 import GalleryDetailModal from "@/containers/gallery/GalleryDetailModal";
 
 type Props = {
-  data: getGalleryDetail;
+  data: getGalleryDetailType;
 };
 const GalleryDetailCard = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
