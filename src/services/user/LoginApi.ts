@@ -1,7 +1,7 @@
 import React from "react";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import AutoCloseTimerAlert from "@/libs/alert/AutoCloseTimerAlert";
-import { Api } from "@/services/axios/Api";
+import { NormalApi } from "@/services/axios/NormalApi";
 
 export default function fetchLogin(
   email: string,
@@ -11,7 +11,7 @@ export default function fetchLogin(
   isChecked: boolean,
   setCookie: (name: string, value: string, days: number) => void,
 ): void {
-  Api.post("/v1/api/sign/login-cookie", {
+  NormalApi.post("/v1/api/sign/login-cookie", {
     email,
     password,
   })
