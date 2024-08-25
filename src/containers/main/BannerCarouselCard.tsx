@@ -10,7 +10,6 @@ type Props = {
 
 const BannerCarouselCard = ({ data }: Props) => {
   return (
-    // TODO: Link 연결 필요
     <Link
       className={"flex flex-col items-center text-center"}
       href={

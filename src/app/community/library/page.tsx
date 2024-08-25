@@ -1,5 +1,7 @@
+import PostList from "@/containers/post/PostList";
+
 const Page = () => {
-  return <div>자료실</div>;
+  return <PostList />;
 };
 
 export default Page;

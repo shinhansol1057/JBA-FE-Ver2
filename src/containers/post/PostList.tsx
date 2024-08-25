@@ -7,11 +7,15 @@ import { getPostListItemType } from "@/types/PostType";
 import LoadingText from "@/components/common/LoadingText";
 import { useObserver } from "@/hooks/useObserver";
 import PostListCard from "@/containers/post/PostListCard";
+import { headers } from "next/headers";
+import { usePathname } from "next/navigation";
 
-const Post = () => {
+const PostList = () => {
   const [searchKey, setSearchKey] = useState<string>("");
-  const [category, setCategory] = useState<string>("notice");
   const bottom = useRef(null);
+  const path = usePathname();
+  const parts = path.split("/");
+  const category = parts[2] === "announcement" ? "notice" : parts[2];
 
   const {
     data,
@@ -26,7 +30,10 @@ const Post = () => {
     queryFn: getPostList,
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages, lastPageParam) => {
-      if (lastPage?.data.totalPages === lastPageParam + 1) {
+      if (
+        !lastPage.data.totalPages ||
+        lastPage?.data?.totalPages === lastPageParam + 1
+      ) {
         // lastPage 가 마지막 페이지였다면 api 호출을 하지 않는다.
         return undefined;
       } else {
@@ -34,7 +41,6 @@ const Post = () => {
       }
     },
   });
-  console.log(data);
   const onIntersect = ([entry]: any) => entry.isIntersecting && fetchNextPage();
 
   useObserver({
@@ -70,13 +76,13 @@ const Post = () => {
         loading={status === "pending"}
         text={"잠시만 기다려주세요."}
       />
-      {data?.pages[0].data.totalPosts === 0 && (
+      {data?.pages[0]?.data?.totalPosts === 0 && (
         <p
           className={
             "text-red-500 mt-[20px] text-[12px] sm:text-[14px] md:text-[20px]"
           }
         >
-          대회가 없습니다.
+          게시물이 없습니다.
         </p>
       )}
       <div className={"mt-[30px] sm:mt-[40px] md:mt-[50px] "}>
@@ -84,7 +90,11 @@ const Post = () => {
           data?.pages.map((group: any, i: number) => (
             <React.Fragment key={i}>
               {group.data?.posts.map((item: getPostListItemType) => (
-                <PostListCard data={item} key={item.postId} />
+                <PostListCard
+                  data={item}
+                  key={item.postId}
+                  category={category}
+                />
               ))}
             </React.Fragment>
           ))}
@@ -95,4 +105,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default PostList;

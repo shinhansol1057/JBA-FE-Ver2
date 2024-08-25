@@ -11,3 +11,10 @@ export const getPostList = async ({
   );
   return res.json();
 };
+
+export const getPostDetail = async (id: string, category: string) => {
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_API_KEY + `/v1/api/post/${category}/${id}`,
+  );
+  return res.json();
+};

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { LuFolder } from "react-icons/lu";
 import { AiOutlineDownload } from "react-icons/ai";

@@ -1,7 +1,7 @@
-import Post from "@/containers/post/Post";
+import PostList from "@/containers/post/PostList";
 
 const Page = () => {
-  return <Post />;
+  return <PostList />;
 };
 
 export default Page;

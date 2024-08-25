@@ -1,5 +1,7 @@
+import PostList from "@/containers/post/PostList";
+
 const Page = () => {
-  return <div>NEWS</div>;
+  return <PostList />;
 };
 
 export default Page;

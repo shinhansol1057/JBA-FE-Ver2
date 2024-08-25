@@ -6,9 +6,22 @@ import { usePathname } from "next/navigation";
 
 type Props = {
   data: getPostListItemType;
+  category: string;
 };
-const PostListCard = ({ data }: Props) => {
+const PostListCard = ({ data, category }: Props) => {
   const pathname: string = usePathname();
+  let cardCategory: string;
+  if (category === "notice") {
+    if (data.isAnnouncement) {
+      cardCategory = "[공지]";
+    } else {
+      cardCategory = "공지사항";
+    }
+  } else if (category === "news") {
+    cardCategory = "NEWS";
+  } else {
+    cardCategory = "자료실";
+  }
 
   return (
     <Link
@@ -28,14 +41,18 @@ const PostListCard = ({ data }: Props) => {
           <p
             className={
               data.isAnnouncement
-                ? "text-[12px] sm:text-[14px] md:text-[20px] "
-                : "text-[10px] sm:text-[12px] md:text-[14px]"
+                ? "text-[12px] sm:text-[14px] md:text-[20px] text-[#FFC700] "
+                : "text-[10px] sm:text-[12px] md:text-[14px] "
             }
           >
-            {data.isAnnouncement ? "[공지]" : "공지사항"}
+            {cardCategory}
           </p>
           {data.isAnnouncement ? (
-            <TiPin className={"text-[14px] sm:text-[18px] md:text-[22px]"} />
+            <TiPin
+              className={
+                "text-[14px] sm:text-[18px] md:text-[22px] text-[#FFC700] pb-[3px]"
+              }
+            />
           ) : (
             ""
           )}
