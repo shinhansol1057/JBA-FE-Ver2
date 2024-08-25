@@ -7,12 +7,11 @@ import GetFileBox from "@/components/common/GetFileBox";
 
 const PostDetail = async ({ id }: { id: string }) => {
   const headersList = headers();
-  const url = headersList.get("referer");
+  const url = headersList.get("x-pathname") || "";
   const parts = url.split("/");
   const category = parts[4];
 
   const data = await getPostDetail(id, category);
-  console.log(data);
   return (
     <div className={"mt-[20px]"}>
       <PostTitle title={data.data.title} />
