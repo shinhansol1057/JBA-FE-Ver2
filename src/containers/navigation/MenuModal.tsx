@@ -28,7 +28,7 @@ const MenuModal = ({ setModalOpen }: Props) => {
   return (
     <div
       className={
-        "animate-[rightSlide_0.5s_ease-out] w-[282px] sm:w-[350px] md:w-[500px] pl-[70px] text-[12px] sm:text-[14px] md:text-[16px]"
+        "animate-[rightSlide_0.5s_ease-out] w-[282px] sm:w-[350px] md:w-[500px] pl-[70px] text-[12px] sm:text-[14px] md:text-[16px] "
       }
     >
       <div className={"flex flex-row justify-end text-[#9B9B9B]"}>

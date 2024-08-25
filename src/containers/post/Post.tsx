@@ -1,19 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "@/components/common/SearchBar";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { getPostList } from "@/services/PostApi";
+import { getPostListItemType } from "@/types/PostType";
+import LoadingText from "@/components/common/LoadingText";
+import { useObserver } from "@/hooks/useObserver";
+import PostListCard from "@/containers/post/PostListCard";
 
 const Post = () => {
   const [searchKey, setSearchKey] = useState<string>("");
-  const OFFSET = 5;
+  const [category, setCategory] = useState<string>("notice");
+  const bottom = useRef(null);
 
-  const getPostList = async ({ pageParam }: { pageParam: number }) => {
-    const res = await fetch(
-      process.env.NEXT_PUBLIC_API_KEY +
-        `/v1/api/competition?status=ALL&year=2024&page=${pageParam}&size=${OFFSET}`,
-    );
-    return res.json();
-  };
   const {
     data,
     error,
@@ -23,32 +22,75 @@ const Post = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["getPostList"],
+    queryKey: ["getPostList", category, searchKey],
     queryFn: getPostList,
     initialPageParam: 0,
-    getNextPageParam: (lastPage, pages) => {
-      if (lastPage.data.last) {
+    getNextPageParam: (lastPage, pages, lastPageParam) => {
+      if (lastPage?.data.totalPages === lastPageParam + 1) {
+        // lastPage 가 마지막 페이지였다면 api 호출을 하지 않는다.
         return undefined;
       } else {
-        return lastPage.data.pageable.pageNumber + 1;
+        return lastPageParam + 1; // 다음 페이지 리턴
       }
     },
   });
   console.log(data);
+  const onIntersect = ([entry]: any) => entry.isIntersecting && fetchNextPage();
+
+  useObserver({
+    target: bottom,
+    onIntersect,
+    threshold: 0.1,
+  });
+
+  // 스크롤이 없을때 자동으로 다음 페이지 호출하는 로직
+  useEffect(() => {
+    if (status === "success" && data?.pages[0].data.totalGalleries > 0) {
+      const contentHeight = document.documentElement.scrollHeight;
+      const windowHeight = window.innerHeight;
+
+      if (contentHeight <= windowHeight && hasNextPage) {
+        fetchNextPage();
+      }
+    }
+  }, [status, data, hasNextPage, fetchNextPage]);
+
+  useEffect(() => {
+    if (scrollY !== 0) window.scrollTo(0, scrollY);
+  }, []);
 
   return (
     <div>
       <SearchBar searchKey={searchKey} setSearchKey={setSearchKey} />
-      {status === "pending" && <p>불러오는 중</p>}
-      {status === "success" &&
-        data?.pages.map((group: any, i: number) => (
-          <React.Fragment key={i}>
-            {group.data?.content.map((item: any) => (
-              <p key={item.postId}>{item.title}</p>
-            ))}
-          </React.Fragment>
-        ))}
-      <button onClick={() => fetchNextPage()}>click</button>
+      <LoadingText
+        loading={status === "error"}
+        text={"에러발생! 관리자에게 문의해주세요."}
+      />
+      <LoadingText
+        loading={status === "pending"}
+        text={"잠시만 기다려주세요."}
+      />
+      {data?.pages[0].data.totalPosts === 0 && (
+        <p
+          className={
+            "text-red-500 mt-[20px] text-[12px] sm:text-[14px] md:text-[20px]"
+          }
+        >
+          대회가 없습니다.
+        </p>
+      )}
+      <div className={"mt-[30px] sm:mt-[40px] md:mt-[50px] "}>
+        {status === "success" &&
+          data?.pages.map((group: any, i: number) => (
+            <React.Fragment key={i}>
+              {group.data?.posts.map((item: getPostListItemType) => (
+                <PostListCard data={item} key={item.postId} />
+              ))}
+            </React.Fragment>
+          ))}
+      </div>
+      <div ref={bottom} />
+      <LoadingText loading={isFetchingNextPage} text={"잠시만 기다려주세요."} />
     </div>
   );
 };

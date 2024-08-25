@@ -9,7 +9,7 @@ export const getGalleryList = async ({
 }) => {
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_KEY +
-      `/v1/api/gallery?keyword=${queryKey[1]}&page=${pageParam.toString()}&size=2&official=false`,
+      `/v1/api/gallery?keyword=${queryKey[1]}&page=${pageParam.toString()}&size=10&official=false`,
   );
   return res.json().catch((err) => {
     console.log(err);

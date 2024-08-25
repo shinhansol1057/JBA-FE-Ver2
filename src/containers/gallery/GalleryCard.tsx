@@ -28,7 +28,7 @@ const GalleryCard = ({ data }: { data: getGalleryType }) => {
       <div
         className={
           "absolute bottom-0 left-0 w-full bg-[rgba(0,0,0,0.6)] " +
-          "text-white flex flex-col justify-between z-20 " +
+          "text-white flex flex-col justify-between z-10 " +
           "h-[40px] sm:h-[50px] md:h-[70px] " +
           "text-[7px] sm:text-[10px] md:text-[14px] " +
           "pl-[10px] sm:pl-[15px] md:pl-[20px] " +
