@@ -6,7 +6,7 @@ export const menuList: {
     title: "농구협회",
     item: [
       { menu: "공지사항", link: "/association/announcement" },
-      { menu: "협회인사말", link: "/association/greeting" },
+      { menu: "회장인사말", link: "/association/greeting" },
       { menu: "협회역사", link: "/association/history" },
     ],
   },

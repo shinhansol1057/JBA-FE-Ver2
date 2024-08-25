@@ -1,5 +1,5 @@
 const Page = () => {
-  return <div>협회역사</div>;
+  return <p className={"text-red-500 mt-[30px]"}>준비중입니다.</p>;
 };
 
 export default Page;

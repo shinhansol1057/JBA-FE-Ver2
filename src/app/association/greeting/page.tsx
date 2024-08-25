@@ -1,5 +1,7 @@
+import Greeting from "@/containers/greeting/Greeting";
+
 const Page = () => {
-  return <div>협회인사말</div>;
+  return <Greeting />;
 };
 
 export default Page;
