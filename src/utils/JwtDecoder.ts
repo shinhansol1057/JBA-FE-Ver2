@@ -1,5 +1,6 @@
 import base64 from "base-64";
-export function JwtDecoder(jwtToken: string | null | undefined) {
+import { useUserStore } from "@/states/UserStore";
+export function JwtDecoder(jwtToken: string | null) {
   if (window !== undefined && jwtToken) {
     //jwt토큰 디코딩
     let payload = jwtToken.split(".")[1]; // Base64 URL part of JWT
@@ -9,3 +10,11 @@ export function JwtDecoder(jwtToken: string | null | undefined) {
     return JSON.parse(utf8Payload);
   }
 }
+
+export const FindAdminRole = () => {
+  const { AccessToken } = useUserStore();
+  return (
+    JwtDecoder(AccessToken)?.role === "ROLE_MASTER" ||
+    JwtDecoder(AccessToken)?.role === "ROLE_ADMIN"
+  );
+};

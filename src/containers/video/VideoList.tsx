@@ -5,10 +5,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import LoadingText from "@/components/common/LoadingText";
 import SearchBar from "@/components/common/SearchBar";
-import CompetitionListCard from "@/containers/jejuCompetition/list/CompetitionListCard";
 import VideoListCard from "@/containers/video/VideoListCard";
+import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 
 const VideoList = () => {
+  useAxiosInterceptor();
   const bottom = useRef(null);
   const [keyword, setKeyword] = useState<string>("");
   const isOfficial: string = "false";
@@ -26,7 +27,6 @@ const VideoList = () => {
         }
       },
     });
-  console.log(data);
   const onIntersect = ([entry]: any) => entry.isIntersecting && fetchNextPage();
 
   useObserver({
@@ -80,6 +80,7 @@ const VideoList = () => {
             </React.Fragment>
           ))}
       </div>
+
       <div ref={bottom} />
       <LoadingText loading={isFetchingNextPage} text={"잠시만 기다려주세요."} />
     </div>

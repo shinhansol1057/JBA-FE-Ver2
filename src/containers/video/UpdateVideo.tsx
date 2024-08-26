@@ -1,19 +1,39 @@
 "use client";
-import React, { useState } from "react";
-import PostInput from "@/components/common/PostInput";
+import React, { useEffect, useState } from "react";
 import PostLabel from "@/components/common/PostLabel";
-import AddBtn from "@/components/common/AddBtn";
+import PostInput from "@/components/common/PostInput";
 import CancelBtn from "@/components/common/CancelBtn";
-import { addVideo } from "@/services/VideoApi";
+import AddBtn from "@/components/common/AddBtn";
+import { addVideo, getVideo, updateVideo } from "@/services/VideoApi";
 import { useRouter } from "next/navigation";
 import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
+import { useQuery } from "@tanstack/react-query";
 
-const AddVideo = () => {
+const UpdateVideo = ({ id }: { id: string }) => {
   const [title, setTitle] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const router = useRouter();
   useAxiosInterceptor();
+
+  const updateHandler = () => {
+    const data = { videoId: id, title: title, url: url, content: content };
+    updateVideo(data);
+  };
+
+  const { data: lastData } = useQuery({
+    queryKey: ["getVideo", id],
+    queryFn: () => getVideo(id),
+    select: (result) => result.data.data,
+  });
+
+  useEffect(() => {
+    if (lastData) {
+      setTitle(lastData.title);
+      setUrl(lastData.url);
+      setContent(lastData.content);
+    }
+  }, [lastData]);
 
   return (
     <div className={"mt-[20px]"}>
@@ -46,10 +66,10 @@ const AddVideo = () => {
       </div>
       <div className={"grid grid-cols-2 gap-[10px]"}>
         <CancelBtn handler={() => router.back()} />
-        <AddBtn handler={() => addVideo(title, url, content, router)} />
+        <AddBtn handler={() => updateHandler()} />
       </div>
     </div>
   );
 };
 
-export default AddVideo;
+export default UpdateVideo;

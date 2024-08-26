@@ -1,7 +1,8 @@
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
+import { NormalApi } from "@/services/axios/NormalApi";
 
-export const addHandler = (
+export const addVideo = (
   title: string,
   url: string,
   content: string,
@@ -27,7 +28,6 @@ export const addHandler = (
       }
     })
     .catch((err) => {
-      console.log(err);
       const data = err.response.data;
       if (data.detailMessage === "공백일 수 없습니다")
         confirmAlert("error", data.request + " 을 입력해주세요");
@@ -52,4 +52,60 @@ export const getVideoList = async ({
     `/v1/api/video/get/videoList?size=10&page=${pageParam.toString()}&keyword=${queryKey[1]}&isOfficial=${queryKey[2]}`;
   const res = await fetch(url);
   return res.json();
+};
+
+export const getVideo = async (id: string) => {
+  return NormalApi.get(`v1/api/video/get?id=${id}`);
+};
+
+export const deleteVideo = async (id: string) => {
+  Api.delete(`/v1/api/video/delete?id=${id}`).then((res) => {
+    if (res.status === 200)
+      confirmAlert("success", "영상 삭제가 완료되었습니다")
+        .then((res) => {
+          if (res.isConfirmed) window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+          const data = err.response.data;
+          if (data.detailMessage === "이미 삭제된 게시물입니다.")
+            confirmAlert("error", "이미 삭제된 영상입니다.").then((res) => {
+              if (res.isConfirmed) window.location.reload();
+            });
+          else if (data.detailMessage === "게시물을 찾을 수 없습니다,")
+            confirmAlert("error", "게시물을 찾을 수 없습니다.").then((res) => {
+              if (res.isConfirmed) window.location.reload();
+            });
+        });
+  });
+};
+
+export const updateVideo = async (data: {
+  videoId: string;
+  title: string;
+  url: string;
+  content: string;
+}) => {
+  Api.put(`/v1/api/video/update`, data)
+    .then((res) => {
+      if (res.status === 200)
+        confirmAlert("success", "영상 수정이 완료되었습니다").then((res) => {
+          if (res.isConfirmed) window.location.href = "/media/video";
+        });
+    })
+    .catch((err) => {
+      const data = err.response.data;
+      if (data.detailMessage === "공백일 수 없습니다")
+        confirmAlert("error", data.request + " 을 입력해주세요");
+      else if (data.code === 409)
+        confirmAlert(
+          "error",
+          "제목이 중복되었습니다",
+          "다른 제목을 입력해주세요.",
+        );
+      else if (data.detailMessage === "게시물을 찾을 수 없습니다,")
+        confirmAlert("error", "게시물을 찾을 수 없습니다").then((res) => {
+          if (res.isConfirmed) window.location.href = "/media/video";
+        });
+    });
 };
