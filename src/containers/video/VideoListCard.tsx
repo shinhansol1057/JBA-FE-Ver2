@@ -4,6 +4,7 @@ import { getVideoId } from "@/constants/Video";
 import { getVideoType } from "@/types/VideoType";
 import PostLabel from "@/components/common/PostLabel";
 import { useRouter } from "next/navigation";
+import { BsFillPlayBtnFill, BsPlayBtnFill } from "react-icons/bs";
 
 type Props = {
   data: getVideoType;
@@ -27,10 +28,15 @@ const VideoListCard = ({ data }: Props) => {
         />
         <div
           className={
-            "w-full h-full hover:bg-[rgba(0,0,0,0.3)] absolute top-0 left-0 rounded-[8px] cursor-pointer z-10"
+            "w-full h-full hover:bg-[rgba(0,0,0,0.3)] absolute top-0 left-0 rounded-[8px] cursor-pointer z-20"
           }
           onClick={() => window.open(data.url, "_blank")}
         ></div>
+        <BsFillPlayBtnFill
+          className={
+            "absolute top-[43%] left-[43%] text-[30px] sm:text-[40px] md:text-[70px] z-10 text-white "
+          }
+        />
       </div>
     </div>
   );
