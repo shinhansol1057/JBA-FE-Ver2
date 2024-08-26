@@ -29,7 +29,7 @@ const VideoListCard = ({ data }: Props) => {
           className={
             "w-full h-full hover:bg-[rgba(0,0,0,0.3)] absolute top-0 left-0 rounded-[8px] cursor-pointer z-10"
           }
-          onClick={() => router.push(`/media/video/${data.videoId}`)}
+          onClick={() => window.open(data.url, "_blank")}
         ></div>
       </div>
     </div>

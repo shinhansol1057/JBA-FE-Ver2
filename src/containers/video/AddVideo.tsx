@@ -30,7 +30,7 @@ const AddVideo = () => {
         <PostLabel content={"url"} />
         <PostInput
           type={"text"}
-          placeHolder={"url을 입력해주세요."}
+          placeHolder={"youtube url을 입력해주세요."}
           data={url}
           setData={setUrl}
         />
