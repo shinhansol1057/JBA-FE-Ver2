@@ -12,7 +12,7 @@ const PostInput = ({ type, placeHolder, data, setData }: Props) => {
     <div
       className={
         "flex items-center bg-white rounded-[8px] shadow-xl " +
-        "w-[280px] sm:w-[400px] md:2-[800px] " +
+        "w-[280px] sm:w-[400px] md:w-[800px] " +
         "h-[30px] sm:h-[40px] md:h-[50px] "
       }
     >

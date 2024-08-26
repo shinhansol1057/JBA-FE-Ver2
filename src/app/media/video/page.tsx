@@ -1,5 +1,7 @@
+import VideoList from "@/containers/video/VideoList";
+
 const Page = () => {
-  return <div>대회영상</div>;
+  return <VideoList />;
 };
 
 export default Page;

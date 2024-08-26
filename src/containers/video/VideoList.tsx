@@ -1,26 +1,23 @@
 "use client";
-
-import React, { useEffect, useRef } from "react";
-import CompetitionStatus from "@/containers/jejuCompetition/list/CompetitionStatus";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { getCompetitionList } from "@/services/CompetitionApi";
-import CompetitionListCard from "@/containers/jejuCompetition/list/CompetitionListCard";
+import { getVideoList } from "@/services/VideoApi";
 import { useObserver } from "@/hooks/useObserver";
+import React, { useEffect, useRef, useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import LoadingText from "@/components/common/LoadingText";
-import { useCompetitionStore } from "@/states/CompetitionStore";
-import { getVideoType } from "@/types/VideoType";
+import SearchBar from "@/components/common/SearchBar";
+import CompetitionListCard from "@/containers/jejuCompetition/list/CompetitionListCard";
 import VideoListCard from "@/containers/video/VideoListCard";
 
-const CompetitionList = () => {
+const VideoList = () => {
   const bottom = useRef(null);
-  const { competitionStatusMenu, setCompetitionStatusMenu } =
-    useCompetitionStore();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+  const [keyword, setKeyword] = useState<string>("");
+  const isOfficial: string = "false";
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ["getCompetitionList", competitionStatusMenu],
-      queryFn: getCompetitionList,
+      queryKey: ["getVideoList", keyword, isOfficial],
+      queryFn: getVideoList,
       initialPageParam: 0,
-      getNextPageParam: (lastPage, pages) => {
+      getNextPageParam: (lastPage) => {
         if (lastPage?.data?.last) {
           // lastPage 가 마지막 페이지였다면 api 호출을 하지 않는다.
           return undefined;
@@ -29,7 +26,7 @@ const CompetitionList = () => {
         }
       },
     });
-
+  console.log(data);
   const onIntersect = ([entry]: any) => entry.isIntersecting && fetchNextPage();
 
   useObserver({
@@ -40,7 +37,7 @@ const CompetitionList = () => {
 
   // 스크롤이 없을때 자동으로 다음 페이지 호출하는 로직
   useEffect(() => {
-    if (status === "success" && data?.pages[0].data.totalElements > 0) {
+    if (status === "success" && data?.pages[0].data.totalGalleries > 0) {
       const contentHeight = document.documentElement.scrollHeight;
       const windowHeight = window.innerHeight;
 
@@ -53,10 +50,9 @@ const CompetitionList = () => {
   useEffect(() => {
     if (scrollY !== 0) window.scrollTo(0, scrollY);
   }, []);
-
   return (
     <div className={"flex flex-col items-center"}>
-      <CompetitionStatus />
+      <SearchBar searchKey={keyword} setSearchKey={setKeyword} />
       <LoadingText
         loading={status === "pending"}
         text={"잠시만 기다려주세요."}
@@ -71,21 +67,23 @@ const CompetitionList = () => {
             "text-red-500 mt-[20px] text-[12px] sm:text-[14px] md:text-[20px]"
           }
         >
-          대회가 없습니다.
+          영상이 없습니다.
         </p>
       )}
-      {status === "success" &&
-        data?.pages.map((group: any, i: number) => (
-          <React.Fragment key={i}>
-            {group.data?.content.map((item: getVideoType, i: number) => (
-              <CompetitionListCard data={item} key={i} />
-            ))}
-          </React.Fragment>
-        ))}
+      <div className={"flex flex-col mt-[20px] md:mt-[40px]"}>
+        {status === "success" &&
+          data?.pages.map((group: any, i: number) => (
+            <React.Fragment key={i}>
+              {group.data?.content.map((item: any) => (
+                <VideoListCard data={item} key={item.videoId} />
+              ))}
+            </React.Fragment>
+          ))}
+      </div>
       <div ref={bottom} />
       <LoadingText loading={isFetchingNextPage} text={"잠시만 기다려주세요."} />
     </div>
   );
 };
 
-export default CompetitionList;
+export default VideoList;
