@@ -13,6 +13,8 @@ const BannerTop = () => {
         alt={"bannerImage"}
         width={1000}
         height={1000}
+        loading={"eager"}
+        property={"true"}
         className={
           "absolute top-0 left-0 w-full h-60 sm:h-96 md:h-[800px] -z-10 object-cover"
         }

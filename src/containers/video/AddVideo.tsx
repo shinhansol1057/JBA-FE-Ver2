@@ -7,6 +7,7 @@ import CancelBtn from "@/components/common/CancelBtn";
 import { addVideo } from "@/services/VideoApi";
 import { useRouter } from "next/navigation";
 import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
+import SubTitle from "@/components/layout/SubTitle";
 
 const AddVideo = () => {
   const [title, setTitle] = useState<string>("");
@@ -17,7 +18,8 @@ const AddVideo = () => {
 
   return (
     <div className={"mt-[20px]"}>
-      <div className={"flex flex-col mb-[20px]"}>
+      <SubTitle title={"대회영상 등록"} />
+      <div className={"flex flex-col my-[20px]"}>
         <PostLabel content={"title"} />
         <PostInput
           type={"text"}

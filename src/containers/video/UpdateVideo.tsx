@@ -8,6 +8,7 @@ import { addVideo, getVideo, updateVideo } from "@/services/VideoApi";
 import { useRouter } from "next/navigation";
 import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import { useQuery } from "@tanstack/react-query";
+import SubTitle from "@/components/layout/SubTitle";
 
 const UpdateVideo = ({ id }: { id: string }) => {
   const [title, setTitle] = useState<string>("");
@@ -37,7 +38,8 @@ const UpdateVideo = ({ id }: { id: string }) => {
 
   return (
     <div className={"mt-[20px]"}>
-      <div className={"flex flex-col mb-[20px]"}>
+      <SubTitle title={"대회영상 수정"} />
+      <div className={"flex flex-col my-[20px]"}>
         <PostLabel content={"title"} />
         <PostInput
           type={"text"}
