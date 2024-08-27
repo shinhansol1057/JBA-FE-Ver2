@@ -1,5 +1,7 @@
+import Faq from "@/containers/faq/Faq";
+
 const Page = () => {
-  return <div>FAQ</div>;
+  return <Faq />;
 };
 
 export default Page;
