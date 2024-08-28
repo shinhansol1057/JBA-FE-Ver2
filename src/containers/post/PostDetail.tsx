@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { getPostDetail } from "@/services/PostApi";
 import PostTitle from "@/components/common/PostTitle";
 import PostDetailInfo from "@/containers/post/PostDetailInfo";
-import { getFileType } from "@/types/CommonType";
+import { getFileWithIdType } from "@/types/CommonType";
 import GetFileBox from "@/components/common/GetFileBox";
 
 const PostDetail = async ({ id }: { id: string }) => {
@@ -17,7 +17,7 @@ const PostDetail = async ({ id }: { id: string }) => {
       <PostTitle title={data.data.title} />
       <PostDetailInfo data={data.data} />
       <div className={"mt-[20px] "}>
-        {data.data.files.map((file: getFileType) => {
+        {data.data.files.map((file: getFileWithIdType) => {
           return (
             <GetFileBox
               fileName={file.fileName}

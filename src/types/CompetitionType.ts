@@ -1,3 +1,5 @@
+import { getFileType } from "@/types/CommonType";
+
 export type competitionDetail = {
   competitionId: number;
   title: string;
@@ -44,4 +46,28 @@ export type competitionResultRow = {
   fileName: string;
   filePath: string | null;
   state5x5: boolean;
+};
+
+export type divisionType = {
+  value: string;
+  label: string;
+};
+
+export type placeType = {
+  competitionPlaceId?: number;
+  address: string;
+  placeName: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type AddCompetitionRequestType = {
+  title: string;
+  divisions: string[];
+  startDate: string | string[];
+  endDate: string | string[];
+  places: placeType[];
+  relatedURL: string | null;
+  ckData: any;
+  ckImgRequests: getFileType[];
 };

@@ -14,7 +14,6 @@ const useAxiosInterceptor = (): void => {
   const { AccessToken, setAccessToken } = useUserStore();
   const requestHandler = async (config: InternalAxiosRequestConfig) => {
     // 토큰이 있으면 요청 헤더에 추가한다.
-    console.log("interceptor");
     if (AccessToken) {
       config.headers["Authorization"] = AccessToken;
       const expireTime: number = Math.floor(

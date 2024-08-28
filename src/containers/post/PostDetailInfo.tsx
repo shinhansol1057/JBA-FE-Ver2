@@ -1,7 +1,7 @@
 import { getPostDetailType } from "@/types/PostType";
 import PostContent from "@/components/common/PostContent";
 import GetFileBox from "@/components/common/GetFileBox";
-import { getFileType } from "@/types/CommonType";
+import { getFileWithIdType } from "@/types/CommonType";
 
 type Props = {
   data: getPostDetailType;

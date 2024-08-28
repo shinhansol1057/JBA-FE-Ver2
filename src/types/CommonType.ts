@@ -33,8 +33,13 @@ export type paginationType = {
   empty: boolean;
 };
 
-export type getFileType = {
+export type getFileWithIdType = {
   fileId: number;
+  fileUrl: string;
+  fileName: string;
+};
+
+export type getFileType = {
   fileUrl: string;
   fileName: string;
 };

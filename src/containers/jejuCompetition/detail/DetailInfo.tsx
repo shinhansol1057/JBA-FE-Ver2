@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { competitionDetail, competitionPlace } from "@/types/CompetitionType";
 import { competitionStatusCalculator } from "@/utils/CompetitionStatusCalculator";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
@@ -7,16 +7,26 @@ import moment from "moment/moment";
 import DOMPurify from "dompurify";
 import GetFileBox from "@/components/common/GetFileBox";
 import { useUserStore } from "@/states/UserStore";
+import { FindAdminRole } from "@/utils/JwtDecoder";
+import { IoMenu } from "react-icons/io5";
+import OptionModal from "@/components/common/OptionModal";
+import ReactModal from "react-modal";
+import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
+import { deleteVideo } from "@/services/VideoApi";
+import { useRouter } from "next/navigation";
+import { deleteCompetitionInfo } from "@/services/CompetitionApi";
 
 type Props = {
   data: competitionDetail;
 };
 const DetailInfo = ({ data }: Props) => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const status = competitionStatusCalculator(data.startDate, data.endDate);
   const startDate: string = moment(data.startDate).format("YYYY-MM-DD");
   const endDate: string = moment(data.endDate).format("YYYY-MM-DD");
   const cleanHtml = DOMPurify.sanitize(data.content);
-  const { AccessToken } = useUserStore();
+  const router = useRouter();
+
   return (
     <div className={"w-[280px] sm:w-[400px] md:w-[800px]"}>
       <div
@@ -41,11 +51,16 @@ const DetailInfo = ({ data }: Props) => {
             }
             bold={true}
           />
-          <HiOutlineDotsHorizontal
-            color={"#4B4B4B"}
-            size={25}
-            className={"mr-[3px] " + (!AccessToken ? "hidden" : "")}
-          />
+          {FindAdminRole() ? (
+            <IoMenu
+              className={
+                "text-[20px] sm:text-[25px] md:text-[35px] cursor-pointer"
+              }
+              onClick={() => setModalOpen(true)}
+            />
+          ) : (
+            ""
+          )}
         </div>
         <div
           className={
@@ -54,12 +69,7 @@ const DetailInfo = ({ data }: Props) => {
           }
         >
           <CompetitionLabel content={"종별"} color={""} bold={true} />
-          <div
-            className={
-              "grid grid-cols-6 gap-2 " +
-              "text-[10px] sm:text-[12px] md:text-[16px] py-[10px]"
-            }
-          >
+          <div className={"grid grid-cols-6 gap-2 "}>
             {data.divisions.map((item: string, i: number) => (
               <p key={i}>{item}</p>
             ))}
@@ -155,8 +165,54 @@ const DetailInfo = ({ data }: Props) => {
           );
         })}
       </div>
+      <ReactModal
+        isOpen={modalOpen}
+        onRequestClose={() => setModalOpen(false)}
+        ariaHideApp={false}
+        style={customModalStyles}
+        shouldCloseOnOverlayClick={true}
+      >
+        <OptionModal
+          setModalOpen={setModalOpen}
+          deleteHandler={() => {
+            confirmAndCancelAlertWithLoading(
+              "question",
+              "대회를 삭제하시겠습니까?",
+              "",
+              async () =>
+                await deleteCompetitionInfo(data.competitionId.toString()),
+            );
+          }}
+          updateHandler={() => {
+            router.push(`/jeju-competition/info/update/${data.competitionId}`);
+          }}
+        />
+      </ReactModal>
     </div>
   );
 };
 
 export default DetailInfo;
+const customModalStyles: ReactModal.Styles = {
+  overlay: {
+    width: "100%",
+    height: "100vh",
+    zIndex: "100",
+    position: "fixed",
+    top: 0,
+    left: "0",
+    backgroundColor: "rgba(0,0,0,0.8)",
+  },
+  content: {
+    width: "100%",
+    height: "100vh",
+    zIndex: "150",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    background: "none",
+    justifyContent: "center",
+    overflow: "auto",
+    padding: "0",
+  },
+};

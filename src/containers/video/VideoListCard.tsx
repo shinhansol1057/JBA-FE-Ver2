@@ -9,7 +9,7 @@ import ReactModal from "react-modal";
 import OptionModal from "@/components/common/OptionModal";
 import { useRouter } from "next/navigation";
 import { deleteVideo } from "@/services/VideoApi";
-import { FindAdminRole, JwtDecoder } from "@/utils/JwtDecoder";
+import { FindAdminRole } from "@/utils/JwtDecoder";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 
 type Props = {
