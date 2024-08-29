@@ -1,4 +1,5 @@
 import React from "react";
+import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 
 type Props = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -6,6 +7,7 @@ type Props = {
   updateHandler: any;
 };
 const OptionModal = ({ setModalOpen, deleteHandler, updateHandler }: Props) => {
+  useAxiosInterceptor();
   return (
     <div className={"w-full h-full flex flex-col justify-end items-center"}>
       <div

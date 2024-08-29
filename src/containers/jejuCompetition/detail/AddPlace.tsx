@@ -32,7 +32,7 @@ const AddPlace = ({ places, setPlaces }: Props) => {
         장소 찾기
       </button>
       <ul>
-        {places.map((place: placeType, i: number) => {
+        {places?.map((place: placeType, i: number) => {
           return (
             <li
               key={i}

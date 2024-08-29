@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import CompetitionStatus from "@/containers/jejuCompetition/list/CompetitionStatus";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getCompetitionList } from "@/services/CompetitionApi";
+import { FetchGetCompetitionList } from "@/services/CompetitionApi";
 import CompetitionListCard from "@/containers/jejuCompetition/list/CompetitionListCard";
 import { useObserver } from "@/hooks/useObserver";
 import LoadingText from "@/components/common/LoadingText";
@@ -18,7 +18,7 @@ const CompetitionList = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
       queryKey: ["getCompetitionList", competitionStatusMenu],
-      queryFn: getCompetitionList,
+      queryFn: FetchGetCompetitionList,
       initialPageParam: 0,
       getNextPageParam: (lastPage, pages) => {
         if (lastPage?.data?.last) {

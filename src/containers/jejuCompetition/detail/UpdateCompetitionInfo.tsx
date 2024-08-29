@@ -1,48 +1,58 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import { getFileType } from "@/types/CommonType";
-import PostInput from "@/components/common/PostInput";
-import SubTitle from "@/components/layout/SubTitle";
-import { DatePicker, Select, Space } from "antd";
-import {
-  AddCompetitionRequestType,
-  divisionType,
-  placeType,
-} from "@/types/CompetitionType";
-import {
-  FetchAddCompetitionInfo,
+import { useQuery } from "@tanstack/react-query";
+import FetchUpdateCompetitionInfo, {
+  FetchGetCompetitionDetail,
   getDivisionList,
 } from "@/services/CompetitionApi";
-import { useQuery } from "@tanstack/react-query";
-import AddPlace from "@/containers/jejuCompetition/detail/AddPlace";
-import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
-import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import CancelBtn from "@/components/common/CancelBtn";
-import { useRouter } from "next/navigation";
-import AddBtn from "@/components/common/AddBtn";
+import {
+  competitionDetailAttachedFileType,
+  divisionType,
+  placeType,
+  UpdateCompetitionRequestType,
+} from "@/types/CompetitionType";
+import { getFileType } from "@/types/CommonType";
+import SubTitle from "@/components/layout/SubTitle";
+import PostInput from "@/components/common/PostInput";
+import { DatePicker, Select, Space } from "antd";
 import { koreanLocale } from "@/constants/AntdConfig";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
+import AddPlace from "@/containers/jejuCompetition/detail/AddPlace";
+import CancelBtn from "@/components/common/CancelBtn";
+import AddBtn from "@/components/common/AddBtn";
+import dynamic from "next/dynamic";
+import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
+import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
+import UpdateAttachedFileBox from "@/containers/jejuCompetition/detail/UpdateAttachedFileBox";
+import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 
 const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
 });
-
-const AddCompetitionInfo = () => {
+const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   useAxiosInterceptor();
   const [title, setTitle] = useState<string>("");
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const [places, setPlaces] = useState<placeType[]>([]);
-  const [relatedURL, setRelatedUrl] = useState<string | null>(null);
+  const [relatedURL, setRelatedUrl] = useState<string | null>("");
   const [files, setFiles] = useState<File[]>([]);
   const [ckData, setCkData] = useState<string>("");
+  const [attachedFileList, setAttachedFileList] = useState<
+    competitionDetailAttachedFileType[]
+  >([]);
   const [newCkImgUrls, setNewCkImgUrls] = useState<getFileType[]>([]);
   const [divisionList, setDivisionList] = useState<divisionType[]>([]);
 
   const router = useRouter();
+
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["getCompetitionDetail", id],
+    queryFn: () => FetchGetCompetitionDetail(id),
+    select: (result) => result?.data.data,
+    gcTime: 1000 * 60 * 10,
+  });
 
   const { data: divisionData } = useQuery({
     queryKey: ["getDivisionList"],
@@ -57,17 +67,26 @@ const AddCompetitionInfo = () => {
   });
 
   const formSubmitHandler = () => {
-    const requestData: AddCompetitionRequestType = {
+    const requestData: UpdateCompetitionRequestType = {
       title: title,
       divisions: selectedDivisions,
       startDate: startDate,
       endDate: endDate,
-      places: places,
+      updatePlaces: places,
       relatedURL: relatedURL,
       ckData: ckData,
       ckImgRequests: [],
+      uploadedAttachedFiles: attachedFileList.map((item) => item.filePath),
+      deletedCkImgUrls: [],
     };
 
+    // 기존 ck이미지에서 삭제된 이미지 추출 -> 백엔드에서 삭제된 이미지는 DB데이터 삭제 및 버킷 파일 삭제 요청
+    for (let i: number = 0; i < data.ckImgUrls.length; i++) {
+      if (!ckData.includes(data.ckImgUrls[i])) {
+        requestData.deletedCkImgUrls.push(data.ckImgUrls[i]);
+      }
+    }
+    // 새로운 ck 이미지
     for (let i: number = 0; i < newCkImgUrls.length; i++) {
       if (ckData.includes(newCkImgUrls[i].fileUrl)) {
         requestData.ckImgRequests.push(newCkImgUrls[i]);
@@ -75,13 +94,24 @@ const AddCompetitionInfo = () => {
     }
     confirmAndCancelAlertWithLoading(
       "question",
-      "대회를 등록하시겠습니까?",
+      "대회를 수정하시겠습니까?",
       "",
       async () => {
-        await FetchAddCompetitionInfo(requestData, files);
+        if (id) await FetchUpdateCompetitionInfo(id, requestData, files);
       },
     );
   };
+
+  useEffect(() => {
+    setTitle(data?.title);
+    setSelectedDivisions(data?.divisions);
+    setStartDate(data?.startDate);
+    setEndDate(data?.endDate);
+    setPlaces(data?.places);
+    setRelatedUrl(data?.relatedUrl);
+    setCkData(data?.content);
+    setAttachedFileList(data?.competitionDetailAttachedFiles);
+  }, [data]);
 
   useEffect(() => {
     const list: divisionType[] = divisionData?.map((division: string) => {
@@ -89,6 +119,7 @@ const AddCompetitionInfo = () => {
     });
     setDivisionList(list);
   }, [divisionData]);
+
   return (
     <div
       className={"flex flex-col mt-[20px] w-[280px] sm:w-[400px] md:w-[800px]"}
@@ -98,7 +129,7 @@ const AddCompetitionInfo = () => {
         <PostInput
           type={"text"}
           placeHolder={"제목을 입력해주세요"}
-          data={title}
+          data={title || ""}
           setData={setTitle}
         />
       </div>
@@ -108,8 +139,9 @@ const AddCompetitionInfo = () => {
           allowClear
           style={{ width: "100%" }}
           placeholder="종별을 입력해주세요"
-          onChange={(e: string[]) => setSelectedDivisions(e)}
+          onChange={(values: string[]) => setSelectedDivisions(values)}
           options={divisionList}
+          value={selectedDivisions}
         />
         <div className={"flex"}>
           <DatePicker
@@ -119,7 +151,9 @@ const AddCompetitionInfo = () => {
               typeof dateString === "string" && setStartDate(dateString)
             }
             locale={koreanLocale}
-            value={dayjs(startDate)}
+            value={
+              dayjs(startDate) || dayjs(data?.startDate.toString().slice(0, 10))
+            }
           />
           <DatePicker
             placeholder={"종료일을 입력해주세요"}
@@ -128,7 +162,9 @@ const AddCompetitionInfo = () => {
               typeof dateString === "string" && setEndDate(dateString)
             }
             locale={koreanLocale}
-            value={dayjs(endDate)}
+            value={
+              dayjs(endDate) || dayjs(data?.endDate.toString().slice(0, 10))
+            }
           />
         </div>
       </Space>
@@ -136,12 +172,17 @@ const AddCompetitionInfo = () => {
       <PostInput
         type={"text"}
         placeHolder={"관련 URL을 입력해주세요."}
-        data={relatedURL ? relatedURL : ""}
+        data={relatedURL || ""}
         setData={setRelatedUrl}
       />
-      <AddAttachedFileBox files={files} setFiles={setFiles} />
+      <UpdateAttachedFileBox
+        files={files}
+        setFiles={setFiles}
+        attachedFileList={attachedFileList}
+        setAttachedFileList={setAttachedFileList}
+      />
       <DynamicCkEditor
-        ckData={ckData}
+        ckData={ckData || ""}
         setCkData={setCkData}
         setNewCkImgUrls={setNewCkImgUrls}
       />
@@ -153,4 +194,4 @@ const AddCompetitionInfo = () => {
   );
 };
 
-export default AddCompetitionInfo;
+export default UpdateCompetitionInfo;

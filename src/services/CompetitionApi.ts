@@ -1,9 +1,12 @@
 import { NormalApi } from "@/services/axios/NormalApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { Api } from "@/services/axios/Api";
-import { AddCompetitionRequestType } from "@/types/CompetitionType";
+import {
+  AddCompetitionRequestType,
+  UpdateCompetitionRequestType,
+} from "@/types/CompetitionType";
 
-export const getCompetitionList = async ({
+export const FetchGetCompetitionList = async ({
   pageParam,
   queryKey,
 }: {
@@ -23,7 +26,7 @@ export const getCompetitionList = async ({
   });
 };
 
-export const getCompetitionDetail = (id: string) => {
+export const FetchGetCompetitionDetail = (id: string) => {
   return NormalApi.get(`/v1/api/competition/detail/${id}`).catch((err) => {
     if (
       err.response.data.detailMessage ===
@@ -54,7 +57,7 @@ export const getDivisionList = async () => {
   return NormalApi.get("/v1/api/competition/find-division-list");
 };
 
-export const addCompetitionInfo = async (
+export const FetchAddCompetitionInfo = async (
   requestData: AddCompetitionRequestType,
   files: File[],
 ) => {
@@ -74,7 +77,7 @@ export const addCompetitionInfo = async (
   })
     .then((res) => {
       confirmAlert("success", "대회등록이 완료되었습니다.").then((res) => {
-        if (res.isConfirmed) window.location.href = "/competition";
+        if (res.isConfirmed) window.location.href = "/jeju-competition/info";
       });
     })
     .catch((err) => {
@@ -93,6 +96,81 @@ export const addCompetitionInfo = async (
     });
 };
 
-export const deleteCompetitionInfo = async (id: string) => {
-  console.log("delete competition");
+export const FetchDeleteCompetitionInfo = async (id: string) => {
+  return Api.delete(`/v1/api/competition/delete/${id}`)
+    .then((res) => {
+      if (res.data.code === 200) {
+        confirmAlert("success", "대회가 삭제되었습니다.").then((res) => {
+          window.location.href = `/jeju-competition/info`;
+        });
+      }
+    })
+    .catch((err) => {
+      confirmAlert(
+        "error",
+        "대회 삭제 중 오류가 발생했습니다.",
+        "관리자에게 문의해주세요.",
+      );
+    });
 };
+
+export default function FetchUpdateCompetitionInfo(
+  id: string,
+  requestData: UpdateCompetitionRequestType,
+  files: File[],
+) {
+  const blob: Blob = new Blob([JSON.stringify(requestData)], {
+    type: "application/json",
+  });
+  const formData: FormData = new FormData();
+  formData.append("requestData", blob);
+  for (let i: number = 0; i < files.length; i++) {
+    formData.append("requestFiles", files[i]);
+  }
+
+  return Api.post(
+    `/v1/api/competition/update/competition-info/${id}`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  )
+    .then((res) => {
+      if (res.status === 200) {
+        confirmAlert("success", "대회수정이 완료되었습니다.").then((res) => {
+          if (res.isConfirmed)
+            window.location.href = `/jeju-competition/info/${id}`;
+        });
+      }
+    })
+    .catch((err) => {
+      const message = err.response.data.detailMessage;
+      if (message === "제목을 입력해주세요.")
+        confirmAlert("error", "제목을 입력해주세요.");
+      else if (message === "종별을 선택해주세요.")
+        confirmAlert("error", "종별을 1개 이상 선택해주세요");
+      else if (
+        message === "시작일을 입력해주세요." ||
+        message === "종료일을 입력해주세요."
+      )
+        confirmAlert("error", "시작일 또는 종료일을 선택해주세요.");
+      else if (message === "장소를 등록해주세요.")
+        confirmAlert("error", "장소를 등록해주세요.");
+      else if (
+        message === "해당 종별은 결과가 이미 입력되어 있어 삭제가 불가능합니다."
+      )
+        confirmAlert(
+          "error",
+          message + "은(는) 이미 결과가 있어 삭제가 불가능합니다.",
+          "대회 결과를 먼저 수정해주세요.",
+        );
+      else if (message === "Duplication CompetitionName")
+        confirmAlert(
+          "error",
+          "이미 등록된 대회명입니다.",
+          "다른 대회명을 입력해주세요.",
+        );
+    });
+}

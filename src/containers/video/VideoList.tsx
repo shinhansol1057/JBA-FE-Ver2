@@ -6,10 +6,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import LoadingText from "@/components/common/LoadingText";
 import SearchBar from "@/components/common/SearchBar";
 import VideoListCard from "@/containers/video/VideoListCard";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 
 const VideoList = () => {
-  useAxiosInterceptor();
   const bottom = useRef(null);
   const [keyword, setKeyword] = useState<string>("");
   const isOfficial: string = "false";

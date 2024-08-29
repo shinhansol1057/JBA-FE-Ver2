@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import { competitionDetail, competitionPlace } from "@/types/CompetitionType";
 import { competitionStatusCalculator } from "@/utils/CompetitionStatusCalculator";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import moment from "moment/moment";
 import DOMPurify from "dompurify";
 import GetFileBox from "@/components/common/GetFileBox";
-import { useUserStore } from "@/states/UserStore";
 import { FindAdminRole } from "@/utils/JwtDecoder";
 import { IoMenu } from "react-icons/io5";
 import OptionModal from "@/components/common/OptionModal";
 import ReactModal from "react-modal";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import { deleteVideo } from "@/services/VideoApi";
 import { useRouter } from "next/navigation";
-import { deleteCompetitionInfo } from "@/services/CompetitionApi";
+import { FetchDeleteCompetitionInfo } from "@/services/CompetitionApi";
 
 type Props = {
   data: competitionDetail;
@@ -69,7 +66,11 @@ const DetailInfo = ({ data }: Props) => {
           }
         >
           <CompetitionLabel content={"종별"} color={""} bold={true} />
-          <div className={"grid grid-cols-6 gap-2 "}>
+          <div
+            className={
+              "grid grid-cols-6 gap-2 text-[10px] sm:text-[12px] md:text-[16px]"
+            }
+          >
             {data.divisions.map((item: string, i: number) => (
               <p key={i}>{item}</p>
             ))}
@@ -176,11 +177,15 @@ const DetailInfo = ({ data }: Props) => {
           setModalOpen={setModalOpen}
           deleteHandler={() => {
             confirmAndCancelAlertWithLoading(
-              "question",
-              "대회를 삭제하시겠습니까?",
-              "",
-              async () =>
-                await deleteCompetitionInfo(data.competitionId.toString()),
+              "warning",
+              "대회를 삭제하겠습니까?",
+              "삭제된 대회는 복구할 수 없습니다.",
+              async () => {
+                data.competitionId &&
+                  (await FetchDeleteCompetitionInfo(
+                    data.competitionId.toString(),
+                  ));
+              },
             );
           }}
           updateHandler={() => {

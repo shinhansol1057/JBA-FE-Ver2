@@ -61,13 +61,32 @@ export type placeType = {
   longitude: number;
 };
 
+export type competitionDetailAttachedFileType = {
+  competitionAttachedFileId: number;
+  fileName: string;
+  filePath: string;
+};
+
 export type AddCompetitionRequestType = {
   title: string;
   divisions: string[];
-  startDate: string | string[];
-  endDate: string | string[];
+  startDate: string;
+  endDate: string;
   places: placeType[];
   relatedURL: string | null;
   ckData: any;
   ckImgRequests: getFileType[];
+};
+
+export type UpdateCompetitionRequestType = {
+  title: string;
+  divisions: string[] | undefined;
+  startDate: string;
+  endDate: string;
+  updatePlaces: placeType[];
+  relatedURL: string | null;
+  ckData: any;
+  ckImgRequests: getFileType[];
+  uploadedAttachedFiles: string[];
+  deletedCkImgUrls: string[];
 };
