@@ -1,19 +1,26 @@
 import React from "react";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { competitionResult } from "@/types/CompetitionType";
+import { FindAdminRole } from "@/utils/JwtDecoder";
+import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
+import { useRouter } from "next/navigation";
 
 type Props = {
   selectInfo: boolean;
   setSelectInfo: (value: ((prevState: boolean) => boolean) | boolean) => void;
   phase: string;
   resultData: competitionResult[];
+  id: string;
 };
 const DetailCategory = ({
   selectInfo,
   setSelectInfo,
   phase,
   resultData,
+  id,
 }: Props) => {
+  const router = useRouter();
+  const isAdmin = FindAdminRole();
   let resultCount: number = 0;
   resultData.forEach((result) => {
     resultCount += result.getResultResponseRows.length;
@@ -38,12 +45,26 @@ const DetailCategory = ({
         className={selectInfo ? "" : "rounded-[8px] bg-black text-white"}
         onClick={() => {
           if (phase === "INFO" || resultCount === 0) {
-            confirmAlert(
-              "error",
-              "대회일정 없음",
-              "대회일정이 아직 등록되지 않았습니다.",
-            );
-            setSelectInfo(true);
+            if (isAdmin) {
+              confirmAndCancelAlertWithLoading(
+                "question",
+                "대회일정 없음",
+                "대회일정을 등록하시겠습니까?",
+              ).then((res) => {
+                if (res.isConfirmed) {
+                  router.push(`/jeju-competition/schedule/add/${id}`);
+                } else {
+                  return setSelectInfo(true);
+                }
+              });
+            } else {
+              confirmAlert(
+                "warning",
+                "대회일정 없음",
+                "대회일정이 아직 등록되지 않았습니다.",
+              );
+              setSelectInfo(true);
+            }
           } else {
             setSelectInfo(false);
           }

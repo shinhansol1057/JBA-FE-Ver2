@@ -36,13 +36,6 @@ const DetailResult = ({ detailData, resultData }: Props) => {
       {filteredResultData.map((result: competitionResult, i: number) => {
         return (
           <div key={i} className={"mt-[50px]"}>
-            {/*<p*/}
-            {/*  className={*/}
-            {/*    "font-bold text-[12px] sm:text-[14px] md:text-[20px] ml-[10px] mb-[5px]"*/}
-            {/*  }*/}
-            {/*>*/}
-            {/*  {result.division}*/}
-            {/*</p>*/}
             <div
               className={
                 "flex justify-center items-center bg-amber-400 mb-[5px] rounded-[8px] " +

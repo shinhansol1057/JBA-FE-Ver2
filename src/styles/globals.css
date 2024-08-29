@@ -143,3 +143,21 @@ body *:lang(en) {
     height: 100%;
     border-radius: 8px;
 }
+
+@media (max-width: 640px) {
+    .ant-picker-input {
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 768px){
+    .ant-picker-input {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 768px) {
+    .ant-picker-input {
+        font-size: 16px;
+    }
+}

@@ -12,7 +12,7 @@ import {
 } from "@/types/CompetitionType";
 import {
   FetchAddCompetitionInfo,
-  getDivisionList,
+  FetchGetDivisionList,
 } from "@/services/CompetitionApi";
 import { useQuery } from "@tanstack/react-query";
 import AddPlace from "@/containers/jejuCompetition/detail/AddPlace";
@@ -24,6 +24,7 @@ import AddBtn from "@/components/common/AddBtn";
 import { koreanLocale } from "@/constants/AntdConfig";
 import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import dayjs from "dayjs";
+import { getNowDateToString } from "@/utils/FormDate";
 
 const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
@@ -33,8 +34,8 @@ const AddCompetitionInfo = () => {
   useAxiosInterceptor();
   const [title, setTitle] = useState<string>("");
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>(getNowDateToString());
+  const [endDate, setEndDate] = useState<string>(getNowDateToString());
   const [places, setPlaces] = useState<placeType[]>([]);
   const [relatedURL, setRelatedUrl] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
@@ -43,10 +44,9 @@ const AddCompetitionInfo = () => {
   const [divisionList, setDivisionList] = useState<divisionType[]>([]);
 
   const router = useRouter();
-
   const { data: divisionData } = useQuery({
     queryKey: ["getDivisionList"],
-    queryFn: () => getDivisionList(),
+    queryFn: () => FetchGetDivisionList(),
     select: (result) => result?.data.data,
     gcTime: 1000 * 60 * 60,
     refetchInterval: false,

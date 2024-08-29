@@ -1,10 +1,10 @@
 import React from "react";
 import { competitionResultRow } from "@/types/CompetitionType";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
-import formatDate from "@/utils/FormDate";
 import { GrDocumentDownload } from "react-icons/gr";
 import { handleDownload } from "@/utils/HandleDownload";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
+import { formatDate } from "@/utils/FormDate";
 
 type Props = {
   data: competitionResultRow;
@@ -60,18 +60,22 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
             />
             <p>{data.gameNumber}</p>
           </div>
-          <GrDocumentDownload
-            className={
-              "text-[15px] sm:text-[20px] md:text-[25px] mr-[10px] md:mr-[20px] cursor-pointer"
-            }
-            onClick={() => {
-              if (data.filePath) {
-                handleDownload(data.filePath, data.fileName);
-              } else {
-                confirmAlert("warning", "등록된 파일이 없습니다.");
+          {phase === "FINISH" ? (
+            <GrDocumentDownload
+              className={
+                "text-[15px] sm:text-[20px] md:text-[25px] mr-[10px] md:mr-[20px] cursor-pointer"
               }
-            }}
-          />
+              onClick={() => {
+                if (data.filePath) {
+                  handleDownload(data.filePath, data.fileName);
+                } else {
+                  confirmAlert("warning", "등록된 파일이 없습니다.");
+                }
+              }}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div

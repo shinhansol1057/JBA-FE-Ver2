@@ -90,3 +90,19 @@ export type UpdateCompetitionRequestType = {
   uploadedAttachedFiles: string[];
   deletedCkImgUrls: string[];
 };
+
+export type AddCompetitionScheduleType = {
+  division: string;
+  postCompetitionScheduleRow: AddCompetitionScheduleRowType[];
+};
+
+export type AddCompetitionScheduleRowType = {
+  competitionResultId?: number;
+  gameNumber: number;
+  startDate: string;
+  floor: string;
+  place: string;
+  homeName: string;
+  awayName: string;
+  state5x5: boolean;
+};

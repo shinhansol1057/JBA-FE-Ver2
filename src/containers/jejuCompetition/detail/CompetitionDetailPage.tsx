@@ -31,6 +31,7 @@ const CompetitionDetailPage = ({ id }: { id: string }) => {
           setSelectInfo={setSelectInfo}
           phase={detailData?.phase}
           resultData={resultData}
+          id={id}
         />
       )}
       {detailData && resultData && selectInfo && (

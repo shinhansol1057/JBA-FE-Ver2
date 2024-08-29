@@ -12,7 +12,7 @@ export const FormDate = (dateString: Date | string): string => {
   return `${year}.${month}.${day}(${dayOfWeek})`;
 };
 
-export default function formatDate(date: Date) {
+export const formatDate = (date: Date) => {
   // 예시 출력: 2024-05-01(수) 22:04
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -21,4 +21,29 @@ export default function formatDate(date: Date) {
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
   return `${year}-${month}-${day}(${dayOfWeek}) ${hours}:${minutes}`;
-}
+};
+
+export const getNowDateToString = () => {
+  const now = new Date();
+  return (
+    now.getFullYear() +
+    "-" +
+    String(now.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(now.getDate()).padStart(2, "0")
+  );
+};
+
+export const getDateAndTimeToString = (date: Date) => {
+  return (
+    date.getFullYear() +
+    "-" +
+    String(date.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(date.getDate()).padStart(2, "0") +
+    "T" +
+    String(date.getHours()).padStart(2, "0") +
+    ":" +
+    String(date.getMinutes()).padStart(2, "0")
+  );
+};

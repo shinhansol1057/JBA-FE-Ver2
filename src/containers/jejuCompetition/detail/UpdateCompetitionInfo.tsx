@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import FetchUpdateCompetitionInfo, {
   FetchGetCompetitionDetail,
-  getDivisionList,
+  FetchGetDivisionList,
 } from "@/services/CompetitionApi";
 import {
   competitionDetailAttachedFileType,
@@ -56,7 +56,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
 
   const { data: divisionData } = useQuery({
     queryKey: ["getDivisionList"],
-    queryFn: () => getDivisionList(),
+    queryFn: () => FetchGetDivisionList(),
     select: (result) => result?.data.data,
     gcTime: 1000 * 60 * 60,
     refetchInterval: false,
