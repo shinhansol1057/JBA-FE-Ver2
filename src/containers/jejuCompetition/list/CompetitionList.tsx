@@ -10,8 +10,13 @@ import LoadingText from "@/components/common/LoadingText";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { getVideoType } from "@/types/VideoType";
 import VideoListCard from "@/containers/video/VideoListCard";
+import AddBtn from "@/components/common/AddBtn";
+import { useRouter } from "next/navigation";
+import { FindAdminRole } from "@/utils/JwtDecoder";
 
 const CompetitionList = () => {
+  const router = useRouter();
+  const isAdmin = typeof window !== "undefined" && FindAdminRole();
   const bottom = useRef(null);
   const { competitionStatusMenu, setCompetitionStatusMenu } =
     useCompetitionStore();
@@ -56,6 +61,13 @@ const CompetitionList = () => {
 
   return (
     <div className={"flex flex-col items-center"}>
+      {isAdmin ? (
+        <div className={"mb-[10px] "}>
+          <AddBtn handler={() => router.push("/jeju-competition/info/add")} />
+        </div>
+      ) : (
+        ""
+      )}
       <CompetitionStatus />
       <LoadingText
         loading={status === "pending"}

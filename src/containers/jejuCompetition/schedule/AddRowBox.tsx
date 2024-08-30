@@ -31,7 +31,6 @@ const AddRowBox = ({
   setGameNumber,
 }: Props) => {
   const [clientWidth, setClientWidth] = useState<number>(320);
-  console.log(rowIndex);
   const placeOptions: divisionType[] = [];
   if (places) {
     places.forEach((p: placeType) =>
@@ -63,7 +62,6 @@ const AddRowBox = ({
       rowData.startDate = dateString;
       return scheduleList;
     });
-    console.log(dateString);
     setGameNumber();
   };
 
@@ -120,7 +118,7 @@ const AddRowBox = ({
   return (
     <ConfigProvider
       theme={
-        window.innerWidth < 640
+        clientWidth < 640
           ? {
               components: {
                 DatePicker: {
