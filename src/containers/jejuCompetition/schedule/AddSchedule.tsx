@@ -11,7 +11,7 @@ import {
   addCompetitionScheduleType,
 } from "@/types/CompetitionType";
 import PostTitle from "@/components/common/PostTitle";
-import AddDivisionBox from "@/containers/jejuCompetition/schedule/AddDivisionBox";
+import AddScheduleDivisionBox from "@/containers/jejuCompetition/schedule/AddScheduleDivisionBox";
 import { getDateAndTimeToString } from "@/utils/FormDate";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import CancelBtn from "@/components/common/CancelBtn";
@@ -91,7 +91,7 @@ const AddSchedule = ({ id }: Props) => {
       </div>
       {detailData?.divisions.map((division: string, i: number) => {
         return (
-          <AddDivisionBox
+          <AddScheduleDivisionBox
             key={"division" + i}
             divisionIndex={i}
             places={detailData?.places}

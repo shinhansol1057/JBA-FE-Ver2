@@ -62,8 +62,18 @@ const CompetitionList = () => {
   return (
     <div className={"flex flex-col items-center"}>
       {isAdmin ? (
-        <div className={"mb-[10px] "}>
-          <AddBtn handler={() => router.push("/jeju-competition/info/add")} />
+        <div className={"flex justify-end mb-[10px] w-full"}>
+          <button
+            className={
+              "font-bold rounded-[8px] bg-black text-white " +
+              "text-[12px] sm:text-[14px] md:text-[18px] " +
+              "w-[60px] sm:w-[80px] md:w-[100px] " +
+              "h-[30px] sm:h-[30px] md:h-[50px]"
+            }
+            onClick={() => router.push("/jeju-competition/info/add")}
+          >
+            대회등록
+          </button>
         </div>
       ) : (
         ""

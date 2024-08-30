@@ -11,7 +11,6 @@ import GetFileBox from "@/components/common/GetFileBox";
 import { FindAdminRole } from "@/utils/JwtDecoder";
 import { IoMenu } from "react-icons/io5";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
-import ReactModal from "react-modal";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useRouter } from "next/navigation";
 import { FetchDeleteCompetitionInfo } from "@/services/CompetitionApi";

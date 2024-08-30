@@ -1,40 +1,42 @@
 import React from "react";
 import {
+  addCompetitionResultRowType,
+  addCompetitionResultType,
   addCompetitionScheduleRowType,
-  addCompetitionScheduleType,
   placeType,
 } from "@/types/CompetitionType";
-import AddRowBox from "@/containers/jejuCompetition/schedule/AddRowBox";
 import { getDateAndTimeToString } from "@/utils/FormDate";
+import AddScheduleRowBox from "@/containers/jejuCompetition/schedule/AddScheduleRowBox";
+import AddResultRowBox from "@/containers/jejuCompetition/schedule/AddResultRowBox";
 
 type Props = {
   divisionIndex: number;
   places: placeType[];
-  addCompetitionScheduleList: addCompetitionScheduleType[];
-  setAddCompetitionScheduleList: React.Dispatch<
-    React.SetStateAction<addCompetitionScheduleType[]>
+  addCompetitionResultList: addCompetitionResultType[];
+  setAddCompetitionResultList: React.Dispatch<
+    React.SetStateAction<addCompetitionResultType[]>
   >;
 };
-const AddDivisionBox = ({
+const AddResultDivisionBox = ({
   divisionIndex,
   places,
-  addCompetitionScheduleList,
-  setAddCompetitionScheduleList,
+  addCompetitionResultList,
+  setAddCompetitionResultList,
 }: Props) => {
-  let list: { place: string; rowList: addCompetitionScheduleRowType[] }[] = [];
+  let list: { place: string; rowList: addCompetitionResultRowType[] }[] = [];
   const setGameNumber = () => {
     list = [];
     for (let k: number = 0; k < places.length; k++) {
       list.push({ place: places[k].placeName, rowList: [] });
     }
-    for (let i: number = 0; i < addCompetitionScheduleList.length; i++) {
+    for (let i: number = 0; i < addCompetitionResultList.length; i++) {
       for (
         let j: number = 0;
-        j < addCompetitionScheduleList[i].postCompetitionScheduleRow.length;
+        j < addCompetitionResultList[i].postResultRequestRows.length;
         j++
       ) {
-        const data: addCompetitionScheduleRowType =
-          addCompetitionScheduleList[i].postCompetitionScheduleRow[j];
+        const data: addCompetitionResultRowType =
+          addCompetitionResultList[i].postResultRequestRows[j];
         for (let e: number = 0; e < list.length; e++) {
           if (list[e].place === data.place) {
             list[e].rowList.push(data);
@@ -43,15 +45,15 @@ const AddDivisionBox = ({
       }
     }
 
-    for (let r: number = 0; r < addCompetitionScheduleList.length; r++) {
+    for (let r: number = 0; r < addCompetitionResultList.length; r++) {
       for (
         let t: number = 0;
-        t < addCompetitionScheduleList[r].postCompetitionScheduleRow.length;
+        t < addCompetitionResultList[r].postResultRequestRows.length;
         t++
       ) {
         let num: number = 1;
-        const target: addCompetitionScheduleRowType =
-          addCompetitionScheduleList[r].postCompetitionScheduleRow[t];
+        const target: addCompetitionResultRowType =
+          addCompetitionResultList[r].postResultRequestRows[t];
         for (let y: number = 0; y < list.length; y++) {
           if (target.place === list[y].place) {
             for (let u: number = 0; u < list[y].rowList.length; u++) {
@@ -67,10 +69,10 @@ const AddDivisionBox = ({
             }
           }
         }
-        setAddCompetitionScheduleList((prevState) => {
-          const scheduleList: addCompetitionScheduleType[] = [...prevState];
-          scheduleList[r].postCompetitionScheduleRow[t].gameNumber = num;
-          return scheduleList;
+        setAddCompetitionResultList((prevState) => {
+          const resultList: addCompetitionResultType[] = [...prevState];
+          resultList[r].postResultRequestRows[t].gameNumber = num;
+          return resultList;
         });
       }
     }
@@ -78,8 +80,7 @@ const AddDivisionBox = ({
 
   const plusHandler = () => {
     let prevStartDate: number | undefined;
-    let row =
-      addCompetitionScheduleList[divisionIndex].postCompetitionScheduleRow;
+    let row = addCompetitionResultList[divisionIndex].postResultRequestRows;
     let firstLastDate;
     let secondLastDate;
     if (row.length > 1) {
@@ -95,7 +96,8 @@ const AddDivisionBox = ({
     } else {
       prevStartDate = new Date().getTime();
     }
-    const initial: addCompetitionScheduleRowType = {
+    const initial: addCompetitionResultRowType = {
+      competitionResultId: null,
       gameNumber: 1,
       startDate: getDateAndTimeToString(
         new Date(prevStartDate ?? new Date().getTime()),
@@ -105,15 +107,18 @@ const AddDivisionBox = ({
       homeName: "",
       awayName: "",
       state5x5: true,
+      homeScore: null,
+      awayScore: null,
+      fileName: null,
+      filePath: null,
     };
-    setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
-      scheduleList[divisionIndex].postCompetitionScheduleRow.push(initial);
-      return scheduleList;
+    setAddCompetitionResultList((prevState) => {
+      const resultList: addCompetitionResultType[] = [...prevState];
+      resultList[divisionIndex].postResultRequestRows.push(initial);
+      return resultList;
     });
     setGameNumber();
   };
-
   return (
     <div className={"mb-[30px] md:mb-[50px]"}>
       <div
@@ -123,20 +128,18 @@ const AddDivisionBox = ({
           "h-[30px] sm:h-[40px] md:h-[50px] "
         }
       >
-        <p>{addCompetitionScheduleList[divisionIndex]?.division}</p>
+        <p>{addCompetitionResultList[divisionIndex]?.division}</p>
       </div>
-      {addCompetitionScheduleList[
-        divisionIndex
-      ]?.postCompetitionScheduleRow.map(
-        (schedule: addCompetitionScheduleRowType, i: number) => {
+      {addCompetitionResultList[divisionIndex]?.postResultRequestRows.map(
+        (result: addCompetitionResultRowType, i: number) => {
           return (
-            <AddRowBox
+            <AddResultRowBox
               key={"row" + i}
               divisionIndex={divisionIndex}
               rowIndex={i}
               places={places}
-              addCompetitionScheduleList={addCompetitionScheduleList}
-              setAddCompetitionScheduleList={setAddCompetitionScheduleList}
+              addCompetitionResultList={addCompetitionResultList}
+              setAddCompetitionResultList={setAddCompetitionResultList}
               setGameNumber={setGameNumber}
             />
           );
@@ -152,4 +155,4 @@ const AddDivisionBox = ({
   );
 };
 
-export default AddDivisionBox;
+export default AddResultDivisionBox;

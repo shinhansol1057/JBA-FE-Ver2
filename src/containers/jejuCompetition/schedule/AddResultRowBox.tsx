@@ -1,33 +1,34 @@
 import React, { useEffect, useState } from "react";
-import CompetitionLabel from "@/components/competition/CompetitionLabel";
-import { ConfigProvider, DatePicker, Select, Space } from "antd";
-import { koreanLocale } from "@/constants/AntdConfig";
-import dayjs from "dayjs";
 import {
-  addCompetitionScheduleRowType,
-  addCompetitionScheduleType,
+  addCompetitionResultRowType,
+  addCompetitionResultType,
   divisionType,
   placeType,
 } from "@/types/CompetitionType";
 import ScheduleRowInput from "@/components/competition/ScheduleRowInput";
+import { ConfigProvider, DatePicker, Select, Space } from "antd";
+import { koreanLocale } from "@/constants/AntdConfig";
+import dayjs from "dayjs";
+import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import { IoClose } from "react-icons/io5";
+import { FetchUploadFile } from "@/services/FileUploadApi";
 
 type Props = {
   divisionIndex: number;
   rowIndex: number;
   places: placeType[];
-  addCompetitionScheduleList: addCompetitionScheduleType[];
-  setAddCompetitionScheduleList: React.Dispatch<
-    React.SetStateAction<addCompetitionScheduleType[]>
+  addCompetitionResultList: addCompetitionResultType[];
+  setAddCompetitionResultList: React.Dispatch<
+    React.SetStateAction<addCompetitionResultType[]>
   >;
   setGameNumber: any;
 };
-const AddRowBox = ({
+const AddResultRowBox = ({
   divisionIndex,
   rowIndex,
   places,
-  addCompetitionScheduleList,
-  setAddCompetitionScheduleList,
+  addCompetitionResultList,
+  setAddCompetitionResultList,
   setGameNumber,
 }: Props) => {
   const [clientWidth, setClientWidth] = useState<number>(320);
@@ -38,65 +39,97 @@ const AddRowBox = ({
     );
   }
   const rowData =
-    addCompetitionScheduleList[divisionIndex].postCompetitionScheduleRow[
-      rowIndex
-    ];
+    addCompetitionResultList[divisionIndex].postResultRequestRows[rowIndex];
 
   const minusHandler = (): void => {
-    setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
-      scheduleList[divisionIndex].postCompetitionScheduleRow = scheduleList[
+    setAddCompetitionResultList((prevState) => {
+      const resultList: addCompetitionResultType[] = [...prevState];
+      resultList[divisionIndex].postResultRequestRows = resultList[
         divisionIndex
-      ].postCompetitionScheduleRow.filter(
-        (item: addCompetitionScheduleRowType, index: number) =>
+      ].postResultRequestRows.filter(
+        (item: addCompetitionResultRowType, index: number) =>
           rowIndex !== index,
       );
-      return scheduleList;
+      return resultList;
     });
     setGameNumber();
   };
 
   const startDateHandler = (dateString: string) => {
-    setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+    setAddCompetitionResultList((prevState) => {
+      const resultList: addCompetitionResultType[] = [...prevState];
       rowData.startDate = dateString;
-      return scheduleList;
+      return resultList;
     });
     setGameNumber();
   };
 
   const floorHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+    setAddCompetitionResultList((prevState) => {
+      const resultList: addCompetitionResultType[] = [...prevState];
       rowData.floor = event.target.value;
-      return scheduleList;
+      return resultList;
     });
   };
 
   const placeHandler = (value: string) => {
-    setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+    setAddCompetitionResultList((prevState) => {
+      const resultList: addCompetitionResultType[] = [...prevState];
       rowData.place = value;
-      return scheduleList;
+      return resultList;
     });
     setGameNumber();
   };
 
   const homeNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+    setAddCompetitionResultList((prevState) => {
+      const resultList: addCompetitionResultType[] = [...prevState];
       rowData.homeName = e.target.value;
-      return scheduleList;
+      return resultList;
+    });
+  };
+
+  const homeScoreHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddCompetitionResultList((prevState) => {
+      const resultList: addCompetitionResultType[] = [...prevState];
+      rowData.homeScore = Number(e.target.value);
+      return resultList;
     });
   };
 
   const awayNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+    setAddCompetitionResultList((prevState) => {
+      const resultList: addCompetitionResultType[] = [...prevState];
       rowData.awayName = e.target.value;
-      return scheduleList;
+      return resultList;
     });
   };
+
+  const awayScoreHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddCompetitionResultList((prevState) => {
+      const resultList: addCompetitionResultType[] = [...prevState];
+      rowData.awayScore = Number(e.target.value);
+      return resultList;
+    });
+  };
+
+  function fileHandler(
+    e: React.ChangeEvent<HTMLInputElement>,
+    rowIndex: number,
+  ): void {
+    if (e.target.files) {
+      let files: File[] = [];
+      files.push(e.target.files[0]);
+      FetchUploadFile(files).then((res) => {
+        setAddCompetitionResultList((prevState) => {
+          const resultList: addCompetitionResultType[] = [...prevState];
+          rowData.fileName = res.data.data[0]?.fileName;
+          rowData.filePath = res.data.data[0]?.fileUrl;
+          return resultList;
+        });
+      });
+    }
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -215,9 +248,47 @@ const AddRowBox = ({
               />
               <p>{rowData.gameNumber}</p>
             </div>
-            <div>
+            <div className={"flex items-center justify-between w-[50%] "}>
+              <div
+                className={
+                  "flex justify-center bg-white items-center border border-solid border-[#B5B5B5] hover:bg-[#F5F5F5] " +
+                  "w-[60px] sm:w-[80px] md:w-[160px] " +
+                  "mr-[5px] md:mr-[10px] "
+                }
+              >
+                <label
+                  htmlFor={"file" + divisionIndex + "&" + rowIndex}
+                  className={
+                    "w-[60px] sm:w-[80px] md:w-[160px] cursor-pointer flex flex-row items-center  "
+                  }
+                >
+                  <p
+                    className={
+                      "w-[60px] sm:w-[80px] md:w-[160px] " +
+                      "h-[20px] truncate cursor-pointer flex flex-row items-center " +
+                      "text-[8px] sm:text-[10px] md:text-[14px] " +
+                      (rowData.fileName === "" || rowData.fileName === null
+                        ? "justify-center "
+                        : "")
+                    }
+                  >
+                    {rowData.fileName === "" || rowData.fileName === null
+                      ? "파일 업로드"
+                      : rowData.fileName}
+                  </p>
+                </label>
+                <input
+                  type="file"
+                  id={"file" + divisionIndex + "&" + rowIndex}
+                  multiple={false}
+                  className={"hidden"}
+                  onChange={(e) => fileHandler(e, rowIndex)}
+                />
+              </div>
               <IoClose
-                className={"cursor-pointer"}
+                className={
+                  "cursor-pointer text-[15px] sm:text-[20px] md:text-[30px]"
+                }
                 onClick={() => minusHandler()}
               />
             </div>
@@ -230,14 +301,30 @@ const AddRowBox = ({
           }
         >
           <ScheduleRowInput
-            value={rowData.homeName}
+            value={rowData.homeName ? rowData.homeName : undefined}
             setValue={homeNameHandler}
             type={"text"}
             placeHolder={"HomeTeam"}
           />
+          <div className={"w-[40%] ml-[10px]"}>
+            <ScheduleRowInput
+              value={rowData.homeScore ? rowData.homeScore : undefined}
+              setValue={homeScoreHandler}
+              type={"number"}
+              placeHolder={"점수"}
+            />
+          </div>
           <p className={"mx-[10px] md:mx-[20px] text-white"}>vs</p>
+          <div className={"w-[40%] mr-[10px]"}>
+            <ScheduleRowInput
+              value={rowData.awayScore ? rowData.awayScore : undefined}
+              setValue={awayScoreHandler}
+              type={"number"}
+              placeHolder={"점수"}
+            />
+          </div>
           <ScheduleRowInput
-            value={rowData.awayName}
+            value={rowData.awayName ? rowData.awayName : undefined}
             setValue={awayNameHandler}
             type={"text"}
             placeHolder={"AwayHome"}
@@ -248,4 +335,4 @@ const AddRowBox = ({
   );
 };
 
-export default AddRowBox;
+export default AddResultRowBox;

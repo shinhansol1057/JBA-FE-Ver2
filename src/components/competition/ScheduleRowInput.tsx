@@ -10,7 +10,7 @@ const ScheduleRowInput = ({ value, setValue, type, placeHolder }: Props) => {
   return (
     <input
       type={type}
-      className={"border-none rounded-[8px] p-[5px] w-full"}
+      className={"border-none rounded-[5px] p-[5px] w-full"}
       value={value}
       onChange={(e) => setValue(e)}
       placeholder={placeHolder}

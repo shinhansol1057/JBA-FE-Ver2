@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import { competitionDetailType } from "@/types/CompetitionType";
-import { useUserStore } from "@/states/UserStore";
 import { IoMenu } from "react-icons/io5";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import {
-  FetchDeleteCompetitionInfo,
-  FetchDeleteSchedule,
-} from "@/services/CompetitionApi";
+import { FetchDeleteSchedule } from "@/services/CompetitionApi";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import { FindAdminRole } from "@/utils/JwtDecoder";
 import { useRouter } from "next/navigation";
-import confirmAlert from "@/libs/alert/ConfirmAlert";
 
 type Props = {
   detailData: competitionDetailType;
@@ -107,7 +102,9 @@ const DetailResultDivisionSelectBar = ({
         }}
         updateHandler={() => {
           router.push(
-            `/jeju-competition/schedule/update/${detailData.competitionId}`,
+            detailData.phase === "SCHEDULE"
+              ? `/jeju-competition/schedule/update/${detailData.competitionId}`
+              : `/jeju-competition/result/update/${detailData.competitionId}`,
           );
         }}
       />

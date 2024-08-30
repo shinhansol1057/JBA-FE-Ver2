@@ -106,3 +106,23 @@ export type addCompetitionScheduleRowType = {
   awayName: string;
   state5x5: boolean;
 };
+
+export type addCompetitionResultType = {
+  division: string;
+  postResultRequestRows: addCompetitionResultRowType[];
+};
+
+export type addCompetitionResultRowType = {
+  competitionResultId: number | null;
+  gameNumber: number;
+  startDate: string;
+  floor: string;
+  place: string;
+  homeName: string;
+  awayName: string;
+  state5x5: boolean;
+  homeScore: number | null;
+  awayScore: number | null;
+  filePath: string | null;
+  fileName: string | null;
+};

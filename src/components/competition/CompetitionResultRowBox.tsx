@@ -60,7 +60,7 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
             />
             <p>{data.gameNumber}</p>
           </div>
-          {phase === "FINISH" ? (
+          {phase === "FINISH" && data.filePath ? (
             <GrDocumentDownload
               className={
                 "text-[15px] sm:text-[20px] md:text-[25px] mr-[10px] md:mr-[20px] cursor-pointer"
