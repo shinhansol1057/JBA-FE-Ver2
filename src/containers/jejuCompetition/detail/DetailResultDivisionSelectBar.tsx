@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { competitionDetail } from "@/types/CompetitionType";
+import { competitionDetailType } from "@/types/CompetitionType";
 import { useUserStore } from "@/states/UserStore";
+import { IoMenu } from "react-icons/io5";
+import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
+import {
+  FetchDeleteCompetitionInfo,
+  FetchDeleteSchedule,
+} from "@/services/CompetitionApi";
+import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
+import { FindAdminRole } from "@/utils/JwtDecoder";
+import { useRouter } from "next/navigation";
+import confirmAlert from "@/libs/alert/ConfirmAlert";
 
 type Props = {
-  detailData: competitionDetail;
+  detailData: competitionDetailType;
   divisionFilter: string;
   setDivisionFilter: (value: ((prevState: string) => string) | string) => void;
 };
@@ -14,7 +23,9 @@ const DetailResultDivisionSelectBar = ({
   divisionFilter,
   setDivisionFilter,
 }: Props) => {
-  const { AccessToken } = useUserStore();
+  const isAdmin = typeof window !== "undefined" && FindAdminRole();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const router = useRouter();
   return (
     <div>
       <div
@@ -34,10 +45,13 @@ const DetailResultDivisionSelectBar = ({
             bold={true}
             long={true}
           />
-          <HiOutlineDotsHorizontal
+          <IoMenu
             color={"#4B4B4B"}
-            size={25}
-            className={"mr-[3px] " + (!AccessToken ? "hidden" : "")}
+            className={
+              "mr-[3px] text-[20px] sm:text-[25px] md:text-[35px] cursor-pointer " +
+              (!isAdmin ? "hidden " : "")
+            }
+            onClick={() => setModalOpen(true)}
           />
         </div>
         <div
@@ -78,6 +92,25 @@ const DetailResultDivisionSelectBar = ({
           </div>
         </div>
       </div>
+      <UpdateDeleteModal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        deleteHandler={() => {
+          confirmAndCancelAlertWithLoading(
+            "warning",
+            "일정을 삭제하겠습니까?",
+            "삭제된 일정은 복구할 수 없고 대회 개요는 보존됩니다.",
+            async () => {
+              FetchDeleteSchedule(detailData.competitionId.toString());
+            },
+          );
+        }}
+        updateHandler={() => {
+          router.push(
+            `/jeju-competition/schedule/update/${detailData.competitionId}`,
+          );
+        }}
+      />
     </div>
   );
 };

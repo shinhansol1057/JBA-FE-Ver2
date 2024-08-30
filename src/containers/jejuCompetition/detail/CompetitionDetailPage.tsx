@@ -2,7 +2,7 @@
 import PostTitle from "@/components/common/PostTitle";
 import {
   FetchGetCompetitionDetail,
-  getCompetitionResult,
+  FetchGetCompetitionResult,
 } from "@/services/CompetitionApi";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -19,7 +19,7 @@ const CompetitionDetailPage = ({ id }: { id: string }) => {
   });
   const { data: resultData } = useQuery({
     queryKey: ["competitionResult", id],
-    queryFn: () => getCompetitionResult(id),
+    queryFn: () => FetchGetCompetitionResult(id),
     select: (result) => result?.data.data,
   });
   return (

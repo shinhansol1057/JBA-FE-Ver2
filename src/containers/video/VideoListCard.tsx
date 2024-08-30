@@ -5,8 +5,7 @@ import { getVideoType } from "@/types/VideoType";
 import PostLabel from "@/components/common/PostLabel";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
-import ReactModal from "react-modal";
-import OptionModal from "@/components/common/OptionModal";
+import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import { useRouter } from "next/navigation";
 import { deleteVideo } from "@/services/VideoApi";
 import { FindAdminRole } from "@/utils/JwtDecoder";
@@ -71,45 +70,14 @@ const VideoListCard = ({ data }: Props) => {
           }
         />
       </div>
-      <ReactModal
-        isOpen={modalOpen}
-        onRequestClose={() => setModalOpen(false)}
-        ariaHideApp={false}
-        style={customModalStyles}
-        shouldCloseOnOverlayClick={true}
-      >
-        <OptionModal
-          setModalOpen={setModalOpen}
-          deleteHandler={() => deleteHandler()}
-          updateHandler={() => updateHandler()}
-        />
-      </ReactModal>
+      <UpdateDeleteModal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        deleteHandler={() => deleteHandler()}
+        updateHandler={() => updateHandler()}
+      />
     </div>
   );
 };
 
 export default VideoListCard;
-
-const customModalStyles: ReactModal.Styles = {
-  overlay: {
-    width: "100%",
-    height: "100vh",
-    zIndex: "100",
-    position: "fixed",
-    top: 0,
-    left: "0",
-    backgroundColor: "rgba(0,0,0,0.8)",
-  },
-  content: {
-    width: "100%",
-    height: "100vh",
-    zIndex: "150",
-    position: "absolute",
-    top: "0",
-    left: "0",
-    background: "none",
-    justifyContent: "center",
-    overflow: "auto",
-    padding: "0",
-  },
-};

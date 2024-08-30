@@ -2,9 +2,9 @@ import { NormalApi } from "@/services/axios/NormalApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { Api } from "@/services/axios/Api";
 import {
-  AddCompetitionRequestType,
-  AddCompetitionScheduleType,
-  UpdateCompetitionRequestType,
+  addCompetitionRequestType,
+  addCompetitionScheduleType,
+  updateCompetitionRequestType,
 } from "@/types/CompetitionType";
 
 export const FetchGetCompetitionList = async ({
@@ -44,7 +44,7 @@ export const FetchGetCompetitionDetail = (id: string) => {
   });
 };
 
-export const getCompetitionResult = (id: string) => {
+export const FetchGetCompetitionResult = (id: string) => {
   return NormalApi.get(`v1/api/competition/result/${id}`).catch((err) => {
     if (err.response.data.detailMessage === "대회를 찾을 수 없습니다.") {
       confirmAlert("error", "대회를 찾을 수 없습니다.").then((res) => {
@@ -59,7 +59,7 @@ export const FetchGetDivisionList = async () => {
 };
 
 export const FetchAddCompetitionInfo = async (
-  requestData: AddCompetitionRequestType,
+  requestData: addCompetitionRequestType,
   files: File[],
 ) => {
   const blob: Blob = new Blob([JSON.stringify(requestData)], {
@@ -115,11 +115,11 @@ export const FetchDeleteCompetitionInfo = async (id: string) => {
     });
 };
 
-export default function FetchUpdateCompetitionInfo(
+export const FetchUpdateCompetitionInfo = (
   id: string,
-  requestData: UpdateCompetitionRequestType,
+  requestData: updateCompetitionRequestType,
   files: File[],
-) {
+) => {
   const blob: Blob = new Blob([JSON.stringify(requestData)], {
     type: "application/json",
   });
@@ -174,13 +174,13 @@ export default function FetchUpdateCompetitionInfo(
           "다른 대회명을 입력해주세요.",
         );
     });
-}
+};
 
 export const FetchAddSchedule = (
   id: string,
-  postCompetitionScheduleList: AddCompetitionScheduleType[],
+  postCompetitionScheduleList: addCompetitionScheduleType[],
 ) => {
-  const request: { request: AddCompetitionScheduleType[] } = {
+  const request: { request: addCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
   return Api.post(`/v1/api/competition/post/schedule/${id}`, request)
@@ -224,4 +224,69 @@ export const FetchAddSchedule = (
           },
         );
     });
+};
+
+export const FetchUpdateSchedule = (
+  id: string,
+  postCompetitionScheduleList: addCompetitionScheduleType[],
+) => {
+  const request: { request: addCompetitionScheduleType[] } = {
+    request: postCompetitionScheduleList,
+  };
+  return Api.put(`/v1/api/competition/update/schedule/${id}`, request)
+    .then((res) => {
+      if (res.status === 200) {
+        confirmAlert("success", "대회일정수정이 완료되었습니다.").then(
+          (res) => {
+            if (res.isConfirmed)
+              window.location.href = `/jeju-competition/info/${id}`;
+          },
+        );
+      }
+    })
+    .catch((err) => {
+      const errMessage: string = err.response.data.detailMessage;
+      if (errMessage === "스테이지를 입력해주세요.")
+        confirmAlert("warning", "floor를 입력해주세요.");
+      else if (errMessage === "종별을 입력해주세요.")
+        confirmAlert("warning", "종별을 입력해주세요.");
+      else if (errMessage === "HOME 팀명을 입력해주세요.")
+        confirmAlert("warning", "HOME 팀명을 입력해주세요.");
+      else if (errMessage === "AWAY 팀명을 입력해주세요.")
+        confirmAlert("warning", "AWAY 팀명을 입력해주세요.");
+      else if (errMessage === "시작일을 입력해주세요.")
+        confirmAlert("warning", "시작일을 입력해주세요.");
+      else if (errMessage === "경기 번호가 없습니다.")
+        confirmAlert("warning", "경기 번호가 없습니다.");
+      else if (errMessage === "장소를 입력해주세요.")
+        confirmAlert("warning", "장소를 입력해주세요.");
+      else if (errMessage === "5대5 경기여부를 입력해주세요.")
+        confirmAlert("warning", "5대5 경기여부를 입력해주세요.");
+      else if (errMessage === "대회를 찾을 수 없습니다.")
+        confirmAlert("warning", "대회를 찾을 수 없습니다.").then((res) => {
+          if (res.isConfirmed) window.location.href = "/jeju-competition/info";
+        });
+      else if (errMessage === "일정등록 단계가 아닙니다.")
+        confirmAlert("warning", "일정이 등록된 단계가 아닙니다.").then(
+          (res) => {
+            if (res.isConfirmed)
+              window.location.href = `/jeju-competition/info/${id}`;
+          },
+        );
+    });
+};
+
+export const FetchDeleteSchedule = (id: string) => {
+  return Api.delete(`/v1/api/competition/delete/schedule/${id}`, {}).then(
+    (res) => {
+      if (res.status === 200) {
+        confirmAlert("success", "완료", "대회일정이 삭제되었습니다.").then(
+          (res) => {
+            if (res.isConfirmed)
+              window.location.href = `/jeju-competition/info/${id}`;
+          },
+        );
+      }
+    },
+  );
 };

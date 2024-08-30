@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { competitionDetail, competitionPlace } from "@/types/CompetitionType";
+import {
+  competitionDetailType,
+  competitionPlaceType,
+} from "@/types/CompetitionType";
 import { competitionStatusCalculator } from "@/utils/CompetitionStatusCalculator";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import moment from "moment/moment";
@@ -7,14 +10,14 @@ import DOMPurify from "dompurify";
 import GetFileBox from "@/components/common/GetFileBox";
 import { FindAdminRole } from "@/utils/JwtDecoder";
 import { IoMenu } from "react-icons/io5";
-import OptionModal from "@/components/common/OptionModal";
+import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import ReactModal from "react-modal";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useRouter } from "next/navigation";
 import { FetchDeleteCompetitionInfo } from "@/services/CompetitionApi";
 
 type Props = {
-  data: competitionDetail;
+  data: competitionDetailType;
 };
 const DetailInfo = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -110,7 +113,7 @@ const DetailInfo = ({ data }: Props) => {
               "flex flex-col text-[10px] sm:text-[12px] md:text-[16px] pt-[5px]"
             }
           >
-            {data.places.map((place: competitionPlace, i: number) => {
+            {data.places.map((place: competitionPlaceType, i: number) => {
               return (
                 <p
                   key={i}
@@ -166,58 +169,28 @@ const DetailInfo = ({ data }: Props) => {
           );
         })}
       </div>
-      <ReactModal
-        isOpen={modalOpen}
-        onRequestClose={() => setModalOpen(false)}
-        ariaHideApp={false}
-        style={customModalStyles}
-        shouldCloseOnOverlayClick={true}
-      >
-        <OptionModal
-          setModalOpen={setModalOpen}
-          deleteHandler={() => {
-            confirmAndCancelAlertWithLoading(
-              "warning",
-              "대회를 삭제하겠습니까?",
-              "삭제된 대회는 복구할 수 없습니다.",
-              async () => {
-                data.competitionId &&
-                  (await FetchDeleteCompetitionInfo(
-                    data.competitionId.toString(),
-                  ));
-              },
-            );
-          }}
-          updateHandler={() => {
-            router.push(`/jeju-competition/info/update/${data.competitionId}`);
-          }}
-        />
-      </ReactModal>
+      <UpdateDeleteModal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        deleteHandler={() => {
+          confirmAndCancelAlertWithLoading(
+            "warning",
+            "대회를 삭제하겠습니까?",
+            "삭제된 대회는 복구할 수 없습니다.",
+            async () => {
+              data.competitionId &&
+                (await FetchDeleteCompetitionInfo(
+                  data.competitionId.toString(),
+                ));
+            },
+          );
+        }}
+        updateHandler={() => {
+          router.push(`/jeju-competition/info/update/${data.competitionId}`);
+        }}
+      />
     </div>
   );
 };
 
 export default DetailInfo;
-const customModalStyles: ReactModal.Styles = {
-  overlay: {
-    width: "100%",
-    height: "100vh",
-    zIndex: "100",
-    position: "fixed",
-    top: 0,
-    left: "0",
-    backgroundColor: "rgba(0,0,0,0.8)",
-  },
-  content: {
-    width: "100%",
-    height: "100vh",
-    zIndex: "150",
-    position: "absolute",
-    top: "0",
-    left: "0",
-    background: "none",
-    justifyContent: "center",
-    overflow: "auto",
-    padding: "0",
-  },
-};

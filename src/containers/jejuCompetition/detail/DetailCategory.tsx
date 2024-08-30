@@ -1,6 +1,6 @@
 import React from "react";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
-import { competitionResult } from "@/types/CompetitionType";
+import { competitionResultType } from "@/types/CompetitionType";
 import { FindAdminRole } from "@/utils/JwtDecoder";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useRouter } from "next/navigation";
@@ -9,7 +9,7 @@ type Props = {
   selectInfo: boolean;
   setSelectInfo: (value: ((prevState: boolean) => boolean) | boolean) => void;
   phase: string;
-  resultData: competitionResult[];
+  resultData: competitionResultType[];
   id: string;
 };
 const DetailCategory = ({

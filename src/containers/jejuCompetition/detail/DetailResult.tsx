@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import {
-  competitionDetail,
-  competitionResult,
-  competitionResultRow,
+  competitionDetailType,
+  competitionResultType,
+  competitionResultRowType,
 } from "@/types/CompetitionType";
 import DetailResultDivisionSelectBar from "@/containers/jejuCompetition/detail/DetailResultDivisionSelectBar";
 import CompetitionResultRowBox from "@/components/competition/CompetitionResultRowBox";
 
 type Props = {
-  detailData: competitionDetail;
-  resultData: competitionResult[];
+  detailData: competitionDetailType;
+  resultData: competitionResultType[];
 };
 const DetailResult = ({ detailData, resultData }: Props) => {
   const [divisionFilter, setDivisionFilter] = useState<string>("전체");
   const [filteredResultData, setFilteredResultData] = useState<
-    competitionResult[]
+    competitionResultType[]
   >([]);
   useEffect(() => {
     if (divisionFilter === "전체") {
@@ -33,7 +33,7 @@ const DetailResult = ({ detailData, resultData }: Props) => {
         divisionFilter={divisionFilter}
         setDivisionFilter={setDivisionFilter}
       />
-      {filteredResultData.map((result: competitionResult, i: number) => {
+      {filteredResultData.map((result: competitionResultType, i: number) => {
         return (
           <div key={i} className={"mt-[50px]"}>
             <div
@@ -45,15 +45,17 @@ const DetailResult = ({ detailData, resultData }: Props) => {
             >
               <p>{result.division}</p>
             </div>
-            {result.getResultResponseRows.map((row: competitionResultRow) => {
-              return (
-                <CompetitionResultRowBox
-                  key={row.competitionResultId}
-                  data={row}
-                  phase={detailData.phase}
-                />
-              );
-            })}
+            {result.getResultResponseRows.map(
+              (row: competitionResultRowType) => {
+                return (
+                  <CompetitionResultRowBox
+                    key={row.competitionResultId}
+                    data={row}
+                    phase={detailData.phase}
+                  />
+                );
+              },
+            )}
           </div>
         );
       })}

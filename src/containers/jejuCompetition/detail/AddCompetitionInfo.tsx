@@ -6,7 +6,7 @@ import PostInput from "@/components/common/PostInput";
 import SubTitle from "@/components/layout/SubTitle";
 import { DatePicker, Select, Space } from "antd";
 import {
-  AddCompetitionRequestType,
+  addCompetitionRequestType,
   divisionType,
   placeType,
 } from "@/types/CompetitionType";
@@ -57,7 +57,7 @@ const AddCompetitionInfo = () => {
   });
 
   const formSubmitHandler = () => {
-    const requestData: AddCompetitionRequestType = {
+    const requestData: addCompetitionRequestType = {
       title: title,
       divisions: selectedDivisions,
       startDate: startDate,

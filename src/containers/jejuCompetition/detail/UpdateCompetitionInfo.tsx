@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import FetchUpdateCompetitionInfo, {
+import {
+  FetchUpdateCompetitionInfo,
   FetchGetCompetitionDetail,
   FetchGetDivisionList,
 } from "@/services/CompetitionApi";
@@ -9,7 +10,7 @@ import {
   competitionDetailAttachedFileType,
   divisionType,
   placeType,
-  UpdateCompetitionRequestType,
+  updateCompetitionRequestType,
 } from "@/types/CompetitionType";
 import { getFileType } from "@/types/CommonType";
 import SubTitle from "@/components/layout/SubTitle";
@@ -67,7 +68,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   });
 
   const formSubmitHandler = () => {
-    const requestData: UpdateCompetitionRequestType = {
+    const requestData: updateCompetitionRequestType = {
       title: title,
       divisions: selectedDivisions,
       startDate: startDate,

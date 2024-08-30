@@ -1,5 +1,5 @@
 import React from "react";
-import { competitionResultRow } from "@/types/CompetitionType";
+import { competitionResultRowType } from "@/types/CompetitionType";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import { GrDocumentDownload } from "react-icons/gr";
 import { handleDownload } from "@/utils/HandleDownload";
@@ -7,7 +7,7 @@ import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { formatDate } from "@/utils/FormDate";
 
 type Props = {
-  data: competitionResultRow;
+  data: competitionResultRowType;
   phase: string;
 };
 const CompetitionResultRowBox = ({ data, phase }: Props) => {

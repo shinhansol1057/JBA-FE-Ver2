@@ -1,6 +1,6 @@
 import { getFileType } from "@/types/CommonType";
 
-export type competitionDetail = {
+export type competitionDetailType = {
   competitionId: number;
   title: string;
   startDate: Date;
@@ -8,13 +8,13 @@ export type competitionDetail = {
   relatedUrl: string | null;
   content: string;
   phase: string;
-  places: competitionPlace[];
-  competitionDetailAttachedFiles: competitionFile[];
+  places: competitionPlaceType[];
+  competitionDetailAttachedFiles: competitionFileType[];
   divisions: string[];
   ckImgUrls: string[];
 };
 
-export type competitionPlace = {
+export type competitionPlaceType = {
   competitionPlaceId: number;
   placeName: string;
   latitude: number;
@@ -22,18 +22,18 @@ export type competitionPlace = {
   address: string;
 };
 
-export type competitionFile = {
+export type competitionFileType = {
   competitionAttachedFileId: number;
   filePath: string;
   fileName: string;
 };
 
-export type competitionResult = {
+export type competitionResultType = {
   division: string;
-  getResultResponseRows: competitionResultRow[];
+  getResultResponseRows: competitionResultRowType[];
 };
 
-export type competitionResultRow = {
+export type competitionResultRowType = {
   competitionResultId: number;
   gameNumber: number;
   startDate: Date;
@@ -67,7 +67,7 @@ export type competitionDetailAttachedFileType = {
   filePath: string;
 };
 
-export type AddCompetitionRequestType = {
+export type addCompetitionRequestType = {
   title: string;
   divisions: string[];
   startDate: string;
@@ -78,7 +78,7 @@ export type AddCompetitionRequestType = {
   ckImgRequests: getFileType[];
 };
 
-export type UpdateCompetitionRequestType = {
+export type updateCompetitionRequestType = {
   title: string;
   divisions: string[] | undefined;
   startDate: string;
@@ -91,12 +91,12 @@ export type UpdateCompetitionRequestType = {
   deletedCkImgUrls: string[];
 };
 
-export type AddCompetitionScheduleType = {
+export type addCompetitionScheduleType = {
   division: string;
-  postCompetitionScheduleRow: AddCompetitionScheduleRowType[];
+  postCompetitionScheduleRow: addCompetitionScheduleRowType[];
 };
 
-export type AddCompetitionScheduleRowType = {
+export type addCompetitionScheduleRowType = {
   competitionResultId?: number;
   gameNumber: number;
   startDate: string;

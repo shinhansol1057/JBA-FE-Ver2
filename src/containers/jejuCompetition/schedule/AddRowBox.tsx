@@ -4,8 +4,8 @@ import { ConfigProvider, DatePicker, Select, Space } from "antd";
 import { koreanLocale } from "@/constants/AntdConfig";
 import dayjs from "dayjs";
 import {
-  AddCompetitionScheduleRowType,
-  AddCompetitionScheduleType,
+  addCompetitionScheduleRowType,
+  addCompetitionScheduleType,
   divisionType,
   placeType,
 } from "@/types/CompetitionType";
@@ -16,9 +16,9 @@ type Props = {
   divisionIndex: number;
   rowIndex: number;
   places: placeType[];
-  addCompetitionScheduleList: AddCompetitionScheduleType[];
+  addCompetitionScheduleList: addCompetitionScheduleType[];
   setAddCompetitionScheduleList: React.Dispatch<
-    React.SetStateAction<AddCompetitionScheduleType[]>
+    React.SetStateAction<addCompetitionScheduleType[]>
   >;
   setGameNumber: any;
 };
@@ -44,11 +44,11 @@ const AddRowBox = ({
 
   const minusHandler = (): void => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
+      const scheduleList: addCompetitionScheduleType[] = [...prevState];
       scheduleList[divisionIndex].postCompetitionScheduleRow = scheduleList[
         divisionIndex
       ].postCompetitionScheduleRow.filter(
-        (item: AddCompetitionScheduleRowType, index: number) =>
+        (item: addCompetitionScheduleRowType, index: number) =>
           rowIndex !== index,
       );
       return scheduleList;
@@ -58,7 +58,7 @@ const AddRowBox = ({
 
   const startDateHandler = (dateString: string) => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
+      const scheduleList: addCompetitionScheduleType[] = [...prevState];
       rowData.startDate = dateString;
       return scheduleList;
     });
@@ -67,7 +67,7 @@ const AddRowBox = ({
 
   const floorHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
+      const scheduleList: addCompetitionScheduleType[] = [...prevState];
       rowData.floor = event.target.value;
       return scheduleList;
     });
@@ -75,7 +75,7 @@ const AddRowBox = ({
 
   const placeHandler = (value: string) => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
+      const scheduleList: addCompetitionScheduleType[] = [...prevState];
       rowData.place = value;
       return scheduleList;
     });
@@ -84,7 +84,7 @@ const AddRowBox = ({
 
   const homeNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
+      const scheduleList: addCompetitionScheduleType[] = [...prevState];
       rowData.homeName = e.target.value;
       return scheduleList;
     });
@@ -92,7 +92,7 @@ const AddRowBox = ({
 
   const awayNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
+      const scheduleList: addCompetitionScheduleType[] = [...prevState];
       rowData.awayName = e.target.value;
       return scheduleList;
     });
