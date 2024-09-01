@@ -1,9 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DOMPurify from "dompurify";
 
 const PostContent = ({ content }: { content: string }) => {
-  const cleanHtml = DOMPurify.sanitize(content);
+  const [cleanHtml, setCleanHtml] = useState<string>("");
+  useEffect(() => {
+    const html = DOMPurify.sanitize(content);
+    setCleanHtml(html);
+  }, [content]);
   return (
     <div
       className={

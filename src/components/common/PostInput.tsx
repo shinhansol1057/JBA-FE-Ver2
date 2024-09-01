@@ -19,7 +19,7 @@ const PostInput = ({ type, placeHolder, data, setData }: Props) => {
       <input
         type={type}
         placeholder={placeHolder}
-        value={data}
+        value={data || ""}
         onChange={(e) => setData(e.target.value)}
         className={
           "w-[80%] ml-[20px] placeholder:text-[#B5B5B5] border-none " +

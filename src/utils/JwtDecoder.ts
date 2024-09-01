@@ -1,7 +1,7 @@
 import base64 from "base-64";
 import { useUserStore } from "@/states/UserStore";
 export function JwtDecoder(jwtToken: string | null) {
-  if (window !== undefined && jwtToken) {
+  if (typeof window !== "undefined" && jwtToken) {
     //jwt토큰 디코딩
     let payload = jwtToken.split(".")[1]; // Base64 URL part of JWT
     let decodedPayload = base64.decode(payload);

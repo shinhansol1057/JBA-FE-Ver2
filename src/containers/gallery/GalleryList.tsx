@@ -1,13 +1,14 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getGalleryList } from "@/services/GalleryApi";
+import { FetchGetGalleryList } from "@/services/GalleryApi";
 import SearchBar from "@/components/common/SearchBar";
 import { useObserver } from "@/hooks/useObserver";
 import LoadingText from "@/components/common/LoadingText";
 import { paginationResponse, paginationType } from "@/types/CommonType";
 import { getGalleryType } from "@/types/GalleryType";
 import GalleryCard from "@/containers/gallery/GalleryCard";
+import AddPageRouter from "@/components/common/AddPageRouter";
 
 const GalleryList = () => {
   const bottom = useRef(null);
@@ -15,7 +16,7 @@ const GalleryList = () => {
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
       queryKey: ["getGalleryList", keyword],
-      queryFn: getGalleryList,
+      queryFn: FetchGetGalleryList,
       initialPageParam: 0,
       getNextPageParam: (lastPage, pages, lastPageParam) => {
         if (lastPage?.data.totalPages === lastPageParam + 1) {
@@ -51,6 +52,7 @@ const GalleryList = () => {
   }, []);
   return (
     <div className={"w-[280px] sm:w-[400px] md:w-[800px]"}>
+      <AddPageRouter content={"갤러리등록"} url={"/media/gallery/add"} />
       <SearchBar searchKey={keyword} setSearchKey={setKeyword} />
       <LoadingText
         loading={status === "error"}

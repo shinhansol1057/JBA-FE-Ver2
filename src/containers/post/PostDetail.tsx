@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { getPostDetail } from "@/services/PostApi";
+import { FetchGetPostDetail } from "@/services/PostApi";
 import PostTitle from "@/components/common/PostTitle";
 import PostDetailInfo from "@/containers/post/PostDetailInfo";
 import { getFileWithIdType } from "@/types/CommonType";
@@ -11,11 +11,11 @@ const PostDetail = async ({ id }: { id: string }) => {
   const parts = url.split("/");
   const category = parts[4];
 
-  const data = await getPostDetail(id, category);
+  const data = await FetchGetPostDetail(id, category);
   return (
     <div className={"mt-[20px]"}>
-      <PostTitle title={data.data.title} />
-      <PostDetailInfo data={data.data} />
+      <PostTitle title={data?.data.title} />
+      <PostDetailInfo data={data?.data} />
       <div className={"mt-[20px] "}>
         {data.data.files.map((file: getFileWithIdType) => {
           return (

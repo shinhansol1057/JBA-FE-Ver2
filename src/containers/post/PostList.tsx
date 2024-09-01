@@ -2,13 +2,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "@/components/common/SearchBar";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getPostList } from "@/services/PostApi";
+import { FetchGetPostList } from "@/services/PostApi";
 import { getPostListItemType } from "@/types/PostType";
 import LoadingText from "@/components/common/LoadingText";
 import { useObserver } from "@/hooks/useObserver";
 import PostListCard from "@/containers/post/PostListCard";
 import { headers } from "next/headers";
 import { usePathname } from "next/navigation";
+import AddPageRouter from "@/components/common/AddPageRouter";
+import { usePostStore } from "@/states/PostStore";
 
 const PostList = () => {
   const [searchKey, setSearchKey] = useState<string>("");
@@ -16,6 +18,7 @@ const PostList = () => {
   const path = usePathname();
   const parts = path.split("/");
   const category = parts[2] === "announcement" ? "notice" : parts[2];
+  const { setPostCategory } = usePostStore();
 
   const {
     data,
@@ -27,7 +30,7 @@ const PostList = () => {
     status,
   } = useInfiniteQuery({
     queryKey: ["getPostList", category, searchKey],
-    queryFn: getPostList,
+    queryFn: FetchGetPostList,
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages, lastPageParam) => {
       if (
@@ -67,6 +70,11 @@ const PostList = () => {
 
   return (
     <div>
+      <AddPageRouter
+        content={"게시물등록"}
+        url={"/post/add"}
+        onClick={() => setPostCategory(category)}
+      />
       <SearchBar searchKey={searchKey} setSearchKey={setSearchKey} />
       <LoadingText
         loading={status === "error"}

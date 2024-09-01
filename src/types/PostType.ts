@@ -26,3 +26,9 @@ export type getPostDetailType = {
   }[];
   content: string;
 };
+
+export type getFileWithFileIdType = {
+  fileId?: number;
+  fileName: string;
+  fileUrl: string;
+};

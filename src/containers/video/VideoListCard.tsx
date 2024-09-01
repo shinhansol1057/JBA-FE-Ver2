@@ -28,7 +28,7 @@ const VideoListCard = ({ data }: Props) => {
   };
 
   const updateHandler = () => {
-    router.push(`/media/video/updateVideo/${data.videoId}`);
+    router.push(`/media/video/update/${data.videoId}`);
   };
 
   return (

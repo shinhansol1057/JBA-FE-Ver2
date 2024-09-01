@@ -6,8 +6,13 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import LoadingText from "@/components/common/LoadingText";
 import SearchBar from "@/components/common/SearchBar";
 import VideoListCard from "@/containers/video/VideoListCard";
+import { FindAdminRole } from "@/utils/JwtDecoder";
+import { useRouter } from "next/navigation";
+import AddPageRouter from "@/components/common/AddPageRouter";
 
 const VideoList = () => {
+  const isAdmin = FindAdminRole();
+  const router = useRouter();
   const bottom = useRef(null);
   const [keyword, setKeyword] = useState<string>("");
   const isOfficial: string = "false";
@@ -50,6 +55,7 @@ const VideoList = () => {
   }, []);
   return (
     <div className={"flex flex-col items-center"}>
+      <AddPageRouter content={"영상등록"} url={"/media/video/add"} />
       <SearchBar searchKey={keyword} setSearchKey={setKeyword} />
       <LoadingText
         loading={status === "pending"}

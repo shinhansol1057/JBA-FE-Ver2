@@ -23,7 +23,7 @@ export const addVideo = (
     .then((res) => {
       if (res.status === 200) {
         confirmAlert("success", "영상 등록이 완료되었습니다").then((res) => {
-          if (res.isConfirmed) router.back();
+          if (res.isConfirmed) router.push("/media/video");
         });
       }
     })
