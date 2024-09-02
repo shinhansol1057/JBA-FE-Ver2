@@ -4,7 +4,7 @@ import PostInput from "@/components/common/PostInput";
 import PostLabel from "@/components/common/PostLabel";
 import AddBtn from "@/components/common/AddBtn";
 import CancelBtn from "@/components/common/CancelBtn";
-import { addVideo } from "@/services/VideoApi";
+import { FetchAddVideo } from "@/services/VideoApi";
 import { useRouter } from "next/navigation";
 import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import SubTitle from "@/components/layout/SubTitle";
@@ -48,7 +48,7 @@ const AddVideo = () => {
       </div>
       <div className={"grid grid-cols-2 gap-[10px]"}>
         <CancelBtn handler={() => router.back()} />
-        <AddBtn handler={() => addVideo(title, url, content, router)} />
+        <AddBtn handler={() => FetchAddVideo(title, url, content, router)} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { NormalApi } from "@/services/axios/NormalApi";
 
-export const addVideo = (
+export const FetchAddVideo = (
   title: string,
   url: string,
   content: string,
@@ -40,7 +40,7 @@ export const addVideo = (
     });
 };
 
-export const getVideoList = async ({
+export const FetchGetVideoList = async ({
   pageParam,
   queryKey,
 }: {
@@ -54,11 +54,11 @@ export const getVideoList = async ({
   return res.json();
 };
 
-export const getVideo = async (id: string) => {
+export const FetchGetVideoDetail = async (id: string) => {
   return NormalApi.get(`v1/api/video/get?id=${id}`);
 };
 
-export const deleteVideo = async (id: string) => {
+export const FetchDeleteVideo = async (id: string) => {
   Api.delete(`/v1/api/video/delete?id=${id}`).then((res) => {
     if (res.status === 200)
       confirmAlert("success", "영상 삭제가 완료되었습니다")

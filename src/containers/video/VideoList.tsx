@@ -1,25 +1,21 @@
 "use client";
-import { getVideoList } from "@/services/VideoApi";
+import { FetchGetVideoList } from "@/services/VideoApi";
 import { useObserver } from "@/hooks/useObserver";
 import React, { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import LoadingText from "@/components/common/LoadingText";
 import SearchBar from "@/components/common/SearchBar";
 import VideoListCard from "@/containers/video/VideoListCard";
-import { FindAdminRole } from "@/utils/JwtDecoder";
-import { useRouter } from "next/navigation";
 import AddPageRouter from "@/components/common/AddPageRouter";
 
 const VideoList = () => {
-  const isAdmin = FindAdminRole();
-  const router = useRouter();
   const bottom = useRef(null);
   const [keyword, setKeyword] = useState<string>("");
   const isOfficial: string = "false";
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
       queryKey: ["getVideoList", keyword, isOfficial],
-      queryFn: getVideoList,
+      queryFn: FetchGetVideoList,
       initialPageParam: 0,
       getNextPageParam: (lastPage) => {
         if (lastPage?.data?.last) {
@@ -54,7 +50,11 @@ const VideoList = () => {
     if (scrollY !== 0) window.scrollTo(0, scrollY);
   }, []);
   return (
-    <div className={"flex flex-col items-center"}>
+    <div
+      className={
+        "flex flex-col items-center w-[280px] sm:w-[400px] md:w-[800px]"
+      }
+    >
       <AddPageRouter content={"영상등록"} url={"/media/video/add"} />
       <SearchBar searchKey={keyword} setSearchKey={setKeyword} />
       <LoadingText
@@ -74,7 +74,7 @@ const VideoList = () => {
           영상이 없습니다.
         </p>
       )}
-      <div className={"flex flex-col mt-[20px] md:mt-[40px]"}>
+      <div className={"flex flex-col mt-[20px] md:mt-[40px] w-full"}>
         {status === "success" &&
           data?.pages.map((group: any, i: number) => (
             <React.Fragment key={i}>

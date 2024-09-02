@@ -4,7 +4,11 @@ import PostLabel from "@/components/common/PostLabel";
 import PostInput from "@/components/common/PostInput";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
-import { addVideo, getVideo, updateVideo } from "@/services/VideoApi";
+import {
+  FetchAddVideo,
+  FetchGetVideoDetail,
+  updateVideo,
+} from "@/services/VideoApi";
 import { useRouter } from "next/navigation";
 import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import { useQuery } from "@tanstack/react-query";
@@ -24,7 +28,7 @@ const UpdateVideo = ({ id }: { id: string }) => {
 
   const { data: lastData } = useQuery({
     queryKey: ["getVideo", id],
-    queryFn: () => getVideo(id),
+    queryFn: () => FetchGetVideoDetail(id),
     select: (result) => result.data.data,
   });
 

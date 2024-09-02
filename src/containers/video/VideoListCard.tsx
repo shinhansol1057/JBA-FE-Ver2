@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import { getVideoId } from "@/constants/Video";
@@ -7,7 +8,7 @@ import { BsFillPlayBtnFill } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import { useRouter } from "next/navigation";
-import { deleteVideo } from "@/services/VideoApi";
+import { FetchDeleteVideo } from "@/services/VideoApi";
 import { FindAdminRole } from "@/utils/JwtDecoder";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 
@@ -23,7 +24,7 @@ const VideoListCard = ({ data }: Props) => {
       "question",
       "영상을 삭제하시겠습니까?",
       "",
-      async () => await deleteVideo(data.videoId.toString()),
+      async () => await FetchDeleteVideo(data.videoId.toString()),
     );
   };
 
@@ -32,15 +33,21 @@ const VideoListCard = ({ data }: Props) => {
   };
 
   return (
-    <div
-      className={"w-[280px] sm:w-[400px] md:w-[800px] mb-[30px] md:mb-[50px]"}
-    >
-      <div className={"flex justify-between items-center"}>
-        <PostLabel content={data.title} />
+    <div className={"w-full mb-[30px] md:mb-[50px] relative"}>
+      <div
+        className={
+          "flex justify-between items-center absolute top-0 left-0 w-full z-30 " +
+          "px-[5px] md:px-[10px] " +
+          "pt-[3px] md:pt-[7px]"
+        }
+      >
+        <h3 className={"text-[9px] sm:text-[11px] md:text-[16px] text-white"}>
+          {data.title}
+        </h3>
         {FindAdminRole() ? (
           <IoMenu
             className={
-              "text-[20px] sm:text-[25px] md:text-[35px] cursor-pointer"
+              "text-[15px] sm:text-[20px] md:text-[30px] cursor-pointer text-white"
             }
             onClick={() => setModalOpen(true)}
           />

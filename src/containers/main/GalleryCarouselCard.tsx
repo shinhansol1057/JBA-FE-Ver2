@@ -2,18 +2,21 @@
 import React from "react";
 import { gallery } from "@/types/MainPageType";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 type Props = {
   data: gallery;
   key: number;
 };
 const GalleryCarouselCard = ({ data, key }: Props) => {
+  const router = useRouter();
   return (
     <div
       className={
         "relative rounded-[8px] overflow-hidden " +
         "w-[280px] sm:w-[400px] md:w-[600px] h-[280px] sm:h-[400px] md:h-[600px]"
       }
+      onClick={() => router.push(`/media/gallery/${data.galleryId}`)}
     >
       <div
         className={

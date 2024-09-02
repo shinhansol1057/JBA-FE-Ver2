@@ -21,7 +21,7 @@ const GalleryCarousel = ({ galleries }: Props) => {
           "w-[100%] absolute flex items-center justify-center bottom-0"
         }
       >
-        <ul> {dots} </ul>
+        <div> {dots} </div>
       </div>
     ),
     dotsClass: "dots_custom",
