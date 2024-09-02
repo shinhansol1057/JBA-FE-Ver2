@@ -4,7 +4,7 @@ import Category from "@/components/layout/Category";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className={"flex flex-col items-center"}>
-      <PageTitle title={"농구협회"} />
+      <PageTitle title={"농구협회"} url={"/association/announcement"} />
       <Category
         category1={"공지사항"}
         category2={"회장인사말"}

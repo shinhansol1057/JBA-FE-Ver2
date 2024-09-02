@@ -7,7 +7,6 @@ import { getPostListItemType } from "@/types/PostType";
 import LoadingText from "@/components/common/LoadingText";
 import { useObserver } from "@/hooks/useObserver";
 import PostListCard from "@/containers/post/PostListCard";
-import { headers } from "next/headers";
 import { usePathname } from "next/navigation";
 import AddPageRouter from "@/components/common/AddPageRouter";
 import { usePostStore } from "@/states/PostStore";
@@ -20,30 +19,23 @@ const PostList = () => {
   const category = parts[2] === "announcement" ? "notice" : parts[2];
   const { setPostCategory } = usePostStore();
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery({
-    queryKey: ["getPostList", category, searchKey],
-    queryFn: FetchGetPostList,
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, pages, lastPageParam) => {
-      if (
-        !lastPage.data.totalPages ||
-        lastPage?.data?.totalPages === lastPageParam + 1
-      ) {
-        // lastPage 가 마지막 페이지였다면 api 호출을 하지 않는다.
-        return undefined;
-      } else {
-        return lastPageParam + 1; // 다음 페이지 리턴
-      }
-    },
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useInfiniteQuery({
+      queryKey: ["getPostList", category, searchKey],
+      queryFn: FetchGetPostList,
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, pages, lastPageParam) => {
+        if (
+          !lastPage.data.totalPages ||
+          lastPage?.data?.totalPages === lastPageParam + 1
+        ) {
+          // lastPage 가 마지막 페이지였다면 api 호출을 하지 않는다.
+          return undefined;
+        } else {
+          return lastPageParam + 1; // 다음 페이지 리턴
+        }
+      },
+    });
   const onIntersect = ([entry]: any) => entry.isIntersecting && fetchNextPage();
 
   useObserver({

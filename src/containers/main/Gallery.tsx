@@ -1,5 +1,6 @@
 import GalleryCarousel from "@/containers/main/GalleryCarousel";
 import { getGalleries } from "@/services/MainPageApi";
+import AllContentBtn from "@/containers/main/AllContentBtn";
 
 const Gallery = async () => {
   const galleries = await getGalleries();
@@ -11,15 +12,7 @@ const Gallery = async () => {
         "w-[280px] sm:w-[400px] md:w-[600px]"
       }
     >
-      <div>
-        <h3
-          className={
-            "text-[14px] sm:text-[20px] md:text-[28px] font-bold ml-[10px] mb-[10px]"
-          }
-        >
-          갤러리
-        </h3>
-      </div>
+      <AllContentBtn url={"/media/gallery"} />
       <div>
         <GalleryCarousel galleries={galleries?.data.galleries} />
       </div>
