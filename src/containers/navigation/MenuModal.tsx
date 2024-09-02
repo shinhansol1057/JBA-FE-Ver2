@@ -7,6 +7,7 @@ import { JwtDecoder } from "@/utils/JwtDecoder";
 import fetchLogout from "@/services/user/LogoutApi";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { IoClose } from "react-icons/io5";
+import Link from "next/link";
 
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
@@ -61,13 +62,15 @@ const MenuModal = ({ setModalOpen }: Props) => {
         </p>
         {AccessToken ? (
           <div className={"flex justify-between"}>
-            <button
+            <Link
+              href={"/user/my-page"}
               className={
-                "w-[60px] sm:w-[80px] md:w-[100px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
+                "flex justify-center items-center w-[60px] sm:w-[80px] md:w-[100px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
               }
+              onClick={() => setModalOpen(false)}
             >
               마이페이지
-            </button>
+            </Link>
             <button
               className={
                 "w-[60px] sm:w-[80px] md:w-[100px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"

@@ -1,6 +1,6 @@
 import GalleryCarousel from "@/containers/main/GalleryCarousel";
 import { getGalleries } from "@/services/MainPageApi";
-import AllContentBtn from "@/containers/main/AllContentBtn";
+import AreaTitleAndAllContentBtn from "@/containers/main/AreaTitleAndAllContentBtn";
 
 const Gallery = async () => {
   const galleries = await getGalleries();
@@ -12,7 +12,7 @@ const Gallery = async () => {
         "w-[280px] sm:w-[400px] md:w-[600px]"
       }
     >
-      <AllContentBtn url={"/media/gallery"} />
+      <AreaTitleAndAllContentBtn title={"갤러리"} url={"/media/gallery"} />
       <div>
         <GalleryCarousel galleries={galleries?.data.galleries} />
       </div>

@@ -12,7 +12,7 @@ const CompetitionLabel = ({ content, color, bold, long }: Props) => {
       className={
         (long
           ? "w-[45px] sm:w-[55px] md:w-[70px] "
-          : "w-[25px] sm:w-[35px] md:w-[50px] ") +
+          : "w-[30px] sm:w-[35px] md:w-[50px] ") +
         "text-[10px] sm:text-[12px] md:text-[16px] " +
         "ml-[3px] " +
         (bold && "font-bold ") +

@@ -2,7 +2,13 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-const AllContentBtn = ({ url }: { url: string }) => {
+const AreaTitleAndAllContentBtn = ({
+  title,
+  url,
+}: {
+  title: string;
+  url: string;
+}) => {
   const router = useRouter();
   return (
     <div className={"w-full flex justify-between items-center mb-[10px]"}>
@@ -11,7 +17,7 @@ const AllContentBtn = ({ url }: { url: string }) => {
           "text-[14px] sm:text-[20px] md:text-[28px] font-bold ml-[10px]"
         }
       >
-        대회영상
+        {title}
       </h3>
       <button
         className={
@@ -28,4 +34,4 @@ const AllContentBtn = ({ url }: { url: string }) => {
   );
 };
 
-export default AllContentBtn;
+export default AreaTitleAndAllContentBtn;

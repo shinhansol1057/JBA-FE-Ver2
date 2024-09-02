@@ -2,7 +2,7 @@ import React from "react";
 import { FetchGetVideoList } from "@/services/VideoApi";
 import VideoListCard from "@/containers/video/VideoListCard";
 import { getVideoType } from "@/types/VideoType";
-import AllContentBtn from "@/containers/main/AllContentBtn";
+import AreaTitleAndAllContentBtn from "@/containers/main/AreaTitleAndAllContentBtn";
 
 const Video = async () => {
   const FetchMainVideoList = async () => {
@@ -17,10 +17,10 @@ const Video = async () => {
   return (
     <div
       className={
-        "flex flex-col items-center w-[280px] sm:w-[400px] md:w-[600px] mt-[50px]"
+        "flex flex-col items-center w-[280px] sm:w-[400px] md:w-[600px] mt-[50px] md:mt-[80px]"
       }
     >
-      <AllContentBtn url={"/media/video"} />
+      <AreaTitleAndAllContentBtn title={"대회영상"} url={"/media/video"} />
       {data?.data.content.map((video: getVideoType) => {
         return <VideoListCard data={video} key={video.videoId} />;
       })}
