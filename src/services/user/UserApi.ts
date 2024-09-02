@@ -36,6 +36,7 @@ export const FetchUpdatePassword = (
   prevPW: string,
   newPW: string,
   newPWConfirm: string,
+  setAccessToken: (token: string | null) => void,
 ) => {
   const request: { prevPW: string; newPW: string; newPWConfirm: string } = {
     prevPW,
