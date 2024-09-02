@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/navigation";
 import { FindAdminRole } from "@/utils/JwtDecoder";
 import Link from "next/link";
 
@@ -21,7 +20,7 @@ const AddPageRouter = ({ content, url, onClick }: Props) => {
             "w-[60px] sm:w-[80px] md:w-[100px] " +
             "h-[30px] sm:h-[30px] md:h-[50px]"
           }
-          onClick={() => onClick()}
+          onClick={() => onClick && onClick()}
         >
           {content}
         </Link>

@@ -67,3 +67,32 @@ export const FetchDeleteGallery = (id: string) => {
         });
     });
 };
+
+export const FetchUpdateGallery = (
+  id: string,
+  title: string,
+  files: getFileType[],
+  isOfficial: boolean,
+) => {
+  const request: { title: string; imgs: getFileType[] } = {
+    title: title,
+    imgs: files,
+  };
+  return Api.put(`/v1/api/gallery/${id}?official=${isOfficial}`, request)
+    .then((res) => {
+      if (res.status === 200) {
+        confirmAlert("success", "갤러리가 수정되었습니다").then((res) => {
+          if (res.isConfirmed) window.location.href = `/media/gallery/${id}`;
+        });
+      }
+    })
+    .catch((err) => {
+      const data = err.response.data;
+      if (data.detailMessage === "Gallery Not Found")
+        confirmAlert("error", "갤러리를 찾을 수 없습니다").then((res) => {
+          if (res.isConfirmed) window.location.href = "/media/gallery";
+        });
+      else if (data.detailMessage === "적어도 한개의 imgs는 필수입니다.")
+        confirmAlert("error", "파일을 한 개 이상 업로드해주세요");
+    });
+};
