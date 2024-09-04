@@ -6,13 +6,17 @@ import { useQuery } from "@tanstack/react-query";
 import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import { FetchGetUserInfo } from "@/services/user/UserApi";
 import Link from "next/link";
+import { useUserStore } from "@/states/UserStore";
+import { useSession } from "next-auth/react";
 
 const MyPage = () => {
   useAxiosInterceptor();
+  const { data: session, status: sessionStatus } = useSession();
   const { data } = useQuery({
     queryKey: ["getUserInfo"],
-    queryFn: async () => await FetchGetUserInfo(),
+    queryFn: async () => await FetchGetUserInfo(session?.accessToken),
     select: (result) => result?.data.data,
+    enabled: sessionStatus === "authenticated",
   });
   return (
     <div className={"flex flex-col items-center"}>

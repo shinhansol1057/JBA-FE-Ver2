@@ -14,12 +14,12 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import { usePostStore } from "@/states/PostStore";
 import SubTitle from "@/components/layout/SubTitle";
+import { useSession } from "next-auth/react";
 
 const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
 });
 const AddPost = () => {
-  useAxiosInterceptor();
   const [title, setTitle] = useState<string>("");
   const [isOfficial, setIsOfficial] = useState<string>("false");
   const { postCategory, setPostCategory } = usePostStore();
@@ -27,14 +27,16 @@ const AddPost = () => {
   const [postImgs, setPostImgs] = useState<getFileType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
-
+  const { data: session } = useSession();
+  console.log(session);
   const addHandler = () => {
     const body = { title, content, postImgs };
     confirmAndCancelAlertWithLoading(
       "question",
       "게시물을 등록하겠습니까?",
       "",
-      async () => await FetchAddPost(postCategory, body, files, isOfficial),
+      async () =>
+        await FetchAddPost(postCategory, body, files, isOfficial, session),
     );
   };
 

@@ -8,6 +8,7 @@ import fetchLogout from "@/services/user/LogoutApi";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
@@ -20,6 +21,7 @@ const MenuModal = ({ setModalOpen }: Props) => {
     setModalOpen(false);
     router.push("/login");
   };
+  const { data: session, status: sessionStatus } = useSession();
 
   const logoutHandler = () => {
     setModalOpen(false);
@@ -44,9 +46,9 @@ const MenuModal = ({ setModalOpen }: Props) => {
             "flex flex-row leading-[18px] sm:leading-[22px] md:leading-[28px]"
           }
         >
-          {AccessToken ? (
+          {sessionStatus === "authenticated" ? (
             <div className={"flex"}>
-              <p className={"font-bold"}>{JwtDecoder(AccessToken).aud}</p>
+              <p className={"font-bold"}>{session?.user?.name}</p>
               <p>님</p>
             </div>
           ) : (
@@ -60,7 +62,7 @@ const MenuModal = ({ setModalOpen }: Props) => {
         >
           JBA 방문을 환영합니다.
         </p>
-        {AccessToken ? (
+        {sessionStatus === "authenticated" ? (
           <div className={"flex justify-between"}>
             <Link
               href={"/user/my-page"}

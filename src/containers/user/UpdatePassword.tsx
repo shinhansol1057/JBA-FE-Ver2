@@ -19,7 +19,8 @@ const UpdatePassword = () => {
   const router = useRouter();
   const { setAccessToken } = useUserStore();
 
-  const updateHandler = () => {
+  const updateHandler = (e: any) => {
+    e.preventDefault();
     confirmAndCancelAlertWithLoading(
       "question",
       "비밀번호를 변경하겠습니까?",
@@ -30,7 +31,7 @@ const UpdatePassword = () => {
   };
 
   return (
-    <div className={"flex flex-col items-center"}>
+    <form className={"flex flex-col items-center"} onSubmit={updateHandler}>
       <PageTitle
         title={"비밀번호 변경"}
         url={"/user/my-page/update/password"}
@@ -64,9 +65,19 @@ const UpdatePassword = () => {
       </div>
       <div className={"grid grid-cols-2 gap-[10px]"}>
         <CancelBtn handler={() => router.back()} />
-        <AddBtn handler={() => updateHandler()} />
+        <button
+          type={"submit"}
+          className={
+            "font-bold rounded-[8px] bg-black text-white " +
+            "text-[12px] sm:text-[14px] md:text-[18px] " +
+            "w-[135px] sm:w-[195px] md:w-[390px] " +
+            "h-[30px] sm:h-[30px] md:h-[50px]"
+          }
+        >
+          수정
+        </button>
       </div>
-    </div>
+    </form>
   );
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { FindAdminRole } from "@/utils/JwtDecoder";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 type Props = {
   content: string;
@@ -8,10 +9,10 @@ type Props = {
   onClick?: any;
 };
 const AddPageRouter = ({ content, url, onClick }: Props) => {
-  const isAdmin = FindAdminRole();
+  const { data: session, status: sessionStatus } = useSession();
   return (
     <div className={"flex justify-end mb-[10px] w-full"}>
-      {isAdmin ? (
+      {sessionStatus === "authenticated" ? (
         <Link
           href={url}
           className={

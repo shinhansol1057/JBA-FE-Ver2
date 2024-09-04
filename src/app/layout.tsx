@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import Navigation from "@/containers/navigation/navigation";
 import ReactQueryProviders from "@/hooks/useReactQuery";
+import AuthProvider from "@/libs/next-auth/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,8 +37,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html lang="kr">
       <body className={inter.className}>
         <div className={"min-h-[100vh]"}>
-          <Navigation />
-          <ReactQueryProviders>{children}</ReactQueryProviders>
+          <AuthProvider>
+            <Navigation />
+            <ReactQueryProviders>{children}</ReactQueryProviders>
+          </AuthProvider>
         </div>
       </body>
     </html>

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useUserStore } from "@/states/UserStore";
 import { getCookie, setCookie } from "@/utils/Cookie";
 import fetchLogin from "@/services/user/LoginApi";
+import { signIn, useSession } from "next-auth/react";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -15,20 +16,29 @@ const Login = () => {
   const [emailMessage, setEmailMessage] = useState<string>("");
   const { AccessToken, setAccessToken } = useUserStore();
   const router = useRouter();
-
-  const loginHandler = (e: FormEvent<HTMLFormElement>) => {
-    if (typeof window !== "undefined") {
-      e.preventDefault();
-      setEmailMessage("");
-      fetchLogin(
-        email,
-        password,
-        setEmailMessage,
-        setAccessToken,
-        isChecked,
-        setCookie,
-      );
-    }
+  const { data } = useSession();
+  console.log(data);
+  const loginHandler = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setEmailMessage("");
+    const res = await signIn("credentials", {
+      username: email,
+      password: password,
+      redirect: false,
+      callbackUrl: "/",
+    });
+    console.log(res);
+    // if (typeof window !== "undefined") {
+    //   e.preventDefault();
+    //   fetchLogin(
+    //     email,
+    //     password,
+    //     setEmailMessage,
+    //     setAccessToken,
+    //     isChecked,
+    //     setCookie,
+    //   );
+    // }
   };
 
   useEffect(() => {
@@ -88,6 +98,7 @@ const Login = () => {
           />
         </div>
         <button
+          type={"submit"}
           className={
             "w-[280px] h-[40px] rounded-[50px] bg-black text-[14px] font-bold text-[white]"
           }

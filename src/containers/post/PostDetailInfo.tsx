@@ -1,7 +1,6 @@
 "use client";
 import { getPostDetailType } from "@/types/PostType";
 import PostContent from "@/components/common/PostContent";
-import { FindAdminRole } from "@/utils/JwtDecoder";
 import { IoMenu } from "react-icons/io5";
 import React, { useState } from "react";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
@@ -9,6 +8,7 @@ import { usePostStore } from "@/states/PostStore";
 import { useRouter, usePathname } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { FetchDeletePost } from "@/services/PostApi";
+import { useSession } from "next-auth/react";
 
 type Props = {
   data: getPostDetailType;
@@ -16,7 +16,7 @@ type Props = {
 
 const PostDetailInfo = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const isAdmin = FindAdminRole();
+  const { data: session, status: sessionStatus } = useSession();
   const { setPostCategory } = usePostStore();
   const router = useRouter();
   const pathName = usePathname();
@@ -58,7 +58,7 @@ const PostDetailInfo = ({ data }: Props) => {
           <p className={"mx-[10px]"}>{data?.createAt}</p>
           <p>조회수 {data?.viewCount}</p>
         </div>
-        {isAdmin ? (
+        {sessionStatus === "authenticated" ? (
           <IoMenu
             className={
               "text-[20px] sm:text-[25px] md:text-[35px] cursor-pointer"

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
+import { useSession } from "next-auth/react";
 
 const UpdateUserInfo = () => {
   useAxiosInterceptor();
@@ -18,11 +19,13 @@ const UpdateUserInfo = () => {
   const [birth, setBirth] = useState<string>("");
   const [team, setTeam] = useState<string>("");
   const router = useRouter();
+  const { data: session, status: sessionStatus } = useSession();
 
   const { data } = useQuery({
     queryKey: ["getUserInfo"],
-    queryFn: async () => await FetchGetUserInfo(),
+    queryFn: async () => await FetchGetUserInfo(session?.accessToken),
     select: (result) => result?.data.data,
+    enabled: sessionStatus === "authenticated",
   });
 
   const updateHandler = () => {

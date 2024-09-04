@@ -1,8 +1,15 @@
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
+import { NormalApi } from "@/services/axios/NormalApi";
 
-export const FetchGetUserInfo = () => {
-  return Api.get("/v1/api/user/get/user-info");
+export const FetchGetUserInfo = (accessToken: string | undefined) => {
+  if (accessToken) {
+    return NormalApi.get("/v1/api/user/get/user-info", {
+      headers: {
+        Authorization: accessToken,
+      },
+    });
+  }
 };
 
 export const FetchUpdateUserInfo = (request: {
@@ -51,8 +58,10 @@ export const FetchUpdatePassword = (
           "비밀번호 변경 완료",
           "다시 로그인해주세요.",
         ).then((res) => {
-          setAccessToken(null);
-          if (res.isConfirmed) window.location.href = "/login";
+          if (res.isConfirmed) {
+            setAccessToken(null);
+            window.location.href = "/login";
+          }
         });
       }
     })

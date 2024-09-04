@@ -2,6 +2,8 @@ import { getFileType } from "@/types/CommonType";
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { findPostCategoryUrl } from "@/constants/Post";
+import axios from "axios";
+import { NormalApi } from "@/services/axios/NormalApi";
 
 export const FetchGetPostList = async ({
   pageParam,
@@ -29,6 +31,7 @@ export const FetchAddPost = (
   body: { title: string; content: string; postImgs: getFileType[] },
   files: File[],
   isOfficial: string,
+  session: any,
 ) => {
   let categoryListUrl = findPostCategoryUrl(category);
 
@@ -39,12 +42,13 @@ export const FetchAddPost = (
   formData.append("body", blob);
   files.forEach((file: File) => formData.append("uploadFiles", file));
 
-  return Api.post(
+  return NormalApi.post(
     `/v1/api/post/${category}?isOfficial=${isOfficial}`,
     formData,
     {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: session.accessToken,
       },
     },
   )
