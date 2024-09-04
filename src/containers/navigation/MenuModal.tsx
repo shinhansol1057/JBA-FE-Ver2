@@ -2,20 +2,17 @@
 import React from "react";
 import { menuList } from "@/constants/navigation";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/states/UserStore";
-import { JwtDecoder } from "@/utils/JwtDecoder";
 import fetchLogout from "@/services/user/LogoutApi";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
 };
 const MenuModal = ({ setModalOpen }: Props) => {
   const router = useRouter();
-  const { AccessToken, setAccessToken } = useUserStore();
   const { setCompetitionStatusMenu } = useCompetitionStore();
   const loginButtonHandler = () => {
     setModalOpen(false);
@@ -25,7 +22,7 @@ const MenuModal = ({ setModalOpen }: Props) => {
 
   const logoutHandler = () => {
     setModalOpen(false);
-    fetchLogout(AccessToken, setAccessToken, router);
+    signOut();
   };
 
   return (

@@ -1,6 +1,7 @@
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { NormalApi } from "@/services/axios/NormalApi";
+import { signOut } from "next-auth/react";
 
 export const FetchGetUserInfo = (accessToken: string | undefined) => {
   if (accessToken) {
@@ -43,7 +44,6 @@ export const FetchUpdatePassword = (
   prevPW: string,
   newPW: string,
   newPWConfirm: string,
-  setAccessToken: (token: string | null) => void,
 ) => {
   const request: { prevPW: string; newPW: string; newPWConfirm: string } = {
     prevPW,
@@ -59,7 +59,7 @@ export const FetchUpdatePassword = (
           "다시 로그인해주세요.",
         ).then((res) => {
           if (res.isConfirmed) {
-            setAccessToken(null);
+            signOut();
             window.location.href = "/login";
           }
         });

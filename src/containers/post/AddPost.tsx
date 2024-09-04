@@ -20,6 +20,7 @@ const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
 });
 const AddPost = () => {
+  useAxiosInterceptor();
   const [title, setTitle] = useState<string>("");
   const [isOfficial, setIsOfficial] = useState<string>("false");
   const { postCategory, setPostCategory } = usePostStore();
@@ -27,7 +28,7 @@ const AddPost = () => {
   const [postImgs, setPostImgs] = useState<getFileType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
   console.log(session);
   const addHandler = () => {
     const body = { title, content, postImgs };
@@ -35,8 +36,7 @@ const AddPost = () => {
       "question",
       "게시물을 등록하겠습니까?",
       "",
-      async () =>
-        await FetchAddPost(postCategory, body, files, isOfficial, session),
+      async () => await FetchAddPost(postCategory, body, files, isOfficial),
     );
   };
 

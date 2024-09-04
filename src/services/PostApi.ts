@@ -4,6 +4,7 @@ import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { findPostCategoryUrl } from "@/constants/Post";
 import axios from "axios";
 import { NormalApi } from "@/services/axios/NormalApi";
+import { getSession } from "next-auth/react";
 
 export const FetchGetPostList = async ({
   pageParam,
@@ -26,15 +27,14 @@ export const FetchGetPostDetail = async (id: string, category: string) => {
   return res.json();
 };
 
-export const FetchAddPost = (
+export const FetchAddPost = async (
   category: string,
   body: { title: string; content: string; postImgs: getFileType[] },
   files: File[],
   isOfficial: string,
-  session: any,
 ) => {
+  const session = await getSession();
   let categoryListUrl = findPostCategoryUrl(category);
-
   const blob: Blob = new Blob([JSON.stringify(body)], {
     type: "application/json",
   });
@@ -42,13 +42,13 @@ export const FetchAddPost = (
   formData.append("body", blob);
   files.forEach((file: File) => formData.append("uploadFiles", file));
 
-  return NormalApi.post(
+  return Api.post(
     `/v1/api/post/${category}?isOfficial=${isOfficial}`,
     formData,
     {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: session.accessToken,
+        Authorization: session?.accessToken,
       },
     },
   )

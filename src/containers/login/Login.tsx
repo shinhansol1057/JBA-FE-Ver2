@@ -4,9 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import LoginInputBox from "@/containers/login/LoginInputBox";
 import { CheckBox } from "@/components/common/checkbox/CheckBox";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/states/UserStore";
-import { getCookie, setCookie } from "@/utils/Cookie";
-import fetchLogin from "@/services/user/LoginApi";
+import { getCookie } from "@/utils/Cookie";
 import { signIn, useSession } from "next-auth/react";
 
 const Login = () => {
@@ -14,7 +12,6 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [emailMessage, setEmailMessage] = useState<string>("");
-  const { AccessToken, setAccessToken } = useUserStore();
   const router = useRouter();
   const { data } = useSession();
   console.log(data);
@@ -43,13 +40,9 @@ const Login = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setIsChecked(!!getCookie("savedEmail"));
-      if (AccessToken) {
-        window.location.href = "/";
-      }
       getCookie("savedEmail") && setEmail(getCookie("savedEmail"));
     }
-  }, [AccessToken]);
+  }, []);
 
   return (
     <div

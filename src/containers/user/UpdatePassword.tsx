@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { FetchUpdatePassword } from "@/services/user/UserApi";
 import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
-import { useUserStore } from "@/states/UserStore";
 
 const UpdatePassword = () => {
   useAxiosInterceptor();
@@ -17,7 +16,6 @@ const UpdatePassword = () => {
   const [newPW, setNewPW] = useState<string>("");
   const [newPWConfirm, setNewPWConfirm] = useState<string>("");
   const router = useRouter();
-  const { setAccessToken } = useUserStore();
 
   const updateHandler = (e: any) => {
     e.preventDefault();
@@ -25,8 +23,7 @@ const UpdatePassword = () => {
       "question",
       "비밀번호를 변경하겠습니까?",
       "",
-      async () =>
-        await FetchUpdatePassword(prevPW, newPW, newPWConfirm, setAccessToken),
+      async () => await FetchUpdatePassword(prevPW, newPW, newPWConfirm),
     );
   };
 

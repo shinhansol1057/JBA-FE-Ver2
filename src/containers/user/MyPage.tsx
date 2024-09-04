@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import { FetchGetUserInfo } from "@/services/user/UserApi";
 import Link from "next/link";
-import { useUserStore } from "@/states/UserStore";
 import { useSession } from "next-auth/react";
 
 const MyPage = () => {
