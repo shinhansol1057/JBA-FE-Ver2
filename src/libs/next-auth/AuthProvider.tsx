@@ -9,7 +9,7 @@ interface Props {
 }
 
 const AuthProvider = ({ children }: Props) => {
-  useAxiosInterceptor();
+  // useAxiosInterceptor();
   return <SessionProvider>{children}</SessionProvider>;
 };
 

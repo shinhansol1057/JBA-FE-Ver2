@@ -27,12 +27,13 @@ export const FetchGetPostDetail = async (id: string, category: string) => {
   return res.json();
 };
 
-export const FetchAddPost = (
+export const FetchAddPost = async (
   category: string,
   body: { title: string; content: string; postImgs: getFileType[] },
   files: File[],
   isOfficial: string,
 ) => {
+  const session = await getSession();
   let categoryListUrl = findPostCategoryUrl(category);
   const blob: Blob = new Blob([JSON.stringify(body)], {
     type: "application/json",
@@ -47,6 +48,7 @@ export const FetchAddPost = (
     {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: session?.accessToken,
       },
     },
   )

@@ -9,17 +9,6 @@ export const nextAuthOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
   },
-  cookies: {
-    sessionToken: {
-      name: `next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "none",
-        path: "/",
-        secure: true,
-      },
-    },
-  },
   session: {
     strategy: "jwt",
     maxAge: 10 * 60,
@@ -80,6 +69,7 @@ export const nextAuthOptions: NextAuthOptions = {
         token.id = user.sub;
         token.exp = user.exp;
         token.iat = user.iat;
+        token.role = user.role;
 
         return token;
       } else {
@@ -97,8 +87,8 @@ export const nextAuthOptions: NextAuthOptions = {
         try {
           console.log("refresh 시작");
           const res = await axios.post(
-            // process.env.NEXT_PUBLIC_API_KEY + "/v1/api/sign/refresh-token-cookie",
-            "http://localhost:8080" + "/v1/api/sign/refresh-token-cookie",
+            process.env.NEXT_PUBLIC_API_KEY +
+              "/v1/api/sign/refresh-token-cookie",
             null,
             {
               // const res = await axios.post(
@@ -135,8 +125,9 @@ export const nextAuthOptions: NextAuthOptions = {
       // 세션에 AccessToken을 추가;
       console.log(token);
       session.accessToken = token.accessToken;
-      session.user.name = token.name;
-      session.user.email = token.id;
+      session.name = token.name;
+      session.email = token.id;
+      session.role = token.role;
       return session;
     },
   },
