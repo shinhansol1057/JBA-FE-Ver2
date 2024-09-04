@@ -11,8 +11,8 @@ import { getSession, signOut } from "next-auth/react";
 const useAxiosInterceptor = () => {
   const requestHandler = async (config: InternalAxiosRequestConfig) => {
     // 토큰이 있으면 요청 헤더에 추가한다.
-    // const session = await getSession();
-    // config.headers["Authorization"] = session?.accessToken;
+    const session = await getSession();
+    config.headers["Authorization"] = session?.accessToken;
 
     return config;
   };
