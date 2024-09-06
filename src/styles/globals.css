@@ -1,6 +1,18 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css");
 @import url('https://fonts.cdnfonts.com/css/helvetica-neue-55');
 
+/*ckeditor 설정*/
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@media print {
+    body {
+        margin: 0 !important;
+    }
+}
+
+
+/*----------------------------*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,6 +38,12 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
+strong {
+    font-weight: bold;
+}
+i {
+    font-style: italic;
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -33,6 +51,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
     line-height: 1;
+    min-width: 300px;
+    background-color: #F5F5F5;
 }
 ol, ul {
     list-style: none;
@@ -102,4 +122,42 @@ body * {
 
 body *:lang(en) {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.main-container {
+    font-family: 'Lato';
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ck-content {
+    font-family: 'Lato';
+    line-height: 1.6;
+    word-break: break-word;
+    min-height: 200px;
+}
+
+.editor-container_classic-editor .editor-container__editor {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+@media (max-width: 640px) {
+    .ant-picker-input {
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 768px){
+    .ant-picker-input {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 768px) {
+    .ant-picker-input {
+        font-size: 16px;
+    }
 }

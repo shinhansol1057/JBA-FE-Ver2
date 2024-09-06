@@ -2,8 +2,19 @@ import type { Config } from "tailwindcss";
 
 const config: {
   plugins: any[];
-  theme: { extend: { backgroundImage: { banner: string }; colors: {} } };
-  content: string[]
+  theme: {
+    extend: {
+      keyframes: {
+        rightSlide: {
+          "100%": { transform: string; opacity: string };
+          "0%": { transform: string; opacity: string };
+        };
+      };
+      colors: { borderColor: string };
+      backgroundImage: { mainAnnouncement: string; banner: string };
+    };
+  };
+  content: string[];
 } = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,9 +25,24 @@ const config: {
   theme: {
     extend: {
       backgroundImage: {
-        "banner": "url('/banner.jpeg')",
+        banner: "url('/image/mainPage/banner.jpeg')",
+        mainAnnouncement: "url('/image/mainPage/announcementImage.png')",
       },
-      colors: {},
+      colors: {
+        borderColor: "rgba(115,115,115,0.2)",
+      },
+      keyframes: {
+        rightSlide: {
+          "0%": {
+            transform: "translateX(100%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateX(0)",
+            opacity: "1",
+          },
+        },
+      },
     },
   },
   plugins: [],
