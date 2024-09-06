@@ -6,7 +6,6 @@ import PostInput from "@/components/common/PostInput";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { FetchGetPostDetail, FetchUpdatePost } from "@/services/PostApi";
@@ -23,7 +22,6 @@ const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
 });
 
 const UpdatePost = ({ id }: { id: string }) => {
-  useAxiosInterceptor();
   const [title, setTitle] = useState<string>("");
   const [isOfficial, setIsOfficial] = useState<string>("false");
   const { postCategory, setPostCategory } = usePostStore();

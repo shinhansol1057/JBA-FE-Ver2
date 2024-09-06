@@ -84,7 +84,6 @@ export function FetchSendCertificationEmail(
       }
     })
     .catch((err) => {
-      console.log(err);
       if (err.response.status === 409)
         confirmAlert("warning", "이미 가입된 이메일입니다.");
     });

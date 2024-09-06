@@ -4,14 +4,11 @@ import PageTitle from "@/components/layout/PageTitle";
 import PostLabel from "@/components/common/PostLabel";
 import PostInput from "@/components/common/PostInput";
 import CancelBtn from "@/components/common/CancelBtn";
-import AddBtn from "@/components/common/AddBtn";
 import { useRouter } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { FetchUpdatePassword } from "@/services/user/UserApi";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 
 const UpdatePassword = () => {
-  useAxiosInterceptor();
   const [prevPW, setPrevPW] = useState<string>("");
   const [newPW, setNewPW] = useState<string>("");
   const [newPWConfirm, setNewPWConfirm] = useState<string>("");

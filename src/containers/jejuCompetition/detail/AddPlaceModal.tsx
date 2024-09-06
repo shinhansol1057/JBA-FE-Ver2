@@ -38,8 +38,7 @@ const AddPlaceModal = ({
       .then((res) => {
         setLatitude(res.data.documents[0].y);
         setLongitude(res.data.documents[0].x);
-      })
-      .catch((err) => console.log(err));
+      });
   };
 
   const registPlace = (): void => {

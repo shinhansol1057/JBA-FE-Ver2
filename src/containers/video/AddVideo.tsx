@@ -6,7 +6,6 @@ import AddBtn from "@/components/common/AddBtn";
 import CancelBtn from "@/components/common/CancelBtn";
 import { FetchAddVideo } from "@/services/VideoApi";
 import { useRouter } from "next/navigation";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import SubTitle from "@/components/layout/SubTitle";
 
 const AddVideo = () => {
@@ -14,7 +13,6 @@ const AddVideo = () => {
   const [url, setUrl] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const router = useRouter();
-  useAxiosInterceptor();
 
   return (
     <div className={"mt-[20px]"}>

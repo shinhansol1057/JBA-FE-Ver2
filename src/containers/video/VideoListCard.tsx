@@ -3,14 +3,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { getVideoId } from "@/constants/Video";
 import { getVideoType } from "@/types/VideoType";
-import PostLabel from "@/components/common/PostLabel";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import { useRouter } from "next/navigation";
 import { FetchDeleteVideo } from "@/services/VideoApi";
-import { FindAdminRole } from "@/utils/JwtDecoder";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
+import { useSession } from "next-auth/react";
 
 type Props = {
   data: getVideoType;
@@ -18,6 +17,7 @@ type Props = {
 const VideoListCard = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const router = useRouter();
+  const { data: session, status } = useSession();
 
   const deleteHandler = () => {
     confirmAndCancelAlertWithLoading(
@@ -44,7 +44,7 @@ const VideoListCard = ({ data }: Props) => {
         <h3 className={"text-[9px] sm:text-[11px] md:text-[16px] text-white"}>
           {data.title}
         </h3>
-        {FindAdminRole() ? (
+        {status === "authenticated" ? (
           <IoMenu
             className={
               "text-[15px] sm:text-[20px] md:text-[30px] cursor-pointer text-white"

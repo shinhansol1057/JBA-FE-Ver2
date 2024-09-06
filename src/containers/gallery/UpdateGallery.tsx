@@ -5,7 +5,6 @@ import PostInput from "@/components/common/PostInput";
 import AddGalleryAttachedFileBox from "@/containers/gallery/AddGalleryAttachedFileBox";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import { getFileType } from "@/types/CommonType";
 import { useRouter } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
@@ -19,7 +18,6 @@ import PostTitle from "@/components/common/PostTitle";
 import { IoClose } from "react-icons/io5";
 
 const UpdateGallery = ({ id }: { id: string }) => {
-  useAxiosInterceptor();
   const [title, setTitle] = useState<string>("");
   const [files, setFiles] = useState<getFileType[]>([]);
   const [remainingFiles, setRemainingFiles] = useState<getFileType[]>([]);

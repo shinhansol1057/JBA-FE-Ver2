@@ -2,8 +2,6 @@ import { getFileType } from "@/types/CommonType";
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { findPostCategoryUrl } from "@/constants/Post";
-import axios from "axios";
-import { NormalApi } from "@/services/axios/NormalApi";
 import { getSession } from "next-auth/react";
 
 export const FetchGetPostList = async ({
@@ -70,7 +68,7 @@ export const FetchAddPost = async (
     });
 };
 
-export const FetchUpdatePost = (
+export const FetchUpdatePost = async (
   id: string,
   category: string,
   body: {
@@ -82,6 +80,7 @@ export const FetchUpdatePost = (
   files: File[],
   isOfficial: string,
 ) => {
+  const session = await getSession();
   let categoryListUrl = findPostCategoryUrl(category);
 
   const blob: Blob = new Blob([JSON.stringify(body)], {
@@ -97,6 +96,7 @@ export const FetchUpdatePost = (
     {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: session?.accessToken,
       },
     },
   )
@@ -122,9 +122,14 @@ export const FetchUpdatePost = (
     });
 };
 
-export const FetchDeletePost = (id: string, category: string) => {
+export const FetchDeletePost = async (id: string, category: string) => {
+  const session = await getSession();
   let categoryListUrl = findPostCategoryUrl(category);
-  return Api.delete(`/v1/api/post/${id}`)
+  return Api.delete(`/v1/api/post/${id}`, {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  })
     .then((res) => {
       if (res.status === 200) {
         confirmAlert("success", "게시물이 삭제되었습니다").then((res) => {

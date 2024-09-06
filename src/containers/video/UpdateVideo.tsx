@@ -4,26 +4,26 @@ import PostLabel from "@/components/common/PostLabel";
 import PostInput from "@/components/common/PostInput";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
-import {
-  FetchAddVideo,
-  FetchGetVideoDetail,
-  updateVideo,
-} from "@/services/VideoApi";
+import { FetchGetVideoDetail, updateVideo } from "@/services/VideoApi";
 import { useRouter } from "next/navigation";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import { useQuery } from "@tanstack/react-query";
 import SubTitle from "@/components/layout/SubTitle";
+import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 
 const UpdateVideo = ({ id }: { id: string }) => {
   const [title, setTitle] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const router = useRouter();
-  useAxiosInterceptor();
 
   const updateHandler = () => {
     const data = { videoId: id, title: title, url: url, content: content };
-    updateVideo(data);
+    confirmAndCancelAlertWithLoading(
+      "question",
+      "영상을 수정하겠습니까?",
+      "",
+      async () => await updateVideo(data),
+    );
   };
 
   const { data: lastData } = useQuery({

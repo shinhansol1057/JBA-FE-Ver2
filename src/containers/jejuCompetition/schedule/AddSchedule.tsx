@@ -17,13 +17,11 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import { useRouter } from "next/navigation";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 
 type Props = {
   id: string;
 };
 const AddSchedule = ({ id }: Props) => {
-  useAxiosInterceptor();
   const [addCompetitionScheduleList, setAddCompetitionScheduleList] = useState<
     addCompetitionScheduleType[]
   >([]);

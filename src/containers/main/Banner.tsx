@@ -6,11 +6,11 @@ const Banner = async () => {
   const announcements = await getAnnouncements();
   const competitions = await getCompetitions();
   return (
-    <div>
+    <div className={"w-full"}>
       <BannerTop />
       <div
         className={
-          "bg-gradient-to-b from-black from-5% to-[#F5F5F5] to-100% h-[310px] sm:h-[410px] md:h-[510px] flex flex-col "
+          "w-full bg-gradient-to-b from-black from-5% to-[#F5F5F5] to-100% h-[310px] sm:h-[410px] md:h-[510px] flex flex-col "
         }
       >
         {announcements && <BannerCarousel data={announcements?.data?.posts} />}

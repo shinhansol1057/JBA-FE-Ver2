@@ -1,13 +1,15 @@
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { NormalApi } from "@/services/axios/NormalApi";
+import { getSession } from "next-auth/react";
 
-export const FetchAddVideo = (
+export const FetchAddVideo = async (
   title: string,
   url: string,
   content: string,
   router: any,
 ) => {
+  const session = await getSession();
   const data: {
     title: string;
     url: string;
@@ -19,7 +21,11 @@ export const FetchAddVideo = (
     content: content,
     isOfficial: false,
   };
-  Api.post("/v1/api/video/post", data)
+  Api.post("/v1/api/video/post", data, {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  })
     .then((res) => {
       if (res.status === 200) {
         confirmAlert("success", "영상 등록이 완료되었습니다").then((res) => {
@@ -59,14 +65,18 @@ export const FetchGetVideoDetail = async (id: string) => {
 };
 
 export const FetchDeleteVideo = async (id: string) => {
-  Api.delete(`/v1/api/video/delete?id=${id}`).then((res) => {
+  const session = await getSession();
+  Api.delete(`/v1/api/video/delete?id=${id}`, {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  }).then((res) => {
     if (res.status === 200)
       confirmAlert("success", "영상 삭제가 완료되었습니다")
         .then((res) => {
           if (res.isConfirmed) window.location.reload();
         })
         .catch((err) => {
-          console.log(err);
           const data = err.response.data;
           if (data.detailMessage === "이미 삭제된 게시물입니다.")
             confirmAlert("error", "이미 삭제된 영상입니다.").then((res) => {
@@ -86,7 +96,12 @@ export const updateVideo = async (data: {
   url: string;
   content: string;
 }) => {
-  Api.put(`/v1/api/video/update`, data)
+  const session = await getSession();
+  Api.put(`/v1/api/video/update`, data, {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  })
     .then((res) => {
       if (res.status === 200)
         confirmAlert("success", "영상 수정이 완료되었습니다").then((res) => {

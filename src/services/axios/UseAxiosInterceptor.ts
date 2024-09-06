@@ -33,7 +33,7 @@ const useAxiosInterceptor = () => {
         const res = await confirmAlert("warning", "접근 권한이 없습니다.");
         if (res.isConfirmed) window.location.href = "/";
       } catch (confirmErr) {
-        console.error("Error during confirmAlert:", confirmErr);
+        console.error("_error during confirmAlert:", confirmErr);
       }
     } else if (
       error.response.status === 401 &&
@@ -49,7 +49,7 @@ const useAxiosInterceptor = () => {
           window.location.href = "/login";
         }
       } catch (confirmErr) {
-        console.error("Error during confirmAlert:", confirmErr);
+        console.error("_error during confirmAlert:", confirmErr);
       }
     }
     return Promise.reject(error);

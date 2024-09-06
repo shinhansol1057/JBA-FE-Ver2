@@ -5,8 +5,9 @@ import { IoMenu } from "react-icons/io5";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { FetchDeleteSchedule } from "@/services/CompetitionApi";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
-import { FindAdminRole } from "@/utils/JwtDecoder";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
   detailData: competitionDetailType;
@@ -18,9 +19,9 @@ const DetailResultDivisionSelectBar = ({
   divisionFilter,
   setDivisionFilter,
 }: Props) => {
-  const isAdmin = typeof window !== "undefined" && FindAdminRole();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const router = useRouter();
+  const isAdmin = useIsAdmin();
   return (
     <div>
       <div

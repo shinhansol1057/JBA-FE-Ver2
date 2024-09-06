@@ -9,10 +9,8 @@ import AddBtn from "@/components/common/AddBtn";
 import { useRouter } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { FetchAddGallery } from "@/services/GalleryApi";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 
 const AddGallery = () => {
-  useAxiosInterceptor();
   const [title, setTitle] = useState<string>("");
   const [files, setFiles] = useState<getFileType[]>([]);
   const router = useRouter();

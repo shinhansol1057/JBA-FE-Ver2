@@ -11,7 +11,7 @@ export const nextAuthOptions: NextAuthOptions = {
   },
   session: {
     strategy: "jwt",
-    maxAge: 10 * 60,
+    maxAge: 60 * 60 * 24 * 3,
   },
   providers: [
     CredentialsProvider({
@@ -29,10 +29,10 @@ export const nextAuthOptions: NextAuthOptions = {
           });
           if (res && res?.data) {
             const userData = jwt.decode(res.data.data.accessToken);
-            // console.log(res.data.data);
             return {
               accessToken: res.data.data.accessToken,
               refreshToken: res.data.data.refreshToken,
+
               sub: userData?.sub,
               // @ts-ignore
               role: userData?.role,
@@ -47,7 +47,6 @@ export const nextAuthOptions: NextAuthOptions = {
             null;
           }
         } catch (error) {
-          console.log("error: " + error);
           if (axios.isAxiosError(error)) {
             return error?.response?.data;
           }
@@ -57,73 +56,46 @@ export const nextAuthOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user, trigger, account, profile }) {
-      console.log("Initial Token");
-      console.log(token);
       if (user) {
-        // 처음 로그인할 때 AccessToken을 저장
-        // console.log(user);
-        // console.log(new Date(user.exp * 1000).toLocaleString());
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.name = user.aud;
         token.id = user.sub;
-        token.exp = user.exp;
+        token.accessTokenExpires = user.exp;
         token.iat = user.iat;
         token.role = user.role;
+        // @ts-ignore
 
         return token;
-      } else {
-        // 토큰 만료 체크
-        // const now = Math.floor(Date.now() / 1000);
-        // const shouldRefreshTime = token.exp - now;
-        // console.log("잔여시간: " + shouldRefreshTime);
+      }
 
-        // if (token.exp && token.exp > now) {
-        //   // console.log("토큰 만료시간 남음");
-        //   console.log(token);
-        //   return token;
-        // }
+      // 토큰 만료 체크
+      const now = Math.floor(Date.now() / 1000);
+      if (token.exp && token.accessTokenExpires > now) {
+        return token;
+      }
 
-        try {
-          console.log("refresh 시작");
-          const res = await axios.post(
-            process.env.NEXT_PUBLIC_API_KEY +
-              "/v1/api/sign/refresh-token-cookie",
-            null,
-            {
-              // const res = await axios.post(
-              //   "http://localhost:8080/v1/api/sign/refresh-token-cookie",
-              //   null,
-              //   {
-              headers: {
-                Authorization: token.accessToken,
-                RefreshToken: token.refreshToken,
-              },
-              withCredentials: true,
-            },
-          );
-          const newTokens = res.data.data;
-          token.accessToken = newTokens.accessToken;
-          token.refreshToken = newTokens.refreshToken;
-          const decodedToken = jwt.decode(token.accessToken);
-          // console.log(decodedToken);
-          // @ts-ignore
-          token.exp = decodedToken.exp;
-          // @ts-ignore
-          token.iat = decodedToken.iat;
+      try {
+        const data = await refreshToken(token.accessToken, token.refreshToken);
+        const newTokens = data?.data;
+        token.accessToken = newTokens.accessToken;
+        token.refreshToken = newTokens.refreshToken;
+        // @ts-ignore
+        const decodedToken = jwt.decode(token.accessToken);
+        // @ts-ignore
+        token.accessTokenExpires = decodedToken.exp;
+        // @ts-ignore
+        token.iat = decodedToken.iat;
 
-          return token;
-        } catch (error) {
-          return {
-            ...token,
-            error: error,
-          };
-        }
+        return token;
+      } catch (error) {
+        return {
+          ...token,
+          error: error,
+        };
       }
     },
     async session({ session, token, user }) {
-      // 세션에 AccessToken을 추가;
-      console.log(token);
       session.accessToken = token.accessToken;
       session.name = token.name;
       session.email = token.id;
@@ -132,19 +104,44 @@ export const nextAuthOptions: NextAuthOptions = {
     },
   },
   events: {
-    // async signOut(message) {
-    //   console.log(message);
-    //   try {
-    //     await NormalApi.post("/v1/api/sign/logout-cookie", {
-    //       headers: {
-    //         Authorization: user.data,
-    //       },
-    //       withCredentials: true,
-    //     });
-    //   } catch (error) {
-    //     console.error("Sign out", error);
-    //   }
-    // },
+    async signOut(message) {
+      try {
+        const data = await refreshToken(
+          message.token.accessToken,
+          message.token.refreshToken,
+        );
+        const res = await fetch(
+          process.env.NEXT_PUBLIC_API_KEY + "/v1/api/sign/logout-cookie",
+          {
+            method: "POST",
+            headers: {
+              Authorization: data.data.AccessToken,
+            },
+            credentials: "include",
+            body: "",
+          },
+        );
+        return res.json();
+      } catch (error) {}
+    },
   },
   debug: process.env.NODE_ENV === "development",
+};
+
+const refreshToken = async (accessToken: string, refreshToken: string) => {
+  try {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_API_KEY + "/v1/api/sign/refresh-token-cookie",
+      {
+        method: "POST",
+        headers: {
+          Authorization: accessToken,
+          RefreshToken: refreshToken,
+        },
+        credentials: "include",
+        body: "",
+      },
+    );
+    return await res.json();
+  } catch (error) {}
 };

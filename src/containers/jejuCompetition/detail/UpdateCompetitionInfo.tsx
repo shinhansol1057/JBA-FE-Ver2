@@ -25,13 +25,11 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import UpdateAttachedFileBox from "@/containers/jejuCompetition/detail/UpdateAttachedFileBox";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 
 const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
 });
 const UpdateCompetitionInfo = ({ id }: { id: string }) => {
-  useAxiosInterceptor();
   const [title, setTitle] = useState<string>("");
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>("");

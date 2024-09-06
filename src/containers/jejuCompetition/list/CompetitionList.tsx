@@ -9,15 +9,9 @@ import { useObserver } from "@/hooks/useObserver";
 import LoadingText from "@/components/common/LoadingText";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { getVideoType } from "@/types/VideoType";
-import VideoListCard from "@/containers/video/VideoListCard";
-import AddBtn from "@/components/common/AddBtn";
-import { useRouter } from "next/navigation";
-import { FindAdminRole } from "@/utils/JwtDecoder";
 import AddPageRouter from "@/components/common/AddPageRouter";
 
 const CompetitionList = () => {
-  const router = useRouter();
-  const isAdmin = typeof window !== "undefined" && FindAdminRole();
   const bottom = useRef(null);
   const { competitionStatusMenu, setCompetitionStatusMenu } =
     useCompetitionStore();

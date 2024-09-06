@@ -11,16 +11,13 @@ import AddBtn from "@/components/common/AddBtn";
 import { useRouter } from "next/navigation";
 import { FetchAddPost } from "@/services/PostApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import { usePostStore } from "@/states/PostStore";
 import SubTitle from "@/components/layout/SubTitle";
-import { useSession } from "next-auth/react";
 
 const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
 });
 const AddPost = () => {
-  useAxiosInterceptor();
   const [title, setTitle] = useState<string>("");
   const [isOfficial, setIsOfficial] = useState<string>("false");
   const { postCategory, setPostCategory } = usePostStore();
@@ -28,8 +25,6 @@ const AddPost = () => {
   const [postImgs, setPostImgs] = useState<getFileType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
-  const { data: session, status: sessionStatus } = useSession();
-  console.log(session);
   const addHandler = () => {
     const body = { title, content, postImgs };
     confirmAndCancelAlertWithLoading(

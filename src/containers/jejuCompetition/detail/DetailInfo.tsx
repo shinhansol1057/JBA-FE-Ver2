@@ -8,12 +8,12 @@ import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import moment from "moment/moment";
 import DOMPurify from "dompurify";
 import GetFileBox from "@/components/common/GetFileBox";
-import { FindAdminRole } from "@/utils/JwtDecoder";
 import { IoMenu } from "react-icons/io5";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useRouter } from "next/navigation";
 import { FetchDeleteCompetitionInfo } from "@/services/CompetitionApi";
+import { useSession } from "next-auth/react";
 
 type Props = {
   data: competitionDetailType;
@@ -25,6 +25,7 @@ const DetailInfo = ({ data }: Props) => {
   const endDate: string = moment(data.endDate).format("YYYY-MM-DD");
   const cleanHtml = DOMPurify.sanitize(data.content);
   const router = useRouter();
+  const { data: session, status: sessionStatus } = useSession();
 
   return (
     <div className={"w-[280px] sm:w-[400px] md:w-[800px]"}>
@@ -50,7 +51,7 @@ const DetailInfo = ({ data }: Props) => {
             }
             bold={true}
           />
-          {FindAdminRole() ? (
+          {sessionStatus === "authenticated" ? (
             <IoMenu
               className={
                 "text-[20px] sm:text-[25px] md:text-[35px] cursor-pointer"

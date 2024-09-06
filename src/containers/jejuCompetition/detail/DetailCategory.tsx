@@ -1,9 +1,10 @@
 import React from "react";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { competitionResultType } from "@/types/CompetitionType";
-import { FindAdminRole } from "@/utils/JwtDecoder";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
   selectInfo: boolean;
@@ -20,7 +21,7 @@ const DetailCategory = ({
   id,
 }: Props) => {
   const router = useRouter();
-  const isAdmin = FindAdminRole();
+  const isAdmin = useIsAdmin();
   let resultCount: number = 0;
   resultData.forEach((result) => {
     resultCount += result.getResultResponseRows.length;

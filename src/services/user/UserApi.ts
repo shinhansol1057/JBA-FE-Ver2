@@ -1,25 +1,29 @@
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { NormalApi } from "@/services/axios/NormalApi";
-import { signOut } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
 
-export const FetchGetUserInfo = (accessToken: string | undefined) => {
-  if (accessToken) {
-    return NormalApi.get("/v1/api/user/get/user-info", {
-      headers: {
-        Authorization: accessToken,
-      },
-    });
-  }
+export const FetchGetUserInfo = async () => {
+  const session = await getSession();
+  return NormalApi.get("/v1/api/user/get/user-info", {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  });
 };
 
-export const FetchUpdateUserInfo = (request: {
+export const FetchUpdateUserInfo = async (request: {
   name: string;
   phoneNum: string;
   birth: string;
   team: string;
 }) => {
-  return Api.put("/v1/api/user/update", request)
+  const session = await getSession();
+  return Api.put("/v1/api/user/update", request, {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  })
     .then((res) => {
       if (res.status === 200) {
         confirmAlert("success", "프로필을 변경하였습니다").then((res) => {
@@ -40,17 +44,22 @@ export const FetchUpdateUserInfo = (request: {
     });
 };
 
-export const FetchUpdatePassword = (
+export const FetchUpdatePassword = async (
   prevPW: string,
   newPW: string,
   newPWConfirm: string,
 ) => {
+  const session = await getSession();
   const request: { prevPW: string; newPW: string; newPWConfirm: string } = {
     prevPW,
     newPW,
     newPWConfirm,
   };
-  return Api.put("/v1/api/user/update/password", request)
+  return Api.put("/v1/api/user/update/password", request, {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  })
     .then((res) => {
       if (res.status === 200) {
         confirmAlert(

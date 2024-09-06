@@ -4,7 +4,6 @@ import PageTitle from "@/components/layout/PageTitle";
 import PostInput from "@/components/common/PostInput";
 import PostLabel from "@/components/common/PostLabel";
 import { useQuery } from "@tanstack/react-query";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import { FetchGetUserInfo, FetchUpdateUserInfo } from "@/services/user/UserApi";
 import { useRouter } from "next/navigation";
 import CancelBtn from "@/components/common/CancelBtn";
@@ -13,7 +12,6 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import { useSession } from "next-auth/react";
 
 const UpdateUserInfo = () => {
-  useAxiosInterceptor();
   const [name, setName] = useState<string>("");
   const [phoneNum, setPhoneNum] = useState<string>("");
   const [birth, setBirth] = useState<string>("");
@@ -23,7 +21,7 @@ const UpdateUserInfo = () => {
 
   const { data } = useQuery({
     queryKey: ["getUserInfo"],
-    queryFn: async () => await FetchGetUserInfo(session?.accessToken),
+    queryFn: async () => await FetchGetUserInfo(),
     select: (result) => result?.data.data,
     enabled: sessionStatus === "authenticated",
   });

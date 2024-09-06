@@ -2,7 +2,6 @@
 import React from "react";
 import { menuList } from "@/constants/navigation";
 import { useRouter } from "next/navigation";
-import fetchLogout from "@/services/user/LogoutApi";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
@@ -22,7 +21,9 @@ const MenuModal = ({ setModalOpen }: Props) => {
 
   const logoutHandler = () => {
     setModalOpen(false);
-    signOut();
+    signOut().then((res) => {
+      router.push("/login");
+    });
   };
 
   return (

@@ -22,7 +22,6 @@ import CancelBtn from "@/components/common/CancelBtn";
 import { useRouter } from "next/navigation";
 import AddBtn from "@/components/common/AddBtn";
 import { koreanLocale } from "@/constants/AntdConfig";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import dayjs from "dayjs";
 import { getNowDateToString } from "@/utils/FormDate";
 
@@ -31,7 +30,6 @@ const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
 });
 
 const AddCompetitionInfo = () => {
-  useAxiosInterceptor();
   const [title, setTitle] = useState<string>("");
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>(getNowDateToString());

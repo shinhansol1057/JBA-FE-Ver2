@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import {
   addCompetitionScheduleRowType,
   addCompetitionScheduleType,
@@ -9,7 +8,6 @@ import {
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import {
-  FetchAddSchedule,
   FetchGetCompetitionDetail,
   FetchGetCompetitionResult,
   FetchUpdateSchedule,
@@ -23,7 +21,6 @@ import AddScheduleDivisionBox from "@/containers/jejuCompetition/schedule/AddSch
 import { getDateAndTimeToString } from "@/utils/FormDate";
 
 const UpdateSchedule = ({ id }: { id: string }) => {
-  useAxiosInterceptor();
   const [addCompetitionScheduleList, setAddCompetitionScheduleList] = useState<
     addCompetitionScheduleType[]
   >([]);

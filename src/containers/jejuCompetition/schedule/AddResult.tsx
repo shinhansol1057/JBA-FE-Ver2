@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import {
   addCompetitionResultRowType,
   addCompetitionResultType,
@@ -22,7 +21,6 @@ import AddBtn from "@/components/common/AddBtn";
 import AddResultDivisionBox from "@/containers/jejuCompetition/schedule/AddResultDivisionBox";
 
 const AddResult = ({ id }: { id: string }) => {
-  useAxiosInterceptor();
   const [addCompetitionResultList, setAddCompetitionResultList] = useState<
     addCompetitionResultType[]
   >([]);
@@ -94,7 +92,6 @@ const AddResult = ({ id }: { id: string }) => {
       });
     }
   }, [scheduleData]);
-  console.log(scheduleData);
   return (
     <div
       className={"flex flex-col mt-[20px] w-[280px] sm:w-[400px] md:w-[800px]"}

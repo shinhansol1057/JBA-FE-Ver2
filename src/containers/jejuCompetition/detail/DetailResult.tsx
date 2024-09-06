@@ -7,8 +7,8 @@ import {
 import DetailResultDivisionSelectBar from "@/containers/jejuCompetition/detail/DetailResultDivisionSelectBar";
 import CompetitionResultRowBox from "@/components/competition/CompetitionResultRowBox";
 import { useRouter } from "next/navigation";
-import { FindAdminRole } from "@/utils/JwtDecoder";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
   detailData: competitionDetailType;
@@ -20,7 +20,7 @@ const DetailResult = ({ detailData, resultData }: Props) => {
     competitionResultType[]
   >([]);
   const router = useRouter();
-  const isAdmin = FindAdminRole();
+  const isAdmin = useIsAdmin();
   useEffect(() => {
     if (divisionFilter === "전체") {
       setFilteredResultData(resultData);

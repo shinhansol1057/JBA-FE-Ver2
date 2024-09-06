@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { getGalleryType } from "@/types/GalleryType";
 import { IoMenu } from "react-icons/io5";
-import { FindAdminRole } from "@/utils/JwtDecoder";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import { useRouter } from "next/navigation";
 import { FetchDeleteGallery } from "@/services/GalleryApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
+import { useSession } from "next-auth/react";
 
 const GalleryCard = ({ data }: { data: getGalleryType }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const isAdmin = FindAdminRole();
   const router = useRouter();
+  const { data: session, status } = useSession();
 
   const updateHandler = () => {
     router.push(`/media/gallery/update/${data.galleryId}`);
@@ -33,7 +33,7 @@ const GalleryCard = ({ data }: { data: getGalleryType }) => {
         "rounded-[8px] overflow-hidden relative cursor-pointer"
       }
     >
-      {isAdmin ? (
+      {status === "authenticated" ? (
         <IoMenu
           className={
             "text-[20px] sm:text-[25px] md:text-[35px] cursor-pointer absolute top-[5px] right-[5px] z-20"

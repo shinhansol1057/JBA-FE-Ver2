@@ -1,5 +1,4 @@
 import React from "react";
-import { useAxiosInterceptor } from "@/services/axios/UseAxiosInterceptor";
 import ReactModal from "react-modal";
 
 type Props = {
@@ -14,7 +13,6 @@ const UpdateDeleteModal = ({
   deleteHandler,
   updateHandler,
 }: Props) => {
-  useAxiosInterceptor();
   const customModalStyles: ReactModal.Styles = {
     overlay: {
       width: "100%",

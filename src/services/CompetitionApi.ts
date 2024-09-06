@@ -7,6 +7,7 @@ import {
   addCompetitionScheduleType,
   updateCompetitionRequestType,
 } from "@/types/CompetitionType";
+import { getSession } from "next-auth/react";
 
 export const FetchGetCompetitionList = async ({
   pageParam,
@@ -63,6 +64,7 @@ export const FetchAddCompetitionInfo = async (
   requestData: addCompetitionRequestType,
   files: File[],
 ) => {
+  const session = await getSession();
   const blob: Blob = new Blob([JSON.stringify(requestData)], {
     type: "application/json",
   });
@@ -75,6 +77,7 @@ export const FetchAddCompetitionInfo = async (
   return Api.post("/v1/api/competition/post/competition-info", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      Authorization: session?.accessToken,
     },
   })
     .then((res) => {
@@ -83,7 +86,6 @@ export const FetchAddCompetitionInfo = async (
       });
     })
     .catch((err) => {
-      console.log(err);
       if (err.response.data.detailMessage === "제목을 입력해주세요.")
         confirmAlert("warning", "제목을 입력해주세요.");
       else if (err.response.data.detailMessage === "종별을 선택해주세요.")
@@ -99,7 +101,12 @@ export const FetchAddCompetitionInfo = async (
 };
 
 export const FetchDeleteCompetitionInfo = async (id: string) => {
-  return Api.delete(`/v1/api/competition/delete/${id}`)
+  const session = await getSession();
+  return Api.delete(`/v1/api/competition/delete/${id}`, {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  })
     .then((res) => {
       if (res.data.code === 200) {
         confirmAlert("success", "대회가 삭제되었습니다.").then((res) => {
@@ -116,11 +123,12 @@ export const FetchDeleteCompetitionInfo = async (id: string) => {
     });
 };
 
-export const FetchUpdateCompetitionInfo = (
+export const FetchUpdateCompetitionInfo = async (
   id: string,
   requestData: updateCompetitionRequestType,
   files: File[],
 ) => {
+  const session = await getSession();
   const blob: Blob = new Blob([JSON.stringify(requestData)], {
     type: "application/json",
   });
@@ -136,6 +144,7 @@ export const FetchUpdateCompetitionInfo = (
     {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: session?.accessToken,
       },
     },
   )
@@ -177,14 +186,19 @@ export const FetchUpdateCompetitionInfo = (
     });
 };
 
-export const FetchAddSchedule = (
+export const FetchAddSchedule = async (
   id: string,
   postCompetitionScheduleList: addCompetitionScheduleType[],
 ) => {
   const request: { request: addCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
-  return Api.post(`/v1/api/competition/post/schedule/${id}`, request)
+  const session = await getSession();
+  return Api.post(`/v1/api/competition/post/schedule/${id}`, request, {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  })
     .then((res) => {
       if (res.status === 200) {
         confirmAlert("success", "대회일정등록이 완료되었습니다.").then(
@@ -227,14 +241,19 @@ export const FetchAddSchedule = (
     });
 };
 
-export const FetchUpdateSchedule = (
+export const FetchUpdateSchedule = async (
   id: string,
   postCompetitionScheduleList: addCompetitionScheduleType[],
 ) => {
   const request: { request: addCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
-  return Api.put(`/v1/api/competition/update/schedule/${id}`, request)
+  const session = await getSession();
+  return Api.put(`/v1/api/competition/update/schedule/${id}`, request, {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  })
     .then((res) => {
       if (res.status === 200) {
         confirmAlert("success", "대회일정수정이 완료되었습니다.").then(
@@ -277,29 +296,37 @@ export const FetchUpdateSchedule = (
     });
 };
 
-export const FetchDeleteSchedule = (id: string) => {
-  return Api.delete(`/v1/api/competition/delete/schedule/${id}`, {}).then(
-    (res) => {
-      if (res.status === 200) {
-        confirmAlert("success", "완료", "대회일정이 삭제되었습니다.").then(
-          (res) => {
-            if (res.isConfirmed)
-              window.location.href = `/jeju-competition/info/${id}`;
-          },
-        );
-      }
+export const FetchDeleteSchedule = async (id: string) => {
+  const session = await getSession();
+  return Api.delete(`/v1/api/competition/delete/schedule/${id}`, {
+    headers: {
+      Authorization: session?.accessToken,
     },
-  );
+  }).then((res) => {
+    if (res.status === 200) {
+      confirmAlert("success", "완료", "대회일정이 삭제되었습니다.").then(
+        (res) => {
+          if (res.isConfirmed)
+            window.location.href = `/jeju-competition/info/${id}`;
+        },
+      );
+    }
+  });
 };
 
-export const FetchAddResult = (
+export const FetchAddResult = async (
   id: string,
   requests: addCompetitionResultType[],
 ) => {
   const request: { requests: addCompetitionResultType[] } = {
     requests: requests,
   };
-  return Api.post(`/v1/api/competition/post/result/${id}`, request)
+  const session = await getSession();
+  return Api.post(`/v1/api/competition/post/result/${id}`, request, {
+    headers: {
+      Authorization: session?.accessToken,
+    },
+  })
     .then((res) => {
       if (res.status === 200) {
         confirmAlert("success", "대회결과등록이 완료되었습니다.").then(
