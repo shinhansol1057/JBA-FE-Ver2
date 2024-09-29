@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { menuList } from "@/constants/navigation";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
@@ -19,11 +19,10 @@ const MenuModal = ({ setModalOpen }: Props) => {
   };
   const { data: session, status: sessionStatus } = useSession();
 
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
     setModalOpen(false);
-    signOut().then((res) => {
-      router.push("/login");
-    });
+    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" });
+    // router.push("/login");
   };
 
   return (

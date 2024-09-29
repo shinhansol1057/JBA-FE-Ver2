@@ -10,7 +10,7 @@ const Banner = async () => {
       <BannerTop />
       <div
         className={
-          "w-full bg-gradient-to-b from-black from-5% to-[#F5F5F5] to-100% h-[310px] sm:h-[410px] md:h-[510px] flex flex-col "
+          "w-full bg-gradient-to-b from-black from-5% to-[#F5F5F5] to-100% h-[350px] sm:h-[410px] md:h-[510px] flex flex-col "
         }
       >
         {announcements && <BannerCarousel data={announcements?.data?.posts} />}

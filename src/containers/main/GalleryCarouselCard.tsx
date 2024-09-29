@@ -14,7 +14,7 @@ const GalleryCarouselCard = ({ data, key }: Props) => {
     <div
       className={
         "relative rounded-[8px] overflow-hidden " +
-        "w-[280px] sm:w-[400px] md:w-[600px] h-[280px] sm:h-[400px] md:h-[600px]"
+        "w-full h-[280px] sm:h-[400px] md:h-[600px]"
       }
       onClick={() => router.push(`/media/gallery/${data.galleryId}`)}
     >
@@ -30,7 +30,7 @@ const GalleryCarouselCard = ({ data, key }: Props) => {
         height={500}
         className={
           "absolute top-0 left-0 bg-cover bg-center object-cover rounded-[inherit] " +
-          "w-[280px] sm:w-[400px] md:w-[600px] h-[280px] sm:h-[400px] md:h-[600px] "
+          "w-full h-[280px] sm:h-[400px] md:h-[600px] "
         }
       />
       <div

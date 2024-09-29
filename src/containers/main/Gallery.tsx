@@ -9,7 +9,7 @@ const Gallery = async () => {
     <div
       className={
         "flex flex-col mt-[25px] sm:mt-[50px] md:mt-[75px] mx-auto " +
-        "w-[280px] sm:w-[400px] md:w-[600px]"
+        "w-[90%] sm:w-[80%] md:w-[70%]"
       }
     >
       <AreaTitleAndAllContentBtn title={"갤러리"} url={"/media/gallery"} />

@@ -4,13 +4,13 @@ const ShortCuts = () => {
   return (
     <div
       className={
-        "flex flex-col w-[280px] sm:w-[400px] md:w-[600px] mx-auto -mt-[75px] sm:-mt-[50px] md:-mt-[25px]"
+        "flex flex-col w-[90%] sm:w-[80%] md:w-[70%] mx-auto -mt-[75px] sm:-mt-[50px] md:-mt-[25px]"
       }
     >
       <div>
         <h3
           className={
-            "text-[14px] sm:text-[20px] md:text-[28px] font-bold ml-[10px] mb-[10px]"
+            "text-[16px] sm:text-[22px] md:text-[32px] font-bold ml-[10px] mb-[10px]"
           }
         >
           바로가기
@@ -18,7 +18,7 @@ const ShortCuts = () => {
       </div>
       <div
         className={
-          "flex flex-col justify-between h-[210px] sm:h-[270px] md:h-[330px]"
+          "flex flex-col justify-between h-[240px] sm:h-[300px] md:h-[500px]"
         }
       >
         <div className={"flex justify-between"}>

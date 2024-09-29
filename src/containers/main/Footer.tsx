@@ -2,19 +2,19 @@ const Footer = () => {
   return (
     <div
       className={
-        "w-full text-[#8E8E8E] text-[7px] sm:text-[9px] md:text-[12px] mt-[50px] sm:mt-[70px] md:mt-[100px] flex flex-col items-center"
+        "w-full text-[#8E8E8E] text-[9px] sm:text-[11px] md:text-[14px] mt-[50px] sm:mt-[70px] md:mt-[100px] flex flex-col items-center"
       }
     >
       <h1
         className={
-          "text-[8px] sm:text-[11px] md:text-[14px] mb-[2px] sm:mb-[3px] md:mb-[4px]"
+          "text-[10px] sm:text-[13px] md:text-[18px] mb-[2px] sm:mb-[3px] md:mb-[4px]"
         }
       >
         제주특별자치도농구협회
       </h1>
       <h2
         className={
-          "text-[5px] sm:text-[8px] md:text-[11px] mb-[10px] sm:mb-[12px] md:mb-[16px]"
+          "text-[7px] sm:text-[10px] md:text-[13px] mb-[10px] sm:mb-[12px] md:mb-[16px]"
         }
       >
         JEJU BASKETBALL ASSOCIATION

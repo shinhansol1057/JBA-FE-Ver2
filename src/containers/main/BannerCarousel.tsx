@@ -62,9 +62,10 @@ const SliderContainer = styled.div<{ display: string }>`
   border-radius: 8px;
   border: 1px solid rgba(115, 115, 115, 0.2);
   .dots_custom {
-    position: absolute;
+    display: flex;
+    justify-content: center;
     vertical-align: middle;
-    margin: auto 0;
+    margin: 0;
     padding: 0;
   }
 
@@ -90,12 +91,9 @@ const SliderContainer = styled.div<{ display: string }>`
   }
 
   @media screen and (max-width: 640px) {
-    width: 280px;
-    height: 100px; /* 높이를 높여 카드 간의 간격을 반영 */
-    .dots_custom {
-      top: 80px;
-      left: 100px;
-    }
+    width: 90%;
+    height: 110px; /* 높이를 높여 카드 간의 간격을 반영 */
+
     .dots_custom li button {
       height: 6px;
       width: 6px;
@@ -103,12 +101,8 @@ const SliderContainer = styled.div<{ display: string }>`
   }
 
   @media screen and (min-width: 640px) and (max-width: 768px) {
-    width: 400px;
+    width: 80%;
     height: 150px; /* 높이를 높여 카드 간의 간격을 반영 */
-    .dots_custom {
-      top: 120px;
-      left: 154px;
-    }
     .dots_custom li button {
       height: 9px;
       width: 9px;
@@ -116,12 +110,8 @@ const SliderContainer = styled.div<{ display: string }>`
   }
 
   @media screen and (min-width: 768px) {
-    width: 600px;
+    width: 70%;
     height: 200px; /* 높이를 높여 카드 간의 간격을 반영 */
-    .dots_custom {
-      top: 160px;
-      left: 250px;
-    }
     .dots_custom li button {
       height: 12px;
       width: 12px;
@@ -135,6 +125,29 @@ const StyledSlider = styled(Slider)`
     flex-wrap: wrap;
     justify-content: center;
     color: white;
+    padding-bottom: 20px;
+  }
+
+  @media screen and (max-width: 640px) {
+    .slick-slide {
+      padding-bottom: 20px;
+    }
+  }
+
+  @media screen and (min-width: 640px) and (max-width: 768px) {
+    .slick-slide {
+      padding-bottom: 35px;
+    }
+  }
+
+  @media screen and (min-width: 769px) {
+    .slick-slide {
+      padding-bottom: 40px;
+    }
+  }
+
+  .slick-slide div {
+    width: 100%;
   }
 
   .slide {

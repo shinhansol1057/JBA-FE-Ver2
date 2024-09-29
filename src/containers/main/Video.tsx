@@ -17,7 +17,7 @@ const Video = async () => {
   return (
     <div
       className={
-        "flex flex-col items-center w-[280px] sm:w-[400px] md:w-[600px] mt-[50px] md:mt-[80px]"
+        "flex flex-col items-center w-[90%] sm:w-[80%] md:w-[70%] mt-[50px] md:mt-[80px]"
       }
     >
       <AreaTitleAndAllContentBtn title={"대회영상"} url={"/media/video"} />
