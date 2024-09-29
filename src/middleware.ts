@@ -5,10 +5,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-pathname", request.nextUrl.pathname);
 
-  if (response.type === "error") {
-    console.log("에러 생발생");
-  }
-
   const session = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
@@ -26,7 +22,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   );
 
   if (userPath && !session) {
-    // 관리자 권한이 없으면 로그인 페이지로 리다이렉션
+    // 로그인 안되어있으면 로그인 페이지로 리다이렉션
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -34,7 +30,9 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     // 관리자 권한이 없으면 로그인 페이지로 리다이렉션
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
   if (request.nextUrl.pathname === "/login" && session) {
+    // 로그인 페이지로 가는데 로그인이 되어있으면 메인페이지로 리다이렉션
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -54,4 +52,4 @@ export const AdminPaths = [
   "/jeju-competition/result/update",
 ];
 
-export const UserPaths = ["/my-page"];
+export const UserPaths = ["/user/my-page"];

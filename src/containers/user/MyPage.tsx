@@ -22,7 +22,7 @@ const MyPage = () => {
         <div
           className={
             "mt-[30px] bg-white border border-solid border-borderColor shadow-xl rounded-[8px] " +
-            "w-[280px] sm:w-[300px] md:w-[400px] " +
+            "w-[280px] sm:w-[400px] md:w-[800px] " +
             "p-[10px] md:p-[20px] " +
             "grid grid-cols-1 gap-[10px] md:gap-[20px]"
           }

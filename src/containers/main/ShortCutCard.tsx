@@ -23,7 +23,7 @@ const ShortCutCard = ({
   return (
     <Link
       className={
-        "w-[135px] sm:w-[195px] md:w-[295px] h-[100px] sm:h-[130px] md:h-[160px] " +
+        "w-[48%] h-[110px] sm:h-[140px] md:h-[230px] " +
         "cursor-pointer rounded-[8px] bg-cover bg-center relative grayscale-[100%] flex flex-col justify-between"
       }
       style={{
@@ -42,7 +42,7 @@ const ShortCutCard = ({
       <div className={"flex justify-between mt-[10px] mx-[10px] grayscale-0"}>
         <h3
           className={
-            "text-white text-[14px] sm:text-[18px] md:text-[24px] font-bold"
+            "text-white text-[18px] sm:text-[22px] md:text-[28px] font-bold"
           }
         >
           {title}

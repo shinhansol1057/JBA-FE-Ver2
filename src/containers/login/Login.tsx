@@ -5,7 +5,7 @@ import LoginInputBox from "@/containers/login/LoginInputBox";
 import { CheckBox } from "@/components/common/checkbox/CheckBox";
 import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "@/utils/Cookie";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import AutoCloseTimerAlert from "@/libs/alert/AutoCloseTimerAlert";
 
@@ -22,51 +22,48 @@ const Login = () => {
       username: email,
       password: password,
       redirect: false,
-      callbackUrl: "/",
-    })
-      .then((res) => {
-        if (isChecked) {
-          setCookie("savedEmail", email, 10);
-        } else {
-          setCookie("savedEmail", "", -1);
-        }
-        window.location.href = "/";
-      })
-      .catch((err) => {
-        const data = err.response.data;
-        // 이메일 유효성 검사
-        if (data.code === 400 && data.request === "email")
-          setEmailMessage(data.detailMessage);
-        else if (data.detailMessage === "Not Found User")
-          setEmailMessage("이메일을 확인해주세요.");
-        else if (data.detailMessage === "자격 증명에 실패하였습니다.")
-          confirmAlert(
-            "warning",
-            `비밀번호를 ${data.request.failureCount}회 틀렸습니다.<br>(5회 실패시 계정 잠금)`,
-          );
-        else if (
-          data.detailMessage === "자격 증명에 실패하였습니다. 계정이 잠깁니다."
-        )
-          confirmAlert(
-            "warning",
-            "비밀번호를 5회 실패로 계정이 잠깁니다.",
-            "5분 뒤에 다시 시도해주세요.",
-          );
-        else if (data.detailMessage === "Login Locked User")
-          AutoCloseTimerAlert(
-            "warning",
-            "잠긴 계정입니다.",
-            "뒤에 다시 로그인해주세요.",
-            5 * 60 * 1000 -
-              (new Date().getTime() -
-                new Date(data.request.failureDate).getTime()),
-          );
-        else if (data.code === 406)
-          confirmAlert(
-            "warning",
-            "로그인 할 수 없습니다.<br>관리자에게 문의하세요.",
-          );
-      });
+    });
+    if (res?.status === 200) {
+      if (isChecked) {
+        setCookie("savedEmail", email, 10);
+      } else {
+        setCookie("savedEmail", "", -1);
+      }
+      window.location.href = "/";
+    }
+    if (res?.error) {
+      const data = JSON.parse(res.error);
+      // 이메일 유효성 검사
+      if (data.code === 400 && data.request === "email")
+        setEmailMessage(data.detailMessage);
+      else if (data.detailMessage === "Not Found User")
+        setEmailMessage("이메일을 확인해주세요.");
+      else if (data.detailMessage === "Bad credentials")
+        confirmAlert(
+          "warning",
+          `비밀번호를 ${data.request.failureCount}회 틀렸습니다.<br>(5회 실패시 계정 잠금)`,
+        );
+      else if (data.detailMessage === "Bad credentials 계정이 잠깁니다.")
+        confirmAlert(
+          "warning",
+          "비밀번호를 5회 실패로 계정이 잠깁니다.",
+          "5분 뒤에 다시 시도해주세요.",
+        );
+      else if (data.detailMessage === "Login Locked User")
+        AutoCloseTimerAlert(
+          "warning",
+          "잠긴 계정입니다.",
+          "뒤에 다시 로그인해주세요.",
+          5 * 60 * 1000 -
+            (new Date().getTime() -
+              new Date(data.request.failureDate).getTime()),
+        );
+      else if (data.code === 406)
+        confirmAlert(
+          "warning",
+          "로그인 할 수 없습니다.<br>관리자에게 문의하세요.",
+        );
+    }
   };
 
   useEffect(() => {
@@ -94,7 +91,7 @@ const Login = () => {
       <form
         noValidate
         className={"w-[280px] text-[12px] flex flex-col"}
-        onSubmit={(e) => loginHandler(e)}
+        onSubmit={loginHandler}
       >
         <label className={"ml-[20px] leading-[16px]"} htmlFor={"email"}>
           이메일

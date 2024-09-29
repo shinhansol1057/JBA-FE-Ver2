@@ -1,9 +1,8 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import axios from "axios";
-import { NormalApi } from "@/services/axios/NormalApi";
 import process from "process";
 import jwt from "jsonwebtoken";
+import { signOut } from "next-auth/react";
 
 export const nextAuthOptions: NextAuthOptions = {
   pages: {
@@ -21,40 +20,56 @@ export const nextAuthOptions: NextAuthOptions = {
         username: { type: "email" },
         password: { type: "password" },
       },
-      async authorize(credentials, req) {
-        try {
-          const res = await NormalApi.post("/v1/api/sign/login-cookie", {
-            email: credentials?.username,
-            password: credentials?.password,
-          });
-          if (res && res?.data) {
-            const userData = jwt.decode(res.data.data.accessToken);
+      async authorize(credentials) {
+        const request = {
+          email: credentials?.username,
+          password: credentials?.password,
+        };
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_KEY}/v1/api/sign/login-cookie`,
+          {
+            method: "POST",
+            body: JSON.stringify(request),
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          },
+        );
+        const data = await res.json();
+        if (res.ok && data?.data) {
+          const userData = jwt.decode(data.data.accessToken);
+          if (userData !== null && typeof userData !== "string") {
             return {
-              accessToken: res.data.data.accessToken,
-              refreshToken: res.data.data.refreshToken,
+              id: String(userData.sub),
+              accessToken: data.data.accessToken,
+              refreshToken: data.data.refreshToken,
 
-              sub: userData?.sub,
+              sub: String(userData.sub),
               // @ts-ignore
-              role: userData?.role,
+              role: String(userData.role),
               // @ts-ignore
-              aud: userData?.aud,
+              aud: userData.aud,
               // @ts-ignore
-              iat: userData?.iat,
+              iat: Number(userData.iat),
               // @ts-ignore
-              exp: userData?.exp,
+              exp: Number(userData.exp),
             };
-          } else {
-            null;
           }
-        } catch (error) {
-          if (axios.isAxiosError(error)) {
-            return error?.response?.data;
-          }
+        } else {
+          throw new Error(JSON.stringify(data));
         }
+        return data;
       },
     }),
   ],
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      // @ts-ignore
+      if (!user.accessToken && user?.code !== 200) {
+        return false;
+      }
+      return true;
+    },
+
     async jwt({ token, user, trigger, account, profile }) {
       if (user) {
         token.accessToken = user.accessToken;
@@ -64,14 +79,12 @@ export const nextAuthOptions: NextAuthOptions = {
         token.accessTokenExpires = user.exp;
         token.iat = user.iat;
         token.role = user.role;
-        // @ts-ignore
-
         return token;
       }
 
       // 토큰 만료 체크
       const now = Math.floor(Date.now() / 1000);
-      if (token.exp && token.accessTokenExpires > now) {
+      if (token.accessTokenExpires > now) {
         return token;
       }
 
@@ -86,15 +99,17 @@ export const nextAuthOptions: NextAuthOptions = {
         token.accessTokenExpires = decodedToken.exp;
         // @ts-ignore
         token.iat = decodedToken.iat;
-
         return token;
       } catch (error) {
+        alert("로그인이 만료되었습니다.");
+        await signOut({ callbackUrl: "/login" });
         return {
           ...token,
-          error: error,
+          error: "RefreshAccessTokenError",
         };
       }
     },
+
     async session({ session, token, user }) {
       session.accessToken = token.accessToken;
       session.name = token.name;
@@ -143,5 +158,7 @@ const refreshToken = async (accessToken: string, refreshToken: string) => {
       },
     );
     return await res.json();
-  } catch (error) {}
+  } catch (error) {
+    throw new Error("Token Refresh Error");
+  }
 };

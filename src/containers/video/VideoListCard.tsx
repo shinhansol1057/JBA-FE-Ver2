@@ -41,7 +41,7 @@ const VideoListCard = ({ data }: Props) => {
           "pt-[3px] md:pt-[7px]"
         }
       >
-        <h3 className={"text-[9px] sm:text-[11px] md:text-[16px] text-white"}>
+        <h3 className={"text-[11px] sm:text-[13px] md:text-[18px] text-white"}>
           {data.title}
         </h3>
         {status === "authenticated" ? (
@@ -61,9 +61,7 @@ const VideoListCard = ({ data }: Props) => {
           alt={data.title}
           width={1000}
           height={1000}
-          className={
-            "w-full h-[150px] sm:h-[200px] md:h-[400px] cursor-pointer shadow-xl rounded-[8px]"
-          }
+          className={" cursor-pointer shadow-xl rounded-[8px]"}
         />
         <div
           className={
