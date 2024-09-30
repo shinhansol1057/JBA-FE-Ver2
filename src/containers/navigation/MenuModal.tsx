@@ -9,8 +9,9 @@ import { signOut, useSession } from "next-auth/react";
 
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
+  closeModal: () => void;
 };
-const MenuModal = ({ setModalOpen }: Props) => {
+const MenuModal = ({ setModalOpen, closeModal }: Props) => {
   const router = useRouter();
   const { setCompetitionStatusMenu } = useCompetitionStore();
   const loginButtonHandler = () => {
@@ -26,23 +27,15 @@ const MenuModal = ({ setModalOpen }: Props) => {
   };
 
   return (
-    <div
-      className={
-        "animate-[rightSlide_0.5s_ease-out] w-[282px] sm:w-[350px] md:w-[500px] pl-[70px] text-[12px] sm:text-[14px] md:text-[16px] "
-      }
-    >
+    <div className={" w-full pl-[70px] text-base sm:text-xl "}>
       <div className={"flex flex-row justify-end text-[#9B9B9B]"}>
         <IoClose
-          onClick={() => setModalOpen(false)}
-          className={"text-[15px] sm:text-[20px] md:text-[25px] cursor-pointer"}
+          onClick={closeModal}
+          className={"text-2xl sm:text-3xl md:text-4xl cursor-pointer"}
         />
       </div>
       <div className={"mb-[35px]"}>
-        <div
-          className={
-            "flex flex-row leading-[18px] sm:leading-[22px] md:leading-[28px]"
-          }
-        >
+        <div className={"flex flex-row"}>
           {sessionStatus === "authenticated" ? (
             <div className={"flex"}>
               <p className={"font-bold"}>{session?.user?.name}</p>
@@ -52,11 +45,7 @@ const MenuModal = ({ setModalOpen }: Props) => {
             <p>비회원 상태</p>
           )}
         </div>
-        <p
-          className={
-            "leading-[18px] sm:leading-[22px] md:leading-[28px] mb-[5px] sm:mb-[8px] md:mb-[12px]"
-          }
-        >
+        <p className={"mb-[5px] sm:mb-[8px] md:mb-[12px]"}>
           JBA 방문을 환영합니다.
         </p>
         {sessionStatus === "authenticated" ? (
@@ -64,7 +53,10 @@ const MenuModal = ({ setModalOpen }: Props) => {
             <Link
               href={"/user/my-page"}
               className={
-                "flex justify-center items-center w-[60px] sm:w-[80px] md:w-[100px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
+                "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
+                "w-[70px] sm:w-[90px] md:w-[110px] " +
+                "h-5 sm:h-6 md:h-7 " +
+                "text-xs sm:text-sm md:text-base "
               }
               onClick={() => setModalOpen(false)}
             >
@@ -72,7 +64,10 @@ const MenuModal = ({ setModalOpen }: Props) => {
             </Link>
             <button
               className={
-                "w-[60px] sm:w-[80px] md:w-[100px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
+                "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
+                "w-[70px] sm:w-[90px] md:w-[110px] " +
+                "h-5 sm:h-6 md:h-7 " +
+                "text-xs sm:text-sm md:text-base "
               }
               onClick={() => logoutHandler()}
             >
@@ -83,7 +78,10 @@ const MenuModal = ({ setModalOpen }: Props) => {
           <div className={"flex justify-between"}>
             <button
               className={
-                "w-[40px] sm:w-[60px] md:w-[80px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
+                "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
+                "w-[70px] sm:w-[90px] md:w-[110px] " +
+                "h-5 sm:h-6 md:h-7 " +
+                "text-xs sm:text-sm md:text-base "
               }
               onClick={() => {
                 loginButtonHandler();
@@ -93,7 +91,10 @@ const MenuModal = ({ setModalOpen }: Props) => {
             </button>
             <button
               className={
-                "w-[60px] sm:w-[80px] md:w-[100px] h-[15px] sm:h-[18px] md:h-[24px] font-bold text-[10px] sm:text-[12px] md:text-[14px] text-white bg-black rounded-[20px]"
+                "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
+                "w-[70px] sm:w-[90px] md:w-[110px] " +
+                "h-5 sm:h-6 md:h-7 " +
+                "text-xs sm:text-sm md:text-base "
               }
               onClick={() => router.push("/sign-up")}
             >
@@ -113,12 +114,16 @@ const MenuModal = ({ setModalOpen }: Props) => {
                 className={" flex flex-row pt-[10px] sm:pt-[15px] md:pt-[20px]"}
                 key={menuIndex}
               >
-                <div className={"w-[80px] sm:w-[90px] md:w-[110px] pl-[10px]"}>
+                <div
+                  className={
+                    "w-[90px] sm:w-[100px] md:w-[120px] pl-[10px] mr-[10px]"
+                  }
+                >
                   <h3 className={"font-bold "}>{menu.title}</h3>
                 </div>
                 <div
                   className={
-                    "flex flex-col text-[#4B4B4B] w-[132px] sm:w-[200px] md:w-[340px] items-start pl-[10px] " +
+                    "flex flex-col text-[#4B4B4B] w-[65%] items-start pl-[10px] " +
                     (menuList.length === menuIndex + 1
                       ? ""
                       : "border-b border-solid border-[#D9D9D9]")

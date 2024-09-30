@@ -20,21 +20,21 @@ const BannerTop = () => {
         }
       />
       <div className="flex justify-end mt-[30px] sm:mt-[50px]">
-        <h1 lang={"en"} className={"text-xl sm:text-5xl md:text-[112px]"}>
+        <h1 lang={"en"} className={"text-2xl sm:text-5xl md:text-[7rem]"}>
           JBA
         </h1>
       </div>
       <div className="flex justify-end ">
-        <h2 lang={"en"} className={"text-xs sm:text-xl md:text-[26px]"}>
+        <h2 lang={"en"} className={"text-xs sm:text-xl md:text-2xl"}>
           Jeju Basketball Association
         </h2>
       </div>
-      <div className={"flex justify-end sm:text-xl md:text-[26px]"}>
+      <div className={"flex justify-end text-xs sm:text-xl md:text-text-2xl"}>
         <p>-</p>
       </div>
       <div
         className={
-          "flex flex-col items-end text-[9px] leading-normal sm:text-xs w-[50%] md:text-xl"
+          "flex flex-col items-end leading-normal w-[50%] text-[0.625rem] sm:text-base md:text-xl"
         }
       >
         <p className={"mb-2"}>제주특별자치도농구협회에 오신것을 환영합니다!</p>

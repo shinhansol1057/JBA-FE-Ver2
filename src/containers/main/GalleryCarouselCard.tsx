@@ -36,7 +36,7 @@ const GalleryCarouselCard = ({ data, key }: Props) => {
       <div
         className={
           "w-full bg-[rgba(0,0,0,0.6)] absolute bottom-0 left-0 flex flex-col justify-around py-[10px] pl-[20px] text-white z-20 " +
-          "text-[10px] sm:text-[16px] md:text-[24px] " +
+          "text-xs sm:text-base md:text-2xl " +
           "h-[55px] sm:h-[70px] md:h-[100px]"
         }
       >

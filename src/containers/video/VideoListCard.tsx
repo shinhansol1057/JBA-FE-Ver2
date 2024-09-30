@@ -41,7 +41,7 @@ const VideoListCard = ({ data }: Props) => {
           "pt-[3px] md:pt-[7px]"
         }
       >
-        <h3 className={"text-[11px] sm:text-[13px] md:text-[18px] text-white"}>
+        <h3 className={"text-sm sm:text-base md:text-2xl text-white"}>
           {data.title}
         </h3>
         {status === "authenticated" ? (
