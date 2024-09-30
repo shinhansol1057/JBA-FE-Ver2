@@ -146,18 +146,18 @@ body *:lang(en) {
 
 @media (max-width: 640px) {
     .ant-picker-input {
-        font-size: 10px;
+        font-size: 0.625rem;
     }
 }
 
 @media (min-width: 640px) and (max-width: 768px){
     .ant-picker-input {
-        font-size: 12px;
+        font-size: 0.75rem;
     }
 }
 
 @media (min-width: 768px) {
     .ant-picker-input {
-        font-size: 16px;
+        font-size: 1rem;
     }
 }
