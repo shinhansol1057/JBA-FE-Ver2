@@ -4,14 +4,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { signUpData } from "@/constants/sighUp";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import PhoneNumHandler from "@/utils/PhoneNumHandler";
-import BirthHandler from "@/utils/BirthHandler";
 import {
   FetchCheckCertificationNum,
   FetchSendCertificationEmail,
   FetchSignUp,
 } from "@/services/user/SignUpApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
-import { Simulate } from "react-dom/test-utils";
 
 const SignUp = () => {
   const [certificating, setCertificating] = useState<boolean>(false);
@@ -205,33 +203,6 @@ const SignUp = () => {
             className={
               '"mt-[5px] mb-[10px] w-[280px] h-[40px] rounded-[50px] border-[#D9D9D9] text-[#4B4B4B] pl-[20px] pr-[50px]'
             }
-          />
-        </div>
-
-        <label className={"ml-[20px] leading-[16px] mb-[5px]"}>소속팀</label>
-        <div>
-          <input
-            {...register("team")}
-            placeholder={"소속팀이 없을 경우 '무소속' 입력해주세요"}
-            type={"text"}
-            className={
-              '"mt-[5px] mb-[10px] w-[280px] h-[40px] rounded-[50px] border-[#D9D9D9] text-[#4B4B4B] pl-[20px] pr-[50px]'
-            }
-          />
-        </div>
-
-        <label className={"ml-[20px] leading-[16px] mb-[5px]"}>
-          주민번호 앞 7자리
-        </label>
-        <div>
-          <input
-            {...register("birth")}
-            type={"text"}
-            onChange={(e) => BirthHandler(e, setValue)}
-            className={
-              '"mt-[5px] mb-[10px] w-[280px] h-[40px] rounded-[50px] border-[#D9D9D9] text-[#4B4B4B] pl-[20px] pr-[50px]'
-            }
-            placeholder={"예) 991212-1"}
           />
         </div>
 
