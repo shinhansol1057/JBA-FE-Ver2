@@ -27,11 +27,15 @@ const SignUp = () => {
     getValues,
   } = useForm<signUpData>();
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     if (!isCertificate)
-      confirmAlert("warning", "인증 미완료", "이메일 인증을 진행해주세요");
+      await confirmAlert(
+        "warning",
+        "인증 미완료",
+        "이메일 인증을 진행해주세요",
+      );
     else {
-      FetchSignUp(data);
+      await FetchSignUp(data);
     }
   });
 

@@ -14,8 +14,6 @@ import { useSession } from "next-auth/react";
 const UpdateUserInfo = () => {
   const [name, setName] = useState<string>("");
   const [phoneNum, setPhoneNum] = useState<string>("");
-  const [birth, setBirth] = useState<string>("");
-  const [team, setTeam] = useState<string>("");
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
 
@@ -30,9 +28,7 @@ const UpdateUserInfo = () => {
     const request: {
       name: string;
       phoneNum: string;
-      birth: string;
-      team: string;
-    } = { name, phoneNum, birth, team };
+    } = { name, phoneNum };
     confirmAndCancelAlertWithLoading(
       "question",
       "프로필을 변경하겠습니까?",
@@ -42,23 +38,8 @@ const UpdateUserInfo = () => {
   };
 
   useEffect(() => {
-    let birthOf7th;
-    if (data?.birth.substring(0, 1) === "0" && data?.gender === "MALE") {
-      birthOf7th = "3";
-    } else if (
-      data?.birth.substring(0, 1) === "0" &&
-      data?.gender === "FEMALE"
-    ) {
-      birthOf7th = "4";
-    } else if (data?.birth.substring(0, 1) !== "0" && data?.gender === "MALE") {
-      birthOf7th = "1";
-    } else {
-      birthOf7th = "2";
-    }
     setName(data?.name);
     setPhoneNum(data?.phoneNum);
-    setBirth(data?.birth + "-" + birthOf7th);
-    setTeam(data?.team);
   }, [data]);
 
   return (
@@ -80,24 +61,6 @@ const UpdateUserInfo = () => {
           placeHolder={"예) 010-1234-5678"}
           data={phoneNum}
           setData={setPhoneNum}
-        />
-      </div>
-      <div className={"flex flex-col mb-[20px]"}>
-        <PostLabel content={"생년월일 앞 7자리"} />
-        <PostInput
-          type={"text"}
-          placeHolder={"예) 991231-1"}
-          data={birth}
-          setData={setBirth}
-        />
-      </div>
-      <div className={"flex flex-col mb-[20px]"}>
-        <PostLabel content={"소속팀"} />
-        <PostInput
-          type={"text"}
-          placeHolder={"예) 소속팀이 없을경우 '무소속'"}
-          data={team}
-          setData={setTeam}
         />
       </div>
       <div className={"grid grid-cols-2 gap-[10px]"}>
