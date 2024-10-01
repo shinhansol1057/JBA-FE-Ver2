@@ -4,6 +4,4 @@ export type signUpData = {
   passwordConfirm: string;
   name: string;
   phoneNum: string;
-  team: string;
-  birth: string;
 };

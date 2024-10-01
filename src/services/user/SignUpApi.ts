@@ -42,8 +42,6 @@ export function FetchSignUp(data: signUpData) {
         );
       else if (message === "휴대폰번호 유효성 검사 실패")
         confirmAlert("warning", "휴대폰번호를 정확히 입력해주세요.");
-      else if (message === "주민번호 유효성 검사 실패")
-        confirmAlert("warning", "주민번호를 정확히 입력해주세요.");
       else if (message === "이미 가입된 이메일입니다.")
         confirmAlert("warning", "이미 가입된 이메일입니다.");
       else if (message === "이미 해당 휴대폰 번호로 가입된 유저가 있습니다.")

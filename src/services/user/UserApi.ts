@@ -15,8 +15,6 @@ export const FetchGetUserInfo = async () => {
 export const FetchUpdateUserInfo = async (request: {
   name: string;
   phoneNum: string;
-  birth: string;
-  team: string;
 }) => {
   const session = await getSession();
   return Api.put("/v1/api/user/update", request, {
@@ -37,8 +35,6 @@ export const FetchUpdateUserInfo = async (request: {
         confirmAlert("warning", "프로필 수정 실패", "빈칸을 모두 채워주세요.");
       else if (message === "휴대폰번호 유효성 검사 실패")
         confirmAlert("warning", "휴대폰번호를 정확히 입력해주세요.");
-      else if (message === "주민번호 유효성 검사 실패")
-        confirmAlert("warning", "주민번호를 정확히 입력해주세요.");
       else if (message === "이미 해당 휴대폰 번호로 가입된 유저가 있습니다.")
         confirmAlert("warning", "이미 가입된 휴대폰번호입니다.");
     });
@@ -61,6 +57,7 @@ export const FetchUpdatePassword = async (
     },
   })
     .then((res) => {
+      console.log("res: ", res);
       if (res.status === 200) {
         confirmAlert(
           "success",
@@ -75,6 +72,7 @@ export const FetchUpdatePassword = async (
       }
     })
     .catch((err) => {
+      console.log(err);
       const message = err.response.data.detailMessage;
       if (message === "비어 있을 수 없습니다")
         confirmAlert("warning", "빈칸을 모두 채워주세요.");
