@@ -25,6 +25,7 @@ const PostInput = ({ type, placeHolder, data, setData }: Props) => {
           "w-[80%] ml-[20px] placeholder:text-[#B5B5B5] border-none " +
           "text-[12px] sm:text-[14px] md:text-[18px] "
         }
+        autoComplete={"false"}
       />
     </div>
   );

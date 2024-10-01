@@ -14,9 +14,9 @@ const UpdatePassword = () => {
   const [newPWConfirm, setNewPWConfirm] = useState<string>("");
   const router = useRouter();
 
-  const updateHandler = (e: any) => {
+  const updateHandler = async (e: any) => {
     e.preventDefault();
-    confirmAndCancelAlertWithLoading(
+    await confirmAndCancelAlertWithLoading(
       "question",
       "비밀번호를 변경하겠습니까?",
       "",

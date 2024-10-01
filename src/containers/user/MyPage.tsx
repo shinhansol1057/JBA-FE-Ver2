@@ -33,8 +33,6 @@ const MyPage = () => {
           />
           <MyPageRow label={"이메일"} value={data?.email} />
           <MyPageRow label={"휴대폰번호"} value={data?.phoneNum} />
-          <MyPageRow label={"생년월일"} value={data?.birth} />
-          <MyPageRow label={"소속팀"} value={data?.team} />
         </div>
       ) : (
         ""
