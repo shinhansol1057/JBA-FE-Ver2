@@ -1,30 +1,30 @@
-"use client";
-import React from "react";
-import { menuList } from "@/constants/navigation";
-import { redirect, useRouter } from "next/navigation";
-import { useCompetitionStore } from "@/states/CompetitionStore";
-import { IoClose } from "react-icons/io5";
-import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
+"use client"
+import React from "react"
+import { menuList } from "@/constants/navigation"
+import { redirect, useRouter } from "next/navigation"
+import { useCompetitionStore } from "@/states/CompetitionStore"
+import { IoClose } from "react-icons/io5"
+import Link from "next/link"
+import { signOut, useSession } from "next-auth/react"
 
 type Props = {
-  setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
-  closeModal: () => void;
-};
+  setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void
+  closeModal: () => void
+}
 const MenuModal = ({ setModalOpen, closeModal }: Props) => {
-  const router = useRouter();
-  const { setCompetitionStatusMenu } = useCompetitionStore();
+  const router = useRouter()
+  const { setCompetitionStatusMenu } = useCompetitionStore()
   const loginButtonHandler = () => {
-    setModalOpen(false);
-    router.push("/login");
-  };
-  const { data: session, status: sessionStatus } = useSession();
+    setModalOpen(false)
+    router.push("/login")
+  }
+  const { data: session, status: sessionStatus } = useSession()
 
   const logoutHandler = async () => {
-    setModalOpen(false);
-    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" });
+    setModalOpen(false)
+    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" })
     // router.push("/login");
-  };
+  }
 
   return (
     <div className={" w-full pl-[70px] text-base sm:text-xl "}>
@@ -62,6 +62,19 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
             >
               마이페이지
             </Link>
+            <Link href='/admin'>
+              <button
+                className={
+                  "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
+                  "w-[70px] sm:w-[90px] md:w-[110px] " +
+                  "h-5 sm:h-6 md:h-7 " +
+                  "text-xs sm:text-sm md:text-base "
+                }
+              >
+                관리자
+              </button>
+            </Link>
+
             <button
               className={
                 "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
@@ -84,7 +97,7 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
                 "text-xs sm:text-sm md:text-base "
               }
               onClick={() => {
-                loginButtonHandler();
+                loginButtonHandler()
               }}
             >
               로그인
@@ -136,25 +149,25 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
                           key={itemIndex}
                           className={"mb-[10px] sm:mb-[15px] md:mb-[20px]"}
                           onClick={() => {
-                            setModalOpen(false);
-                            router.push(i.link);
+                            setModalOpen(false)
+                            router.push(i.link)
                             if (i.menu === "대회정보")
-                              setCompetitionStatusMenu("ALL");
+                              setCompetitionStatusMenu("ALL")
                           }}
                         >
                           {i.menu}
                         </button>
-                      );
+                      )
                     },
                   )}
                 </div>
               </div>
-            );
+            )
           },
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MenuModal;
+export default MenuModal
