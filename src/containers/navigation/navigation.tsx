@@ -1,24 +1,28 @@
-"use client";
-import styled, { css, keyframes } from "styled-components";
-import Modal from "react-modal";
-import MenuModal from "@/containers/navigation/MenuModal";
-import { IoMenu } from "react-icons/io5";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+"use client"
+import styled, { css, keyframes } from "styled-components"
+import Modal from "react-modal"
+import MenuModal from "@/containers/navigation/MenuModal"
+import { IoMenu } from "react-icons/io5"
+import { usePathname, useRouter } from "next/navigation"
+import { useState } from "react"
 
 const Navigation = () => {
-  const router = useRouter();
-  const path = usePathname();
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [isClosing, setIsClosing] = useState<boolean>(false);
+  const router = useRouter()
+  const path = usePathname()
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const [isClosing, setIsClosing] = useState<boolean>(false)
 
   const closeModal = () => {
-    setIsClosing(true);
+    setIsClosing(true)
     setTimeout(() => {
-      setModalOpen(false);
-      setIsClosing(false);
-    }, 500); // Match the duration of the closing animation
-  };
+      setModalOpen(false)
+      setIsClosing(false)
+    }, 500) // Match the duration of the closing animation
+  }
+
+  if (path === "/admin") {
+    return null
+  }
   return (
     <nav
       className={
@@ -42,17 +46,17 @@ const Navigation = () => {
         ariaHideApp={false}
         isOpen={modalOpen}
         onRequestClose={closeModal}
-        contentLabel="menu"
+        contentLabel='menu'
         style={customModalStyles}
         isClosing={isClosing}
       >
         <MenuModal setModalOpen={setModalOpen} closeModal={closeModal} />
       </StyledModal>
     </nav>
-  );
-};
+  )
+}
 
-export default Navigation;
+export default Navigation
 
 const rightSlideIn = keyframes`
   0% {
@@ -63,7 +67,7 @@ const rightSlideIn = keyframes`
     transform: translateX(0);
     opacity: 1;
   }
-`;
+`
 
 const rightSlideOut = keyframes`
   0% {
@@ -74,7 +78,7 @@ const rightSlideOut = keyframes`
     transform: translateX(100%);
     opacity: 0;
   }
-`;
+`
 
 const StyledModal = styled(Modal)<{ isClosing: boolean }>`
   &.ReactModal__Content {
@@ -99,7 +103,7 @@ const StyledModal = styled(Modal)<{ isClosing: boolean }>`
       width: 500px;
     }
   }
-`;
+`
 
 const customModalStyles: ReactModal.Styles = {
   overlay: {
@@ -125,4 +129,4 @@ const customModalStyles: ReactModal.Styles = {
     display: "flex",
     overflow: "auto",
   },
-};
+}
