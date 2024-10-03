@@ -1,16 +1,30 @@
-import { LogoutButton } from "@/containers/admin/LogoutButton"
+import { AdminTitle } from "@/containers/admin/AdminTitle"
+import { HomeButton } from "@/containers/admin/HomeButton"
+import { Sidebar } from "@/containers/admin/Sidebar"
+import { SideMenuButton } from "@/containers/admin/SideMenuButton"
+import { FetchServerGetUserInfo } from "@/services/user/UserApi"
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+  const user = await FetchServerGetUserInfo()
+
   return (
-    <main>
-      <nav className='fixed h-16 w-full bg-black text-white flex items-center'>
-        <div className='flex w-full px-8 justify-between'>
-          <h1 className='font-extrabold text-2xl'>JBA 관리자 센터</h1>
-          <LogoutButton />
-        </div>
-      </nav>
-      <div className='pt-16'>{children}</div>
-    </main>
+    <div className='flex h-screen overflow-hidden'>
+      <Sidebar username={user.name} />
+      <div className='flex-1 flex flex-col overflow-hidden'>
+        <nav className='fixed h-16 w-full bg-black text-white flex items-center z-10'>
+          <div className='flex items-center w-full px-4 justify-between'>
+            <div className='flex items-center gap-x-4'>
+              <SideMenuButton />
+              <AdminTitle />
+            </div>
+            <HomeButton />
+          </div>
+        </nav>
+        <main className='pt-16 flex-1 overflow-x-hidden overflow-y-auto bg-gray-100'>
+          {children}
+        </main>
+      </div>
+    </div>
   )
 }
 
