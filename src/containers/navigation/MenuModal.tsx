@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { menuList } from "@/constants/navigation";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
@@ -88,17 +88,6 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
               }}
             >
               로그인
-            </button>
-            <button
-              className={
-                "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
-                "w-[70px] sm:w-[90px] md:w-[110px] " +
-                "h-5 sm:h-6 md:h-7 " +
-                "text-xs sm:text-sm md:text-base "
-              }
-              onClick={() => router.push("/sign-up")}
-            >
-              회원가입
             </button>
           </div>
         )}

@@ -9,6 +9,7 @@ type Props = {
 };
 const AddPageRouter = ({ content, url, onClick }: Props) => {
   const { data: session, status: sessionStatus } = useSession();
+  console.log(sessionStatus);
   return (
     <div className={"flex justify-end mb-[10px] w-full"}>
       {sessionStatus === "authenticated" ? (

@@ -5,12 +5,14 @@ import SocialLoginBtn from "@/components/login/SocialLoginBtn";
 
 const SocialLogin = () => {
   const googleLogin = async () => {
-    const res = await signIn("google", { callbackUrl: "/" }, "ok");
+    const res = await signIn("google", { callbackUrl: "/" });
+  };
+
+  const naverLogin = async () => {
+    const res = await signIn("naver", { callbackUrl: "/" });
   };
 
   const kakaoLogin = async () => {};
-
-  const naverLogin = async () => {};
 
   return (
     <div
@@ -39,13 +41,13 @@ const SocialLogin = () => {
         content={"네이버 로그인"}
         backgroundColor={"#02C75A"}
       />
-      <SocialLoginBtn
-        loginFc={kakaoLogin}
-        imgSrc={"/image/social/kakao.svg"}
-        alt={"kakao"}
-        content={"카카오 로그인"}
-        backgroundColor={"#F8DE36"}
-      />
+      {/*<SocialLoginBtn*/}
+      {/*  loginFc={kakaoLogin}*/}
+      {/*  imgSrc={"/image/social/kakao.svg"}*/}
+      {/*  alt={"kakao"}*/}
+      {/*  content={"카카오 로그인"}*/}
+      {/*  backgroundColor={"#F8DE36"}*/}
+      {/*/>*/}
       <div className={"w-[90%] md:w-[500px] flex items-center justify-between"}>
         <hr className="w-[43%] md:w-[230px] my-[20px] border-t border-[#B3B3B3]" />
         <p className={"text-[#B3B3B3] text-lg"}>OR</p>

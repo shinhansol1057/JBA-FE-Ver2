@@ -4,7 +4,12 @@ import process from "process";
 import jwt from "jsonwebtoken";
 import { signOut } from "next-auth/react";
 import GoogleProvider from "next-auth/providers/google";
-import { redirect } from "next/navigation";
+import NaverProvider from "next-auth/providers/naver";
+import {
+  refreshToken,
+  socialLogin,
+  socialSignUp,
+} from "@/services/user/LoginApi";
 
 export const nextAuthOptions: NextAuthOptions = {
   pages: {
@@ -18,6 +23,17 @@ export const nextAuthOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
+    NaverProvider({
+      clientId: process.env.NAVER_CLIENT_ID || "",
+      clientSecret: process.env.NAVER_CLIENT_SECRET || "",
       authorization: {
         params: {
           prompt: "consent",
@@ -76,30 +92,46 @@ export const nextAuthOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log("signIn", account);
+      console.log("signIn", user, account, profile, email, credentials);
 
-      if (account?.provider === "google" && user?.email) {
+      if (
+        (account?.provider === "google" || account?.provider === "naver") &&
+        user?.email &&
+        account
+      ) {
         const data = await socialLogin(account.providerAccountId, user.email);
         account.access_token = data.accessToken;
         account.refresh_token = data.refreshToken;
-        console.log("res: ", data);
+        console.log("loginres: ", data);
         if (data.status === 200) {
           return true;
-        } else if (
-          data.status === 404 &&
-          account?.provider === "google" &&
-          user?.email &&
-          user?.name
-        ) {
-          const data = await socialSignUp(
-            account.providerAccountId,
-            user.email,
-            user.name,
-          );
-          account.access_token = data.accessToken;
-          account.refresh_token = data.refreshToken;
-          console.log("res: ", data);
-          return true;
+        } else if (data.status === 404) {
+          if (account.provider === "google" && user?.name) {
+            const data = await socialSignUp(
+              account.providerAccountId,
+              user.email,
+              user.name,
+              null,
+            );
+            account.access_token = data.accessToken;
+            account.refresh_token = data.refreshToken;
+            console.log("googleres: ", data);
+            return true;
+          }
+          if (account?.provider === "naver" && profile) {
+            const data = await socialSignUp(
+              account.providerAccountId,
+              null,
+              // @ts-ignore
+              profile.response.name,
+              // @ts-ignore
+              profile.response.mobile,
+            );
+            account.access_token = data.accessToken;
+            account.refresh_token = data.refreshToken;
+            console.log("naverres: ", data);
+            return true;
+          }
         } else if (data.status === 409) {
           console.log("res: ", data);
           return `/sign-up/duplicate?id=${account.providerAccountId}&email=${user.email}`;
@@ -116,7 +148,7 @@ export const nextAuthOptions: NextAuthOptions = {
       console.log("jwt", account);
 
       if (
-        account?.provider === "google" &&
+        (account?.provider === "google" || account?.provider === "naver") &&
         account.access_token &&
         account.refresh_token
       ) {
@@ -204,58 +236,4 @@ export const nextAuthOptions: NextAuthOptions = {
     },
   },
   debug: process.env.NODE_ENV === "development",
-};
-
-const refreshToken = async (accessToken: string, refreshToken: string) => {
-  try {
-    const res = await fetch(
-      process.env.NEXT_PUBLIC_API_KEY + "/v1/api/sign/refresh-token-cookie",
-      {
-        method: "POST",
-        headers: {
-          Authorization: accessToken,
-          RefreshToken: refreshToken,
-        },
-        credentials: "include",
-        body: "",
-      },
-    );
-    return await res.json();
-  } catch (error) {
-    throw new Error("Token Refresh Error");
-  }
-};
-
-const socialLogin = async (socialId: String, email: string) => {
-  try {
-    const res = await fetch(
-      process.env.NEXT_PUBLIC_API_KEY +
-        `/v1/api/sign/social-login?socialId=${socialId}&email=${email}`,
-      {
-        method: "POST",
-        credentials: "include",
-        body: "",
-      },
-    );
-    return await res.json();
-  } catch (error) {
-    throw new Error("Token Refresh Error");
-  }
-};
-
-const socialSignUp = async (socialId: String, email: string, name: string) => {
-  try {
-    const res = await fetch(
-      process.env.NEXT_PUBLIC_API_KEY +
-        `/v1/api/sign/social-sign-up?socialId=${socialId}&email=${email}&name=${name}`,
-      {
-        method: "POST",
-        credentials: "include",
-        body: "",
-      },
-    );
-    return await res.json();
-  } catch (error) {
-    throw new Error("Token Refresh Error");
-  }
 };
