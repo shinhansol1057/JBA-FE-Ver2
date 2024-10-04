@@ -3,6 +3,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import process from "process";
 import jwt from "jsonwebtoken";
 import { signOut } from "next-auth/react";
+import GoogleProvider from "next-auth/providers/google";
+import { redirect } from "next/navigation";
 
 export const nextAuthOptions: NextAuthOptions = {
   pages: {
@@ -13,6 +15,17 @@ export const nextAuthOptions: NextAuthOptions = {
     maxAge: 60 * 60 * 24 * 3,
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
     CredentialsProvider({
       name: "credentials",
       credentials: {
@@ -63,14 +76,65 @@ export const nextAuthOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      // @ts-ignore
-      if (!user.accessToken && user?.code !== 200) {
-        return false;
+      console.log("signIn", account);
+
+      if (account?.provider === "google" && user?.email) {
+        const data = await socialLogin(account.providerAccountId, user.email);
+        account.access_token = data.accessToken;
+        account.refresh_token = data.refreshToken;
+        console.log("res: ", data);
+        if (data.status === 200) {
+          return true;
+        } else if (
+          data.status === 404 &&
+          account?.provider === "google" &&
+          user?.email &&
+          user?.name
+        ) {
+          const data = await socialSignUp(
+            account.providerAccountId,
+            user.email,
+            user.name,
+          );
+          account.access_token = data.accessToken;
+          account.refresh_token = data.refreshToken;
+          console.log("res: ", data);
+          return true;
+        } else if (data.status === 409) {
+          console.log("res: ", data);
+          return `/sign-up/duplicate?id=${account.providerAccountId}&email=${user.email}`;
+        }
       }
-      return true;
+      // @ts-ignore
+      if (user.accessToken) {
+        return true;
+      }
+      return false;
     },
 
     async jwt({ token, user, trigger, account, profile }) {
+      console.log("jwt", account);
+
+      if (
+        account?.provider === "google" &&
+        account.access_token &&
+        account.refresh_token
+      ) {
+        const userData = jwt.decode(account.access_token);
+        if (userData !== null && typeof userData !== "string") {
+          token.accessToken = account.access_token;
+          token.refreshToken = account.refresh_token;
+          token.name = String(userData.aud);
+          token.id = String(userData.sub);
+          token.accessTokenExpires = Number(userData.exp);
+          token.iat = Number(userData.iat);
+          token.role = String(userData.role);
+          return token;
+        } else {
+          throw new Error(JSON.stringify(account));
+        }
+      }
+
       if (user) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
@@ -101,7 +165,6 @@ export const nextAuthOptions: NextAuthOptions = {
         token.iat = decodedToken.iat;
         return token;
       } catch (error) {
-        alert("로그인이 만료되었습니다.");
         await signOut({ callbackUrl: "/login" });
         return {
           ...token,
@@ -153,6 +216,40 @@ const refreshToken = async (accessToken: string, refreshToken: string) => {
           Authorization: accessToken,
           RefreshToken: refreshToken,
         },
+        credentials: "include",
+        body: "",
+      },
+    );
+    return await res.json();
+  } catch (error) {
+    throw new Error("Token Refresh Error");
+  }
+};
+
+const socialLogin = async (socialId: String, email: string) => {
+  try {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_API_KEY +
+        `/v1/api/sign/social-login?socialId=${socialId}&email=${email}`,
+      {
+        method: "POST",
+        credentials: "include",
+        body: "",
+      },
+    );
+    return await res.json();
+  } catch (error) {
+    throw new Error("Token Refresh Error");
+  }
+};
+
+const socialSignUp = async (socialId: String, email: string, name: string) => {
+  try {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_API_KEY +
+        `/v1/api/sign/social-sign-up?socialId=${socialId}&email=${email}&name=${name}`,
+      {
+        method: "POST",
         credentials: "include",
         body: "",
       },

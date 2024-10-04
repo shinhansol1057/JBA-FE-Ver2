@@ -15,6 +15,7 @@ const Login = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [emailMessage, setEmailMessage] = useState<string>("");
   const router = useRouter();
+
   const loginHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setEmailMessage("");

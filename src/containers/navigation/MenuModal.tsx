@@ -16,7 +16,7 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
   const { setCompetitionStatusMenu } = useCompetitionStore();
   const loginButtonHandler = () => {
     setModalOpen(false);
-    router.push("/login");
+    router.push("/login/social");
   };
   const { data: session, status: sessionStatus } = useSession();
 
