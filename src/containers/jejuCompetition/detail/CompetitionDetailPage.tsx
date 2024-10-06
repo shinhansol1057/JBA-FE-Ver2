@@ -23,7 +23,7 @@ const CompetitionDetailPage = ({ id }: { id: string }) => {
     select: (result) => result?.data.data,
   });
   return (
-    <div className={"my-[10px] md:my-[20px] "}>
+    <div className={"my-2.5 md:my-5 w-[90%] md:w-[800px]"}>
       <PostTitle title={detailData?.title} />
       {detailData && resultData && (
         <DetailCategory

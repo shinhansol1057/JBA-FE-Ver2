@@ -14,14 +14,14 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
   return (
     <div
       className={
-        "w-full border border-solid border-borderColor shadow-xl rounded-[8px] " +
-        "h-[90px] sm:h-[105px] md:h-[120px] text-[10px] sm:text-[12px] md:text-[16px] mb-[10px]"
+        "w-full border border-solid border-borderColor shadow-xl rounded-lg " +
+        "text-sm sm:text-base md:text-lg mb-2.5"
       }
     >
       <div
         className={
           "flex flex-row items-center border-b border-solid border-[#D9D9D9] mx-[7px] " +
-          "h-[30px] sm:h-[35px] md:h-[40px]"
+          "h-7 sm:h-9 md:h-10"
         }
       >
         <div className={"w-[50%]"}>
@@ -38,8 +38,8 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
       </div>
       <div
         className={
-          "flex flex-row items-center border-b border-solid border-[#D9D9D9] mx-[7px] " +
-          "h-[30px] sm:h-[35px] md:h-[40px] "
+          "flex flex-row items-center border-b border-solid border-[#D9D9D9] mx-2 " +
+          "h-7 sm:h-9 md:h-10 "
         }
       >
         <div className={"w-[50%] flex flex-row items-center"}>
@@ -63,13 +63,13 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
           {phase === "FINISH" && data.filePath ? (
             <GrDocumentDownload
               className={
-                "text-[15px] sm:text-[20px] md:text-[25px] mr-[10px] md:mr-[20px] cursor-pointer"
+                "text-base sm:text-xl md:text-3xl mr-2.5 md:mr-5 cursor-pointer"
               }
-              onClick={() => {
+              onClick={async () => {
                 if (data.filePath) {
-                  handleDownload(data.filePath, data.fileName);
+                  await handleDownload(data.filePath, data.fileName);
                 } else {
-                  confirmAlert("warning", "등록된 파일이 없습니다.");
+                  await confirmAlert("warning", "등록된 파일이 없습니다.");
                 }
               }}
             />
@@ -80,11 +80,11 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
       </div>
       <div
         className={
-          "bg-black flex flex-row items-center justify-center rounded-b-[8px] text-white " +
-          "h-[30px] sm:h-[35px] md:h-[40px] "
+          "bg-black flex flex-row items-center justify-center rounded-b-lg text-white " +
+          "h-7 sm:h-9 md:h-10 "
         }
       >
-        <p className={"mr-[10px] md:mr-[20px]"}>{data.homeName}</p>
+        <p className={"mr-2.5 md:mr-5"}>{data.homeName}</p>
         <p
           className={
             data.homeScore > data.awayScore
@@ -96,7 +96,7 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
         >
           {phase === "FINISH" && data.homeScore}
         </p>
-        <p className={"mx-[10px] md:mx-[20px]"}>vs</p>
+        <p className={"mx-2.5 md:mx-5"}>vs</p>
         <p
           className={
             data.homeScore < data.awayScore
@@ -108,7 +108,7 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
         >
           {phase === "FINISH" && data.awayScore}
         </p>
-        <p className={"ml-[10px] md:ml-[20px]"}>{data.awayName}</p>
+        <p className={"ml-2.5 md:ml-5"}>{data.awayName}</p>
       </div>
     </div>
   );

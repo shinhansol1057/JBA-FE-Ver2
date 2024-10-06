@@ -22,25 +22,24 @@ const SearchBar = ({ searchKey, setSearchKey }: Props) => {
   return (
     <div
       className={
-        "w-[280px] sm:w-[400px] md:w-[800px] " +
-        "h-[30px] sm:h-[40px] md:h-[50px] " +
-        "border border-solid border-borderColor relative rounded-[8px] shadow-lg"
+        "w-full h-8 sm:h-10 md:h-12 " +
+        "border border-solid border-borderColor relative rounded-lg shadow-lg"
       }
     >
       <input
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         className={
-          "border-none h-full w-full rounded-[8px] " +
-          "text-[12px] sm:text-[14px] md:text-[16px] pl-[20px] pr-[40px]"
+          "border-none h-full w-full rounded-lg " +
+          "text-sm sm:text-base md:text-lg pl-5 pr-10"
         }
       />
       <IoSearchSharp
         className={
           "cursor-pointer absolute " +
-          "text-[15px] sm:text-[20px] md:text-[30px] " +
-          "top-[7px] sm:top-[10px] md:top-[10px] " +
-          "right-[10px] sm:right-[12px] md:right-[14px] "
+          "text-base sm:text-xl md:text-3xl " +
+          "top-2 sm:top-2.5 md:top-2.5 " +
+          "right-2.5 sm:right-3 md:right-3.5 "
         }
       />
     </div>

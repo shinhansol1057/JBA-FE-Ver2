@@ -6,7 +6,7 @@ const PageTitle = ({ title, url }: { title: string; url: string }) => {
     <Link
       href={url}
       className={
-        "text-[14px] sm:text-[18px] md:text-[24px] font-bold mt-[20px] md:mt-[30px]"
+        "text-xl sm:text-2xl md:text-3xl font-bold mt-[20px] md:mt-[30px]"
       }
     >
       {title}

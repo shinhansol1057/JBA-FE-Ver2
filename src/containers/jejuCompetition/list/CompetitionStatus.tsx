@@ -7,19 +7,17 @@ const CompetitionStatus = () => {
   return (
     <div
       className={
-        "w-[280px] sm:w-[400px] md:w-[800px] " +
-        "h-[30px] sm:h-[40px] md:h-[60px] " +
-        "text-[12px] sm:text-[14px] md:text-[20px] " +
-        "mb-[10px] sm:mb-[20px] " +
-        "shadow-lg rounded-[8px] border border-solid border-[rgba(115,115,115,0.2)] box-content grid grid-cols-4 "
+        "w-full h-10 sm:h-12 md:h-14 " +
+        "text-sm sm:text-base md:text-xl " +
+        "mb-2.5 sm:mb-5 " +
+        "shadow-lg rounded-lg border border-solid border-[rgba(115,115,115,0.2)] box-content grid grid-cols-4 "
       }
     >
       <button
         className={
-          "h-full " +
-          (competitionStatusMenu === "ALL"
-            ? "bg-black text-white rounded-[8px]"
-            : "")
+          competitionStatusMenu === "ALL"
+            ? "bg-black text-white rounded-lg"
+            : ""
         }
         onClick={() => {
           setCompetitionStatusMenu("ALL");
@@ -29,10 +27,9 @@ const CompetitionStatus = () => {
       </button>
       <button
         className={
-          "h-full " +
-          (competitionStatusMenu === "EXPECTED"
-            ? "bg-black text-white rounded-[8px]"
-            : "")
+          competitionStatusMenu === "EXPECTED"
+            ? "bg-black text-white rounded-lg"
+            : ""
         }
         onClick={() => {
           setCompetitionStatusMenu("EXPECTED");
@@ -42,10 +39,9 @@ const CompetitionStatus = () => {
       </button>
       <button
         className={
-          "h-full " +
-          (competitionStatusMenu === "PROCEEDING"
-            ? "bg-black text-white rounded-[8px]"
-            : "")
+          competitionStatusMenu === "PROCEEDING"
+            ? "bg-black text-white rounded-lg"
+            : ""
         }
         onClick={() => {
           setCompetitionStatusMenu("PROCEEDING");
@@ -55,10 +51,9 @@ const CompetitionStatus = () => {
       </button>
       <button
         className={
-          "h-full " +
-          (competitionStatusMenu === "COMPLETE"
-            ? "bg-black text-white rounded-[8px]"
-            : "")
+          competitionStatusMenu === "COMPLETE"
+            ? "bg-black text-white rounded-lg"
+            : ""
         }
         onClick={() => {
           setCompetitionStatusMenu("COMPLETE");

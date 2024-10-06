@@ -50,11 +50,7 @@ const VideoList = () => {
     if (scrollY !== 0) window.scrollTo(0, scrollY);
   }, []);
   return (
-    <div
-      className={
-        "flex flex-col items-center w-[280px] sm:w-[400px] md:w-[800px]"
-      }
-    >
+    <div className={"flex flex-col items-center w-[90%] md:w-[800px]"}>
       <AddPageRouter content={"영상등록"} url={"/media/video/add"} />
       <SearchBar searchKey={keyword} setSearchKey={setKeyword} />
       <LoadingText
@@ -68,13 +64,13 @@ const VideoList = () => {
       {data?.pages[0].data.totalElements === 0 && (
         <p
           className={
-            "text-red-500 mt-[20px] text-[12px] sm:text-[14px] md:text-[20px]"
+            "text-red-500 mt-5 text-sm sm:text-base md:text-xl text-center"
           }
         >
           영상이 없습니다.
         </p>
       )}
-      <div className={"flex flex-col mt-[20px] md:mt-[40px] w-full"}>
+      <div className={"flex flex-col mt-5 md:mt-10"}>
         {status === "success" &&
           data?.pages.map((group: any, i: number) => (
             <React.Fragment key={i}>
