@@ -22,7 +22,7 @@ const SearchBar = ({ searchKey, setSearchKey }: Props) => {
   return (
     <div
       className={
-        "h-8 sm:h-10 md:h-12 " +
+        "w-full h-8 sm:h-10 md:h-12 " +
         "border border-solid border-borderColor relative rounded-lg shadow-lg"
       }
     >

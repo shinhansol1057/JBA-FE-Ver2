@@ -13,8 +13,7 @@ const GalleryDetailCard = ({ data }: Props) => {
   return (
     <div
       className={
-        "w-[135px] sm:w-[195px] md:w-[390px] " +
-        "h-[135px] sm:h-[195px] md:h-[390px] " +
+        "h-[180px] sm:h-[220px] md:h-[390px] " +
         "rounded-[8px] overflow-hidden cursor-pointer"
       }
     >
