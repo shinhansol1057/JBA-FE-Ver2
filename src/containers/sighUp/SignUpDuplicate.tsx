@@ -22,7 +22,6 @@ const SignUpDuplicate = () => {
           "연동되었습니다. 다시 로그인해주세요",
           async () => {
             const res = await signIn("google", { callbackUrl: "/" });
-            console.log(res);
           },
         );
       }
