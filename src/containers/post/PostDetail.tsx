@@ -13,10 +13,10 @@ const PostDetail = async ({ id }: { id: string }) => {
 
   const data = await FetchGetPostDetail(id, category);
   return (
-    <div className={"mt-[20px]"}>
+    <div className={"mt-5 w-[90%] md:w-[800px]"}>
       <PostTitle title={data?.data.title} />
       <PostDetailInfo data={data?.data} />
-      <div className={"mt-[20px] "}>
+      <div className={"mt-5"}>
         {data.data.files.map((file: getFileWithIdType) => {
           return (
             <GetFileBox
