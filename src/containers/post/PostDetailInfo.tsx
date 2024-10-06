@@ -9,6 +9,7 @@ import { useRouter, usePathname } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { FetchDeletePost } from "@/services/PostApi";
 import { useSession } from "next-auth/react";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
   data: getPostDetailType;
@@ -16,10 +17,10 @@ type Props = {
 
 const PostDetailInfo = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const { data: session, status: sessionStatus } = useSession();
   const { setPostCategory } = usePostStore();
   const router = useRouter();
   const pathName = usePathname();
+  const isAdmin = useIsAdmin();
   const category = pathName.includes("news")
     ? "news"
     : pathName.includes("library")
@@ -53,13 +54,11 @@ const PostDetailInfo = ({ data }: Props) => {
           <p className={"mx-3"}>{data?.createAt}</p>
           <p>조회수 {data?.viewCount}</p>
         </div>
-        {sessionStatus === "authenticated" ? (
+        {isAdmin && (
           <IoMenu
             className={"text-2xl sm:text-3xl md:text-4xl cursor-pointer"}
             onClick={() => setModalOpen(true)}
           />
-        ) : (
-          ""
         )}
       </div>
       <div>

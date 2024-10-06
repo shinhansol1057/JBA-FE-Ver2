@@ -31,8 +31,8 @@ const DetailResult = ({ detailData, resultData }: Props) => {
     }
   }, [divisionFilter, resultData]);
 
-  const addResultHandler = () => {
-    confirmAndCancelAlertWithLoading(
+  const addResultHandler = async () => {
+    await confirmAndCancelAlertWithLoading(
       "question",
       "대회결과를 등록하겠습니까?",
     ).then((res) => {
@@ -41,15 +41,15 @@ const DetailResult = ({ detailData, resultData }: Props) => {
     });
   };
   return (
-    <div className={"w-[280px] sm:w-[400px] md:w-[800px]"}>
+    <div>
       {isAdmin && detailData.phase === "SCHEDULE" ? (
-        <div className={"flex justify-end mb-[10px]"}>
+        <div className={"flex justify-end mb-2.5"}>
           <button
             className={
-              "font-bold rounded-[8px] bg-black text-white " +
-              "text-[12px] sm:text-[14px] md:text-[18px] " +
-              "w-[60px] sm:w-[80px] md:w-[100px] " +
-              "h-[30px] sm:h-[30px] md:h-[50px]"
+              "font-bold rounded-lg bg-black text-white " +
+              "text-sm sm:text-base md:text-xl " +
+              "w-16 sm:w-20 md:w-24 " +
+              "h-10 sm:h-12 md:h-14"
             }
             onClick={() => addResultHandler()}
           >
@@ -66,12 +66,12 @@ const DetailResult = ({ detailData, resultData }: Props) => {
       />
       {filteredResultData.map((result: competitionResultType, i: number) => {
         return (
-          <div key={i} className={"mt-[50px]"}>
+          <div key={i} className={"mt-12"}>
             <div
               className={
-                "flex justify-center items-center bg-amber-400 mb-[5px] rounded-[8px] " +
-                "text-[12px] sm:text-[14px] md:text-[20px] " +
-                "h-[30px] sm:h-[40px] md:h-[50px] "
+                "flex justify-center items-center bg-amber-400 mb-1 rounded-lg " +
+                "text-sm sm:text-base md:text-xl " +
+                "h-8 sm:h-10 md:h-12 "
               }
             >
               <p>{result.division}</p>

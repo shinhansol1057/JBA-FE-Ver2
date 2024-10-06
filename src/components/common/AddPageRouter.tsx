@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
   content: string;
@@ -8,24 +9,22 @@ type Props = {
   onClick?: any;
 };
 const AddPageRouter = ({ content, url, onClick }: Props) => {
-  const { data: session, status: sessionStatus } = useSession();
+  const isAdmin = useIsAdmin();
   return (
-    <div className={"flex justify-end mb-[10px] w-full"}>
-      {sessionStatus === "authenticated" ? (
+    <div className={"flex justify-end mb-2.5 w-full"}>
+      {isAdmin && (
         <Link
           href={url}
           className={
-            "flex justify-center items-center font-bold rounded-[8px] bg-black text-white " +
-            "text-[12px] sm:text-[14px] md:text-[18px] " +
-            "w-[60px] sm:w-[80px] md:w-[100px] " +
-            "h-[30px] sm:h-[30px] md:h-[50px]"
+            "flex justify-center items-center font-bold rounded-lg bg-black text-white " +
+            "text-sm sm:text-base md:text-xl " +
+            "w-16 sm:w-20 md:w-24 " +
+            "h-10 md:h-14"
           }
           onClick={() => onClick && onClick()}
         >
           {content}
         </Link>
-      ) : (
-        ""
       )}
     </div>
   );
