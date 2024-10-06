@@ -29,25 +29,24 @@ const DetailCategory = ({
   return (
     <div
       className={
-        "grid grid-cols-2 shadow-xl rounded-[8px] bg-[rgba(245,245,245,0.1)] border border-solid border-borderColor " +
-        "w-[280px] sm:w-[400px] md:w-[800px] " +
-        "h-[30px] sm:h-[40px] md:h-[50px] " +
-        "text-[12px] sm:text-[14px] md:text-[20px] " +
-        "my-[10px] md:my[20px] "
+        "grid grid-cols-2 shadow-xl rounded-lg bg-[rgba(245,245,245,0.1)] border border-solid border-borderColor " +
+        "h-10 sm:h-12 md:h-16 " +
+        "text-sm sm:text-base md:text-xl " +
+        "my-2.5 md:my-5 "
       }
     >
       <button
-        className={selectInfo ? "rounded-[8px] bg-black text-white" : ""}
+        className={selectInfo ? "rounded-lg bg-black text-white" : ""}
         onClick={() => setSelectInfo(true)}
       >
         대회개요
       </button>
       <button
-        className={selectInfo ? "" : "rounded-[8px] bg-black text-white"}
-        onClick={() => {
+        className={selectInfo ? "" : "rounded-lg bg-black text-white"}
+        onClick={async () => {
           if (phase === "INFO" || resultCount === 0) {
             if (isAdmin) {
-              confirmAndCancelAlertWithLoading(
+              await confirmAndCancelAlertWithLoading(
                 "question",
                 "대회일정 없음",
                 "대회일정을 등록하시겠습니까?",

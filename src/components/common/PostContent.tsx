@@ -11,9 +11,9 @@ const PostContent = ({ content }: { content: string }) => {
   return (
     <div
       className={
-        "text-[10px] sm:text-[12px] md:text-[16px]" +
-        " pl-[5px] py-[20px] " +
-        "min-h-[100px] sm:min-h-[150px] md:min-h-[200px]"
+        "text-sm sm:text-base md:text-lg " +
+        "pl-1.5 py-5 " +
+        "min-h-[150px] sm:min-h-[200px] md:min-h-[300px] "
       }
       dangerouslySetInnerHTML={{ __html: cleanHtml }}
     />

@@ -13,24 +13,17 @@ const GetFileBox = ({ fileName, fileUrl }: Props) => {
     <button
       onClick={() => handleDownload(fileUrl, fileName)}
       className={
-        "flex flex-row justify-between items-center shadow-xl rounded-[8px] px-[20px] bg-white mb-[10px] hover:bg-[rgba(0,0,0,0.3)] " +
-        "w-[278px] sm:w-[398px] md:w-[800px] " +
-        "h-[35px] sm:h-[45px] md:h-[60px] "
+        "flex flex-row justify-between items-center shadow-xl rounded-lg px-5 bg-white mb-2.5 hover:bg-[rgba(0,0,0,0.3)] " +
+        "w-full h-10 sm:h-12 md:h-16 "
       }
     >
-      <div className={"flex flex-row "}>
-        <LuFolder className={"text-[15px] sm:text-[20px] md:text-[30px]"} />
-        <p
-          className={
-            "ml-[10px] text-[10px] sm:text-[12px] md:text-[16px] content-center"
-          }
-        >
+      <div className={"flex items-center"}>
+        <LuFolder className={"text-base sm:text-xl md:text-3xl"} />
+        <p className={"ml-2.5 text-sm sm:text-base md:text-lg content-center"}>
           {fileName}
         </p>
       </div>
-      <AiOutlineDownload
-        className={"text-[15px] sm:text-[20px] md:text-[30px]"}
-      />
+      <AiOutlineDownload className={"text-base sm:text-xl md:text-3xl"} />
     </button>
   );
 };

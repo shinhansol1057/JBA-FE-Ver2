@@ -9,6 +9,7 @@ import { useRouter, usePathname } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { FetchDeletePost } from "@/services/PostApi";
 import { useSession } from "next-auth/react";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
   data: getPostDetailType;
@@ -16,18 +17,18 @@ type Props = {
 
 const PostDetailInfo = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const { data: session, status: sessionStatus } = useSession();
   const { setPostCategory } = usePostStore();
   const router = useRouter();
   const pathName = usePathname();
+  const isAdmin = useIsAdmin();
   const category = pathName.includes("news")
     ? "news"
     : pathName.includes("library")
       ? "library"
       : "notice";
 
-  const deleteHandler = () => {
-    confirmAndCancelAlertWithLoading(
+  const deleteHandler = async () => {
+    await confirmAndCancelAlertWithLoading(
       "question",
       "게시물을 삭제하겠습니까?",
       "",
@@ -40,33 +41,24 @@ const PostDetailInfo = ({ data }: Props) => {
     router.push(`/post/update/${data.postId}`);
   };
   return (
-    <div
-      className={
-        "mt-[20px] flex flex-col px-[7px] bg-white rounded-[8px] shadow-xl " +
-        "w-[280px] sm:w-[400px] md:w-[800px] "
-      }
-    >
+    <div className={"mt-5 flex flex-col px-2 bg-white rounded-lg shadow-xl "}>
       <div
         className={
           "flex justify-between items-center border-b border-solid border-[#D9D9D9] text-[#4B4B4B] " +
-          "text-[10px] sm:text-[12px] md:text-[16px] " +
-          "min-h-[30px] sm:min-h-[40px] md:min-h-[50px] "
+          "text-sm sm:text-base md:text-lg " +
+          "min-h-8 sm:min-h-10 md:min-h-14 "
         }
       >
         <div className={"flex"}>
-          <p className={"ml-[5px]"}>관리자</p>
-          <p className={"mx-[10px]"}>{data?.createAt}</p>
+          <p className={"ml-2"}>관리자</p>
+          <p className={"mx-3"}>{data?.createAt}</p>
           <p>조회수 {data?.viewCount}</p>
         </div>
-        {sessionStatus === "authenticated" ? (
+        {isAdmin && (
           <IoMenu
-            className={
-              "text-[20px] sm:text-[25px] md:text-[35px] cursor-pointer"
-            }
+            className={"text-2xl sm:text-3xl md:text-4xl cursor-pointer"}
             onClick={() => setModalOpen(true)}
           />
-        ) : (
-          ""
         )}
       </div>
       <div>

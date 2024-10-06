@@ -14,8 +14,7 @@ const UpdatePassword = () => {
   const [newPWConfirm, setNewPWConfirm] = useState<string>("");
   const router = useRouter();
 
-  const updateHandler = async (e: any) => {
-    e.preventDefault();
+  const updateHandler = async () => {
     await confirmAndCancelAlertWithLoading(
       "question",
       "비밀번호를 변경하겠습니까?",
@@ -25,7 +24,7 @@ const UpdatePassword = () => {
   };
 
   return (
-    <form className={"flex flex-col items-center"} onSubmit={updateHandler}>
+    <div className={"flex flex-col items-center"}>
       <PageTitle
         title={"비밀번호 변경"}
         url={"/user/my-page/update/password"}
@@ -60,6 +59,7 @@ const UpdatePassword = () => {
       <div className={"grid grid-cols-2 gap-[10px]"}>
         <CancelBtn handler={() => router.back()} />
         <button
+          onClick={() => updateHandler()}
           type={"submit"}
           className={
             "font-bold rounded-[8px] bg-black text-white " +
@@ -71,7 +71,7 @@ const UpdatePassword = () => {
           수정
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 

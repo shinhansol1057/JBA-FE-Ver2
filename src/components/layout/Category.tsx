@@ -42,19 +42,17 @@ const Category = ({
             : !category3
               ? "grid grid-cols-2 "
               : "grid grid-cols-3 ") +
-          "w-[280px] sm:w-[400px] md:w-[800px] " +
-          "h-[30px] sm:h-[40px] md:h-[60px] " +
-          "my-[10px] sm:my-[15px] md:my-[25px] " +
-          "text-[12px] sm:text-[14px] md:text-[20px] " +
-          "shadow-lg rounded-[8px] border border-solid border-[rgba(115,115,115,0.2)] box-content "
+          "w-[90%] md:w-[800px] " +
+          "h-10 sm:h-12 md:h-14 " +
+          "my-2.5 sm:my-4 md:my-6 " +
+          "text-sm sm:text-base md:text-xl " +
+          "shadow-lg rounded-lg border border-solid border-[rgba(115,115,115,0.2)] box-content "
         }
       >
         <button
           className={
-            "h-[30px] sm:h-[40px] md:h-[60px] " +
-            (segment === category1Url
-              ? "bg-black text-white rounded-[8px]"
-              : "")
+            "h-10 sm:h-12 md:h-14 " +
+            (segment === category1Url ? "bg-black text-white rounded-lg" : "")
           }
           onClick={() => router.push(defaultUrl + category1Url)}
         >
@@ -62,10 +60,8 @@ const Category = ({
         </button>
         <button
           className={
-            "h-[30px] sm:h-[40px] md:h-[60px] " +
-            (segment === category2Url
-              ? "bg-black text-white rounded-[8px]"
-              : "")
+            "h-10 sm:h-12 md:h-14 " +
+            (segment === category2Url ? "bg-black text-white rounded-lg" : "")
           }
           onClick={() => router.push(defaultUrl + category2Url)}
         >
@@ -73,10 +69,8 @@ const Category = ({
         </button>
         <button
           className={
-            "h-[30px] sm:h-[40px] md:h-[60px] " +
-            (segment === category3Url
-              ? "bg-black text-white rounded-[8px]"
-              : "")
+            "h-10 sm:h-12 md:h-14 " +
+            (segment === category3Url ? "bg-black text-white rounded-lg" : "")
           }
           onClick={() => router.push(defaultUrl + category3Url)}
         >

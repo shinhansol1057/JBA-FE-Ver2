@@ -61,7 +61,7 @@ const PostList = () => {
   }, []);
 
   return (
-    <div>
+    <div className={"w-[90%] md:w-[800px]"}>
       <AddPageRouter
         content={"게시물등록"}
         url={"/post/add"}
@@ -79,13 +79,13 @@ const PostList = () => {
       {data?.pages[0]?.data?.totalPosts === 0 && (
         <p
           className={
-            "text-red-500 mt-[20px] text-[12px] sm:text-[14px] md:text-[20px]"
+            "text-center text-red-500 mt-10 text-sm sm:text-base md:text-2xl"
           }
         >
           게시물이 없습니다.
         </p>
       )}
-      <div className={"mt-[30px] sm:mt-[40px] md:mt-[50px] "}>
+      <div className={"mt-8 sm:mt-10 md:mt-12 "}>
         {status === "success" &&
           data?.pages.map((group: any, i: number) => (
             <React.Fragment key={i}>
