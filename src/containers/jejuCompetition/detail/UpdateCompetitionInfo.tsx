@@ -65,7 +65,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
     refetchIntervalInBackground: false,
   });
 
-  const formSubmitHandler = () => {
+  const formSubmitHandler = async () => {
     const requestData: updateCompetitionRequestType = {
       title: title,
       divisions: selectedDivisions,
@@ -91,7 +91,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
         requestData.ckImgRequests.push(newCkImgUrls[i]);
       }
     }
-    confirmAndCancelAlertWithLoading(
+    await confirmAndCancelAlertWithLoading(
       "question",
       "대회를 수정하시겠습니까?",
       "",
@@ -120,11 +120,9 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   }, [divisionData]);
 
   return (
-    <div
-      className={"flex flex-col mt-[20px] w-[280px] sm:w-[400px] md:w-[800px]"}
-    >
+    <div className={"flex flex-col mt-5 w-[90%] md:w-[800px]"}>
       <SubTitle title={"대회정보 등록"} />
-      <div className={"my-[20px]"}>
+      <div className={"my-5"}>
         <PostInput
           type={"text"}
           placeHolder={"제목을 입력해주세요"}

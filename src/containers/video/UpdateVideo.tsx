@@ -16,9 +16,9 @@ const UpdateVideo = ({ id }: { id: string }) => {
   const [content, setContent] = useState<string>("");
   const router = useRouter();
 
-  const updateHandler = () => {
+  const updateHandler = async () => {
     const data = { videoId: id, title: title, url: url, content: content };
-    confirmAndCancelAlertWithLoading(
+    await confirmAndCancelAlertWithLoading(
       "question",
       "영상을 수정하겠습니까?",
       "",
@@ -41,9 +41,9 @@ const UpdateVideo = ({ id }: { id: string }) => {
   }, [lastData]);
 
   return (
-    <div className={"mt-[20px]"}>
+    <div className={"w-[90%] md:w-[800px] mt-5"}>
       <SubTitle title={"대회영상 수정"} />
-      <div className={"flex flex-col my-[20px]"}>
+      <div className={"flex flex-col my-5"}>
         <PostLabel content={"title"} />
         <PostInput
           type={"text"}
@@ -52,7 +52,7 @@ const UpdateVideo = ({ id }: { id: string }) => {
           setData={setTitle}
         />
       </div>
-      <div className={"flex flex-col mb-[20px]"}>
+      <div className={"flex flex-col mb-5"}>
         <PostLabel content={"url"} />
         <PostInput
           type={"text"}
@@ -61,7 +61,7 @@ const UpdateVideo = ({ id }: { id: string }) => {
           setData={setUrl}
         />
       </div>
-      <div className={"flex flex-col mb-[20px] "}>
+      <div className={"flex flex-col mb-5 "}>
         <PostLabel content={"content"} />
         <PostInput
           type={"text"}
@@ -70,7 +70,7 @@ const UpdateVideo = ({ id }: { id: string }) => {
           setData={setContent}
         />
       </div>
-      <div className={"grid grid-cols-2 gap-[10px]"}>
+      <div className={"grid grid-cols-2 gap-2.5"}>
         <CancelBtn handler={() => router.back()} />
         <AddBtn handler={() => updateHandler()} />
       </div>

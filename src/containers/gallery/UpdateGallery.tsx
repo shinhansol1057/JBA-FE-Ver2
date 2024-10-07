@@ -29,12 +29,12 @@ const UpdateGallery = ({ id }: { id: string }) => {
     select: (result) => result?.data,
   });
 
-  const updateGalleryHandler = () => {
+  const updateGalleryHandler = async () => {
     let fileList: getFileType[] = [];
     remainingFiles.forEach((file: getFileType) => fileList.push(file));
     files.forEach((file: getFileType) => fileList.push(file));
 
-    confirmAndCancelAlertWithLoading(
+    await confirmAndCancelAlertWithLoading(
       "question",
       "갤러리를 수정하겠습니까?",
       "",
@@ -59,8 +59,8 @@ const UpdateGallery = ({ id }: { id: string }) => {
   }, [data]);
 
   return (
-    <div className={"w-[280px] sm:w-[400px] md:w-[800px]"}>
-      <div className={"my-[20px]"}>
+    <div className={"w-[90%] md:w-[800px]"}>
+      <div className={"my-5"}>
         <SubTitle title={"갤러리 수정"} />
       </div>
       <PostInput
@@ -75,19 +75,19 @@ const UpdateGallery = ({ id }: { id: string }) => {
           <PostTitle title={"기존 파일"} />
           <ul
             className={
-              "flex flex-col bg-white rounded-[8px] border border-solid border-borderColor shadow-xl " +
-              "text-[10px] sm:text-[12px] md:text-[18px] " +
-              "p-[10px] md:p-[20px]"
+              "flex flex-col bg-white rounded-lg border border-solid border-borderColor shadow-xl " +
+              "text-sm sm:text-base md:text-lg " +
+              "p-2.5 md:p-5"
             }
           >
             {remainingFiles?.map((file: getFileWithFileIdType, i: number) => {
               return (
                 <li key={file.fileId + "/" + i}>
-                  <div className={"flex"}>
-                    <p className={"mr-[5px]"}>{file.fileName}</p>
+                  <div className={"flex items-center "}>
+                    <p className={"mr-1.5"}>{file.fileName}</p>
                     <IoClose
                       className={
-                        "text-[12px] sm:text-[16px] md:text-[20px] cursor-pointer"
+                        "ftext-lg sm:text-xl md:text-2xl cursor-pointer"
                       }
                       onClick={() => deleteRemainingFile(file.fileUrl)}
                     />

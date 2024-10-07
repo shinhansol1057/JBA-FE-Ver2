@@ -123,13 +123,13 @@ const AddScheduleRowBox = ({
               components: {
                 DatePicker: {
                   cellWidth: 26,
-                  inputFontSize: 10,
+                  inputFontSize: 14,
                   timeColumnWidth: 40,
-                  fontSize: 10,
+                  fontSize: 14,
                 },
                 Select: {
-                  optionFontSize: 10,
-                  fontSize: 10,
+                  optionFontSize: 14,
+                  fontSize: 14,
                 },
               },
             }
@@ -137,13 +137,13 @@ const AddScheduleRowBox = ({
               components: {
                 DatePicker: {
                   cellWidth: 34,
-                  inputFontSize: 16,
+                  inputFontSize: 18,
                   timeColumnWidth: 50,
-                  fontSize: 16,
+                  fontSize: 18,
                 },
                 Select: {
-                  optionFontSize: 16,
-                  fontSize: 16,
+                  optionFontSize: 18,
+                  fontSize: 18,
                 },
               },
             }
@@ -151,14 +151,14 @@ const AddScheduleRowBox = ({
     >
       <div
         className={
-          "w-full border border-solid border-borderColor shadow-xl rounded-[8px] " +
-          "h-[90px] sm:h-[105px] md:h-[120px] text-[10px] sm:text-[12px] md:text-[16px] mb-[10px]"
+          "w-full border border-solid border-borderColor shadow-xl rounded-lg " +
+          "text-2.5 sm:text-sm md:text-lg mb-2.5"
         }
       >
         <div
           className={
-            "flex flex-row items-center justify-between border-b border-solid border-[#D9D9D9] mx-[7px] " +
-            "h-[30px] sm:h-[35px] md:h-[40px]"
+            "flex flex-row items-center justify-between border-b border-solid border-[#D9D9D9] " +
+            "mx-2 h-10 sm:h-12 md:h-14"
           }
         >
           <div className={"w-[35%]"}>
@@ -188,8 +188,8 @@ const AddScheduleRowBox = ({
         </div>
         <div
           className={
-            "flex flex-row items-center justify-between border-b border-solid border-[#D9D9D9] mx-[7px] " +
-            "h-[30px] sm:h-[35px] md:h-[40px] "
+            "flex flex-row items-center justify-between border-b border-solid border-[#D9D9D9] mx-2 " +
+            "h-10 sm:h-12 md:h-14 "
           }
         >
           <div className={"w-[35%] flex flex-row items-center"}>
@@ -225,8 +225,8 @@ const AddScheduleRowBox = ({
         </div>
         <div
           className={
-            "bg-black flex flex-row items-center justify-center rounded-b-[8px] " +
-            "h-[30px] sm:h-[35px] md:h-[40px] px-[10px] md:px-[50px]"
+            "bg-black flex flex-row items-center justify-center rounded-b-lg " +
+            "h-10 sm:h-12 md:h-14 px-2.5 md:px-12"
           }
         >
           <ScheduleRowInput
@@ -235,7 +235,7 @@ const AddScheduleRowBox = ({
             type={"text"}
             placeHolder={"HomeTeam"}
           />
-          <p className={"mx-[10px] md:mx-[20px] text-white"}>vs</p>
+          <p className={"mx-2.5 md:mx-5 text-white"}>vs</p>
           <ScheduleRowInput
             value={rowData.awayName}
             setValue={awayNameHandler}

@@ -43,9 +43,9 @@ const UpdateUserInfo = () => {
   }, [data]);
 
   return (
-    <div className={"flex flex-col items-center"}>
+    <div className={"w-full flex flex-col items-center"}>
       <PageTitle title={"프로필 편집"} url={"/user/my-page/update"} />
-      <div className={"flex flex-col my-[20px]"}>
+      <div className={"w-[90%] md:w-[800px] flex flex-col my-5 "}>
         <PostLabel content={"이름"} />
         <PostInput
           type={"text"}
@@ -54,7 +54,7 @@ const UpdateUserInfo = () => {
           setData={setName}
         />
       </div>
-      <div className={"flex flex-col mb-[20px]"}>
+      <div className={"w-[90%] md:w-[800px] flex flex-col mb-5"}>
         <PostLabel content={"휴대폰번호"} />
         <PostInput
           type={"text"}
@@ -63,7 +63,7 @@ const UpdateUserInfo = () => {
           setData={setPhoneNum}
         />
       </div>
-      <div className={"grid grid-cols-2 gap-[10px]"}>
+      <div className={"w-[90%] md:w-[800px] grid grid-cols-2 gap-2.5"}>
         <CancelBtn handler={() => router.back()} />
         <AddBtn handler={() => updateHandler()} />
       </div>
