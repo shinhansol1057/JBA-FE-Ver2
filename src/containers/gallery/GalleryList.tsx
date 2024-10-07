@@ -51,7 +51,7 @@ const GalleryList = () => {
     if (scrollY !== 0) window.scrollTo(0, scrollY);
   }, []);
   return (
-    <div className={"w-[280px] sm:w-[400px] md:w-[800px]"}>
+    <div className={"w-[90%] md:w-[800px]"}>
       <AddPageRouter content={"갤러리등록"} url={"/media/gallery/add"} />
       <SearchBar searchKey={keyword} setSearchKey={setKeyword} />
       <LoadingText
@@ -65,13 +65,13 @@ const GalleryList = () => {
       {data?.pages[0].data.totalGalleries === 0 && (
         <p
           className={
-            "text-red-500 mt-[20px] text-[12px] sm:text-[14px] md:text-[20px]"
+            "text-red-500 mt-5 text-sm sm:text-base md:text-2xl text-center"
           }
         >
           대회가 없습니다.
         </p>
       )}
-      <div className={"grid grid-cols-2 gap-[10px] md:gap-[20px] mt-[30px]"}>
+      <div className={"grid grid-cols-2 gap-2.5 md:gap-5 mt-8"}>
         {status === "success" &&
           data?.pages.map((group: paginationResponse) => {
             return group?.data.galleries.map((gallery: getGalleryType) => {

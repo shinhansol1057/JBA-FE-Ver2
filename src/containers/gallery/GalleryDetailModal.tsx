@@ -13,16 +13,16 @@ const GalleryDetailModal = ({ setModalOpen, data }: Props) => {
     <div className={"flex flex-col items-center relative max-h-[95vh]"}>
       <div
         className={
-          "text-[#EEEEEE] bg-[rgba(0,0,0,0.8)] flex justify-between items-center px-[20px] " +
-          "h-[30px] sm:h-[40px] md:h-[50px] w-full"
+          "text-[#EEEEEE] bg-[rgba(0,0,0,0.8)] flex justify-between items-center px-5 " +
+          "h-10 sm:h-14 md:h-20 w-full text-xl sm:text-2xl md:text-3xl"
         }
       >
         <AiOutlineDownload
-          className={"cursor-pointer text-[15px] sm:text-[20px] md:text-[30px]"}
+          className={"cursor-pointer"}
           onClick={() => handleDownload(data.fileUrl, data.fileName)}
         />
         <IoClose
-          className={"cursor-pointer text-[15px] sm:text-[20px] md:text-[30px]"}
+          className={"cursor-pointer"}
           onClick={() => setModalOpen(false)}
         />
       </div>

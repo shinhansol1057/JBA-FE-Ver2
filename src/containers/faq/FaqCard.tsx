@@ -7,81 +7,49 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 const FaqCard = ({ data }: { data: MockPost }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <div className={"mb-[20px]"}>
+    <div className={"mb-5 text-sm sm:text-base md:text-lg"}>
       {!isOpen ? (
         <div
           className={
-            "flex justify-between shadow-xl rounded-[8px] bg-white p-[20px] cursor-pointer"
+            "flex justify-between shadow-xl rounded-lg bg-white p-5 cursor-pointer"
           }
           onClick={() => setIsOpen(true)}
         >
-          <div className={"flex w-[240px]"}>
+          <div className={"flex"}>
             <FaQuestion
-              className={
-                "mr-[5px] md:mr-[10px] text-[12px] sm:text-[15px] md:text-[25px]"
-              }
+              className={"mr-1.5 md:mr-2.5 text-sm sm:text-base md:text-2xl"}
             />
-            <p
-              className={
-                "text-[10px] sm:text-[12px] md:text-[16px] leading-3 sm:leading-4 md:leading-5"
-              }
-            >
-              {data.title}
-            </p>
+            <p className={"text-sm sm:text-base md:text-lg"}>{data.title}</p>
           </div>
-          <div className={"w-[20px]"}>
-            <IoIosArrowDown
-              className={"text-[15px] sm:text-[20px] md:text-[30px]"}
-            />
+          <div>
+            <IoIosArrowDown className={"text-lg sm:text-2xl md:text-3xl"} />
           </div>
         </div>
       ) : (
         <div
           className={
-            "flex flex-col shadow-xl rounded-[8px] bg-white p-[20px] cursor-pointer"
+            "flex flex-col shadow-xl rounded-lg bg-white p-5 cursor-pointer"
           }
           onClick={() => setIsOpen(false)}
         >
           <div
             className={
-              "flex justify-between border-b border-solid border-[#D9D9D9] pb-[20px]"
+              "flex justify-between border-b border-solid border-[#D9D9D9] pb-5"
             }
           >
-            <div className={"flex "}>
+            <div className={"flex"}>
               <FaQuestion
-                className={
-                  "mr-[5px] md:mr-[10px] text-[12px] sm:text-[15px] md:text-[25px]"
-                }
+                className={"mr-1.5 md:mr-2.5 text-sm sm:text-base md:text-2xl"}
               />
-              <p
-                className={
-                  "text-[10px] sm:text-[12px] md:text-[16px] leading-3 sm:leading-4 md:leading-5"
-                }
-              >
-                {data.title}
-              </p>
+              <p>{data.title}</p>
             </div>
-            <div className={"w-[20px]"}>
-              <IoIosArrowDown
-                className={"text-[15px] sm:text-[20px] md:text-[30px]"}
-              />
+            <div>
+              <IoIosArrowDown className={"text-lg sm:text-2xl md:text-3xl"} />
             </div>
           </div>
-          <div className={"flex pt-[20px]"}>
-            <p
-              className={
-                "font-bold mr-[5px] md:mr-[10px] text-[12px] sm:text-[14px] md:text-[20px]"
-              }
-            >
-              A.
-            </p>
-            <p
-              className={
-                "text-[10px] sm:text-[12px] md:text-[16px] leading-3 sm:leading-4 md:leading-5 pr-[20px]"
-              }
-            >
-              {data.content}
-            </p>
+          <div className={"flex pt-5"}>
+            <p className={"font-bold mr-1.5 md:mr-2.5 "}>A.</p>
+            <p className={"pr-5"}>{data.content}</p>
           </div>
         </div>
       )}

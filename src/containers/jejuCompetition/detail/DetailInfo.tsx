@@ -14,6 +14,7 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import { useRouter } from "next/navigation";
 import { FetchDeleteCompetitionInfo } from "@/services/CompetitionApi";
 import { useSession } from "next-auth/react";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
   data: competitionDetailType;
@@ -25,19 +26,16 @@ const DetailInfo = ({ data }: Props) => {
   const endDate: string = moment(data.endDate).format("YYYY-MM-DD");
   const cleanHtml = DOMPurify.sanitize(data.content);
   const router = useRouter();
+  const isAdmin = useIsAdmin();
   const { data: session, status: sessionStatus } = useSession();
 
   return (
-    <div className={"w-[280px] sm:w-[400px] md:w-[800px]"}>
-      <div
-        className={
-          "w-[280px] sm:w-[400px] md:w-[800px] px-[7px] bg-white rounded-[8px] shadow-xl "
-        }
-      >
+    <div>
+      <div className={"px-2 bg-white rounded-lg shadow-xl "}>
         <div
           className={
             "flex justify-between items-center border-b border-solid border-[#D9D9D9] " +
-            "min-h-[30px] sm:min-h-[40px] md:min-h-[50px] "
+            "h-10 sm:h-12 md:h-14 "
           }
         >
           <CompetitionLabel
@@ -51,11 +49,9 @@ const DetailInfo = ({ data }: Props) => {
             }
             bold={true}
           />
-          {sessionStatus === "authenticated" ? (
+          {isAdmin ? (
             <IoMenu
-              className={
-                "text-[20px] sm:text-[25px] md:text-[35px] cursor-pointer"
-              }
+              className={"text-2xl sm:text-3xl md:text-4xl cursor-pointer"}
               onClick={() => setModalOpen(true)}
             />
           ) : (
@@ -65,14 +61,12 @@ const DetailInfo = ({ data }: Props) => {
         <div
           className={
             "flex items-center border-b border-solid border-[#D9D9D9] " +
-            "min-h-[30px] sm:min-h-[40px] md:min-h-[50px] "
+            "min-h-10 sm:min-h-12 md:min-h-14 "
           }
         >
           <CompetitionLabel content={"종별"} color={""} bold={true} />
           <div
-            className={
-              "grid grid-cols-6 gap-2 text-[10px] sm:text-[12px] md:text-[16px]"
-            }
+            className={"grid grid-cols-6 gap-2 text-sm sm:text-base md:text-lg"}
           >
             {data.divisions.map((item: string, i: number) => (
               <p key={i}>{item}</p>
@@ -82,8 +76,8 @@ const DetailInfo = ({ data }: Props) => {
         <div
           className={
             "flex items-center border-b border-solid border-[#D9D9D9] " +
-            "text-[10px] sm:text-[12px] md:text-[16px] " +
-            "min-h-[30px] sm:min-h-[40px] md:min-h-[50px] "
+            "text-sm sm:text-base md:text-lg " +
+            "min-h-10 sm:min-h-12 md:min-h-14 "
           }
         >
           <CompetitionLabel
@@ -92,14 +86,14 @@ const DetailInfo = ({ data }: Props) => {
             bold={true}
             long={true}
           />
-          <p className={"text-[10px] sm:text-[12px] md:text-[16px]"}>
+          <p className={"text-sm sm:text-base md:text-lg"}>
             {startDate} ~ {endDate}
           </p>
         </div>
         <div
           className={
             "flex items-center border-b border-solid border-[#D9D9D9] " +
-            "min-h-[30px] sm:min-h-[40px] md:min-h-[50px]"
+            "min-h-10 sm:min-h-12 md:min-h-14"
           }
         >
           <CompetitionLabel
@@ -108,19 +102,10 @@ const DetailInfo = ({ data }: Props) => {
             bold={true}
             long={true}
           />
-          <div
-            className={
-              "flex flex-col text-[10px] sm:text-[12px] md:text-[16px] pt-[5px]"
-            }
-          >
+          <div className={"flex flex-col text-sm sm:text-base md:text-lg py-1"}>
             {data.places.map((place: competitionPlaceType, i: number) => {
               return (
-                <p
-                  key={i}
-                  className={
-                    "pb-[5px] w-[215px] sm:w-[325px] md:w-[710px] leading-3 sm:leading-4 md:leading-5"
-                  }
-                >
+                <p key={i}>
                   {place.placeName}
                   <br />
                   {"(" + place.address + ")"}
@@ -132,14 +117,14 @@ const DetailInfo = ({ data }: Props) => {
         <div
           className={
             "flex items-center border-b border-solid border-[#D9D9D9] " +
-            "min-h-[30px] sm:min-h-[40px] md:min-h-[50px] "
+            "min-h-10 sm:min-h-12 md:min-h-14 "
           }
         >
           <CompetitionLabel content={"URL"} color={""} bold={true} />
           {data.relatedUrl ? (
             <a
               className={
-                "text-[10px] sm:text-[12px] md:text-[16px] underline text-[#2D42FF]"
+                "text-sm sm:text-base md:text-lg underline text-[#2D42FF]"
               }
               href={data.relatedUrl}
             >
@@ -151,14 +136,14 @@ const DetailInfo = ({ data }: Props) => {
         </div>
         <div
           className={
-            "text-[10px] sm:text-[12px] md:text-[16px]" +
-            " pl-[3px] py-[10px] " +
-            "min-h-[100px] sm:min-h-[150px] md:min-h-[200px]"
+            "text-sm sm:text-base md:text-lg " +
+            "pl-1 py-2.5 " +
+            "min-h-[150px] sm:min-h-[200px] md:min-h-[300px]"
           }
           dangerouslySetInnerHTML={{ __html: cleanHtml }}
         />
       </div>
-      <div className={"mt-[20px] w-[280px] sm:w-[400px] md:w-[800px]"}>
+      <div className={"my-5"}>
         {data.competitionDetailAttachedFiles.map((file) => {
           return (
             <GetFileBox
@@ -172,8 +157,8 @@ const DetailInfo = ({ data }: Props) => {
       <UpdateDeleteModal
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
-        deleteHandler={() => {
-          confirmAndCancelAlertWithLoading(
+        deleteHandler={async () => {
+          await confirmAndCancelAlertWithLoading(
             "warning",
             "대회를 삭제하겠습니까?",
             "삭제된 대회는 복구할 수 없습니다.",

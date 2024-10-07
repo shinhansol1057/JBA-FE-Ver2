@@ -50,13 +50,14 @@ const UpdateDeleteModal = ({
           onClick={() => setModalOpen(false)}
         ></div>
         <div
-          className={"flex flex-col text-[14px] sm:text-[16px] md:text-[20px]"}
+          className={
+            "flex flex-col text-sm sm:text-base md:text-xl w-[90%] md:w-[600px] "
+          }
         >
           <button
             className={
-              "w-[280px] sm:w-[350px] md:w-[600px] " +
-              "h-[45px] sm:h-[60px] md:h-[90px] " +
-              "bg-[#D9D9D9] rounded-t-[10px] border border-solid border-[#B5B5B5] hover:bg-[#B5B5B5]"
+              "h-12 sm:h-16 md:h-24 " +
+              "bg-[#D9D9D9] rounded-t-xl border border-solid border-[#B5B5B5] hover:bg-[#B5B5B5]"
             }
             onClick={updateHandler}
           >
@@ -64,9 +65,8 @@ const UpdateDeleteModal = ({
           </button>
           <button
             className={
-              "w-[280px] sm:w-[350px] md:w-[600px] " +
-              "h-[45px] sm:h-[60px] md:h-[90px] " +
-              "bg-[#D9D9D9] rounded-b-[10px] text-[#DF1A1A] hover:bg-[#B5B5B5]"
+              "h-12 sm:h-16 md:h-24 " +
+              "bg-[#D9D9D9] rounded-b-xl text-[#DF1A1A] hover:bg-[#B5B5B5]"
             }
             onClick={deleteHandler}
           >
@@ -74,9 +74,8 @@ const UpdateDeleteModal = ({
           </button>
           <button
             className={
-              "w-[280px] sm:w-[350px] md:w-[600px] " +
-              "h-[45px] sm:h-[60px] md:h-[90px] " +
-              "bg-[#D9D9D9] rounded-[10px] my-[20px] hover:bg-[#B5B5B5]"
+              "h-12 sm:h-16 md:h-24 " +
+              "bg-[#D9D9D9] rounded-xl my-5 hover:bg-[#B5B5B5]"
             }
             onClick={() => setModalOpen(false)}
           >

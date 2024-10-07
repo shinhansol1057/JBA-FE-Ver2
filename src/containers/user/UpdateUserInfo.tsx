@@ -24,12 +24,12 @@ const UpdateUserInfo = () => {
     enabled: sessionStatus === "authenticated",
   });
 
-  const updateHandler = () => {
+  const updateHandler = async () => {
     const request: {
       name: string;
       phoneNum: string;
     } = { name, phoneNum };
-    confirmAndCancelAlertWithLoading(
+    await confirmAndCancelAlertWithLoading(
       "question",
       "프로필을 변경하겠습니까?",
       "",

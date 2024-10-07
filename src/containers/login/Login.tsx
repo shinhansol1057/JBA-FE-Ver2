@@ -8,6 +8,7 @@ import { getCookie, setCookie } from "@/utils/Cookie";
 import { signIn } from "next-auth/react";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import AutoCloseTimerAlert from "@/libs/alert/AutoCloseTimerAlert";
+import Link from "next/link";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -15,6 +16,7 @@ const Login = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [emailMessage, setEmailMessage] = useState<string>("");
   const router = useRouter();
+
   const loginHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setEmailMessage("");
@@ -114,12 +116,13 @@ const Login = () => {
           value={password}
           setValue={setPassword}
         />
-        <div className={"mt-[20px] mb-[10px] pl-[20px]"}>
+        <div className={"mt-[20px] mb-[10px] pl-[20px] flex justify-between"}>
           <CheckBox
             isChecked={isChecked}
             setIsChecked={setIsChecked}
             content={"이메일 기억하기"}
           />
+          <Link href={"/login/social"}>소셜 로그인 하기 &gt;</Link>
         </div>
         <button
           type={"submit"}

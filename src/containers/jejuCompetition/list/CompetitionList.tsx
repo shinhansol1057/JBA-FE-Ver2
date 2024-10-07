@@ -55,7 +55,7 @@ const CompetitionList = () => {
   }, []);
 
   return (
-    <div className={"flex flex-col items-center"}>
+    <div className={"flex flex-col items-center w-[90%] md:w-[800px]"}>
       <AddPageRouter content={"대회등록"} url={"/jeju-competition/info/add"} />
       <CompetitionStatus />
       <LoadingText
@@ -69,7 +69,7 @@ const CompetitionList = () => {
       {data?.pages[0].data.totalElements === 0 && (
         <p
           className={
-            "text-red-500 mt-[20px] text-[12px] sm:text-[14px] md:text-[20px]"
+            "text-red-500 mt-5 text-base sm:text-lg md:text-xl text-center"
           }
         >
           대회가 없습니다.

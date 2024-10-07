@@ -26,10 +26,10 @@ const PostListCard = ({ data, category }: Props) => {
   return (
     <Link
       className={
-        "flex flex-col justify-between py-[20px] " +
-        "pl-[20px] mb-[10px] md:mb-[20px] " +
-        "rounded-[8px] shadow-xl cursor-pointer " +
-        "h-[100px] sm:h-[120px] md:h-[150px] " +
+        "flex flex-col justify-between " +
+        "py-5 pl-5 mb-3 md:mb-5 " +
+        "rounded-lg shadow-xl cursor-pointer " +
+        "h-28 sm:h-32 md:h-40 " +
         (data.isAnnouncement
           ? "bg-black text-white "
           : "bg-white text-[#4B4B4B] ")
@@ -37,33 +37,27 @@ const PostListCard = ({ data, category }: Props) => {
       href={pathname + `/${data.postId}`}
     >
       <div>
-        <div className={"flex mb-[5px] md:mb-[10px] "}>
+        <div className={"flex mb-1 md:mb-2 items-center"}>
           <p
             className={
               data.isAnnouncement
-                ? "text-[12px] sm:text-[14px] md:text-[20px] text-[#FFC700] "
-                : "text-[10px] sm:text-[12px] md:text-[14px] "
+                ? "text-sm sm:text-base md:text-xl text-[#FFC700] "
+                : "text-xs sm:text-sm md:text-base "
             }
           >
             {cardCategory}
           </p>
           {data.isAnnouncement ? (
             <TiPin
-              className={
-                "text-[14px] sm:text-[18px] md:text-[22px] text-[#FFC700] pb-[3px]"
-              }
+              className={"text-base sm:text-xl md:text-2xl text-[#FFC700] "}
             />
           ) : (
             ""
           )}
         </div>
-        <h1 className={"text-[12px] sm:text-[14px] md:text-[20px]"}>
-          {data.title}
-        </h1>
+        <h1 className={"text-base sm:text-lg md:text-xl"}>{data.title}</h1>
       </div>
-      <p className={"text-[10px] sm:text-[12px] md:text-[14px]"}>
-        {data.createAt}
-      </p>
+      <p className={"text-sm sm:text-base md:text-lg"}>{data.createAt}</p>
     </Link>
   );
 };

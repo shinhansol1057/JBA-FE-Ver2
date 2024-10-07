@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { FetchDeleteVideo } from "@/services/VideoApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useSession } from "next-auth/react";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
   data: getVideoType;
@@ -17,10 +18,10 @@ type Props = {
 const VideoListCard = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const isAdmin = useIsAdmin();
 
-  const deleteHandler = () => {
-    confirmAndCancelAlertWithLoading(
+  const deleteHandler = async () => {
+    await confirmAndCancelAlertWithLoading(
       "question",
       "영상을 삭제하시겠습니까?",
       "",
@@ -33,26 +34,24 @@ const VideoListCard = ({ data }: Props) => {
   };
 
   return (
-    <div className={"w-full mb-[30px] md:mb-[50px] relative"}>
+    <div className={"w-full mb-8 md:mb-12 relative"}>
       <div
         className={
           "flex justify-between items-center absolute top-0 left-0 w-full z-30 " +
-          "px-[5px] md:px-[10px] " +
-          "pt-[3px] md:pt-[7px]"
+          "px-1.5 md:px-2.5 " +
+          "pt-1 md:pt-2"
         }
       >
         <h3 className={"text-sm sm:text-base md:text-2xl text-white"}>
           {data.title}
         </h3>
-        {status === "authenticated" ? (
+        {isAdmin && (
           <IoMenu
             className={
-              "text-[15px] sm:text-[20px] md:text-[30px] cursor-pointer text-white"
+              "text-lg sm:text-xl md:text-3xl cursor-pointer text-white"
             }
             onClick={() => setModalOpen(true)}
           />
-        ) : (
-          ""
         )}
       </div>
       <div className={"relative"}>
@@ -61,17 +60,17 @@ const VideoListCard = ({ data }: Props) => {
           alt={data.title}
           width={1000}
           height={1000}
-          className={" cursor-pointer shadow-xl rounded-[8px]"}
+          className={"cursor-pointer shadow-xl rounded-lg"}
         />
         <div
           className={
-            "w-full h-full hover:bg-[rgba(0,0,0,0.3)] absolute top-0 left-0 rounded-[8px] cursor-pointer z-20"
+            "w-full h-full hover:bg-[rgba(0,0,0,0.3)] absolute top-0 left-0 rounded-lg cursor-pointer z-20"
           }
           onClick={() => window.open(data.url, "_blank")}
         ></div>
         <BsFillPlayBtnFill
           className={
-            "absolute top-[43%] left-[43%] text-[30px] sm:text-[40px] md:text-[70px] z-10 text-white "
+            "absolute top-[43%] left-[43%] text-3xl sm:text-5xl md:text-7xl z-10 text-white "
           }
         />
       </div>

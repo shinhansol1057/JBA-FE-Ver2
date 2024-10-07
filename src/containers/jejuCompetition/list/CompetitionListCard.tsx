@@ -19,25 +19,24 @@ const CompetitionListCard = ({ data }: Props) => {
     <Link
       key={data.competitionId}
       className={
-        "cursor-pointer rounded-[8px] shadow-xl flex flex-col justify-between hover:bg-[rgba(0,0,0,0.3)] " +
-        "py-[15px] sm:py-[20px] md:py-[30px] " +
-        "pl-[15px] sm:pl-[20px] md:pl-[30px] " +
-        "w-[280px] sm:w-[400px] md:w-[800px] " +
-        "h-[100px] sm:h-[120px] md:h-[150px] " +
-        "mb-[10px] md:mb-[20px] " +
+        "cursor-pointer rounded-lg shadow-xl flex flex-col justify-between hover:bg-[rgba(0,0,0,0.3)] " +
+        "py-2.5 sm:py-5 " +
+        "pl-2.5 sm:pl-5 " +
+        "w-full h-24 sm:h-28 md:h-36 " +
+        "mb-2.5 md:mb-5 " +
         (status === "진행중" ? "bg-black " : "bg-white ")
       }
       onClick={() => setScrollY(window.scrollY)}
       href={`/jeju-competition/info/${data.competitionId}`}
     >
-      <div className={"text-[12px] sm:text-[14px] md:text-[20px]"}>
+      <div className={"text-sm sm:text-base md:text-xl"}>
         <p
           className={
             (status === "예정"
               ? "text-[#DF1A1A] "
               : status === "진행중"
                 ? "text-[#5B6BFF] "
-                : "text-black ") + "font-bold mb-[5px]"
+                : "text-black ") + "font-bold "
           }
         >
           {status}
@@ -48,7 +47,7 @@ const CompetitionListCard = ({ data }: Props) => {
       </div>
       <p
         className={
-          "text-[10px] sm:text-[12px] md:text-[18px] " +
+          "text-sm sm:text-base md:text-xl " +
           (status === "진행중" ? "text-white" : "text-black")
         }
       >
