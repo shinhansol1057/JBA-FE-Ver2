@@ -20,7 +20,7 @@ const Navigation = () => {
     }, 500) // Match the duration of the closing animation
   }
 
-  if (path === "/admin") {
+  if (path.startsWith("/admin")) {
     return null
   }
   return (
