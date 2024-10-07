@@ -12,18 +12,18 @@ export const SideMenuButton = () => {
       onClick={toggle}
       className={cn(
         "lg:hidden relative w-8 h-8",
-        "transition-colors duration-300",
+        "transition-colors duration-150",
       )}
     >
       <IoMdMenu
         className={cn(
-          "absolute inset-0 w-full h-full transition-opacity duration-300",
+          "absolute inset-0 w-full h-full transition-opacity duration-150",
           isOpen ? "opacity-0" : "opacity-100",
         )}
       />
       <IoMdClose
         className={cn(
-          "absolute inset-0 w-full h-full transition-opacity duration-300",
+          "absolute inset-0 w-full h-full transition-opacity duration-150",
           isOpen ? "opacity-100" : "opacity-0",
         )}
       />
