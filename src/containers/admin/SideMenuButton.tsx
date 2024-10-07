@@ -10,10 +10,7 @@ export const SideMenuButton = () => {
   return (
     <button
       onClick={toggle}
-      className={cn(
-        "lg:hidden relative w-8 h-8",
-        "transition-colors duration-150",
-      )}
+      className='relative w-8 h-8 transition-colors duration-150'
     >
       <IoMdMenu
         className={cn(

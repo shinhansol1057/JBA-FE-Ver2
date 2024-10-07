@@ -29,17 +29,13 @@ export const Sidebar = ({ username }: Props) => {
   return (
     <>
       {isOpen && (
-        <div
-          className='fixed inset-0 bg-black/50 z-10 lg:hidden'
-          onClick={toggle}
-        />
+        <div className='fixed inset-0 bg-black/50 z-10' onClick={toggle} />
       )}
       <div
         className={cn(
           "fixed inset-y-0 mt-16 left-0 z-20 w-64 bg-black text-white",
           "transform transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full",
-          "lg:relative lg:translate-x-0",
         )}
       >
         <div className='p-4'>
