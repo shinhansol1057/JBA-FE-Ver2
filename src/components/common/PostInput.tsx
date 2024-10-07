@@ -11,9 +11,8 @@ const PostInput = ({ type, placeHolder, data, setData }: Props) => {
   return (
     <div
       className={
-        "flex items-center bg-white rounded-[8px] shadow-xl " +
-        "w-[280px] sm:w-[400px] md:w-[800px] " +
-        "h-[30px] sm:h-[40px] md:h-[50px] "
+        "flex items-center bg-white rounded-lg shadow-xl w-full " +
+        "h-10 sm:h-12 md:h-14 "
       }
     >
       <input
@@ -22,8 +21,8 @@ const PostInput = ({ type, placeHolder, data, setData }: Props) => {
         value={data || ""}
         onChange={(e) => setData(e.target.value)}
         className={
-          "w-[80%] ml-[20px] placeholder:text-[#B5B5B5] border-none " +
-          "text-[12px] sm:text-[14px] md:text-[18px] "
+          "w-[80%] ml-5 placeholder:text-[#B5B5B5] border-none " +
+          "text-sm sm:text-base md:text-lg "
         }
         autoComplete={"false"}
       />

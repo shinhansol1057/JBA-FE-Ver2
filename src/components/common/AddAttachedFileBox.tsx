@@ -29,14 +29,14 @@ const AddAttachedFileBox = ({ files, setFiles }: Props) => {
   return (
     <div
       className={
-        "flex flex-col min-h-[70px] bg-white rounded-[8px] shadow-xl my-[20px] p-[10px] md:p-[20px]"
+        "flex flex-col min-h-28 bg-white rounded-lg shadow-xl my-5 p-2.5 md:p-5"
       }
     >
       <div
         className={
           "relative inline-block overflow-hidden cursor-pointer text-center " +
-          "font-bold rounded-[8px] bg-black hover:bg-[#4B4B4B] text-white p-[10px] " +
-          "text-[12px] sm:text-[14px] md:text-[18px]"
+          "font-bold rounded-lg bg-black hover:bg-[#4B4B4B] text-white p-2.5 " +
+          "text-sm sm:text-base md:text-lg"
         }
       >
         <p>파일 첨부</p>
@@ -56,12 +56,12 @@ const AddAttachedFileBox = ({ files, setFiles }: Props) => {
             <li
               key={i}
               className={
-                "flex text-[12px] sm:text-[14px] md:text-[16px] m-[10px]"
+                "flex items-center text-sm sm:text-base md:text-lg m-2.5"
               }
             >
               <p>- {file.name}</p>
               <IoClose
-                className={"cursor-pointer "}
+                className={"cursor-pointer text-lg"}
                 onClick={() => handleDeleteUploadFiles(i)}
               />
             </li>

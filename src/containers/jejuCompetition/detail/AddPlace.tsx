@@ -20,12 +20,13 @@ const AddPlace = ({ places, setPlaces }: Props) => {
   return (
     <div
       className={
-        "flex flex-col min-h-[70px] bg-white rounded-[8px] shadow-xl my-[20px] p-[10px] md:p-[20px]"
+        "flex flex-col min-h-28 bg-white rounded-lg shadow-xl my-5 p-2.5 md:p-5"
       }
     >
       <button
         className={
-          "font-bold rounded-[8px] bg-black text-white p-[10px] text-[12px] sm:text-[14px] md:text-[18px] hover:bg-[#4B4B4B]"
+          "font-bold rounded-lg bg-black text-white p-2.5 " +
+          "text-sm sm:text-base md:text-lg hover:bg-[#4B4B4B]"
         }
         onClick={() => setModalOpen(true)}
       >
@@ -36,9 +37,7 @@ const AddPlace = ({ places, setPlaces }: Props) => {
           return (
             <li
               key={i}
-              className={
-                "flex text-[12px] sm:text-[14px] md:text-[16px] m-[10px]"
-              }
+              className={"flex text-sm sm:text-base md:text-lg m-2.5"}
             >
               <p>- {place.placeName}</p>
               <IoClose

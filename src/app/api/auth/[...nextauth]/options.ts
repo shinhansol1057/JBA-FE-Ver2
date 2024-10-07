@@ -92,14 +92,18 @@ export const nextAuthOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log("signIn", user, account, profile, email, credentials);
+      console.log("user", user, account, profile, email, credentials);
+      console.log("account", user, account, profile, email, credentials);
+      console.log("profile", user, account, profile, email, credentials);
+      console.log("email", user, account, profile, email, credentials);
+      console.log("credentials", user, account, profile, email, credentials);
 
       if (
         (account?.provider === "google" || account?.provider === "naver") &&
-        user?.email &&
         account
       ) {
-        const data = await socialLogin(account.providerAccountId, user.email);
+        // @ts-ignore
+        const data = await socialLogin(account.providerAccountId, user?.email);
         account.access_token = data.accessToken;
         account.refresh_token = data.refreshToken;
         console.log("loginres: ", data);
@@ -109,6 +113,7 @@ export const nextAuthOptions: NextAuthOptions = {
           if (account.provider === "google" && user?.name) {
             const data = await socialSignUp(
               account.providerAccountId,
+              // @ts-ignore
               user.email,
               user.name,
               null,

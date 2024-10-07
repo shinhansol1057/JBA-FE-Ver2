@@ -120,12 +120,12 @@ const AddResultDivisionBox = ({
     setGameNumber();
   };
   return (
-    <div className={"mb-[30px] md:mb-[50px]"}>
+    <div className={"mb-8 md:mb-12"}>
       <div
         className={
-          "flex justify-center items-center bg-amber-400 mb-[5px] rounded-[8px] " +
-          "text-[12px] sm:text-[14px] md:text-[20px] " +
-          "h-[30px] sm:h-[40px] md:h-[50px] "
+          "flex justify-center items-center bg-amber-400 mb-1.5 rounded-lg " +
+          "text-sm sm:text-base md:text-xl " +
+          "h-10 sm:h-12 md:h-14 "
         }
       >
         <p>{addCompetitionResultList[divisionIndex]?.division}</p>
@@ -147,7 +147,7 @@ const AddResultDivisionBox = ({
       )}
       <button
         onClick={() => plusHandler()}
-        className={"w-full h-[20px] rounded-[8px] bg-[#B5B5B5]"}
+        className={"w-full h-5 rounded-lg bg-[#B5B5B5]"}
       >
         +
       </button>

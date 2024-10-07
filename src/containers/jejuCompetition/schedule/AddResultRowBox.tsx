@@ -155,14 +155,14 @@ const AddResultRowBox = ({
           ? {
               components: {
                 DatePicker: {
-                  cellWidth: 26,
-                  inputFontSize: 10,
+                  cellWidth: 30,
+                  inputFontSize: 14,
                   timeColumnWidth: 40,
-                  fontSize: 10,
+                  fontSize: 14,
                 },
                 Select: {
-                  optionFontSize: 10,
-                  fontSize: 10,
+                  optionFontSize: 14,
+                  fontSize: 14,
                 },
               },
             }
@@ -170,13 +170,13 @@ const AddResultRowBox = ({
               components: {
                 DatePicker: {
                   cellWidth: 34,
-                  inputFontSize: 16,
+                  inputFontSize: 18,
                   timeColumnWidth: 50,
-                  fontSize: 16,
+                  fontSize: 18,
                 },
                 Select: {
-                  optionFontSize: 16,
-                  fontSize: 16,
+                  optionFontSize: 18,
+                  fontSize: 18,
                 },
               },
             }
@@ -184,14 +184,14 @@ const AddResultRowBox = ({
     >
       <div
         className={
-          "w-full border border-solid border-borderColor shadow-xl rounded-[8px] " +
-          "h-[90px] sm:h-[105px] md:h-[120px] text-[10px] sm:text-[12px] md:text-[16px] mb-[10px]"
+          "w-full border border-solid border-borderColor shadow-xl rounded-lg " +
+          "text-sm sm:text-base md:text-lg mb-2.5"
         }
       >
         <div
           className={
-            "flex flex-row items-center justify-between border-b border-solid border-[#D9D9D9] mx-[7px] " +
-            "h-[30px] sm:h-[35px] md:h-[40px]"
+            "flex flex-row items-center justify-between border-b border-solid border-[#D9D9D9] mx-2 " +
+            "h-10 sm:h-12 md:h-14"
           }
         >
           <div className={"w-[35%]"}>
@@ -221,8 +221,8 @@ const AddResultRowBox = ({
         </div>
         <div
           className={
-            "flex flex-row items-center justify-between border-b border-solid border-[#D9D9D9] mx-[7px] " +
-            "h-[30px] sm:h-[35px] md:h-[40px] "
+            "flex flex-row items-center justify-between border-b border-solid border-[#D9D9D9] mx-2 " +
+            "h-10 sm:h-12 md:h-14 "
           }
         >
           <div className={"w-[35%] flex flex-row items-center"}>
@@ -252,21 +252,21 @@ const AddResultRowBox = ({
               <div
                 className={
                   "flex justify-center bg-white items-center border border-solid border-[#B5B5B5] hover:bg-[#F5F5F5] " +
-                  "w-[60px] sm:w-[80px] md:w-[160px] " +
-                  "mr-[5px] md:mr-[10px] "
+                  "w-14 sm:w-20 md:w-40 " +
+                  "mr-1.5 md:mr-2.5 "
                 }
               >
                 <label
                   htmlFor={"file" + divisionIndex + "&" + rowIndex}
                   className={
-                    "w-[60px] sm:w-[80px] md:w-[160px] cursor-pointer flex flex-row items-center  "
+                    "w-14 sm:w-20 md:w-40 cursor-pointer flex flex-row items-center  "
                   }
                 >
                   <p
                     className={
-                      "w-[60px] sm:w-[80px] md:w-[160px] " +
-                      "h-[20px] truncate cursor-pointer flex flex-row items-center " +
-                      "text-[8px] sm:text-[10px] md:text-[14px] " +
+                      "w-14 sm:w-20 md:w-40 " +
+                      "h-5 truncate cursor-pointer flex flex-row items-center " +
+                      "text-xs sm:text-sm md:text-base " +
                       (rowData.fileName === "" || rowData.fileName === null
                         ? "justify-center "
                         : "")
@@ -286,9 +286,7 @@ const AddResultRowBox = ({
                 />
               </div>
               <IoClose
-                className={
-                  "cursor-pointer text-[15px] sm:text-[20px] md:text-[30px]"
-                }
+                className={"cursor-pointer text-base sm:text-xl md:text-3xl"}
                 onClick={() => minusHandler()}
               />
             </div>
@@ -296,8 +294,8 @@ const AddResultRowBox = ({
         </div>
         <div
           className={
-            "bg-black flex flex-row items-center justify-center rounded-b-[8px] " +
-            "h-[30px] sm:h-[35px] md:h-[40px] px-[10px] md:px-[50px]"
+            "bg-black flex flex-row items-center justify-center rounded-b-lg " +
+            "h-10 sm:h-12 md:h-14 px-2.5 md:px-12"
           }
         >
           <ScheduleRowInput
@@ -306,7 +304,7 @@ const AddResultRowBox = ({
             type={"text"}
             placeHolder={"HomeTeam"}
           />
-          <div className={"w-[40%] ml-[10px]"}>
+          <div className={"w-[40%] ml-2.5"}>
             <ScheduleRowInput
               value={rowData.homeScore ? rowData.homeScore : undefined}
               setValue={homeScoreHandler}
@@ -314,8 +312,8 @@ const AddResultRowBox = ({
               placeHolder={"점수"}
             />
           </div>
-          <p className={"mx-[10px] md:mx-[20px] text-white"}>vs</p>
-          <div className={"w-[40%] mr-[10px]"}>
+          <p className={"mx-2.5 md:mx-5 text-white"}>vs</p>
+          <div className={"w-[40%] mr-2.5"}>
             <ScheduleRowInput
               value={rowData.awayScore ? rowData.awayScore : undefined}
               setValue={awayScoreHandler}
