@@ -8,7 +8,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   const user = await FetchServerGetUserInfo()
 
   return (
-    <div className='flex h-screen overflow-hidden'>
+    <div className='flex h-screen'>
       <Sidebar username={user.name} />
       <div className='flex-1 flex flex-col overflow-hidden'>
         <nav className='fixed h-16 w-full bg-black text-white flex items-center z-10'>
