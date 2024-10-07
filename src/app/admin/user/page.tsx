@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react"
 import { Table, Input, Select, DatePicker, Button, Modal } from "antd"
 import { SearchOutlined, DownloadOutlined } from "@ant-design/icons"
-import type { ColumnsType } from "antd/es/table"
+import type { ColumnsType, ColumnType } from "antd/es/table"
 
 const { RangePicker } = DatePicker
 const { Option } = Select
@@ -84,8 +84,8 @@ const Page = () => {
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  const getVisibleColumns = (): ColumnsType<MemberData> => {
-    const allColumns: ColumnsType<MemberData> = [
+  const getVisibleColumns = (): ColumnType<MemberData>[] => {
+    const allColumns: ColumnType<MemberData>[] = [
       { title: "아이디", dataIndex: "id", key: "id" },
       { title: "이름", dataIndex: "name", key: "name" },
       { title: "소속팀", dataIndex: "type", key: "type" },
@@ -224,8 +224,10 @@ const Page = () => {
               <p key={column.key}>
                 <strong>{column.title as React.ReactNode}:</strong>{" "}
                 {
-                  //@ts-ignore
-                  selectedMember[column.dataIndex]
+                  selectedMember[
+                    (column as ColumnType<MemberData>)
+                      .dataIndex as keyof MemberData
+                  ]
                 }
               </p>
             ))}
