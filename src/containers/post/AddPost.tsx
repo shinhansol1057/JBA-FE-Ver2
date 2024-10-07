@@ -25,9 +25,9 @@ const AddPost = () => {
   const [postImgs, setPostImgs] = useState<getFileType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
-  const addHandler = () => {
+  const addHandler = async () => {
     const body = { title, content, postImgs };
-    confirmAndCancelAlertWithLoading(
+    await confirmAndCancelAlertWithLoading(
       "question",
       "게시물을 등록하겠습니까?",
       "",
@@ -36,9 +36,12 @@ const AddPost = () => {
   };
 
   return (
-    <div className={"flex flex-col w-[280px] sm:w-[400px] md:w-[800px]"}>
+    <div className={"flex flex-col w-[90%] md:w-[800px]"}>
       <SubTitle title={"게시글 등록"} />
-      <Space style={{ width: "100%", marginTop: "20px" }} direction="vertical">
+      <Space
+        style={{ width: "100%", marginTop: "1.25rem" }}
+        direction="vertical"
+      >
         <div className={"flex"}>
           <Select
             allowClear
@@ -61,7 +64,7 @@ const AddPost = () => {
           />
         </div>
       </Space>
-      <div className={"my-[20px]"}>
+      <div className={"my-5"}>
         <PostInput
           type={"text"}
           placeHolder={"제목을 입력해주세요"}
@@ -75,7 +78,7 @@ const AddPost = () => {
         setNewCkImgUrls={setPostImgs}
       />
       <AddAttachedFileBox files={files} setFiles={setFiles} />
-      <div>
+      <div className={"grid grid-cols-2 gap-2.5 md:gap-5"}>
         <CancelBtn handler={() => router.back()} />
         <AddBtn handler={() => addHandler()} />
       </div>

@@ -33,7 +33,9 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
             color={"text-[#4B4B4B] "}
             bold={true}
           />
-          <p>{formatDate(new Date(data.startDate))}</p>
+          <p className={"text-xs sm:text-sm md:text-lg"}>
+            {formatDate(new Date(data.startDate))}
+          </p>
         </div>
       </div>
       <div

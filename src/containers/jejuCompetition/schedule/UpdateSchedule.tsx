@@ -91,11 +91,9 @@ const UpdateSchedule = ({ id }: { id: string }) => {
     }
   }, [scheduleData]);
   return (
-    <div
-      className={"flex flex-col mt-[20px] w-[280px] sm:w-[400px] md:w-[800px]"}
-    >
+    <div className={"flex flex-col mt-5 w-[90%] md:w-[800px]"}>
       <SubTitle title={"대회일정 수정"} />
-      <div className={"my-[20px]"}>
+      <div className={"my-5"}>
         <PostTitle title={detailData?.title} />
       </div>
       {detailData?.divisions.map((division: string, i: number) => {
@@ -109,7 +107,7 @@ const UpdateSchedule = ({ id }: { id: string }) => {
           />
         );
       })}
-      <div className={"flex mb-[50px]"}>
+      <div className={"grid grid-cols-2 gap-2.5 md:gap-5 mb-12"}>
         <CancelBtn handler={() => router.back()} />
         <AddBtn handler={() => submitHandler()} />
       </div>

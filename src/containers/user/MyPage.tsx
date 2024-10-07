@@ -18,13 +18,13 @@ const MyPage = () => {
   return (
     <div className={"flex flex-col items-center"}>
       <PageTitle title={"마이페이지"} url={"/user/my-page"} />
-      {data ? (
+      {data && (
         <div
           className={
-            "mt-[30px] bg-white border border-solid border-borderColor shadow-xl rounded-[8px] " +
-            "w-[280px] sm:w-[400px] md:w-[800px] " +
-            "p-[10px] md:p-[20px] " +
-            "grid grid-cols-1 gap-[10px] md:gap-[20px]"
+            "mt-7 bg-white border border-solid border-borderColor shadow-xl rounded-lg " +
+            "w-[90%] md:w-[800px] " +
+            "p-2.5 md:p-5 " +
+            "grid grid-cols-1 gap-2.5 md:gap-5"
           }
         >
           <MyPageRow
@@ -34,32 +34,35 @@ const MyPage = () => {
           <MyPageRow label={"이메일"} value={data?.email} />
           <MyPageRow label={"휴대폰번호"} value={data?.phoneNum} />
         </div>
-      ) : (
-        ""
       )}
-      <div className={"grid grid-cols-2 gap-[10px] md:gap-[20px] mt-[20px]"}>
+      <div
+        className={
+          `w-[90%] md:w-[800px] ${!data?.isSocial && "grid grid-cols-2 gap-2.5 md:gap-5"} mt-5 ` +
+          "text-sm sm:text-base md:text-lg"
+        }
+      >
         <Link
           href={"/user/my-page/update"}
           className={
-            "flex justify-center items-center font-bold rounded-[8px] bg-[#D9D9D9] hover:bg-black text-[#4B4B4B] hover:text-white " +
-            "text-[12px] sm:text-[14px] md:text-[18px] " +
-            "w-[135px] sm:w-[195px] md:w-[390px] " +
-            "h-[30px] sm:h-[30px] md:h-[50px]"
+            "flex justify-center items-center font-bold rounded-lg " +
+            "bg-[#D9D9D9] hover:bg-black text-[#4B4B4B] hover:text-white " +
+            "h-10 sm:h-12 md:h-14"
           }
         >
           프로필 편집
         </Link>
-        <Link
-          href={"/user/my-page/update/password"}
-          className={
-            "flex justify-center items-center font-bold rounded-[8px] bg-[#D9D9D9] hover:bg-black text-[#4B4B4B] hover:text-white " +
-            "text-[12px] sm:text-[14px] md:text-[18px] " +
-            "w-[135px] sm:w-[195px] md:w-[390px] " +
-            "h-[30px] sm:h-[30px] md:h-[50px] "
-          }
-        >
-          비밀번호 변경
-        </Link>
+        {!data?.isSocial && (
+          <Link
+            href={"/user/my-page/update/password"}
+            className={
+              "flex justify-center items-center font-bold rounded-lg " +
+              "bg-[#D9D9D9] hover:bg-black text-[#4B4B4B] hover:text-white " +
+              "h-10 sm:h-12 md:h-14 "
+            }
+          >
+            비밀번호 변경
+          </Link>
+        )}
       </div>
     </div>
   );

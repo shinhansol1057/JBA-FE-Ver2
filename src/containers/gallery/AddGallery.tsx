@@ -15,8 +15,8 @@ const AddGallery = () => {
   const [files, setFiles] = useState<getFileType[]>([]);
   const router = useRouter();
 
-  const addGalleryHandler = () => {
-    confirmAndCancelAlertWithLoading(
+  const addGalleryHandler = async () => {
+    await confirmAndCancelAlertWithLoading(
       "question",
       "갤러리를 등록하겠습니까?",
       "",
@@ -25,8 +25,8 @@ const AddGallery = () => {
   };
 
   return (
-    <div className={"w-[280px] sm:w-[400px] md:w-[800px]"}>
-      <div className={"my-[20px]"}>
+    <div className={"w-[90%] md:w-[800px]"}>
+      <div className={"my-5"}>
         <SubTitle title={"갤러리 등록"} />
       </div>
       <PostInput
@@ -36,7 +36,7 @@ const AddGallery = () => {
         setData={setTitle}
       />
       <AddGalleryAttachedFileBox files={files} setFiles={setFiles} />
-      <div className={"grid grid-cols-2 gap-[10px]"}>
+      <div className={"grid grid-cols-2 gap-2.5 md:gap-5"}>
         <CancelBtn handler={() => router.back()} />
         <AddBtn handler={() => addGalleryHandler()} />
       </div>

@@ -15,9 +15,9 @@ const AddVideo = () => {
   const router = useRouter();
 
   return (
-    <div className={"mt-[20px]"}>
+    <div className={"w-[90%] md:w-[800px] mt-5"}>
       <SubTitle title={"대회영상 등록"} />
-      <div className={"flex flex-col my-[20px]"}>
+      <div className={"flex flex-col my-5"}>
         <PostLabel content={"title"} />
         <PostInput
           type={"text"}
