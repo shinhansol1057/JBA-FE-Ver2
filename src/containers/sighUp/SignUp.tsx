@@ -10,6 +10,7 @@ import {
   FetchSignUp,
 } from "@/services/user/SignUpApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
+import { CheckBox } from "@/components/common/checkbox/CheckBox";
 
 const SignUp = () => {
   const [certificating, setCertificating] = useState<boolean>(false);
@@ -19,6 +20,7 @@ const SignUp = () => {
   const [isHidePassword, setIsHidePassword] = useState<boolean>(true);
   const [isHidePasswordConfirm, setIsHidePasswordConfirm] =
     useState<boolean>(true);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
   const {
     register,
     setValue,
@@ -209,12 +211,23 @@ const SignUp = () => {
             }
           />
         </div>
-
+        <div className={"flex ml-5 my-2.5"}>
+          <CheckBox
+            isChecked={isChecked}
+            setIsChecked={setIsChecked}
+            content={"개인정보 이용동의"}
+          />
+          <a
+            href={"/file/개인정보처리방침.pdf"}
+            className={"ml-2 text-blue-400"}
+          >
+            &lt;개인정보처리방침&gt;
+          </a>
+        </div>
         <button
           type={"submit"}
-          className={
-            "w-[280px] h-[40px] text-white text-[14px] font-bold bg-black mt-[10px] rounded-[50px]"
-          }
+          className={`w-[280px] h-[40px] text-white text-[14px] font-bold bg-black 
+          mt-[10px] rounded-[50px] ${!isChecked && "pointer-events-none opacity-50"}`}
         >
           회원가입
         </button>
