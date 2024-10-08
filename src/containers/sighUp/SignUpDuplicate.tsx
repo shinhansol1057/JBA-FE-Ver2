@@ -36,6 +36,8 @@ const SignUpDuplicate = () => {
       async () => linkSocial(),
     ).then((res) => {
       if (res.isDismissed) {
+        router.push("/login/social");
+      } else {
         router.push("/login");
       }
     });
