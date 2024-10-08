@@ -13,7 +13,7 @@ import {
 
 export const nextAuthOptions: NextAuthOptions = {
   pages: {
-    signIn: "/login",
+    signIn: "/login/social",
   },
   session: {
     strategy: "jwt",
@@ -202,7 +202,7 @@ export const nextAuthOptions: NextAuthOptions = {
         token.iat = decodedToken.iat;
         return token;
       } catch (error) {
-        await signOut({ callbackUrl: "/login" });
+        await signOut({ callbackUrl: "/login/social" });
         return {
           ...token,
           error: "RefreshAccessTokenError",

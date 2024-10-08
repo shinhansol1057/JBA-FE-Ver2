@@ -23,15 +23,19 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 
   if (userPath && !session) {
     // 로그인 안되어있으면 로그인 페이지로 리다이렉션
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/login/social", request.url));
   }
 
   if (adminPath && !isAdmin) {
     // 관리자 권한이 없으면 로그인 페이지로 리다이렉션
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/login/social", request.url));
   }
 
-  if (request.nextUrl.pathname === "/login" && session) {
+  if (
+    (request.nextUrl.pathname === "/login" ||
+      request.nextUrl.pathname === "/login/social") &&
+    session
+  ) {
     // 로그인 페이지로 가는데 로그인이 되어있으면 메인페이지로 리다이렉션
     return NextResponse.redirect(new URL("/", request.url));
   }
@@ -50,6 +54,12 @@ export const AdminPaths = [
   "/jeju-competition/schedule/update",
   "/jeju-competition/result/add",
   "/jeju-competition/result/update",
+  "/media/gallery/add",
+  "/media/gallery/update",
+  "/media/video/add",
+  "/media/video/update",
+  "/post/add",
+  "/post/update",
 ];
 
 export const UserPaths = ["/user/my-page"];
