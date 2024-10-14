@@ -1,7 +1,7 @@
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { NormalApi } from "@/services/axios/NormalApi";
-import { getSession } from "next-auth/react";
+import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchAddVideo = async (
   title: string,
@@ -9,7 +9,6 @@ export const FetchAddVideo = async (
   content: string,
   router: any,
 ) => {
-  const session = await getSession();
   const data: {
     title: string;
     url: string;
@@ -23,7 +22,7 @@ export const FetchAddVideo = async (
   };
   Api.post("/v1/api/video/post", data, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {
@@ -65,10 +64,9 @@ export const FetchGetVideoDetail = async (id: string) => {
 };
 
 export const FetchDeleteVideo = async (id: string) => {
-  const session = await getSession();
   Api.delete(`/v1/api/video/delete?id=${id}`, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   }).then((res) => {
     if (res.status === 200)
@@ -96,10 +94,9 @@ export const updateVideo = async (data: {
   url: string;
   content: string;
 }) => {
-  const session = await getSession();
   Api.put(`/v1/api/video/update`, data, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {

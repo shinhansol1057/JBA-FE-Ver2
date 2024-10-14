@@ -1,13 +1,13 @@
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { NormalApi } from "@/services/axios/NormalApi";
-import { getSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetUserInfo = async () => {
-  const session = await getSession();
   return NormalApi.get("/v1/api/user/get/user-info", {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   });
 };
@@ -16,10 +16,9 @@ export const FetchUpdateUserInfo = async (request: {
   name: string;
   phoneNum: string;
 }) => {
-  const session = await getSession();
   return Api.put("/v1/api/user/update", request, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {
@@ -45,7 +44,6 @@ export const FetchUpdatePassword = async (
   newPW: string,
   newPWConfirm: string,
 ) => {
-  const session = await getSession();
   const request: { prevPW: string; newPW: string; newPWConfirm: string } = {
     prevPW,
     newPW,
@@ -53,7 +51,7 @@ export const FetchUpdatePassword = async (
   };
   return Api.put("/v1/api/user/update/password", request, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {

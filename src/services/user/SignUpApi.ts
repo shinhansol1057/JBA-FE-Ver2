@@ -2,7 +2,7 @@ import { NormalApi } from "@/services/axios/NormalApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { signUpData } from "@/constants/sighUp";
 
-export function FetchSignUp(data: signUpData) {
+export const FetchSignUp = async (data: signUpData) => {
   return NormalApi.post("v1/api/sign/sign-up", data)
     .then((res) => {
       if (res.status === 200) {
@@ -47,12 +47,12 @@ export function FetchSignUp(data: signUpData) {
       else if (message === "이미 해당 휴대폰 번호로 가입된 유저가 있습니다.")
         confirmAlert("warning", "이미 가입된 휴대폰번호입니다.");
     });
-}
+};
 
-export function FetchSendCertificationEmail(
+export const FetchSendCertificationEmail = async (
   email: string,
   setCertificating: React.Dispatch<React.SetStateAction<boolean>>,
-) {
+) => {
   const emailRequest: { email: string } = { email };
   return NormalApi.get(`v1/api/sign/check-email?email=${email}`)
     .then((res) => {
@@ -85,14 +85,14 @@ export function FetchSendCertificationEmail(
       if (err.response.status === 409)
         confirmAlert("warning", "이미 가입된 이메일입니다.");
     });
-}
+};
 
-export function FetchCheckCertificationNum(
+export const FetchCheckCertificationNum = (
   email: string,
   num: string,
   setCertificating: React.Dispatch<React.SetStateAction<boolean>>,
   setIsCertificate: React.Dispatch<React.SetStateAction<boolean>>,
-) {
+) => {
   const emailCheckRequest: { email: string; authNum: string } = {
     email: email,
     authNum: num,
@@ -123,4 +123,4 @@ export function FetchCheckCertificationNum(
           "이메일과 인증번호를 확인해주세요",
         );
     });
-}
+};

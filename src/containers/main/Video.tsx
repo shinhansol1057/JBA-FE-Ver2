@@ -21,7 +21,7 @@ const Video = async () => {
       }
     >
       <AreaTitleAndAllContentBtn title={"대회영상"} url={"/media/video"} />
-      {data?.data.content.map((video: getVideoType) => {
+      {data?.data?.content.map((video: getVideoType) => {
         return <VideoListCard data={video} key={video.videoId} />;
       })}
     </div>

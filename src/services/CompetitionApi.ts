@@ -7,7 +7,7 @@ import {
   addCompetitionScheduleType,
   updateCompetitionRequestType,
 } from "@/types/CompetitionType";
-import { getSession } from "next-auth/react";
+import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetCompetitionList = async ({
   pageParam,
@@ -64,7 +64,6 @@ export const FetchAddCompetitionInfo = async (
   requestData: addCompetitionRequestType,
   files: File[],
 ) => {
-  const session = await getSession();
   const blob: Blob = new Blob([JSON.stringify(requestData)], {
     type: "application/json",
   });
@@ -77,7 +76,7 @@ export const FetchAddCompetitionInfo = async (
   return Api.post("/v1/api/competition/post/competition-info", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {
@@ -101,10 +100,9 @@ export const FetchAddCompetitionInfo = async (
 };
 
 export const FetchDeleteCompetitionInfo = async (id: string) => {
-  const session = await getSession();
   return Api.delete(`/v1/api/competition/delete/${id}`, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {
@@ -128,7 +126,6 @@ export const FetchUpdateCompetitionInfo = async (
   requestData: updateCompetitionRequestType,
   files: File[],
 ) => {
-  const session = await getSession();
   const blob: Blob = new Blob([JSON.stringify(requestData)], {
     type: "application/json",
   });
@@ -144,7 +141,7 @@ export const FetchUpdateCompetitionInfo = async (
     {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: session?.accessToken,
+        Authorization: await getBearerToken(),
       },
     },
   )
@@ -193,10 +190,9 @@ export const FetchAddSchedule = async (
   const request: { request: addCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
-  const session = await getSession();
   return Api.post(`/v1/api/competition/post/schedule/${id}`, request, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {
@@ -248,10 +244,9 @@ export const FetchUpdateSchedule = async (
   const request: { request: addCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
-  const session = await getSession();
   return Api.put(`/v1/api/competition/update/schedule/${id}`, request, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {
@@ -297,10 +292,9 @@ export const FetchUpdateSchedule = async (
 };
 
 export const FetchDeleteSchedule = async (id: string) => {
-  const session = await getSession();
   return Api.delete(`/v1/api/competition/delete/schedule/${id}`, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   }).then((res) => {
     if (res.status === 200) {
@@ -321,10 +315,9 @@ export const FetchAddResult = async (
   const request: { requests: addCompetitionResultType[] } = {
     requests: requests,
   };
-  const session = await getSession();
   return Api.post(`/v1/api/competition/post/result/${id}`, request, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {
