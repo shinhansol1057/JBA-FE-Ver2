@@ -4,13 +4,14 @@ export const refreshToken = async (
   accessToken: string,
   refreshToken: string,
 ) => {
+  console.log("refresh start");
   try {
     const res = await fetch(
       process.env.NEXT_PUBLIC_API_KEY + "/v1/api/sign/refresh-token-cookie",
       {
         method: "POST",
         headers: {
-          Authorization: accessToken,
+          Authorization: `Bearer ${accessToken}`,
           RefreshToken: refreshToken,
         },
         credentials: "include",
