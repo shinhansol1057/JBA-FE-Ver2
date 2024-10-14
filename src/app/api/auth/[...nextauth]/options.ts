@@ -150,7 +150,7 @@ export const nextAuthOptions: NextAuthOptions = {
     },
 
     async jwt({ token, user, trigger, account, profile }) {
-      console.log("jwt", account);
+      // console.log("jwt", token);
 
       if (
         (account?.provider === "google" || account?.provider === "naver") &&
@@ -230,14 +230,16 @@ export const nextAuthOptions: NextAuthOptions = {
           {
             method: "POST",
             headers: {
-              Authorization: data.data.AccessToken,
+              Authorization: `Bearer ${data.data.accessToken}`,
             },
             credentials: "include",
             body: "",
           },
         );
         return res.json();
-      } catch (error) {}
+      } catch (error) {
+        return error;
+      }
     },
   },
   debug: process.env.NODE_ENV === "development",

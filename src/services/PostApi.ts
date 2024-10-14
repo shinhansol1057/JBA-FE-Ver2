@@ -2,7 +2,7 @@ import { getFileType } from "@/types/CommonType";
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { findPostCategoryUrl } from "@/constants/Post";
-import { getSession } from "next-auth/react";
+import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetPostList = async ({
   pageParam,
@@ -31,7 +31,6 @@ export const FetchAddPost = async (
   files: File[],
   isOfficial: string,
 ) => {
-  const session = await getSession();
   let categoryListUrl = findPostCategoryUrl(category);
   const blob: Blob = new Blob([JSON.stringify(body)], {
     type: "application/json",
@@ -46,7 +45,7 @@ export const FetchAddPost = async (
     {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: session?.accessToken,
+        Authorization: await getBearerToken(),
       },
     },
   )
@@ -80,7 +79,6 @@ export const FetchUpdatePost = async (
   files: File[],
   isOfficial: string,
 ) => {
-  const session = await getSession();
   let categoryListUrl = findPostCategoryUrl(category);
 
   const blob: Blob = new Blob([JSON.stringify(body)], {
@@ -96,7 +94,7 @@ export const FetchUpdatePost = async (
     {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: session?.accessToken,
+        Authorization: await getBearerToken(),
       },
     },
   )
@@ -123,11 +121,10 @@ export const FetchUpdatePost = async (
 };
 
 export const FetchDeletePost = async (id: string, category: string) => {
-  const session = await getSession();
   let categoryListUrl = findPostCategoryUrl(category);
   return Api.delete(`/v1/api/post/${id}`, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {

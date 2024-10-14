@@ -78,7 +78,7 @@ const SignUp = () => {
   return (
     <div
       className={
-        "flex flex-col items-center w-full h-full -mt-7 sm:-mt-10 md:-mt-12 bg-[#F5F5F5]"
+        "flex flex-col items-center w-full h-full -mt-8 sm:-mt-10 md:-mt-12 bg-[#F5F5F5]"
       }
     >
       <h1 className={"mt-20 mb-4 text-2xl font-bold"}>회원가입</h1>

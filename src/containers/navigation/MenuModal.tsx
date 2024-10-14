@@ -23,7 +23,6 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
   const logoutHandler = async () => {
     setModalOpen(false);
     await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" });
-    // router.push("/login");
   };
 
   return (

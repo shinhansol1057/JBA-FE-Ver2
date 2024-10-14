@@ -14,7 +14,7 @@ const Gallery = async () => {
     >
       <AreaTitleAndAllContentBtn title={"갤러리"} url={"/media/gallery"} />
       <div>
-        <GalleryCarousel galleries={galleries?.data.galleries} />
+        <GalleryCarousel galleries={galleries?.data?.galleries} />
       </div>
     </div>
   );
