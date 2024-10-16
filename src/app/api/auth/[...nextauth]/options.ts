@@ -17,7 +17,7 @@ export const nextAuthOptions: NextAuthOptions = {
   },
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24 * 3,
+    maxAge: 60 * 60 * 24 * 4,
   },
   providers: [
     GoogleProvider({
@@ -25,8 +25,8 @@ export const nextAuthOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
       authorization: {
         params: {
-          prompt: "consent",
-          access_type: "offline",
+          // prompt: "consent",
+          // access_type: "offline",
           response_type: "code",
         },
       },
@@ -92,12 +92,6 @@ export const nextAuthOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log("user", user, account, profile, email, credentials);
-      console.log("account", user, account, profile, email, credentials);
-      console.log("profile", user, account, profile, email, credentials);
-      console.log("email", user, account, profile, email, credentials);
-      console.log("credentials", user, account, profile, email, credentials);
-
       if (
         (account?.provider === "google" || account?.provider === "naver") &&
         account
@@ -106,7 +100,6 @@ export const nextAuthOptions: NextAuthOptions = {
         const data = await socialLogin(account.providerAccountId, user?.email);
         account.access_token = data.accessToken;
         account.refresh_token = data.refreshToken;
-        console.log("loginres: ", data);
         if (data.status === 200) {
           return true;
         } else if (data.status === 404) {
@@ -120,7 +113,6 @@ export const nextAuthOptions: NextAuthOptions = {
             );
             account.access_token = data.accessToken;
             account.refresh_token = data.refreshToken;
-            console.log("googleres: ", data);
             return true;
           }
           if (account?.provider === "naver" && profile) {
@@ -134,7 +126,6 @@ export const nextAuthOptions: NextAuthOptions = {
             );
             account.access_token = data.accessToken;
             account.refresh_token = data.refreshToken;
-            console.log("naverres: ", data);
             return true;
           }
         } else if (data.status === 409) {
@@ -150,8 +141,6 @@ export const nextAuthOptions: NextAuthOptions = {
     },
 
     async jwt({ token, user, trigger, account, profile }) {
-      // console.log("jwt", token);
-
       if (
         (account?.provider === "google" || account?.provider === "naver") &&
         account.access_token &&
@@ -185,7 +174,7 @@ export const nextAuthOptions: NextAuthOptions = {
 
       // 토큰 만료 체크
       const now = Math.floor(Date.now() / 1000);
-      if (token.accessTokenExpires > now) {
+      if (token.accessTokenExpires > now - 300) {
         return token;
       }
 
