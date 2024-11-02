@@ -29,7 +29,7 @@ export const FetchGetCompetitionList = async ({
   });
 };
 
-export const FetchGetCompetitionDetail = (id: string) => {
+export const FetchGetCompetitionDetail = async (id: string) => {
   return NormalApi.get(`/v1/api/competition/detail/${id}`).catch((err) => {
     if (
       err.response.data.detailMessage ===
@@ -46,7 +46,7 @@ export const FetchGetCompetitionDetail = (id: string) => {
   });
 };
 
-export const FetchGetCompetitionResult = (id: string) => {
+export const FetchGetCompetitionResult = async (id: string) => {
   return NormalApi.get(`v1/api/competition/result/${id}`).catch((err) => {
     if (err.response.data.detailMessage === "대회를 찾을 수 없습니다.") {
       confirmAlert("error", "대회를 찾을 수 없습니다.").then((res) => {
