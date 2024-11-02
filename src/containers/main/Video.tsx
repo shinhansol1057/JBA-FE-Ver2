@@ -6,6 +6,7 @@ import AreaTitleAndAllContentBtn from "@/containers/main/AreaTitleAndAllContentB
 
 const Video = async () => {
   const data = await FetchMainVideoList();
+  console.log(data);
 
   return (
     <div
