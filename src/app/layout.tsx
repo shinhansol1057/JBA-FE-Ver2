@@ -37,10 +37,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html lang="kr">
       <body className={inter.className}>
         <div className={"min-h-[100vh]"}>
-          <AuthProvider>
-            <Navigation />
-            <ReactQueryProviders>{children}</ReactQueryProviders>
-          </AuthProvider>
+          <ReactQueryProviders>
+            <AuthProvider>
+              <Navigation />
+              {children}
+            </AuthProvider>
+          </ReactQueryProviders>
         </div>
       </body>
     </html>
