@@ -4,7 +4,7 @@ import process from "process";
 import jwt from "jsonwebtoken";
 import { signOut } from "next-auth/react";
 import GoogleProvider from "next-auth/providers/google";
-import NaverProvider from "next-auth/providers/naver";
+import KakaoProvider from "next-auth/providers/kakao";
 import {
   refreshToken,
   socialLogin,
@@ -31,9 +31,20 @@ export const nextAuthOptions: NextAuthOptions = {
         },
       },
     }),
-    NaverProvider({
-      clientId: process.env.NAVER_CLIENT_ID || "",
-      clientSecret: process.env.NAVER_CLIENT_SECRET || "",
+    // NaverProvider({
+    //   clientId: process.env.NAVER_CLIENT_ID || "",
+    //   clientSecret: process.env.NAVER_CLIENT_SECRET || "",
+    //   authorization: {
+    //     params: {
+    //       prompt: "consent",
+    //       access_type: "offline",
+    //       response_type: "code",
+    //     },
+    //   },
+    // }),
+    KakaoProvider({
+      clientId: process.env.KAKAO_CLIENT_ID || "",
+      clientSecret: process.env.KAKAO_CLIENT_SECRET || "",
       authorization: {
         params: {
           prompt: "consent",
@@ -93,7 +104,9 @@ export const nextAuthOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       if (
-        (account?.provider === "google" || account?.provider === "naver") &&
+        (account?.provider === "google" ||
+          account?.provider === "naver" ||
+          account?.provider === "kakao") &&
         account
       ) {
         // @ts-ignore
@@ -115,19 +128,35 @@ export const nextAuthOptions: NextAuthOptions = {
             account.refresh_token = data.refreshToken;
             return true;
           }
-          if (account?.provider === "naver" && profile) {
+          if (account.provider === "kakao" && profile) {
+            // @ts-ignore
             const data = await socialSignUp(
-              account.providerAccountId,
-              null,
               // @ts-ignore
-              profile.response.name,
+              profile.id,
               // @ts-ignore
-              profile.response.mobile,
+              profile.kakao_account.email,
+              // @ts-ignore
+              profile.kakao_account?.name,
+              // @ts-ignore
+              "0" + profile.kakao_account.phone_number.substring(4),
             );
             account.access_token = data.accessToken;
             account.refresh_token = data.refreshToken;
             return true;
           }
+          // if (account?.provider === "naver" && profile) {
+          //   const data = await socialSignUp(
+          //     account.providerAccountId,
+          //     null,
+          //     // @ts-ignore
+          //     profile.response.name,
+          //     // @ts-ignore
+          //     profile.response.mobile,
+          //   );
+          //   account.access_token = data.accessToken;
+          //   account.refresh_token = data.refreshToken;
+          //   return true;
+          // }
         } else if (data.status === 409) {
           console.log("res: ", data);
           return `/sign-up/duplicate?id=${account.providerAccountId}&email=${user.email}`;
@@ -142,7 +171,9 @@ export const nextAuthOptions: NextAuthOptions = {
 
     async jwt({ token, user, trigger, account, profile }) {
       if (
-        (account?.provider === "google" || account?.provider === "naver") &&
+        (account?.provider === "google" ||
+          account?.provider === "naver" ||
+          account?.provider === "kakao") &&
         account.access_token &&
         account.refresh_token
       ) {
