@@ -3,7 +3,7 @@ import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { signUpData } from "@/constants/sighUp";
 
 export const FetchSignUp = async (data: signUpData) => {
-  return NormalApi.post("v1/api/sign/sign-up", data)
+  return NormalApi.post("v1/api/auth/sign-up", data)
     .then((res) => {
       if (res.status === 200) {
         confirmAlert(
@@ -54,7 +54,7 @@ export const FetchSendCertificationEmail = async (
   setCertificating: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const emailRequest: { email: string } = { email };
-  return NormalApi.get(`v1/api/sign/check-email?email=${email}`)
+  return NormalApi.get(`v1/api/mail/sign-up?email=${email}`)
     .then((res) => {
       if (res.status === 200) {
         confirmAlert(
@@ -87,7 +87,7 @@ export const FetchSendCertificationEmail = async (
     });
 };
 
-export const FetchCheckCertificationNum = (
+export const FetchCheckCertificationNum = async (
   email: string,
   num: string,
   setCertificating: React.Dispatch<React.SetStateAction<boolean>>,
@@ -97,7 +97,7 @@ export const FetchCheckCertificationNum = (
     email: email,
     authNum: num,
   };
-  return NormalApi.post("/v1/api/mail/check-auth-num", emailCheckRequest)
+  return NormalApi.post("/v1/api/mail/verify", emailCheckRequest)
     .then((res) => {
       confirmAlert(
         "success",

@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetUserInfo = async () => {
-  return NormalApi.get("/v1/api/user/get/user-info", {
+  return NormalApi.get("/v1/api/account", {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -16,7 +16,7 @@ export const FetchUpdateUserInfo = async (request: {
   name: string;
   phoneNum: string;
 }) => {
-  return Api.put("/v1/api/user/update", request, {
+  return Api.put("/v1/api/account", request, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -49,7 +49,7 @@ export const FetchUpdatePassword = async (
     newPW,
     newPWConfirm,
   };
-  return Api.put("/v1/api/user/update/password", request, {
+  return Api.put("/v1/api/account/password", request, {
     headers: {
       Authorization: await getBearerToken(),
     },
