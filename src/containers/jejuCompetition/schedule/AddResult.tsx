@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   FetchAddResult,
   FetchGetCompetitionDetail,
-  FetchGetCompetitionResult,
+  FetchGetCompetitionScheduleAndResult,
 } from "@/services/CompetitionApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { getDateAndTimeToString } from "@/utils/FormDate";
@@ -40,7 +40,7 @@ const AddResult = ({ id }: { id: string }) => {
 
   const { data: scheduleData } = useQuery({
     queryKey: ["getSchedule", id],
-    queryFn: () => FetchGetCompetitionResult(id),
+    queryFn: () => FetchGetCompetitionScheduleAndResult(id),
     select: (result) => result?.data.data,
     gcTime: 1000 * 60 * 10,
     refetchOnMount: false,

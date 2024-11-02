@@ -1,9 +1,8 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { NormalApi } from "@/services/axios/NormalApi";
-import { signIn } from "next-auth/react";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
+import { FetchUpdateLinkSocial } from "@/services/user/LoginApi";
 
 const SignUpDuplicate = () => {
   const searchParams = useSearchParams();
@@ -11,21 +10,10 @@ const SignUpDuplicate = () => {
   const id = searchParams.get("id");
   const email = searchParams.get("email");
 
-  const linkSocial = () => {
-    const data = NormalApi.post(
-      `/v1/api/sign/link-social?socialId=${id}&email=${email}`,
-    ).then((res) => {
-      if (res.status === 200) {
-        confirmAndCancelAlertWithLoading(
-          "success",
-          "연동 성공",
-          "연동되었습니다. 다시 로그인해주세요",
-          async () => {
-            const res = await signIn("google", { callbackUrl: "/" });
-          },
-        );
-      }
-    });
+  const linkSocial = async () => {
+    if (id && email) {
+      const data = await FetchUpdateLinkSocial(id, email);
+    }
   };
 
   const openAlert = async () => {

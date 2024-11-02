@@ -66,7 +66,7 @@ export const nextAuthOptions: NextAuthOptions = {
           password: credentials?.password,
         };
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_KEY}/v1/api/sign/login-cookie`,
+          `${process.env.NEXT_PUBLIC_API_KEY}/v1/api/auth/login`,
           {
             method: "POST",
             body: JSON.stringify(request),
@@ -246,7 +246,7 @@ export const nextAuthOptions: NextAuthOptions = {
           message.token.refreshToken,
         );
         const res = await fetch(
-          process.env.NEXT_PUBLIC_API_KEY + "/v1/api/sign/logout-cookie",
+          process.env.NEXT_PUBLIC_API_KEY + "/v1/api/auth/logout",
           {
             method: "POST",
             headers: {

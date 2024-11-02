@@ -30,7 +30,7 @@ export const FetchGetCompetitionList = async ({
 };
 
 export const FetchGetCompetitionDetail = async (id: string) => {
-  return NormalApi.get(`/v1/api/competition/detail/${id}`).catch((err) => {
+  return NormalApi.get(`/v1/api/competition/${id}`).catch((err) => {
     if (
       err.response.data.detailMessage ===
         "해당 아이디와 일치하는 대회를 찾을 수 없습니다." ||
@@ -46,8 +46,8 @@ export const FetchGetCompetitionDetail = async (id: string) => {
   });
 };
 
-export const FetchGetCompetitionResult = async (id: string) => {
-  return NormalApi.get(`v1/api/competition/result/${id}`).catch((err) => {
+export const FetchGetCompetitionScheduleAndResult = async (id: string) => {
+  return NormalApi.get(`v1/api/competition/${id}/result`).catch((err) => {
     if (err.response.data.detailMessage === "대회를 찾을 수 없습니다.") {
       confirmAlert("error", "대회를 찾을 수 없습니다.").then((res) => {
         if (res.isConfirmed) window.location.href = "/jeju-competition/info";
@@ -57,7 +57,7 @@ export const FetchGetCompetitionResult = async (id: string) => {
 };
 
 export const FetchGetDivisionList = async () => {
-  return NormalApi.get("/v1/api/competition/find-division-list");
+  return NormalApi.get("/v1/api/competition/divisions");
 };
 
 export const FetchAddCompetitionInfo = async (
@@ -73,7 +73,7 @@ export const FetchAddCompetitionInfo = async (
     formData.append("requestFiles", files[i]);
   }
 
-  return Api.post("/v1/api/competition/post/competition-info", formData, {
+  return Api.post("/v1/api/competition", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: await getBearerToken(),
@@ -100,7 +100,7 @@ export const FetchAddCompetitionInfo = async (
 };
 
 export const FetchDeleteCompetitionInfo = async (id: string) => {
-  return Api.delete(`/v1/api/competition/delete/${id}`, {
+  return Api.delete(`/v1/api/competition/${id}`, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -135,16 +135,12 @@ export const FetchUpdateCompetitionInfo = async (
     formData.append("requestFiles", files[i]);
   }
 
-  return Api.post(
-    `/v1/api/competition/update/competition-info/${id}`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: await getBearerToken(),
-      },
+  return Api.put(`/v1/api/competition/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: await getBearerToken(),
     },
-  )
+  })
     .then((res) => {
       if (res.status === 200) {
         confirmAlert("success", "대회수정이 완료되었습니다.").then((res) => {
@@ -190,7 +186,7 @@ export const FetchAddSchedule = async (
   const request: { request: addCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
-  return Api.post(`/v1/api/competition/post/schedule/${id}`, request, {
+  return Api.post(`/v1/api/competition/${id}/schedule`, request, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -244,7 +240,7 @@ export const FetchUpdateSchedule = async (
   const request: { request: addCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
-  return Api.put(`/v1/api/competition/update/schedule/${id}`, request, {
+  return Api.put(`/v1/api/competition/${id}/schedule`, request, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -292,7 +288,7 @@ export const FetchUpdateSchedule = async (
 };
 
 export const FetchDeleteSchedule = async (id: string) => {
-  return Api.delete(`/v1/api/competition/delete/schedule/${id}`, {
+  return Api.delete(`/v1/api/competition/${id}/schedule`, {
     headers: {
       Authorization: await getBearerToken(),
     },
