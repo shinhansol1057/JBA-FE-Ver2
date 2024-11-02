@@ -20,7 +20,7 @@ export const FetchAddVideo = async (
     content: content,
     isOfficial: false,
   };
-  Api.post("/v1/api/video/post", data, {
+  Api.post("/v1/api/video", data, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -54,17 +54,17 @@ export const FetchGetVideoList = async ({
 }) => {
   const url =
     process.env.NEXT_PUBLIC_API_KEY +
-    `/v1/api/video/get/videoList?size=10&page=${pageParam.toString()}&keyword=${queryKey[1]}&isOfficial=${queryKey[2]}`;
+    `/v1/api/video?size=10&page=${pageParam.toString()}&keyword=${queryKey[1]}&isOfficial=${queryKey[2]}`;
   const res = await fetch(url);
   return res.json();
 };
 
 export const FetchGetVideoDetail = async (id: string) => {
-  return NormalApi.get(`v1/api/video/get?id=${id}`);
+  return NormalApi.get(`v1/api/video/${id}`);
 };
 
 export const FetchDeleteVideo = async (id: string) => {
-  Api.delete(`/v1/api/video/delete?id=${id}`, {
+  Api.delete(`/v1/api/video?id=${id}`, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -94,7 +94,7 @@ export const updateVideo = async (data: {
   url: string;
   content: string;
 }) => {
-  Api.put(`/v1/api/video/update`, data, {
+  Api.put(`/v1/api/video`, data, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -120,4 +120,12 @@ export const updateVideo = async (data: {
           if (res.isConfirmed) window.location.href = "/media/video";
         });
     });
+};
+
+export const FetchMainVideoList = async () => {
+  const url =
+    process.env.NEXT_PUBLIC_API_KEY +
+    `/v1/api/video/get/videoList?size=3&keyword=&page=0&isOfficial=false`;
+  const res = await fetch(url);
+  return res.json();
 };

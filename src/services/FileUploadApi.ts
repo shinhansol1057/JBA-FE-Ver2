@@ -5,7 +5,7 @@ export const FetchUploadFile = (files: File[]) => {
   files.forEach((file) => {
     formData.append("uploadFiles", file);
   });
-  return Api.post("v1/api/upload/uploadFiles", formData, {
+  return Api.post("v1/api/disk/files", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

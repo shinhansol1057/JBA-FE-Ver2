@@ -4,7 +4,7 @@ export const getAnnouncements = async () => {
 };
 
 export const getCompetitions = async () => {
-  const url = process.env.NEXT_PUBLIC_API_KEY + "/v1/api/main/competition";
+  const url = process.env.NEXT_PUBLIC_API_KEY + "/v1/api/competition/main";
   return await fetch(url, { cache: "no-store" }).then((res) => res.json());
 };
 
