@@ -16,7 +16,7 @@ const LoginInputBox = ({ type, id, setValue, value }: Props) => {
       autoComplete={type === "password" ? "off" : "on"}
       onChange={(e) => setValue(e.target.value)}
       className={
-        "mt-[5px] mb-[10px] w-[280px] h-[40px] rounded-[50px] border-[#D9D9D9] text-[#4B4B4B] px-[20px]"
+        "mt-2 mb-4 w-full h-12 rounded-2xl border-[#D9D9D9] pl-5 pr-20"
       }
     />
   );

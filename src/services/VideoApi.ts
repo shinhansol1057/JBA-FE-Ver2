@@ -1,7 +1,7 @@
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { NormalApi } from "@/services/axios/NormalApi";
-import { getSession } from "next-auth/react";
+import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchAddVideo = async (
   title: string,
@@ -9,7 +9,6 @@ export const FetchAddVideo = async (
   content: string,
   router: any,
 ) => {
-  const session = await getSession();
   const data: {
     title: string;
     url: string;
@@ -21,9 +20,9 @@ export const FetchAddVideo = async (
     content: content,
     isOfficial: false,
   };
-  Api.post("/v1/api/video/post", data, {
+  Api.post("/v1/api/video", data, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {
@@ -55,20 +54,19 @@ export const FetchGetVideoList = async ({
 }) => {
   const url =
     process.env.NEXT_PUBLIC_API_KEY +
-    `/v1/api/video/get/videoList?size=10&page=${pageParam.toString()}&keyword=${queryKey[1]}&isOfficial=${queryKey[2]}`;
+    `/v1/api/video?size=10&page=${pageParam.toString()}&keyword=${queryKey[1]}&isOfficial=${queryKey[2]}`;
   const res = await fetch(url);
   return res.json();
 };
 
 export const FetchGetVideoDetail = async (id: string) => {
-  return NormalApi.get(`v1/api/video/get?id=${id}`);
+  return NormalApi.get(`v1/api/video/${id}`);
 };
 
 export const FetchDeleteVideo = async (id: string) => {
-  const session = await getSession();
-  Api.delete(`/v1/api/video/delete?id=${id}`, {
+  Api.delete(`/v1/api/video?id=${id}`, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   }).then((res) => {
     if (res.status === 200)
@@ -96,10 +94,9 @@ export const updateVideo = async (data: {
   url: string;
   content: string;
 }) => {
-  const session = await getSession();
-  Api.put(`/v1/api/video/update`, data, {
+  Api.put(`/v1/api/video`, data, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {
@@ -123,4 +120,12 @@ export const updateVideo = async (data: {
           if (res.isConfirmed) window.location.href = "/media/video";
         });
     });
+};
+
+export const FetchMainVideoList = async () => {
+  const url =
+    process.env.NEXT_PUBLIC_API_KEY +
+    `/v1/api/video?size=3&keyword=&page=0&isOfficial=false`;
+  const res = await fetch(url);
+  return res.json();
 };

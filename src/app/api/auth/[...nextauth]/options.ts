@@ -4,7 +4,7 @@ import process from "process";
 import jwt from "jsonwebtoken";
 import { signOut } from "next-auth/react";
 import GoogleProvider from "next-auth/providers/google";
-import NaverProvider from "next-auth/providers/naver";
+import KakaoProvider from "next-auth/providers/kakao";
 import {
   refreshToken,
   socialLogin,
@@ -13,11 +13,11 @@ import {
 
 export const nextAuthOptions: NextAuthOptions = {
   pages: {
-    signIn: "/login",
+    signIn: "/login/social",
   },
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24 * 3,
+    maxAge: 60 * 60 * 24 * 4,
   },
   providers: [
     GoogleProvider({
@@ -25,15 +25,26 @@ export const nextAuthOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
       authorization: {
         params: {
-          prompt: "consent",
-          access_type: "offline",
+          // prompt: "consent",
+          // access_type: "offline",
           response_type: "code",
         },
       },
     }),
-    NaverProvider({
-      clientId: process.env.NAVER_CLIENT_ID || "",
-      clientSecret: process.env.NAVER_CLIENT_SECRET || "",
+    // NaverProvider({
+    //   clientId: process.env.NAVER_CLIENT_ID || "",
+    //   clientSecret: process.env.NAVER_CLIENT_SECRET || "",
+    //   authorization: {
+    //     params: {
+    //       prompt: "consent",
+    //       access_type: "offline",
+    //       response_type: "code",
+    //     },
+    //   },
+    // }),
+    KakaoProvider({
+      clientId: process.env.KAKAO_CLIENT_ID || "",
+      clientSecret: process.env.KAKAO_CLIENT_SECRET || "",
       authorization: {
         params: {
           prompt: "consent",
@@ -55,7 +66,7 @@ export const nextAuthOptions: NextAuthOptions = {
           password: credentials?.password,
         };
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_KEY}/v1/api/sign/login-cookie`,
+          `${process.env.NEXT_PUBLIC_API_KEY}/v1/api/auth/login`,
           {
             method: "POST",
             body: JSON.stringify(request),
@@ -92,46 +103,60 @@ export const nextAuthOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log("signIn", user, account, profile, email, credentials);
-
       if (
-        (account?.provider === "google" || account?.provider === "naver") &&
-        user?.email &&
+        (account?.provider === "google" ||
+          account?.provider === "naver" ||
+          account?.provider === "kakao") &&
         account
       ) {
-        const data = await socialLogin(account.providerAccountId, user.email);
+        // @ts-ignore
+        const data = await socialLogin(account.providerAccountId, user?.email);
         account.access_token = data.accessToken;
         account.refresh_token = data.refreshToken;
-        console.log("loginres: ", data);
         if (data.status === 200) {
           return true;
         } else if (data.status === 404) {
           if (account.provider === "google" && user?.name) {
             const data = await socialSignUp(
               account.providerAccountId,
+              // @ts-ignore
               user.email,
               user.name,
               null,
             );
             account.access_token = data.accessToken;
             account.refresh_token = data.refreshToken;
-            console.log("googleres: ", data);
             return true;
           }
-          if (account?.provider === "naver" && profile) {
+          if (account.provider === "kakao" && profile) {
+            // @ts-ignore
             const data = await socialSignUp(
-              account.providerAccountId,
-              null,
               // @ts-ignore
-              profile.response.name,
+              profile.id,
               // @ts-ignore
-              profile.response.mobile,
+              profile.kakao_account.email,
+              // @ts-ignore
+              profile.kakao_account?.name,
+              // @ts-ignore
+              "0" + profile.kakao_account.phone_number.substring(4),
             );
             account.access_token = data.accessToken;
             account.refresh_token = data.refreshToken;
-            console.log("naverres: ", data);
             return true;
           }
+          // if (account?.provider === "naver" && profile) {
+          //   const data = await socialSignUp(
+          //     account.providerAccountId,
+          //     null,
+          //     // @ts-ignore
+          //     profile.response.name,
+          //     // @ts-ignore
+          //     profile.response.mobile,
+          //   );
+          //   account.access_token = data.accessToken;
+          //   account.refresh_token = data.refreshToken;
+          //   return true;
+          // }
         } else if (data.status === 409) {
           console.log("res: ", data);
           return `/sign-up/duplicate?id=${account.providerAccountId}&email=${user.email}`;
@@ -145,10 +170,10 @@ export const nextAuthOptions: NextAuthOptions = {
     },
 
     async jwt({ token, user, trigger, account, profile }) {
-      console.log("jwt", account);
-
       if (
-        (account?.provider === "google" || account?.provider === "naver") &&
+        (account?.provider === "google" ||
+          account?.provider === "naver" ||
+          account?.provider === "kakao") &&
         account.access_token &&
         account.refresh_token
       ) {
@@ -180,7 +205,7 @@ export const nextAuthOptions: NextAuthOptions = {
 
       // 토큰 만료 체크
       const now = Math.floor(Date.now() / 1000);
-      if (token.accessTokenExpires > now) {
+      if (token.accessTokenExpires > now - 300) {
         return token;
       }
 
@@ -197,7 +222,7 @@ export const nextAuthOptions: NextAuthOptions = {
         token.iat = decodedToken.iat;
         return token;
       } catch (error) {
-        await signOut({ callbackUrl: "/login" });
+        await signOut({ callbackUrl: "/login/social" });
         return {
           ...token,
           error: "RefreshAccessTokenError",
@@ -221,18 +246,20 @@ export const nextAuthOptions: NextAuthOptions = {
           message.token.refreshToken,
         );
         const res = await fetch(
-          process.env.NEXT_PUBLIC_API_KEY + "/v1/api/sign/logout-cookie",
+          process.env.NEXT_PUBLIC_API_KEY + "/v1/api/auth/logout",
           {
             method: "POST",
             headers: {
-              Authorization: data.data.AccessToken,
+              Authorization: `Bearer ${data.data.accessToken}`,
             },
             credentials: "include",
             body: "",
           },
         );
         return res.json();
-      } catch (error) {}
+      } catch (error) {
+        return error;
+      }
     },
   },
   debug: process.env.NODE_ENV === "development",

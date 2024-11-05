@@ -1,7 +1,7 @@
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { getFileType } from "@/types/CommonType";
 import { Api } from "@/services/axios/Api";
-import { getSession } from "next-auth/react";
+import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetGalleryList = async ({
   pageParam,
@@ -34,14 +34,13 @@ export const FetchAddGallery = async (
   files: getFileType[],
   isOfficial: boolean,
 ) => {
-  const session = await getSession();
   const request: { title: string; imgs: getFileType[] } = {
     title: title,
     imgs: files,
   };
   return Api.post(`/v1/api/gallery/register?official=${isOfficial}`, request, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   }).then((res) => {
     if (res.status === 200) {
@@ -53,10 +52,9 @@ export const FetchAddGallery = async (
 };
 
 export const FetchDeleteGallery = async (id: string) => {
-  const session = await getSession();
   return Api.delete(`/v1/api/gallery/${id}`, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {
@@ -85,10 +83,9 @@ export const FetchUpdateGallery = async (
     title: title,
     imgs: files,
   };
-  const session = await getSession();
   return Api.put(`/v1/api/gallery/${id}?official=${isOfficial}`, request, {
     headers: {
-      Authorization: session?.accessToken,
+      Authorization: await getBearerToken(),
     },
   })
     .then((res) => {

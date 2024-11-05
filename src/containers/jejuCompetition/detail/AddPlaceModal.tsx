@@ -41,12 +41,12 @@ const AddPlaceModal = ({
       });
   };
 
-  const registPlace = (): void => {
+  const registPlace = async () => {
     if (placeName === "") {
-      confirmAlert("error", "장소명을 입력해주세요.");
+      await confirmAlert("error", "장소명을 입력해주세요.");
       return;
     } else if (address === "") {
-      confirmAlert("error", "주소를 검색해주세요.");
+      await confirmAlert("error", "주소를 검색해주세요.");
       return;
     }
     let place: placeType = {
@@ -71,11 +71,11 @@ const AddPlaceModal = ({
       style={customModalStyles}
       shouldCloseOnOverlayClick={true}
     >
-      <div className={"flex flex-col items-center "}>
+      <div className={"flex flex-col items-center w-full"}>
         <div
           className={
-            "text-[#EEEEEE] bg-[rgba(0,0,0,0.8)] flex justify-end items-center px-[20px] " +
-            "h-[30px] sm:h-[40px] md:h-[50px] w-full"
+            "text-[#EEEEEE] bg-[rgba(0,0,0,0.8)] flex justify-end items-center px-5 " +
+            "h-10 sm:h-12 md:h-14 w-full"
           }
         >
           <IoClose
@@ -87,15 +87,16 @@ const AddPlaceModal = ({
         </div>
         <div
           className={
-            "flex justify-center items-center rounded-[8px] shadow-xl bg-black text-white font-bold  my-[10px] " +
-            "w-[280px] sm:w-[400px] md:w-[800px] " +
-            "text-[12px] sm:text-[14px] md:text-[18px] " +
-            "h-[30px] sm:h-[40px] md:h-[50px] "
+            "flex justify-center items-center rounded-lg shadow-xl " +
+            "bg-black text-white font-bold my-5 " +
+            "text-sm sm:text-base md:text-lg " +
+            "w-[90%] md:w-[800px] " +
+            "h-10 sm:h-12 md:h-14 "
           }
         >
           {address === "" ? <p>주소 검색</p> : <p>{address}</p>}
         </div>
-        <div className={"w-[280px] sm:w-[400px] md:w-[800px]"}>
+        <div className={"w-[90%] md:w-[800px]"}>
           <DaumPostcode
             onComplete={(data: Address): void => {
               const address: string =
@@ -110,21 +111,24 @@ const AddPlaceModal = ({
         </div>
         <div
           className={
-            "flex justify-center items-center rounded-[8px] shadow-xl bg-black text-white font-bold  my-[10px] " +
-            "w-[280px] sm:w-[400px] md:w-[800px] " +
-            "text-[12px] sm:text-[14px] md:text-[18px] " +
-            "h-[30px] sm:h-[40px] md:h-[50px] "
+            "flex justify-center items-center rounded-lg shadow-xl " +
+            "bg-black text-white font-bold my-5 " +
+            "w-[90%] md:w-[800px] " +
+            "text-sm sm:text-base md:text-lg " +
+            "h-10 sm:h-12 md:h-14 "
           }
         >
           <p>장소명</p>
         </div>
-        <PostInput
-          type={"text"}
-          placeHolder={"예) 다목적체육관"}
-          data={placeName}
-          setData={setPlaceName}
-        />
-        <div className={"mt-[20px]"}>
+        <div className={"w-[90%] md:w-[800px]"}>
+          <PostInput
+            type={"text"}
+            placeHolder={"예) 다목적체육관"}
+            data={placeName}
+            setData={setPlaceName}
+          />
+        </div>
+        <div className={"mt-5 w-[90%] md:w-[800px]"}>
           <AddBtn handler={registPlace} />
         </div>
       </div>

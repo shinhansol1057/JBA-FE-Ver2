@@ -21,10 +21,10 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
   const { data: session, status: sessionStatus } = useSession()
 
   const logoutHandler = async () => {
-    setModalOpen(false)
-    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" })
+    setModalOpen(false);
+    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" });
     // router.push("/login");
-  }
+  };
 
   return (
     <div className={" w-full pl-[70px] text-base sm:text-xl "}>

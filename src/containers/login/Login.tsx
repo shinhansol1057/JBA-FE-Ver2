@@ -80,22 +80,16 @@ const Login = () => {
   return (
     <div
       className={
-        "flex flex-col items-center w-full h-[100vh] -mt-[30px] sm:-mt-[40px] md:-mt-[50px] bg-[#F5F5F5]"
+        "flex flex-col items-center w-full h-full -mt-8 sm:-mt-10 md:-mt-12 bg-[#F5F5F5]"
       }
     >
-      <h1
-        className={
-          "mt-[80px] sm:mt-[90px] md:mt-[100px] mb-[15px] text-[16px] font-bold"
-        }
-      >
-        로그인
-      </h1>
+      <h1 className={"mt-20 mb-4 text-2xl font-bold"}>로그인</h1>
       <form
         noValidate
-        className={"w-[280px] text-[12px] flex flex-col"}
+        className={"w-[90%] md:w-[400px] flex flex-col text-[#4B4B4B]"}
         onSubmit={loginHandler}
       >
-        <label className={"ml-[20px] leading-[16px]"} htmlFor={"email"}>
+        <label className={"ml-5"} htmlFor={"email"}>
           이메일
         </label>
         <LoginInputBox
@@ -105,9 +99,9 @@ const Login = () => {
           setValue={setEmail}
         />
         <div>
-          <p className={"ml-[20px] mb-[10px] text-[#DF1A1A]"}>{emailMessage}</p>
+          <p className={"ml-5 mb-2.5 text-[#DF1A1A]"}>{emailMessage}</p>
         </div>
-        <label className={"ml-[20px] leading-[16px]"} htmlFor={"password"}>
+        <label className={"ml-5"} htmlFor={"password"}>
           비밀번호
         </label>
         <LoginInputBox
@@ -116,7 +110,7 @@ const Login = () => {
           value={password}
           setValue={setPassword}
         />
-        <div className={"mt-[20px] mb-[10px] pl-[20px] flex justify-between"}>
+        <div className={"mt-5 mb-2.5 pl-5 flex justify-between"}>
           <CheckBox
             isChecked={isChecked}
             setIsChecked={setIsChecked}
@@ -127,7 +121,7 @@ const Login = () => {
         <button
           type={"submit"}
           className={
-            "w-[280px] h-[40px] rounded-[50px] bg-black text-[14px] font-bold text-[white]"
+            "w-full h-12 rounded-2xl bg-black text-xl font-bold text-white mt-2.5"
           }
         >
           로그인
@@ -136,13 +130,13 @@ const Login = () => {
       <button
         onClick={() => router.push("/sign-up")}
         className={
-          "w-[280px] h-[40px] rounded-[50px] bg-white text-[14px] font-bold text-black border border-solid border-[#D9D9D9] mt-[10px]"
+          "w-[90%] md:w-[400px] h-12 rounded-2xl bg-white text-xl font-bold text-black border border-solid border-[#D9D9D9] mt-5"
         }
       >
         회원가입
       </button>
       <button
-        className={"text-[12px] text-[#8E8E8E] mt-[10px]"}
+        className={"text-base text-[#8E8E8E] mt-5"}
         onClick={() => console.log("비번찾기")}
       >
         계정 찾기 | 비밀번호 찾기

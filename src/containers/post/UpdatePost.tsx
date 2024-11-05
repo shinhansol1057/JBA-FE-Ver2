@@ -46,9 +46,9 @@ const UpdatePost = ({ id }: { id: string }) => {
     });
   };
 
-  const updateHandler = () => {
+  const updateHandler = async () => {
     const body = { title, content, postImgs, remainingFiles };
-    confirmAndCancelAlertWithLoading(
+    await confirmAndCancelAlertWithLoading(
       "question",
       "게시물을 수정하겠습니까?",
       "",
@@ -66,9 +66,12 @@ const UpdatePost = ({ id }: { id: string }) => {
   }, [data]);
 
   return (
-    <div className={"flex flex-col w-[280px] sm:w-[400px] md:w-[800px]"}>
+    <div className={"flex flex-col w-[90%] md:w-[800px]"}>
       <SubTitle title={"게시글 수정"} />
-      <Space style={{ width: "100%", marginTop: "20px" }} direction="vertical">
+      <Space
+        style={{ width: "100%", marginTop: "1.25rem" }}
+        direction="vertical"
+      >
         <div className={"flex"}>
           <Select
             allowClear
@@ -91,7 +94,7 @@ const UpdatePost = ({ id }: { id: string }) => {
           />
         </div>
       </Space>
-      <div className={"my-[20px]"}>
+      <div className={"my-5"}>
         <PostInput
           type={"text"}
           placeHolder={"제목을 입력해주세요"}
@@ -105,25 +108,24 @@ const UpdatePost = ({ id }: { id: string }) => {
         setNewCkImgUrls={setPostImgs}
       />
       <AddAttachedFileBox files={files} setFiles={setFiles} />
-      {remainingFiles?.length !== 0 ? (
+      {remainingFiles?.length !== 0 && (
         <div>
           <PostTitle title={"기존 파일"} />
           <ul
             className={
-              "flex flex-col bg-white rounded-[8px] border border-solid border-borderColor shadow-xl " +
-              "text-[10px] sm:text-[12px] md:text-[18px] " +
-              "p-[10px] md:p-[20px]"
+              "flex flex-col bg-white rounded-lg border " +
+              "border-solid border-borderColor shadow-xl " +
+              "text-sm sm:text-base md:text-lg " +
+              "p-2.5 md:p-5"
             }
           >
             {remainingFiles?.map((file: getFileWithFileIdType) => {
               return (
                 <li key={file.fileId}>
-                  <div className={"flex"}>
-                    <p className={"mr-[5px]"}>{file.fileName}</p>
+                  <div className={"flex items-center"}>
+                    <p className={"mr-1.5"}>{file.fileName}</p>
                     <IoClose
-                      className={
-                        "text-[12px] sm:text-[16px] md:text-[20px] cursor-pointer"
-                      }
+                      className={"text-lg cursor-pointer"}
                       onClick={() => deleteRemainingFile(file.fileUrl)}
                     />
                   </div>
@@ -132,10 +134,8 @@ const UpdatePost = ({ id }: { id: string }) => {
             })}
           </ul>
         </div>
-      ) : (
-        ""
       )}
-      <div className={"my-[20px]"}>
+      <div className={"my-5 grid grid-cols-2 gap-2.5 md:gap-5"}>
         <CancelBtn handler={() => router.back()} />
         <AddBtn handler={() => updateHandler()} />
       </div>

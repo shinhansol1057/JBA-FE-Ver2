@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   FetchAddResult,
   FetchGetCompetitionDetail,
-  FetchGetCompetitionResult,
+  FetchGetCompetitionScheduleAndResult,
 } from "@/services/CompetitionApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { getDateAndTimeToString } from "@/utils/FormDate";
@@ -40,7 +40,7 @@ const AddResult = ({ id }: { id: string }) => {
 
   const { data: scheduleData } = useQuery({
     queryKey: ["getSchedule", id],
-    queryFn: () => FetchGetCompetitionResult(id),
+    queryFn: () => FetchGetCompetitionScheduleAndResult(id),
     select: (result) => result?.data.data,
     gcTime: 1000 * 60 * 10,
     refetchOnMount: false,
@@ -50,8 +50,8 @@ const AddResult = ({ id }: { id: string }) => {
     refetchIntervalInBackground: false,
   });
 
-  const submitHandler = () => {
-    confirmAndCancelAlertWithLoading(
+  const submitHandler = async () => {
+    await confirmAndCancelAlertWithLoading(
       "question",
       "대회결과 등록",
       "대회결과를 등록하시겠습니까?",
@@ -93,11 +93,9 @@ const AddResult = ({ id }: { id: string }) => {
     }
   }, [scheduleData]);
   return (
-    <div
-      className={"flex flex-col mt-[20px] w-[280px] sm:w-[400px] md:w-[800px]"}
-    >
+    <div className={"flex flex-col mt-5 w-[90%] md:w-[800px]"}>
       <SubTitle title={"대회결과 등록"} />
-      <div className={"my-[20px]"}>
+      <div className={"my-5"}>
         <PostTitle title={detailData?.title} />
       </div>
       {detailData?.divisions.map((division: string, i: number) => {
@@ -111,7 +109,7 @@ const AddResult = ({ id }: { id: string }) => {
           />
         );
       })}
-      <div className={"flex mb-[50px]"}>
+      <div className={"grid grid-cols-2 gap-2.5 md:gap-5 mb-12"}>
         <CancelBtn handler={() => router.back()} />
         <AddBtn handler={() => submitHandler()} />
       </div>
