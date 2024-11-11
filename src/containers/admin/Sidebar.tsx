@@ -1,13 +1,13 @@
 "use client"
 
 import { cn } from "@/libs/utils/cn"
+import { FetchGetUserInfo } from "@/services/user/UserApi"
 import { useSidebarStore } from "@/states/SidebarStore"
+import { User } from "@/types/Admin"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
-type Props = {
-  username: string
-}
 
 const menuItems = [
   { href: "/admin/user", label: "회원 관리" },
@@ -16,15 +16,25 @@ const menuItems = [
   { href: "/admin/media", label: "미디어 관리" },
 ]
 
-export const Sidebar = ({ username }: Props) => {
+export const Sidebar = () => {
   const isOpen = useSidebarStore((state) => state.isOpen)
   const toggle = useSidebarStore((state) => state.toggle)
   const router = useRouter()
+  const [userData, setUserData] = useState<User | null>(null);
 
   const handleNavigation = (href: string) => {
     router.push(href)
     toggle()
   }
+ 
+
+  useEffect(() => {
+    (async () => {
+      const res = await FetchGetUserInfo();
+      setUserData(res.data.data);
+      console.log(res.data)
+    })()
+  }, []);
 
   return (
     <>
@@ -39,7 +49,7 @@ export const Sidebar = ({ username }: Props) => {
         )}
       >
         <div className='p-4'>
-          <h2 className='text-2xl font-semibold'>{username} 님</h2>
+          <h2 className='text-2xl font-semibold'>{userData?.name} 님</h2>
           <hr className='my-8' />
           <div className='space-y-2'>
             {menuItems.map((item, index) => (

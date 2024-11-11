@@ -1,3 +1,4 @@
+'use client'
 import ShortCutCard from "@/containers/main/ShortCutCard";
 
 const ShortCuts = () => {

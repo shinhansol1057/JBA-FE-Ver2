@@ -2,25 +2,14 @@ import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { NormalApi } from "@/services/axios/NormalApi";
 import { getSession, signOut } from "next-auth/react";
+import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetUserInfo = async () => {
-  const session = await getSession();
-  return NormalApi.get("/v1/api/user/get/user-info", {
+  return NormalApi.get("/v1/api/account", {
     headers: {
       Authorization: await getBearerToken(),
     },
   })
-}
-
-export const FetchServerGetUserInfo = async () => {
-  const session = await getServerSession(nextAuthOptions)
-  const res = await NormalApi.get("/v1/api/user/get/user-info", {
-    headers: {
-      Authorization: session?.accessToken,
-    },
-  })
-  const userData = res.data.data as UserData
-  return userData
 }
 
 export const FetchUpdateUserInfo = async (request: {
