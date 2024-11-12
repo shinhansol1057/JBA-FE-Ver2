@@ -54,7 +54,7 @@ export const FetchSendCertificationEmail = async (
   setCertificating: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const emailRequest: { email: string } = { email };
-  return NormalApi.get(`v1/api/mail/sign-up?email=${email}`)
+  return NormalApi.post(`v1/api/mail/sign-up?email=${email}`)
     .then((res) => {
       if (res.status === 200) {
         confirmAlert(
