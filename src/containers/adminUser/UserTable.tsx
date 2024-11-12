@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { use, useEffect, useState } from "react"
 import { Table, Button } from "antd"
 import { DownloadOutlined } from "@ant-design/icons"
 import UserDetailModal from "./UserDetailModal"
@@ -8,20 +8,31 @@ import UserDetailModal from "./UserDetailModal"
 import type { ColumnType } from "antd/es/table"
 import { useUserTable } from "@/hooks/useUserTable"
 import NoData from "./NoData"
+import { getUsers, GetUsersParams } from "@/services/admin/user"
 
 type Props = {
-  userData: SearchUserData[]
   pageSize: number
+  searchParams:GetUsersParams 
 }
 
-const UserTable = ({ userData, pageSize }: Props) => {
+const UserTable = ({  pageSize, searchParams }: Props) => {
+  const [data, setData] = useState<SearchUserData[]>([])
+
+  useEffect(() => {
+    (async() => {
+      const users = await getUsers(searchParams)
+      setData(users)
+    })()
+  }, [searchParams])
+
+
   const {
     modalVisible,
     selectedUser,
     handleExcelDownload,
     handleRowClick,
     setModalVisible,
-  } = useUserTable(userData, pageSize)
+  } = useUserTable(data, pageSize)
 
   const columns: ColumnType<SearchUserData>[] = [
     { title: "이름", dataIndex: "name", key: "name" },
@@ -79,15 +90,15 @@ const UserTable = ({ userData, pageSize }: Props) => {
   return (
     <>
       <div className='flex justify-between items-center mb-4'>
-        <span>총 {userData?.length ?? 0}건</span>
+        <span>총 {data?.length ?? 0}건</span>
         <Button icon={<DownloadOutlined />} onClick={handleExcelDownload}>
           엑셀 다운로드
         </Button>
       </div>
-      {userData && userData.length > 0 ? (
+      {data && data.length > 0 ? (
         <Table
           columns={columns}
-          dataSource={userData.map((user) => ({ ...user, key: user.userId }))}
+          dataSource={data.map((user) => ({ ...user, key: user.userId }))}
           pagination={{
             pageSize: pageSize,
             position: ["bottomCenter"],
