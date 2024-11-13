@@ -9,7 +9,7 @@ export function competitionStatusCalculator(
   } else if (new Date(startDate) <= now && new Date(endDate) >= now) {
     status = "진행중";
   } else {
-    status = "완료";
+    status = "종료";
   }
 
   return status;
