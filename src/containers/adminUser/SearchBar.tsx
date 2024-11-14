@@ -2,8 +2,9 @@
 
 import React, { useState } from "react"
 import { Input, Select, DatePicker, Button } from "antd"
-import { SearchOutlined } from "@ant-design/icons"
+import { SearchOutlined, UndoOutlined } from "@ant-design/icons"
 import { useRouter } from "next/navigation"
+import dayjs from "dayjs"
 
 const { RangePicker } = DatePicker
 const { Option } = Select
@@ -30,13 +31,21 @@ const SearchBar = () => {
     router.push(`/admin/user?${params.toString()}`)
   }
 
+  const handleReset = () => {
+    setSearchType("이름")
+    setSearchText("")
+    setPermissionsStr("")
+    setDateRange(null)
+    setPageSize(20)
+  }
+
   const selectStyle = { width: 200, marginBottom: "10px" }
 
   return (
     <div className='bg-white p-4 rounded-lg shadow-md mb-6'>
       <div className='flex flex-col md:flex-row md:items-center md:space-x-4 mb-4'>
         <Select
-          defaultValue='이름'
+          value={searchType}
           style={selectStyle}
           onChange={(value: string) => setSearchType(value)}
           popupMatchSelectWidth={100}
@@ -45,6 +54,7 @@ const SearchBar = () => {
           <Option value='id'>아이디</Option>
         </Select>
         <Input
+          value={searchText}
           placeholder='검색어를 입력하세요'
           style={{ width: "100%", marginBottom: "10px" }}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -52,7 +62,7 @@ const SearchBar = () => {
           }
         />
         <Select
-          defaultValue=''
+          value={permissionsStr}
           style={selectStyle}
           onChange={(value: string) => setPermissionsStr(value)}
           popupMatchSelectWidth={100}
@@ -63,13 +73,14 @@ const SearchBar = () => {
           <Option value='master'>마스터</Option>
         </Select>
         <RangePicker
+          value={dateRange ? [dayjs(dateRange[0]), dayjs(dateRange[1])] : null}
           style={{ width: "100%", marginBottom: "10px" }}
           onChange={(_, dateStrings) =>
             setDateRange(dateStrings as [string, string])
           }
         />
         <Select
-          defaultValue={20}
+          value={pageSize}
           style={selectStyle}
           onChange={(value: number) => setPageSize(value)}
           popupMatchSelectWidth={150}
@@ -80,7 +91,16 @@ const SearchBar = () => {
         </Select>
       </div>
       <div className='flex justify-end space-x-2'>
-        <Button icon={<SearchOutlined />} onClick={handleSearch}>
+        <Button 
+          icon={<UndoOutlined />} 
+          onClick={handleReset}
+        >
+          초기화
+        </Button>
+        <Button 
+          icon={<SearchOutlined />} 
+          onClick={handleSearch}
+        >
           조회
         </Button>
       </div>
