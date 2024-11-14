@@ -1,10 +1,11 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Table, Tag, Button } from "antd"
 import { DownloadOutlined } from "@ant-design/icons"
 import type { ColumnType } from "antd/es/table"
 import * as XLSX from "xlsx"
+import { getCompetitions, GetCompetitionsParams } from "@/services/admin/competition"
 
 interface Competition {
   competitionId: number
@@ -25,15 +26,35 @@ interface Competition {
 }
 
 type Props = {
-  competitionData: Competition[]
+  searchParams: GetCompetitionsParams
   pageSize: number
 }
 
-const CompetitionTable = ({ competitionData, pageSize }: Props) => {
-  console.log(competitionData)
+const CompetitionTable = ({ searchParams, pageSize }: Props) => {
+  const [data, setData] = useState<Competition[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const response = await getCompetitions(searchParams)
+        setData(response.content)
+      } catch (err) {
+        console.error("Error fetching competitions:", err)
+        setError("데이터를 불러오는 중 오류가 발생했습니다.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [searchParams])
+
   const handleExcelDownload = () => {
     const worksheet = XLSX.utils.json_to_sheet(
-      competitionData.map((comp) => ({
+      data.map((comp) => ({
         대회명: comp.competitionName,
         부문: comp.divisions.join(', '),
         상태: comp.situation,
@@ -51,94 +72,91 @@ const CompetitionTable = ({ competitionData, pageSize }: Props) => {
     XLSX.writeFile(workbook, `competition_list_${date}.xlsx`)
   }
 
-  const columns: ColumnType<Competition>[] = [
-    { 
-      title: '대회명',
-      dataIndex: 'competitionName',
-      key: 'competitionName',
-    },
-    {
-      title: '부문',
-      dataIndex: 'divisions',
-      key: 'divisions',
-      className: 'hidden sm:table-cell',
-      render: (divisions: string[]) => (
-        <div className="flex flex-wrap gap-1">
-          {divisions.map((division) => (
-            <Tag key={division} color="blue">
-              {division}
+  const CompetitionCard = ({ competition }: { competition: Competition }) => {
+    return (
+      <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div>
+            <span className="font-semibold">대회명:</span>
+            <span className="ml-2">{competition.competitionName}</span>
+          </div>
+          
+          <div>
+            <span className="font-semibold">부문:</span>
+            <div className="inline-flex flex-wrap gap-1 ml-2">
+              {competition.divisions.map((division) => (
+                <Tag key={division} color="blue">
+                  {division}
+                </Tag>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <span className="font-semibold">상태:</span>
+            <Tag 
+              className="ml-2"
+              color={
+                competition.situation === '예정' ? 'green' : 
+                competition.situation === '진행중' ? 'blue' : 'red'
+              }
+            >
+              {competition.situation}
             </Tag>
-          ))}
+          </div>
+
+          <div className="sm:col-span-2 lg:col-span-1">
+            <span className="font-semibold">기간:</span>
+            <span className="ml-2">
+              {new Date(competition.startDate).toLocaleDateString()} ~ 
+              {new Date(competition.endDate).toLocaleDateString()}
+            </span>
+          </div>
+
+          <div className="lg:col-span-1">
+            <span className="font-semibold">작성자:</span>
+            <span className="ml-2">{competition.userEmail}</span>
+          </div>
+
+          <div className="sm:col-span-2 lg:col-span-1">
+            <span className="font-semibold">관리:</span>
+            <div className="inline-flex space-x-2 ml-2">
+              <Button type="link" size="small">수정</Button>
+              <Button type="link" danger size="small">삭제</Button>
+            </div>
+          </div>
         </div>
-      ),
-    },
-    {
-      title: '상태',
-      dataIndex: 'situation',
-      key: 'situation',
-      render: (situation: string) => {
-        const color = situation === '예정' ? 'green' : 
-                     situation === '진행중' ? 'blue' : 'red'
-        return <Tag color={color}>{situation}</Tag>
-      },
-    },
-    {
-      title: '시작일',
-      dataIndex: 'startDate',
-      key: 'startDate',
-      className: 'hidden md:table-cell',
-      render: (date: string) => new Date(date).toLocaleDateString(),
-    },
-    {
-      title: '종료일',
-      dataIndex: 'endDate',
-      key: 'endDate',
-      className: 'hidden md:table-cell',
-      render: (date: string) => new Date(date).toLocaleDateString(),
-    },
-    {
-      title: '작성자',
-      dataIndex: 'userEmail',
-      key: 'userEmail',
-      className: 'hidden lg:table-cell',
-    },
-    {
-      title: '관리',
-      key: 'action',
-      render: (_, record) => (
-        <div className="space-x-2">
-          <Button type="link" size="small">수정</Button>
-          <Button type="link" danger size="small">삭제</Button>
-        </div>
-      ),
-    },
-  ]
+      </div>
+    )
+  }
+
+  if (loading) return <div>로딩 중...</div>
+  if (error) return <div>{error}</div>
 
   return (
-    <>
-      <div className='flex justify-between items-center mb-4'>
-        <span>총 {competitionData?.length ?? 0}건</span>
+    <div className="space-y-4">
+      <div className='flex justify-between items-center'>
+        <span>총 {data?.length ?? 0}건</span>
         <Button icon={<DownloadOutlined />} onClick={handleExcelDownload}>
           엑셀 다운로드
         </Button>
       </div>
-      {competitionData && competitionData.length > 0 ? (
-        <Table 
-          columns={columns}
-          dataSource={competitionData.map(comp => ({ ...comp, key: comp.competitionId }))}
-          pagination={{
-            pageSize: pageSize,
-            position: ['bottomCenter'],
-            showSizeChanger: false,
-          }}
-          className='bg-white rounded-lg shadow-md'
-        />
+
+      {data && data.length > 0 ? (
+        <div className="space-y-4">
+          {data.map(competition => (
+            <CompetitionCard 
+              key={competition.competitionId} 
+              competition={competition} 
+            />
+          ))}
+        </div>
       ) : (
         <div className="text-center py-10 bg-white rounded-lg shadow-md">
           <p className="text-gray-500">검색 결과가 없습니다.</p>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

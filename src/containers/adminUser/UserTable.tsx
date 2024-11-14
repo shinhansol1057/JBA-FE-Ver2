@@ -1,21 +1,19 @@
 "use client"
 
-import React, { use, useEffect, useState } from "react"
-import { Table, Button } from "antd"
+import React, { useEffect, useState } from "react"
+import { Button } from "antd"
 import { DownloadOutlined } from "@ant-design/icons"
 import UserDetailModal from "./UserDetailModal"
-
-import type { ColumnType } from "antd/es/table"
 import { useUserTable } from "@/hooks/useUserTable"
 import NoData from "./NoData"
 import { getUsers, GetUsersParams } from "@/services/admin/user"
 
 type Props = {
   pageSize: number
-  searchParams:GetUsersParams 
+  searchParams: GetUsersParams
 }
 
-const UserTable = ({  pageSize, searchParams }: Props) => {
+const UserTable = ({ pageSize, searchParams }: Props) => {
   const [data, setData] = useState<SearchUserData[]>([])
 
   useEffect(() => {
@@ -25,7 +23,6 @@ const UserTable = ({  pageSize, searchParams }: Props) => {
     })()
   }, [searchParams])
 
-
   const {
     modalVisible,
     selectedUser,
@@ -34,89 +31,88 @@ const UserTable = ({  pageSize, searchParams }: Props) => {
     setModalVisible,
   } = useUserTable(data, pageSize)
 
-  const columns: ColumnType<SearchUserData>[] = [
-    { title: "이름", dataIndex: "name", key: "name" },
-    {
-      title: "권한",
-      dataIndex: "permission",
-      key: "permission",
-      render: (permission: string) => (
-        <span
-          className={`px-2 py-1 rounded ${permission === "user" ? "bg-green-500" : "bg-red-500"} text-white`}
-        >
-          {permission}
-        </span>
-      ),
-    },
-    {
-      title: "최근로그인",
-      dataIndex: "loginAt",
-      key: "loginAt",
-      render: (loginAt: string) => (loginAt ? loginAt.substring(0, 16) : "-"),
-    },
-    {
-      title: "아이디",
-      dataIndex: "userId",
-      key: "userId",
-      className: "hidden sm:table-cell",
-    },
-    {
-      title: "가입일",
-      dataIndex: "createAt",
-      key: "createAt",
-      render: (createAt: string) => createAt.substring(0, 10),
-      className: "hidden sm:table-cell",
-    },
-    {
-      title: "이메일",
-      dataIndex: "email",
-      key: "email",
-      className: "hidden md:table-cell",
-    },
-    {
-      title: "휴대폰 번호",
-      dataIndex: "phoneNum",
-      key: "phoneNum",
-      className: "hidden lg:table-cell",
-    },
-    {
-      title: "회원상태",
-      dataIndex: "userStatus",
-      key: "userStatus",
-      className: "hidden lg:table-cell",
-    },
-  ]
+  const UserCard = ({ user }: { user: SearchUserData }) => {
+    return (
+      <div 
+        className="bg-white p-4 rounded-lg shadow-md mb-4 cursor-pointer hover:bg-gray-50"
+        onClick={() => handleRowClick(user)}
+      >
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div>
+            <span className="font-semibold">이름:</span>
+            <span className="ml-2">{user.name}</span>
+          </div>
+
+          <div>
+            <span className="font-semibold">권한:</span>
+            <span className={`ml-2 px-2 py-1 rounded ${
+              user.permission === "user" ? "bg-green-500" : "bg-red-500"
+            } text-white`}>
+              {user.permission}
+            </span>
+          </div>
+
+          <div>
+            <span className="font-semibold">최근로그인:</span>
+            <span className="ml-2">
+              {user.loginAt ? user.loginAt.substring(0, 16) : "-"}
+            </span>
+          </div>
+
+          <div>
+            <span className="font-semibold">아이디:</span>
+            <span className="ml-2">{user.userId}</span>
+          </div>
+
+          <div className="sm:block">
+            <span className="font-semibold">가입일:</span>
+            <span className="ml-2">{user.createAt.substring(0, 10)}</span>
+          </div>
+
+          <div className="md:block">
+            <span className="font-semibold">이메일:</span>
+            <span className="ml-2">{user.email}</span>
+          </div>
+
+          <div className="lg:block">
+            <span className="font-semibold">휴대폰:</span>
+            <span className="ml-2">{user.phoneNum}</span>
+          </div>
+
+          <div className="lg:block">
+            <span className="font-semibold">회원상태:</span>
+            <span className="ml-2">{user.userStatus}</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <>
-      <div className='flex justify-between items-center mb-4'>
+    <div className="space-y-4">
+      <div className='flex justify-between items-center'>
         <span>총 {data?.length ?? 0}건</span>
         <Button icon={<DownloadOutlined />} onClick={handleExcelDownload}>
           엑셀 다운로드
         </Button>
       </div>
+
       {data && data.length > 0 ? (
-        <Table
-          columns={columns}
-          dataSource={data.map((user) => ({ ...user, key: user.userId }))}
-          pagination={{
-            pageSize: pageSize,
-            position: ["bottomCenter"],
-          }}
-          onRow={(record) => ({
-            onClick: () => handleRowClick(record),
-          })}
-          className='bg-white rounded-lg shadow-md'
-        />
+        <div className="space-y-4">
+          {data.map(user => (
+            <UserCard key={user.userId} user={user} />
+          ))}
+        </div>
       ) : (
         <NoData message='검색 결과가 없습니다.' />
       )}
+
       <UserDetailModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         user={selectedUser}
       />
-    </>
+    </div>
   )
 }
 

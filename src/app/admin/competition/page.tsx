@@ -20,13 +20,11 @@ const Page = async ({
     situation: searchParams.situation || '전체'
   }
 
-  const competitions = await getCompetitions(params)
-
   return (
     <div className='p-4 md:p-6 bg-gray-100 min-h-screen'>
       <h1 className='text-2xl font-bold mb-6 text-gray-800'>대회 관리</h1>
       <SearchBar />
-      <CompetitionTable competitionData={competitions} pageSize={pageSize} />
+      <CompetitionTable searchParams={params} pageSize={pageSize} />
     </div>
   )
 }
