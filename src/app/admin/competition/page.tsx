@@ -1,4 +1,5 @@
 
+import ActionButtons from "@/containers/adminCompetition/ActionButtons"
 import CompetitionTable from "@/containers/adminCompetition/CompetitionTable"
 import SearchBar from "@/containers/adminCompetition/SearchBar"
 import { getCompetitions, GetCompetitionsParams } from "@/services/admin/competition"
@@ -24,6 +25,7 @@ const Page = async ({
     <div className='p-4 md:p-6 bg-gray-100 min-h-screen'>
       <h1 className='text-2xl font-bold mb-6 text-gray-800'>대회 관리</h1>
       <SearchBar />
+      <ActionButtons/>
       <CompetitionTable searchParams={params} pageSize={pageSize} />
     </div>
   )
