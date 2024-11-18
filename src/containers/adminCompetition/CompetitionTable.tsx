@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { Table, Tag, Button } from "antd"
-import { DownloadOutlined } from "@ant-design/icons"
+import { Table, Tag, Button, Modal, message } from "antd"
+import { DownloadOutlined, EditOutlined, DeleteOutlined, TrophyOutlined, TeamOutlined, FileOutlined, EyeOutlined } from "@ant-design/icons"
 import type { ColumnType } from "antd/es/table"
 import * as XLSX from "xlsx"
 import { getCompetitions, GetCompetitionsParams } from "@/services/admin/competition"
+import { useRouter } from "next/navigation"
 
 interface Competition {
   competitionId: number
@@ -34,6 +35,7 @@ const CompetitionTable = ({ searchParams, pageSize }: Props) => {
   const [data, setData] = useState<Competition[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,14 +119,79 @@ const CompetitionTable = ({ searchParams, pageSize }: Props) => {
             <span className="font-semibold">작성자:</span>
             <span className="ml-2">{competition.userEmail}</span>
           </div>
-
           <div className="sm:col-span-2 lg:col-span-1">
-            <span className="font-semibold">관리:</span>
-            <div className="inline-flex space-x-2 ml-2">
-              <Button type="link" size="small">수정</Button>
-              <Button type="link" danger size="small">삭제</Button>
-            </div>
-          </div>
+          <div className="col-span-full">
+  <div className="col-span-full">
+  <span className="font-semibold">관리:</span>
+  <div className="flex flex-wrap items-center gap-1 mt-2">
+    <Button 
+      type="link" 
+      size="small"
+      icon={<EyeOutlined />}
+      onClick={() => router.push(`/admin/competition/view/${competition.competitionId}`)}
+    >
+      조회
+    </Button>
+    <Button 
+      type="link" 
+      size="small"
+      icon={<EditOutlined />}
+      onClick={() => router.push(`/admin/competition/edit/${competition.competitionId}`)}
+    >
+      수정
+    </Button>
+    <Button 
+      type="link" 
+      size="small"
+      icon={<DeleteOutlined />}
+      onClick={() => {
+        Modal.confirm({
+          title: '대회 삭제',
+          content: '정말로 이 대회를 삭제하시겠습니까?',
+          okText: '삭제',
+          cancelText: '취소',
+          onOk: async () => {
+            try {
+              // API 호출 로직 추가 필요
+              message.success('대회가 삭제되었습니다.');
+            } catch (error) {
+              message.error('대회 삭제 중 오류가 발생했습니다.');
+            }
+          }
+        });
+      }}
+      danger
+    >
+      삭제
+    </Button>
+    <Button 
+      type="link" 
+      size="small"
+      icon={<TrophyOutlined />}
+      onClick={() => router.push(`/admin/competition/result/${competition.competitionId}`)}
+    >
+      대회결과 등록
+    </Button>
+    <Button 
+      type="link" 
+      size="small"
+      icon={<TeamOutlined />}
+      onClick={() => router.push(`/admin/competition/participants/${competition.competitionId}`)}
+    >
+      참가자 관리
+    </Button>
+    <Button 
+      type="link" 
+      size="small"
+      icon={<FileOutlined />}
+      onClick={() => router.push(`/admin/competition/files/${competition.competitionId}`)}
+    >
+      첨부파일 관리
+    </Button>
+  </div>
+</div>
+</div>
+</div>
         </div>
       </div>
     )
