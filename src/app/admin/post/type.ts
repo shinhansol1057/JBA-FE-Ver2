@@ -1,11 +1,4 @@
-export interface User {
-  email: string;
-  isSocial: boolean; 
-  name: string;
-  phoneNum: string;
-  role: "마스터" | "일반" | string;
-}
-
+// types/post.ts
 export interface Post {
   postId: number
   isAnnouncement: boolean
@@ -27,4 +20,13 @@ export interface PostResponse {
     totalPosts: number
     posts: Post[]
   }
+}
+
+export interface PostSearchParams {
+  page?: number
+  size?: number
+  searchType?: string
+  searchKeyword?: string
+  startDate?: string
+  endDate?: string
 }
