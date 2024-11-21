@@ -25,7 +25,7 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
         }
       >
         <div className={"w-[50%]"}>
-          <CompetitionLabel content={"결승"} color={""} bold={true} />
+          <CompetitionLabel content={data.floor} color={""} bold={true} />
         </div>
         <div className={"w-[50%] flex flex-row items-center"}>
           <CompetitionLabel
