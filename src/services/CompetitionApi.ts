@@ -73,7 +73,7 @@ export const FetchAddCompetitionInfo = async (
     formData.append("requestFiles", files[i]);
   }
 
-  return Api.post("/v1/api/competition", formData, {
+  return Api.post("/v1/api/admin/competition", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: await getBearerToken(),
@@ -100,7 +100,7 @@ export const FetchAddCompetitionInfo = async (
 };
 
 export const FetchDeleteCompetitionInfo = async (id: string) => {
-  return Api.delete(`/v1/api/competition/${id}`, {
+  return Api.delete(`/v1/api/admin/competition/${id}`, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -135,7 +135,7 @@ export const FetchUpdateCompetitionInfo = async (
     formData.append("requestFiles", files[i]);
   }
 
-  return Api.put(`/v1/api/competition/${id}`, formData, {
+  return Api.post(`/v1/api/admin/competition/${id}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: await getBearerToken(),
@@ -186,7 +186,7 @@ export const FetchAddSchedule = async (
   const request: { request: addCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
-  return Api.post(`/v1/api/competition/${id}/schedule`, request, {
+  return Api.post(`/v1/api/admin/competition/${id}/schedule`, request, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -240,7 +240,7 @@ export const FetchUpdateSchedule = async (
   const request: { request: addCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
-  return Api.put(`/v1/api/competition/${id}/schedule`, request, {
+  return Api.put(`/v1/api/admin/competition/${id}/schedule`, request, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -288,7 +288,7 @@ export const FetchUpdateSchedule = async (
 };
 
 export const FetchDeleteSchedule = async (id: string) => {
-  return Api.delete(`/v1/api/competition/${id}/schedule`, {
+  return Api.delete(`/v1/api/admin/competition/${id}/schedule`, {
     headers: {
       Authorization: await getBearerToken(),
     },
@@ -311,7 +311,7 @@ export const FetchAddResult = async (
   const request: { requests: addCompetitionResultType[] } = {
     requests: requests,
   };
-  return Api.post(`/v1/api/competition/post/result/${id}`, request, {
+  return Api.post(`/v1/api/admin/competition/${id}/result`, request, {
     headers: {
       Authorization: await getBearerToken(),
     },
