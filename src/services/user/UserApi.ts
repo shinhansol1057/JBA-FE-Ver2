@@ -55,7 +55,6 @@ export const FetchUpdatePassword = async (
     },
   })
     .then((res) => {
-      console.log("res: ", res);
       if (res.status === 200) {
         confirmAlert(
           "success",
@@ -70,7 +69,6 @@ export const FetchUpdatePassword = async (
       }
     })
     .catch((err) => {
-      console.log(err);
       const message = err.response.data.detailMessage;
       if (message === "비어 있을 수 없습니다")
         confirmAlert("warning", "빈칸을 모두 채워주세요.");

@@ -9,7 +9,6 @@ type Props = {
   data: getGalleryDetailType;
 };
 const GalleryDetailCard = ({ data }: Props) => {
-  console.log(data);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   return (
     <div

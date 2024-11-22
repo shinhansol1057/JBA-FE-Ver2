@@ -6,6 +6,7 @@ import { useCompetitionStore } from "@/states/CompetitionStore";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { logout } from "@/services/user/LoginApi";
 
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
@@ -19,10 +20,12 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
     router.push("/login/social");
   };
   const { data: session, status: sessionStatus } = useSession();
-
   const logoutHandler = async () => {
     setModalOpen(false);
-    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" });
+    await logout();
+    await signOut({
+      redirectTo: process.env.NEXT_PUBLIC_API_KEY + "/login/social",
+    });
   };
 
   return (
