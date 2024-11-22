@@ -1,9 +1,9 @@
-import { NormalApi } from "@/services/axios/NormalApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { signUpData } from "@/constants/sighUp";
+import { Api } from "@/services/axios/Api";
 
 export const FetchSignUp = async (data: signUpData) => {
-  return NormalApi.post("v1/api/auth/sign-up", data)
+  return Api.post("v1/api/auth/sign-up", data)
     .then((res) => {
       if (res.status === 200) {
         confirmAlert(
@@ -53,62 +53,42 @@ export const FetchSendCertificationEmail = async (
   email: string,
   setCertificating: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
-  const emailRequest: { email: string } = { email };
-  return NormalApi.get(`v1/api/mail/sign-up?email=${email}`)
-    .then((res) => {
-      if (res.status === 200) {
-        confirmAlert(
-          "success",
-          "인증번호 발송 완료",
-          "인증번호 확인 부탁드립니다.",
-        ).then((res) => {
-          if (res.isConfirmed) setCertificating(true);
-        });
-        NormalApi.post("v1/api/mail/sign-up-send-mail", emailRequest).catch(
-          (err) => {
-            const message = err.response.data.detailMessage;
-            if (message === "이메일을 입력해주세요.")
-              confirmAlert("warning", "이메일을 입력해주세요.");
-            else if (message === "이메일 형식을 확인해주세요.")
-              confirmAlert("warning", "이메일 형식을 확인해주세요.");
-            else if (message === "이메일 형식을 확인해주세요.")
-              confirmAlert(
-                "warning",
-                "이미 가입된 이메일입니다.",
-                err.response.data.request,
-              );
-          },
-        );
-      }
-    })
-    .catch((err) => {
-      if (err.response.status === 409)
-        confirmAlert("warning", "이미 가입된 이메일입니다.");
-    });
+  setCertificating(true);
+  await confirmAlert(
+    "success",
+    "인증번호 발송 완료",
+    "인증번호 확인 부탁드립니다.",
+  );
+  return Api.post("v1/api/mail/sign-up", {
+    email,
+  }).catch((err) => {
+    const message = err.response.data.detailMessage;
+    if (message === "이메일을 입력해주세요.")
+      confirmAlert("warning", "이메일을 입력해주세요.");
+    else if (message === "이메일 형식을 확인해주세요.")
+      confirmAlert("warning", "이메일 형식을 확인해주세요.");
+    else if (message === "이메일 형식을 확인해주세요.")
+      confirmAlert(
+        "warning",
+        "이미 가입된 이메일입니다.",
+        err.response.data.request,
+      );
+  });
 };
 
 export const FetchCheckCertificationNum = async (
   email: string,
-  num: string,
+  authNum: string,
   setCertificating: React.Dispatch<React.SetStateAction<boolean>>,
   setIsCertificate: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
-  const emailCheckRequest: { email: string; authNum: string } = {
-    email: email,
-    authNum: num,
-  };
-  return NormalApi.post("/v1/api/mail/verify", emailCheckRequest)
+  return Api.post("/v1/api/mail/verify", { email, authNum })
     .then((res) => {
-      confirmAlert(
-        "success",
-        "인증 완료",
-        "인증번호 확인이 완료되었습니다.",
-      ).then((res) => {
-        if (res.isConfirmed) {
-          setCertificating(false);
-          setIsCertificate(true);
-        }
-      });
+      if (res.status === 200) {
+        setCertificating(false);
+        setIsCertificate(true);
+        confirmAlert("success", "인증 완료", "인증번호 확인이 완료되었습니다.");
+      }
     })
     .catch((err) => {
       const message = err.response.data.detailMessage;

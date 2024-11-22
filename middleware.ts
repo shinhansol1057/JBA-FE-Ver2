@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest, response: NextResponse) {
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-pathname", request.nextUrl.pathname);
-
   const session = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
@@ -36,15 +33,14 @@ export async function middleware(request: NextRequest, response: NextResponse) {
       request.nextUrl.pathname === "/login/social") &&
     session
   ) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.searchParams.set("callbackUrl", request.nextUrl.pathname);
     // 로그인 페이지로 가는데 로그인이 되어있으면 메인페이지로 리다이렉션
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
+  return NextResponse.next();
 }
 
 export const AdminPaths = [

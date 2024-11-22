@@ -41,19 +41,19 @@ const SignUp = () => {
     }
   });
 
-  const sendEmailHandler = (
+  const sendEmailHandler = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
     setTimeLeft(300);
-    FetchSendCertificationEmail(getValues("email"), setCertificating);
+    await FetchSendCertificationEmail(getValues("email"), setCertificating);
   };
 
-  const confirmCertificationNumHandler = (
+  const confirmCertificationNumHandler = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
-    FetchCheckCertificationNum(
+    await FetchCheckCertificationNum(
       getValues("email"),
       certificationNum,
       setCertificating,
