@@ -10,14 +10,14 @@ const CompetitionStatus = () => {
         "w-full h-10 sm:h-12 md:h-14 " +
         "text-sm sm:text-base md:text-xl " +
         "mb-2.5 sm:mb-5 " +
-        "shadow-lg rounded-lg border border-solid border-[rgba(115,115,115,0.2)] box-content grid grid-cols-4 "
+        "shadow-lg rounded-lg border border-solid border-[rgba(115,115,115,0.2)] box-content grid grid-cols-4 bg-white"
       }
     >
       <button
         className={
           competitionStatusMenu === "ALL"
             ? "bg-black text-white rounded-lg"
-            : ""
+            : "rounded-lg"
         }
         onClick={() => {
           setCompetitionStatusMenu("ALL");
@@ -29,7 +29,7 @@ const CompetitionStatus = () => {
         className={
           competitionStatusMenu === "EXPECTED"
             ? "bg-black text-white rounded-lg"
-            : ""
+            : "rounded-lg"
         }
         onClick={() => {
           setCompetitionStatusMenu("EXPECTED");
@@ -41,7 +41,7 @@ const CompetitionStatus = () => {
         className={
           competitionStatusMenu === "PROCEEDING"
             ? "bg-black text-white rounded-lg"
-            : ""
+            : "rounded-lg"
         }
         onClick={() => {
           setCompetitionStatusMenu("PROCEEDING");
@@ -53,7 +53,7 @@ const CompetitionStatus = () => {
         className={
           competitionStatusMenu === "COMPLETE"
             ? "bg-black text-white rounded-lg"
-            : ""
+            : "rounded-lg"
         }
         onClick={() => {
           setCompetitionStatusMenu("COMPLETE");

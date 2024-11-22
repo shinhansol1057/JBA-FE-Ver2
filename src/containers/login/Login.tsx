@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
     setEmailMessage("");
     const res = await signIn("credentials", {
-      username: email,
+      email: email,
       password: password,
       redirect: false,
     });
