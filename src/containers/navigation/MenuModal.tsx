@@ -21,10 +21,9 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
   const { data: session, status: sessionStatus } = useSession()
 
   const logoutHandler = async () => {
-    setModalOpen(false);
-    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" });
-    // router.push("/login");
-  };
+    setModalOpen(false)
+    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" })
+  }
 
   return (
     <div className={" w-full pl-[70px] text-base sm:text-xl "}>
@@ -45,9 +44,7 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
             <p>비회원 상태</p>
           )}
         </div>
-        <p className={"mb-[5px] sm:mb-[8px] md:mb-[12px]"}>
-          JBA 방문을 환영합니다.
-        </p>
+        <p className={"mb-[5px] sm:mb-[8px] md:mb-[12px]"}>JBA 방문을 환영합니다.</p>
         {sessionStatus === "authenticated" ? (
           <div className={"flex justify-between"}>
             <Link
@@ -62,7 +59,7 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
             >
               마이페이지
             </Link>
-            <Link href='/admin'>
+            <Link href="/admin">
               <button
                 className={
                   "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
@@ -107,20 +104,10 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
       </div>
       <div className={"border-t border-[#D9D9D9] border-solid"}>
         {menuList.map(
-          (
-            menu: { title: string; item: { menu: string; link: string }[] },
-            menuIndex: number,
-          ) => {
+          (menu: { title: string; item: { menu: string; link: string }[] }, menuIndex: number) => {
             return (
-              <div
-                className={" flex flex-row pt-[10px] sm:pt-[15px] md:pt-[20px]"}
-                key={menuIndex}
-              >
-                <div
-                  className={
-                    "w-[90px] sm:w-[100px] md:w-[120px] pl-[10px] mr-[10px]"
-                  }
-                >
+              <div className={" flex flex-row pt-[10px] sm:pt-[15px] md:pt-[20px]"} key={menuIndex}>
+                <div className={"w-[90px] sm:w-[100px] md:w-[120px] pl-[10px] mr-[10px]"}>
                   <h3 className={"font-bold "}>{menu.title}</h3>
                 </div>
                 <div
@@ -131,28 +118,25 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
                       : "border-b border-solid border-[#D9D9D9]")
                   }
                 >
-                  {menu.item.map(
-                    (i: { menu: string; link: string }, itemIndex: number) => {
-                      return (
-                        <button
-                          key={itemIndex}
-                          className={"mb-[10px] sm:mb-[15px] md:mb-[20px]"}
-                          onClick={() => {
-                            setModalOpen(false)
-                            router.push(i.link)
-                            if (i.menu === "대회정보")
-                              setCompetitionStatusMenu("ALL")
-                          }}
-                        >
-                          {i.menu}
-                        </button>
-                      )
-                    },
-                  )}
+                  {menu.item.map((i: { menu: string; link: string }, itemIndex: number) => {
+                    return (
+                      <button
+                        key={itemIndex}
+                        className={"mb-[10px] sm:mb-[15px] md:mb-[20px]"}
+                        onClick={() => {
+                          setModalOpen(false)
+                          router.push(i.link)
+                          if (i.menu === "대회정보") setCompetitionStatusMenu("ALL")
+                        }}
+                      >
+                        {i.menu}
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
             )
-          },
+          }
         )}
       </div>
     </div>

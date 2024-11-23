@@ -6,23 +6,18 @@ import { Button } from "antd"
 import { DownloadOutlined } from "@ant-design/icons"
 import { User } from "../type"
 import NoData from "./no-data"
-import UserDetailModal from "./user-detail-modal"
 import UserCard from "./user-card"
 
 interface Props {
   initialData: User[]
-  pageSize: number
 }
 
-const UserTable = ({ initialData, pageSize }: Props) => {
-  const [modalVisible, setModalVisible] = useState(false)
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-
+const UserTable = ({ initialData }: Props) => {
   const handleExcelDownload = async () => {
     try {
       const data = initialData.map((user) => ({
         이름: user.name,
-        권한: user.role,
+        권한: user.permission,
         최근로그인: user.loginAt ? user.loginAt.substring(0, 16) : "-",
         아이디: user.userId,
         가입일: user.createAt.substring(0, 10),
@@ -49,11 +44,6 @@ const UserTable = ({ initialData, pageSize }: Props) => {
     }
   }
 
-  const handleRowClick = (user: User) => {
-    setSelectedUser(user)
-    setModalVisible(true)
-  }
-
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -66,18 +56,12 @@ const UserTable = ({ initialData, pageSize }: Props) => {
       {initialData.length > 0 ? (
         <div className="space-y-4">
           {initialData.map((user) => (
-            <UserCard key={user.userId} user={user} onClick={handleRowClick} />
+            <UserCard key={user.userId} user={user} />
           ))}
         </div>
       ) : (
         <NoData message="검색 결과가 없습니다." />
       )}
-
-      <UserDetailModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        user={selectedUser}
-      />
     </div>
   )
 }

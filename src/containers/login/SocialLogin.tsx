@@ -5,7 +5,7 @@ import SocialLoginBtn from "@/components/login/SocialLoginBtn";
 
 const SocialLogin = () => {
   const googleLogin = async () => {
-    const res = await signIn("google", { callbackUrl: "/" });
+    const res = await signIn("google");
   };
 
   // const naverLogin = async () => {
@@ -13,7 +13,7 @@ const SocialLogin = () => {
   // };
 
   const kakaoLogin = async () => {
-    const res = await signIn("kakao", { callbackUrl: "/" });
+    const res = await signIn("kakao");
   };
 
   return (

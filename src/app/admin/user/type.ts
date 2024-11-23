@@ -1,23 +1,30 @@
 // types/user.ts
+
 export interface User {
-  email: string
-  isSocial: boolean
+  userId: number
   name: string
+  team: string | null
+  permission: UserRole
+  email: string
   phoneNum: string
-  role: "마스터" | "일반" | string
-  userId: string
-  team?: string
-  permission: string
-  loginAt?: string
+  userStatus: "normal" | "deleted" | "locked" | string
+  loginAt: string | null
   createAt: string
-  updateAt?: string
-  deleteAt?: string
-  lockAt?: string
+  updateAt: string | null
+  deleteAt: string | null
+  lockAt: string | null
   failureCount: number
-  userStatus: string
-  dateOfBirth?: string
-  gender?: string
 }
+
+export type UserRole =
+  | "user" // 일반 사용자
+  | "master" // 마스터
+  | "admin" // 관리자
+  | "referee" // 심판
+  | "referee-leader" // 심판장
+  | "table-official" // 테이블 오피셜
+  | "table-official-leader" // 테이블 오피셜 리더
+
 export interface UserResponse {
   code: number
   message: string
