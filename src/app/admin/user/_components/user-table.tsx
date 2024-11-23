@@ -1,7 +1,6 @@
 // components/user-table.tsx
 "use client"
 
-import { useState } from "react"
 import { Button } from "antd"
 import { DownloadOutlined } from "@ant-design/icons"
 import { User } from "../type"
@@ -45,7 +44,7 @@ const UserTable = ({ initialData }: Props) => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mt-6">
       <div className="flex justify-between items-center">
         <span>총 {initialData.length}건</span>
         <Button icon={<DownloadOutlined />} onClick={handleExcelDownload}>
