@@ -1,4 +1,3 @@
-// app/admin/post/_components/post-card.tsx
 import { Tag } from "antd"
 import dayjs from "dayjs"
 import { Post } from "../type"
@@ -8,59 +7,52 @@ interface Props {
 }
 
 const PostCard = ({ post }: Props) => {
+  const getCategoryInfo = (category: string) => {
+    switch (category) {
+      case "notice":
+        return { color: "blue", text: "공지사항" }
+      case "news":
+        return { color: "green", text: "뉴스" }
+      default:
+        return { color: "orange", text: "자료실" }
+    }
+  }
+  console.log(post)
+
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md mb-4 cursor-pointer hover:bg-gray-50">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        <div>
-          <span className="font-semibold">게시물ID:</span>
-          <span className="ml-2">{post.postId}</span>
+    <div className="bg-white p-4 rounded-lg shadow-sm hover:bg-gray-50 transition-colors">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="flex items-center">
+          <span className="text-gray-600 w-20">게시물ID</span>
+          <span>{post.postId}</span>
         </div>
-        <div>
-          <span className="font-semibold">제목:</span>
-          <div className="flex items-center ml-2">
+
+        <div className="flex items-center col-span-1 sm:col-span-2 lg:col-span-3">
+          <span className="text-gray-600 w-20 shrink-0">제목</span>
+          <div className="flex items-center gap-2 w-full">
             {post.isAnnouncement && (
-              <Tag color="red" className="mr-2">
+              <Tag color="red" className="shrink-0">
                 공지
               </Tag>
             )}
-            <span>{post.title}</span>
+            <span className="break-all">{post.title}</span>
           </div>
         </div>
-        <div>
-          <span className="font-semibold">카테고리:</span>
-          <Tag
-            color={
-              post.category === "notice" ? "blue" : post.category === "news" ? "green" : "orange"
-            }
-            className="ml-2"
-          >
-            {post.category === "notice" ? "공지사항" : post.category === "news" ? "뉴스" : "자료실"}
+        <div className="flex items-center">
+          <span className="text-gray-600 w-20">카테고리</span>
+          <Tag color={getCategoryInfo(post.category).color}>
+            {getCategoryInfo(post.category).text}
           </Tag>
         </div>
-        <div>
-          <span className="font-semibold">작성자:</span>
-          <span className="ml-2">{post.writer}</span>
+
+        <div className="flex items-center">
+          <span className="text-gray-600 w-20">작성자</span>
+          <span>{post.writer}</span>
         </div>
-        <div>
-          <span className="font-semibold">상태:</span>
-          <Tag
-            color={post.status === "NORMAL" ? "green" : post.status === "HIDE" ? "orange" : "red"}
-            className="ml-2"
-          >
-            {post.status}
-          </Tag>
-        </div>
-        <div>
-          <span className="font-semibold">조회수:</span>
-          <span className="ml-2">{post.viewCount}</span>
-        </div>
-        <div>
-          <span className="font-semibold">작성일시:</span>
-          <span className="ml-2">{dayjs(post.createAt).format("YYYY-MM-DD HH:mm:ss")}</span>
-        </div>
-        <div>
-          <span className="font-semibold">수정일시:</span>
-          <span className="ml-2">{dayjs(post.updateAt).format("YYYY-MM-DD HH:mm:ss")}</span>
+
+        <div className="flex items-center">
+          <span className="text-gray-600 w-20">작성일시</span>
+          <span>{dayjs(post.createAt).format("YYYY-MM-DD HH:mm")}</span>
         </div>
       </div>
     </div>

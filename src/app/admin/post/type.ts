@@ -6,7 +6,6 @@ export interface Post {
   writer: string
   createAt: string
   viewCount: number
-  status: string
   category: string
   updateAt: string
   deleteAt: string | null

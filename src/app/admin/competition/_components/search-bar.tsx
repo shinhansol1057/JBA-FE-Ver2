@@ -1,45 +1,40 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import { Input, Select, DatePicker, Button } from "antd"
+import React, { useEffect } from "react"
+import { Input, Select, DatePicker, Button, Form } from "antd"
 import { SearchOutlined, UndoOutlined } from "@ant-design/icons"
 import { useRouter } from "next/navigation"
 import { NormalApi } from "@/services/axios/NormalApi"
-import dayjs from 'dayjs'
 
 const { RangePicker } = DatePicker
 const { Option } = Select
 
 const SearchBar = () => {
   const router = useRouter()
-  const [divisions, setDivisions] = useState<Array<{divisionName: string}>>([])
-  
-  const [searchKey, setSearchKey] = useState("")
-  const [division, setDivision] = useState("전체")
-  const [situation, setSituation] = useState("전체")
-  const [dateRange, setDateRange] = useState<[string, string] | null>(null)
+  const [form] = Form.useForm()
+  const [divisions, setDivisions] = React.useState<Array<{ divisionName: string }>>([])
 
   useEffect(() => {
     const fetchDivisions = async () => {
       try {
-        const response = await NormalApi.get('/v1/api/division/a-valid')
+        const response = await NormalApi.get("/v1/api/division/a-valid")
         setDivisions(response.data.data)
       } catch (error) {
-        console.error('부문 목록 조회 실패:', error)
+        console.error("부문 목록 조회 실패:", error)
       }
     }
     fetchDivisions()
   }, [])
 
-  const handleSearch = () => {
+  const handleSearch = (values: any) => {
     const params = new URLSearchParams()
     params.append("searchType", "title")
-    if (searchKey) params.append("searchKey", searchKey)
-    if (division !== '전체') params.append("division", division)
-    if (situation !== '전체') params.append("situation", situation)
-    if (dateRange) {
-      params.append("filterStartDate", dateRange[0])
-      params.append("filterEndDate", dateRange[1])
+    if (values.searchKey) params.append("searchKey", values.searchKey)
+    if (values.division !== "전체") params.append("division", values.division)
+    if (values.situation !== "전체") params.append("situation", values.situation)
+    if (values.dateRange) {
+      params.append("filterStartDate", values.dateRange[0].format("YYYY-MM-DD"))
+      params.append("filterEndDate", values.dateRange[1].format("YYYY-MM-DD"))
     }
     params.append("page", "0")
     params.append("size", "20")
@@ -48,65 +43,63 @@ const SearchBar = () => {
   }
 
   const handleReset = () => {
-    setSearchKey("")
-    setDivision("전체")
-    setSituation("전체")
-    setDateRange(null)
+    form.resetFields()
+    router.push("/admin/competition")
   }
 
-  const selectStyle = { width: 200, marginBottom: "10px" }
+  const selectStyle = { width: 200 }
 
   return (
-    <div className='bg-white p-4 rounded-lg shadow-md mb-6'>
-      <div className='flex flex-col md:flex-row md:items-center md:space-x-4 mb-4'>
-        <Input
-          value={searchKey}
-          placeholder='대회명을 입력하세요'
-          style={{ width: "100%", marginBottom: "10px" }}
-          onChange={(e) => setSearchKey(e.target.value)}
-        />
-        <Select
-          value={division}
-          style={selectStyle}
-          onChange={(value) => setDivision(value)}
-        >
-          <Option value="전체">전체 부문</Option>
-          {divisions.map((div) => (
-            <Option key={div.divisionName} value={div.divisionName}>
-              {div.divisionName}
-            </Option>
-          ))}
-        </Select>
-        <Select
-          value={situation}
-          style={selectStyle}
-          onChange={(value) => setSituation(value)}
-        >
-          <Option value="전체">전체 상태</Option>
-          <Option value="예정">예정</Option>
-          <Option value="진행중">진행중</Option>
-          <Option value="종료">종료</Option>
-        </Select>
-        <RangePicker
-          value={dateRange ? [dayjs(dateRange[0]), dayjs(dateRange[1])] : null}
-          style={{ width: "100%", marginBottom: "10px" }}
-          onChange={(_, dateStrings) => setDateRange(dateStrings as [string, string])}
-        />
-      </div>
-      <div className='flex justify-end space-x-2'>
-        <Button 
-          icon={<UndoOutlined />} 
-          onClick={handleReset}
-        >
-          초기화
-        </Button>
-        <Button 
-          icon={<SearchOutlined />} 
-          onClick={handleSearch}
-        >
-          조회
-        </Button>
-      </div>
+    <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+      <Form
+        form={form}
+        onFinish={handleSearch}
+        initialValues={{
+          searchKey: "",
+          division: "전체",
+          situation: "전체",
+          dateRange: null
+        }}
+      >
+        <div className="flex flex-col md:flex-row md:items-center md:space-x-4 mb-4">
+          <Form.Item name="searchKey" className="mb-0 w-full">
+            <Input placeholder="대회명을 입력하세요" style={{ width: "100%" }} />
+          </Form.Item>
+
+          <Form.Item name="division" className="mb-0">
+            <Select style={selectStyle}>
+              <Option value="전체">전체 부문</Option>
+              {divisions.map((div) => (
+                <Option key={div.divisionName} value={div.divisionName}>
+                  {div.divisionName}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="situation" className="mb-0">
+            <Select style={selectStyle}>
+              <Option value="전체">전체 상태</Option>
+              <Option value="예정">예정</Option>
+              <Option value="진행중">진행중</Option>
+              <Option value="종료">종료</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="dateRange" className="mb-0 w-full">
+            <RangePicker style={{ width: "100%" }} />
+          </Form.Item>
+        </div>
+
+        <div className="flex justify-end space-x-2">
+          <Button icon={<UndoOutlined />} onClick={handleReset}>
+            초기화
+          </Button>
+          <Button icon={<SearchOutlined />} htmlType="submit">
+            조회
+          </Button>
+        </div>
+      </Form>
     </div>
   )
 }
