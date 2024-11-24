@@ -14,7 +14,7 @@ const GalleryDetailModal = ({ setModalOpen, data }: Props) => {
       <div
         className={
           "text-[#EEEEEE] bg-[rgba(0,0,0,0.8)] flex justify-between items-center px-5 " +
-          "h-10 sm:h-14 md:h-20 w-full text-xl sm:text-2xl md:text-3xl"
+          "w-full text-3xl sm:text-4xl md:text-5xl py-4"
         }
       >
         <AiOutlineDownload
