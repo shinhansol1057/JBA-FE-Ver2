@@ -66,7 +66,7 @@ const DetailResult = ({ detailData, resultData }: Props) => {
       />
       {filteredResultData.map((result: competitionResultType, i: number) => {
         return (
-          <div key={i} className={"mt-12"}>
+          <div key={i} className={"mt-4"}>
             <div
               className={
                 "flex justify-center items-center bg-amber-400 mb-1 rounded-lg " +

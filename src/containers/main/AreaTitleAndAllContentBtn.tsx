@@ -11,20 +11,16 @@ const AreaTitleAndAllContentBtn = ({
 }) => {
   const router = useRouter();
   return (
-    <div className={"w-full flex justify-between items-center mb-[10px]"}>
-      <h3
-        className={
-          "text-[16px] sm:text-[22px] md:text-[32px] font-bold ml-[10px]"
-        }
-      >
+    <div className={"w-full flex justify-between items-center mb-2.5"}>
+      <h3 className={"text-base sm:text-lg md:text-3xl font-bold ml-2.5"}>
         {title}
       </h3>
       <button
         className={
-          "rounded-[5px] bg-black text-white " +
-          "text-[12px] sm:text-[14px] md:text-[20px] " +
-          "py-[3px] " +
-          "px-[7px] md:px-[12px]"
+          "rounded-md bg-black text-white " +
+          "text-sm sm:text-base md:text-xl " +
+          "py-2 md:py-3 " +
+          "px-2 md:px-3"
         }
         onClick={() => router.push(url)}
       >

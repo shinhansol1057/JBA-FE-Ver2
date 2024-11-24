@@ -8,7 +8,7 @@ const Gallery = async () => {
   return (
     <div
       className={
-        "flex flex-col mt-[25px] sm:mt-[50px] md:mt-[75px] mx-auto " +
+        "flex flex-col mt-6 sm:mt-12 md:mt-20 mx-auto " +
         "w-[90%] sm:w-[80%] md:w-[70%]"
       }
     >

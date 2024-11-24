@@ -34,22 +34,18 @@ const VideoListCard = ({ data }: Props) => {
   };
 
   return (
-    <div className={"w-full mb-8 md:mb-12 relative"}>
+    <div className={"w-full mb-8 md:mb-12"}>
       <div
         className={
-          "flex justify-between items-center absolute top-0 left-0 w-full z-30 " +
+          "flex justify-between items-center w-full bg-black text-white rounded-t-lg " +
           "px-1.5 md:px-2.5 " +
           "pt-1 md:pt-2"
         }
       >
-        <h3 className={"text-sm sm:text-base md:text-2xl text-white"}>
-          {data.title}
-        </h3>
+        <h3 className={"text-sm sm:text-base md:text-2xl"}>{data.title}</h3>
         {isAdmin && (
           <IoMenu
-            className={
-              "text-lg sm:text-xl md:text-3xl cursor-pointer text-white"
-            }
+            className={"text-lg sm:text-xl md:text-3xl cursor-pointer"}
             onClick={() => setModalOpen(true)}
           />
         )}
@@ -60,11 +56,13 @@ const VideoListCard = ({ data }: Props) => {
           alt={data.title}
           width={1000}
           height={1000}
-          className={"cursor-pointer shadow-xl rounded-lg"}
+          className={
+            "cursor-pointer shadow-xl rounded-b-lg object-cover w-full"
+          }
         />
         <div
           className={
-            "w-full h-full hover:bg-[rgba(0,0,0,0.3)] absolute top-0 left-0 rounded-lg cursor-pointer z-20"
+            "w-full h-full hover:bg-[rgba(0,0,0,0.3)] absolute top-0 left-0 rounded-b-lg cursor-pointer z-20"
           }
           onClick={() => window.open(data.url, "_blank")}
         ></div>

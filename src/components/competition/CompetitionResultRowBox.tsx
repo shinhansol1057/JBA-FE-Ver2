@@ -4,7 +4,7 @@ import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import { GrDocumentDownload } from "react-icons/gr";
 import { handleDownload } from "@/utils/HandleDownload";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
-import { formatDate } from "@/utils/FormDate";
+import { formatDate, formatDateWithoutYear } from "@/utils/FormDate";
 
 type Props = {
   data: competitionResultRowType;
@@ -33,8 +33,8 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
             color={"text-[#4B4B4B] "}
             bold={true}
           />
-          <p className={"text-xs sm:text-sm md:text-lg"}>
-            {formatDate(new Date(data.startDate))}
+          <p className={"text-sm md:text-lg"}>
+            {formatDateWithoutYear(new Date(data.startDate))}
           </p>
         </div>
       </div>

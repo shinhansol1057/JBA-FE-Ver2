@@ -23,6 +23,16 @@ export const formatDate = (date: Date) => {
   return `${year}-${month}-${day}(${dayOfWeek}) ${hours}:${minutes}`;
 };
 
+export const formatDateWithoutYear = (date: Date) => {
+  // 예시 출력: 05-01(수) 22:04
+  const month = String(date.getMonth() + 1);
+  const day = String(date.getDate()).padStart(2, "0");
+  const dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${month}-${day}(${dayOfWeek}) ${hours}:${minutes}`;
+};
+
 export const getNowDateToString = () => {
   const now = new Date();
   return (

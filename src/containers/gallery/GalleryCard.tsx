@@ -65,7 +65,7 @@ const GalleryCard = ({ data }: { data: getGalleryType }) => {
           "text-white flex flex-col justify-between z-10 " +
           "min-h-12 sm:min-h-14 md:min-h-20 " +
           "text-xs sm:text-sm md:text-base " +
-          "pl-2.5 sm:pl-4 md:pl-5 " +
+          "px-2.5 sm:px-4 md:px-5 " +
           "py-2 sm:py-3 md:py-4 "
         }
         onClick={() => router.push(`/media/gallery/${data.galleryId}`)}
