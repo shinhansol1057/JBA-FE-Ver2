@@ -69,7 +69,9 @@ const DetailInfo = ({ data }: Props) => {
             className={"grid grid-cols-6 gap-2 text-sm sm:text-base md:text-lg"}
           >
             {data.divisions.map((item: string, i: number) => (
-              <p key={i}>{item}</p>
+              <p key={i} className={"whitespace-nowrap"}>
+                {item}
+              </p>
             ))}
           </div>
         </div>

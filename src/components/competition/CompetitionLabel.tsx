@@ -10,9 +10,9 @@ const CompetitionLabel = ({ content, color, bold, long }: Props) => {
   return (
     <p
       className={
-        (long ? "w-16 sm:w-20  md:w-24 " : "w-9 sm:w-11 md:w-13 ") +
+        // (long ? "w-16 sm:w-20  md:w-24 " : "w-9 sm:w-11 md:w-13 ") +
         "text-sm sm:text-base md:text-lg " +
-        "ml-1 " +
+        "px-2 whitespace-nowrap " +
         (bold && "font-bold ") +
         color
       }
