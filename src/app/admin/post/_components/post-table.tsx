@@ -20,7 +20,6 @@ const PostTable = ({ initialData }: Props) => {
         제목: post.title,
         카테고리: post.category,
         작성자: post.writer,
-        상태: post.status,
         조회수: post.viewCount,
         작성일: dayjs(post.createAt).format("YYYY-MM-DD HH:mm:ss"),
         수정일: dayjs(post.updateAt).format("YYYY-MM-DD HH:mm:ss"),

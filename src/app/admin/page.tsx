@@ -1,5 +1,7 @@
+import { redirect } from 'next/navigation'
+
 const Page = () => {
-  return <div>test</div>
+  return redirect('/admin/user')
 }
 
 export default Page
