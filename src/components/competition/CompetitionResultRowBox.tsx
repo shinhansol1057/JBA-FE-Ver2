@@ -25,13 +25,19 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
         }
       >
         <div className={"w-[50%]"}>
-          <CompetitionLabel content={data.floor} color={""} bold={true} />
+          <CompetitionLabel
+            content={data.floor}
+            color={""}
+            bold={true}
+            long={false}
+          />
         </div>
         <div className={"w-[50%] flex flex-row items-center"}>
           <CompetitionLabel
             content={"일시"}
             color={"text-[#4B4B4B] "}
             bold={true}
+            long={false}
           />
           <p className={"text-sm md:text-lg"}>
             {formatDateWithoutYear(new Date(data.startDate))}
@@ -49,6 +55,7 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
             content={"장소"}
             color={"text-[#4B4B4B] "}
             bold={true}
+            long={false}
           />
           <p>{data.place}</p>
         </div>

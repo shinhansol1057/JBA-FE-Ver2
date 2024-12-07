@@ -3,7 +3,10 @@ import {
   competitionDetailType,
   competitionPlaceType,
 } from "@/types/CompetitionType";
-import { competitionStatusCalculator } from "@/utils/CompetitionStatusCalculator";
+import {
+  calculatorCompetitionStatus,
+  calculatorParticipationDuration,
+} from "@/utils/calculatorCompetitionStatus";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import moment from "moment/moment";
 import DOMPurify from "dompurify";
@@ -13,7 +16,6 @@ import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useRouter } from "next/navigation";
 import { FetchDeleteCompetitionInfo } from "@/services/CompetitionApi";
-import { useSession } from "next-auth/react";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
@@ -21,14 +23,13 @@ type Props = {
 };
 const DetailInfo = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const status = competitionStatusCalculator(data.startDate, data.endDate);
+  const status = calculatorCompetitionStatus(data.startDate, data.endDate);
   const startDate: string = moment(data.startDate).format("YYYY-MM-DD");
   const endDate: string = moment(data.endDate).format("YYYY-MM-DD");
   const cleanHtml = DOMPurify.sanitize(data.content);
   const router = useRouter();
   const isAdmin = useIsAdmin();
-  const { data: session, status: sessionStatus } = useSession();
-
+  console.log(data);
   return (
     <div>
       <div className={"px-2 bg-white rounded-lg shadow-xl "}>
@@ -38,17 +39,32 @@ const DetailInfo = ({ data }: Props) => {
             "h-10 sm:h-12 md:h-14 "
           }
         >
-          <CompetitionLabel
-            content={status}
-            color={
-              status === "예정"
-                ? "text-red-500 "
-                : status === "진행중"
-                  ? "text-blue-700 "
-                  : "text-black "
-            }
-            bold={true}
-          />
+          <div className={"flex gap-2 items-center"}>
+            <CompetitionLabel
+              content={status}
+              color={
+                status === "예정"
+                  ? "text-red-500 "
+                  : status === "진행중"
+                    ? "text-blue-700 "
+                    : "text-black "
+              }
+              bold={true}
+              long={false}
+            />
+            {calculatorParticipationDuration(
+              data.participationStartDate,
+              data.participationEndDate,
+            ) && (
+              <button
+                className={
+                  "bg-black px-4 py-1 text-white text-sm md:text-lg rounded-[20px] font-bold text-center"
+                }
+              >
+                참가신청 &gt;
+              </button>
+            )}
+          </div>
           {isAdmin ? (
             <IoMenu
               className={"text-2xl sm:text-3xl md:text-4xl cursor-pointer"}
@@ -64,9 +80,16 @@ const DetailInfo = ({ data }: Props) => {
             "min-h-10 sm:min-h-12 md:min-h-14 "
           }
         >
-          <CompetitionLabel content={"종별"} color={""} bold={true} />
+          <CompetitionLabel
+            content={"종별"}
+            color={""}
+            long={true}
+            bold={true}
+          />
           <div
-            className={"grid grid-cols-6 gap-2 text-sm sm:text-base md:text-lg"}
+            className={
+              "grid grid-cols-4 gap-2 text-sm sm:text-base md:text-lg md:grid-cols-6"
+            }
           >
             {data.divisions.map((item: string, i: number) => (
               <p key={i} className={"whitespace-nowrap"}>
@@ -85,8 +108,8 @@ const DetailInfo = ({ data }: Props) => {
           <CompetitionLabel
             content={"대회기간"}
             color={""}
-            bold={true}
             long={true}
+            bold={true}
           />
           <p className={"text-sm sm:text-base md:text-lg"}>
             {startDate} ~ {endDate}
@@ -101,8 +124,8 @@ const DetailInfo = ({ data }: Props) => {
           <CompetitionLabel
             content={"대회장소"}
             color={""}
-            bold={true}
             long={true}
+            bold={true}
           />
           <div className={"flex flex-col text-sm sm:text-base md:text-lg pt-2"}>
             {data.places.map((place: competitionPlaceType, i: number) => {
@@ -123,7 +146,12 @@ const DetailInfo = ({ data }: Props) => {
             "min-h-10 sm:min-h-12 md:min-h-14 "
           }
         >
-          <CompetitionLabel content={"URL"} color={""} bold={true} />
+          <CompetitionLabel
+            content={"URL"}
+            color={""}
+            long={true}
+            bold={true}
+          />
           {data.relatedUrl ? (
             <a
               className={
@@ -140,7 +168,7 @@ const DetailInfo = ({ data }: Props) => {
         <div
           className={
             "text-sm sm:text-base md:text-lg " +
-            "pl-1 py-2.5 " +
+            "pl-1 py-6 " +
             "min-h-[150px] sm:min-h-[200px] md:min-h-[300px]"
           }
           dangerouslySetInnerHTML={{ __html: cleanHtml }}

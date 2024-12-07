@@ -34,6 +34,12 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
+  const [participationStartDate, setParticipationStartDate] = useState<
+    string | null
+  >(null);
+  const [participationEndDate, setParticipationEndDate] = useState<
+    string | null
+  >(null);
   const [places, setPlaces] = useState<placeType[]>([]);
   const [relatedURL, setRelatedUrl] = useState<string | null>("");
   const [files, setFiles] = useState<File[]>([]);
@@ -71,6 +77,8 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
       divisions: selectedDivisions,
       startDate: startDate,
       endDate: endDate,
+      participationStartDate: participationStartDate,
+      participationEndDate: participationEndDate,
       updatePlaces: places,
       relatedURL: relatedURL,
       ckData: ckData,
@@ -106,6 +114,8 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
     setSelectedDivisions(data?.divisions);
     setStartDate(data?.startDate);
     setEndDate(data?.endDate);
+    setParticipationStartDate(data?.participationStartDate);
+    setParticipationEndDate(data?.participationEndDate);
     setPlaces(data?.places);
     setRelatedUrl(data?.relatedUrl);
     setCkData(data?.content);
@@ -140,6 +150,9 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
           options={divisionList}
           value={selectedDivisions}
         />
+        <div className={"pl-2 mt-4"}>
+          <label className={"text-sm md:text-lg"}>● 대회 일정</label>
+        </div>
         <div className={"flex"}>
           <DatePicker
             placeholder={"시작일을 입력해주세요"}
@@ -162,6 +175,33 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
             value={
               dayjs(endDate) || dayjs(data?.endDate.toString().slice(0, 10))
             }
+          />
+        </div>
+        <div className={"pl-2 mt-4"}>
+          <label className={"text-sm md:text-lg"}>● 참가 기간</label>
+        </div>
+        <div className={"flex"}>
+          <DatePicker
+            placeholder={"시작일을 입력해주세요"}
+            style={{ width: "50%" }}
+            onChange={(date, dateString) =>
+              typeof dateString === "string" &&
+              setParticipationStartDate(dateString)
+            }
+            locale={koreanLocale}
+            value={
+              participationStartDate ? dayjs(participationStartDate) : null
+            }
+          />
+          <DatePicker
+            placeholder={"종료일을 입력해주세요"}
+            style={{ width: "50%" }}
+            onChange={(date, dateString) =>
+              typeof dateString === "string" &&
+              setParticipationEndDate(dateString)
+            }
+            locale={koreanLocale}
+            value={participationEndDate ? dayjs(participationEndDate) : null}
           />
         </div>
       </Space>

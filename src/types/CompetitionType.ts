@@ -8,6 +8,8 @@ export type competitionDetailType = {
   relatedUrl: string | null;
   content: string;
   phase: string;
+  participationStartDate: Date | null;
+  participationEndDate: Date | null;
   places: competitionPlaceType[];
   competitionDetailAttachedFiles: competitionFileType[];
   divisions: string[];
@@ -72,6 +74,8 @@ export type addCompetitionRequestType = {
   divisions: string[];
   startDate: string;
   endDate: string;
+  participationStartDate: string | null;
+  participationEndDate: string | null;
   places: placeType[];
   relatedURL: string | null;
   ckData: any;
@@ -83,6 +87,8 @@ export type updateCompetitionRequestType = {
   divisions: string[] | undefined;
   startDate: string;
   endDate: string;
+  participationStartDate: string | null;
+  participationEndDate: string | null;
   updatePlaces: placeType[];
   relatedURL: string | null;
   ckData: any;
