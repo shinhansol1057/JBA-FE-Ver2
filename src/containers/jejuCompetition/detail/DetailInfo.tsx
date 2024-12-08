@@ -29,7 +29,6 @@ const DetailInfo = ({ data }: Props) => {
   const cleanHtml = DOMPurify.sanitize(data.content);
   const router = useRouter();
   const isAdmin = useIsAdmin();
-  console.log(data);
   return (
     <div>
       <div className={"px-2 bg-white rounded-lg shadow-xl "}>
@@ -59,6 +58,11 @@ const DetailInfo = ({ data }: Props) => {
               <button
                 className={
                   "bg-black px-4 py-1 text-white text-sm md:text-lg rounded-[20px] font-bold text-center"
+                }
+                onClick={() =>
+                  router.push(
+                    `/competition-participation/add/${data.competitionId}`,
+                  )
                 }
               >
                 참가신청 &gt;

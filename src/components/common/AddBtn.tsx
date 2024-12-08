@@ -2,8 +2,9 @@ import React from "react";
 
 type Props = {
   handler: any;
+  text?: string;
 };
-const AddBtn = ({ handler }: Props) => {
+const AddBtn = ({ handler, text = "등록" }: Props) => {
   return (
     <button
       className={
@@ -13,7 +14,7 @@ const AddBtn = ({ handler }: Props) => {
       }
       onClick={handler}
     >
-      등록
+      {text}
     </button>
   );
 };
