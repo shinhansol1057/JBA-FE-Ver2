@@ -34,8 +34,7 @@ const DetailInfo = ({ data }: Props) => {
       <div className={"px-2 bg-white rounded-lg shadow-xl "}>
         <div
           className={
-            "flex justify-between items-center border-b border-solid border-[#D9D9D9] " +
-            "h-10 sm:h-12 md:h-14 "
+            "flex justify-between items-center border-b border-solid border-[#D9D9D9] py-2.5 "
           }
         >
           <div className={"flex gap-2 items-center"}>
@@ -80,8 +79,7 @@ const DetailInfo = ({ data }: Props) => {
         </div>
         <div
           className={
-            "flex items-center border-b border-solid border-[#D9D9D9] " +
-            "min-h-10 sm:min-h-12 md:min-h-14 "
+            "flex items-center border-b border-solid border-[#D9D9D9] py-2.5 "
           }
         >
           <CompetitionLabel
@@ -105,8 +103,7 @@ const DetailInfo = ({ data }: Props) => {
         <div
           className={
             "flex items-center border-b border-solid border-[#D9D9D9] " +
-            "text-sm sm:text-base md:text-lg " +
-            "min-h-10 sm:min-h-12 md:min-h-14 "
+            "text-sm sm:text-base md:text-lg py-2.5 "
           }
         >
           <CompetitionLabel
@@ -121,8 +118,7 @@ const DetailInfo = ({ data }: Props) => {
         </div>
         <div
           className={
-            "flex items-center border-b border-solid border-[#D9D9D9] " +
-            "min-h-10 sm:min-h-12 md:min-h-14"
+            "flex items-center border-b border-solid border-[#D9D9D9] py-2.5 "
           }
         >
           <CompetitionLabel
@@ -131,10 +127,12 @@ const DetailInfo = ({ data }: Props) => {
             long={true}
             bold={true}
           />
-          <div className={"flex flex-col text-sm sm:text-base md:text-lg pt-2"}>
+          <div
+            className={"flex flex-col text-sm sm:text-base md:text-lg gap-2"}
+          >
             {data.places.map((place: competitionPlaceType, i: number) => {
               return (
-                <div key={i} className={"flex flex-col md:flex-row mb-2"}>
+                <div key={i} className={"flex flex-col md:flex-row"}>
                   <p>{place.placeName}</p>
                   <p className={"text-gray-400 md:ml-2"}>
                     {"(" + place.address + ")"}
@@ -146,8 +144,7 @@ const DetailInfo = ({ data }: Props) => {
         </div>
         <div
           className={
-            "flex items-center border-b border-solid border-[#D9D9D9] " +
-            "min-h-10 sm:min-h-12 md:min-h-14 "
+            "flex items-center border-b border-solid border-[#D9D9D9] py-2.5 "
           }
         >
           <CompetitionLabel

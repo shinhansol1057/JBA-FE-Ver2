@@ -23,7 +23,7 @@ const MyParticipationDetail = ({ id }: { id: string }) => {
       <div className={"my-5"}>
         <PostTitle title={data?.competitionName} />
       </div>
-      <div className={"px-2.5 bg-white rounded-lg"}>
+      <div className={"px-2.5 bg-white rounded-lg shadow-2xl"}>
         <div
           className={
             "flex flex-col gap-2.5 border-[#D9D9D9] border-solid border-b-[1px] py-2.5"
