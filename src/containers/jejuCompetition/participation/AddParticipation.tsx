@@ -75,7 +75,7 @@ const AddParticipation = ({ id }: { id: string }) => {
             type={"text"}
             placeholder={"이름을 입력해주세요."}
             className={
-              "placeholder:text-[#B5B5B5] w-full h-4 md:h-6 text-base border-none mt-2 md:mt-4 md:text-xl"
+              "pl-1 md:p-2 placeholder:text-[#B5B5B5] w-full h-4 md:h-6 text-base border-none mt-2 md:mt-4 md:text-xl"
             }
           />
         </div>
@@ -90,7 +90,7 @@ const AddParticipation = ({ id }: { id: string }) => {
             type={"text"}
             placeholder={"'-'를 제외하고 입력해주세요."}
             className={
-              "placeholder:text-[#B5B5B5] w-full h-4 md:h-6 text-base border-none mt-2  md:mt-4 md:text-xl"
+              "pl-1 md:p-2 placeholder:text-[#B5B5B5] w-full h-4 md:h-6 text-base border-none mt-2  md:mt-4 md:text-xl"
             }
           />
         </div>
@@ -105,7 +105,7 @@ const AddParticipation = ({ id }: { id: string }) => {
             type={"email"}
             placeholder={"이메일을 입력해주세요"}
             className={
-              "placeholder:text-[#B5B5B5] w-full h-4 md:h-6 text-base border-none mt-2 md:mt-4 md:text-xl"
+              "pl-1 md:p-2 placeholder:text-[#B5B5B5] w-full h-4 md:h-6 text-base border-none mt-2 md:mt-4 md:text-xl"
             }
           />
         </div>

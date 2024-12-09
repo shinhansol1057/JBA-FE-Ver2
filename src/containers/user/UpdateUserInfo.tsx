@@ -10,6 +10,7 @@ import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useSession } from "next-auth/react";
+import Category from "@/components/layout/Category";
 
 const UpdateUserInfo = () => {
   const [name, setName] = useState<string>("");
@@ -44,7 +45,11 @@ const UpdateUserInfo = () => {
 
   return (
     <div className={"w-full flex flex-col items-center"}>
-      <PageTitle title={"프로필 편집"} url={"/user/my-page/update"} />
+      <Category
+        category1={"프로필 편집"}
+        category1Url={"update"}
+        defaultUrl={"/user/my-page/"}
+      />
       <div className={"w-[90%] md:w-[800px] flex flex-col my-5 "}>
         <PostLabel content={"이름"} />
         <PostInput
@@ -65,7 +70,7 @@ const UpdateUserInfo = () => {
       </div>
       <div className={"w-[90%] md:w-[800px] grid grid-cols-2 gap-2.5"}>
         <CancelBtn handler={() => router.back()} />
-        <AddBtn handler={() => updateHandler()} />
+        <AddBtn handler={() => updateHandler()} text={"수정"} />
       </div>
     </div>
   );

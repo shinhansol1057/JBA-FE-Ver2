@@ -18,12 +18,12 @@ const GetFileBox = ({ fileName, fileUrl }: Props) => {
       }
     >
       <div className={"flex items-center justify-between"}>
-        <LuFolder className={"text-3xl md:text-4xl"} />
+        <LuFolder className={"text-2xl md:text-4xl"} />
         <p className={"px-2 text-sm sm:text-base md:text-lg text-start"}>
           {fileName}
         </p>
       </div>
-      <AiOutlineDownload className={"text-3xl md:text-4xl"} />
+      <AiOutlineDownload className={"text-2xl md:text-4xl"} />
     </button>
   );
 };
