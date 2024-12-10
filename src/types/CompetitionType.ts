@@ -12,7 +12,7 @@ export type competitionDetailType = {
   participationEndDate: Date | null;
   places: competitionPlaceType[];
   competitionDetailAttachedFiles: competitionFileType[];
-  divisions: string[];
+  divisions: { divisionId: number; divisionName: string }[];
   ckImgUrls: string[];
 };
 

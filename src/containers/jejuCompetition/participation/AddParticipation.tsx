@@ -13,7 +13,7 @@ import AddBtn from "@/components/common/AddBtn";
 
 const AddParticipation = ({ id }: { id: string }) => {
   const router = useRouter();
-  const [selectedDivision, setSelectedDivision] = useState<String>("");
+  const [selectedDivision, setSelectedDivision] = useState<number | null>(null);
   const [name, setName] = useState<string>("");
   const [phoneNum, setPhoneNum] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -24,6 +24,8 @@ const AddParticipation = ({ id }: { id: string }) => {
     queryFn: () => FetchGetCompetitionDetail(id),
     select: (result) => result?.data.data,
   });
+
+  console.log(detailData);
 
   const submitHandler = () => {
     router.push("/competition-participation-complete");
@@ -47,21 +49,31 @@ const AddParticipation = ({ id }: { id: string }) => {
               "grid grid-cols-3 gap-4 py-4 border-solid border-b-[1px] border-[#D9D9D9]"
             }
           >
-            {detailData?.divisions.map((item: string, i: number) => (
-              <div className={style.checkbox} key={i}>
-                <input
-                  id={`check-${i}`}
-                  type="checkbox"
-                  checked={selectedDivision === item}
-                  onChange={(e) =>
-                    setSelectedDivision(e.target.checked ? item : "")
-                  }
-                />
-                <label className={"text-sm md:text-lg"} htmlFor={`check-${i}`}>
-                  {item}
-                </label>
-              </div>
-            ))}
+            {detailData?.divisions.map(
+              (
+                item: { divisionId: number; divisionName: string },
+                i: number,
+              ) => (
+                <div className={style.checkbox} key={i}>
+                  <input
+                    id={`check-${i}`}
+                    type="checkbox"
+                    checked={selectedDivision === item.divisionId}
+                    onChange={(e) =>
+                      setSelectedDivision(
+                        e.target.checked ? item.divisionId : null,
+                      )
+                    }
+                  />
+                  <label
+                    className={"text-sm md:text-lg"}
+                    htmlFor={`check-${i}`}
+                  >
+                    {item.divisionName}
+                  </label>
+                </div>
+              ),
+            )}
           </div>
         </div>
         <div className={"py-2.5 border-solid border-b-[1px] border-[#D9D9D9]"}>
