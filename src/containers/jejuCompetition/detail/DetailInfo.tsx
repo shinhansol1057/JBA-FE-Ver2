@@ -69,7 +69,9 @@ const DetailInfo = ({ data }: Props) => {
             className={"grid grid-cols-6 gap-2 text-sm sm:text-base md:text-lg"}
           >
             {data.divisions.map((item: string, i: number) => (
-              <p key={i}>{item}</p>
+              <p key={i} className={"whitespace-nowrap"}>
+                {item}
+              </p>
             ))}
           </div>
         </div>
@@ -102,14 +104,15 @@ const DetailInfo = ({ data }: Props) => {
             bold={true}
             long={true}
           />
-          <div className={"flex flex-col text-sm sm:text-base md:text-lg py-1"}>
+          <div className={"flex flex-col text-sm sm:text-base md:text-lg pt-2"}>
             {data.places.map((place: competitionPlaceType, i: number) => {
               return (
-                <p key={i}>
-                  {place.placeName}
-                  <br />
-                  {"(" + place.address + ")"}
-                </p>
+                <div key={i} className={"flex flex-col md:flex-row mb-2"}>
+                  <p>{place.placeName}</p>
+                  <p className={"text-gray-400 md:ml-2"}>
+                    {"(" + place.address + ")"}
+                  </p>
+                </div>
               );
             })}
           </div>

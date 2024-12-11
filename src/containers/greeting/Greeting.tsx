@@ -3,7 +3,11 @@ import Image from "next/image";
 const Greeting = () => {
   return (
     <div className={"flex flex-col items-center w-[90%] md:w-[800px] mb-8"}>
-      <h2 className={"text-sm sm:text-base md:text-xl text-[#999999] my-5"}>
+      <h2
+        className={
+          "text-sm sm:text-base md:text-xl text-[#999999] my-5 text-center"
+        }
+      >
         제주특별자치도농구협회 홈페이지 방문을 진심으로 환영합니다.
       </h2>
       <div
@@ -11,8 +15,10 @@ const Greeting = () => {
           "flex flex-col items-center mb-3 text-base sm:text-lg md:text-xl"
         }
       >
-        <p>제주특별자치도 농구 발전을 위해 끊임없는 관심과 애정을</p>
-        <p>보여드릴 수 있는 협회가 될 것을 약속드립니다.</p>
+        <p className={"max-w-[460px] text-center"}>
+          제주특별자치도 농구 발전을 위해 끊임없는 관심과 애정을 보여드릴 수
+          있는 협회가 될 것을 약속드립니다.
+        </p>
       </div>
       <Image
         src={"/image/회장님 사진1.jpeg"}
