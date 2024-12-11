@@ -75,7 +75,7 @@ const CompetitionCard = ({ competition }: Props) => {
               type="link"
               size="small"
               icon={<EyeOutlined />}
-              onClick={() => router.push(`/admin/competition/view/${competition.competitionId}`)}
+              onClick={() => router.push(`/jeju-competition/info/${competition.competitionId}`)}
             >
               조회
             </Button>
@@ -83,7 +83,9 @@ const CompetitionCard = ({ competition }: Props) => {
               type="link"
               size="small"
               icon={<EditOutlined />}
-              onClick={() => router.push(`/admin/competition/edit/${competition.competitionId}`)}
+              onClick={() =>
+                router.push(`/jeju-competition/info/update/${competition.competitionId}`)
+              }
             >
               수정
             </Button>
@@ -117,7 +119,9 @@ const CompetitionCard = ({ competition }: Props) => {
               type="link"
               size="small"
               icon={<TrophyOutlined />}
-              onClick={() => router.push(`/admin/competition/result/${competition.competitionId}`)}
+              onClick={() =>
+                router.push(`/jeju-competition/result/add/${competition.competitionId}`)
+              }
             >
               대회결과 등록
             </Button>

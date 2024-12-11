@@ -1,123 +1,38 @@
-'use client'
-import { useState, useEffect } from 'react';
+// app/admin/gallery/page.tsx
+import GalleryTable from './_components/gallery-table'
+import SearchBar from './_components/search-bar'
+import { getGallery } from './api'
+import type { GalleryParams } from './api'
 
-// Response Interface
-interface GalleryResponse {
-  code: number;
-  message: string;
-  data: {
-    totalPages: number;
-    totalGalleries: number;
-    galleries: Gallery[];
-  }
+interface SearchParams {
+  page?: string
+  size?: string
+  keyword?: string
+  searchCriteriaString?: string
+  startDate?: string
+  endDate?: string
 }
 
-// Gallery Interface
-interface Gallery {
-  galleryId: number;
-  title: string;
-  fileName: string;
-  imgUrl: string;
-  createAt: string;
-}
-
-interface GallerySearchParams {
-  page: number;
-  size: number;
-  keyword?: string;
-  official: boolean;
-}
-
-const Page = () => {
-  const [galleries, setGalleries] = useState<Gallery[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchGalleries = async (params: GallerySearchParams): Promise<GalleryResponse> => {
-    try {
-      const { page, size, keyword, official } = params;
-      const queryParams = new URLSearchParams({
-        page: page.toString(),
-        size: size.toString(),
-        official: official.toString(),
-        ...(keyword && { keyword })
-      });
-
-      const response = await fetch(
-        `https://jbaserver.shop/v1/api/gallery?${queryParams}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data: GalleryResponse = await response.json();
-      return data;
-
-    } catch (error) {
-      console.error('갤러리 데이터 조회 중 오류 발생:', error);
-      throw error;
-    }
+const Page = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const pageSize = searchParams.size ? parseInt(searchParams.size, 10) : 20
+  const params: GalleryParams = {
+    page: searchParams.page ? parseInt(searchParams.page, 10) : 0,
+    size: pageSize,
+    keyword: searchParams.keyword,
+    searchCriteriaString: searchParams.searchCriteriaString ?? 'title',
+    startDate: searchParams.startDate,
+    endDate: searchParams.endDate
   }
 
-  useEffect(() => {
-    const getGalleries = async () => {
-      setLoading(true);
-      try {
-        const params: GallerySearchParams = {
-          page: 0,
-          size: 6,
-          official: true
-        };
-        const response = await fetchGalleries(params);
-        setGalleries(response.data.galleries);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : '갤러리 로딩 중 오류가 발생했습니다');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getGalleries();
-  }, []);
-
-  if (loading) return <div>로딩중...</div>;
-  if (error) return <div>에러: {error}</div>;
+  const initialData = await getGallery(params)
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">갤러리</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {galleries.map((gallery) => (
-          <div 
-            key={gallery.galleryId} 
-            className="border rounded-lg overflow-hidden shadow-lg"
-          >
-            <img 
-              src={gallery.imgUrl} 
-              alt={gallery.title}
-              className="w-full h-48 object-cover"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = "https://www.irisoele.com/img/noimage.png";
-              }}
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-semibold mb-2">{gallery.title}</h2>
-              <p className="text-gray-600">{gallery.fileName}</p>
-              <p className="text-sm text-gray-500 mt-2">{gallery.createAt}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+    <div className="p-4 md:p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-2xl font-bold mb-6 text-gray-800">갤러리 관리</h1>
+      <SearchBar />
+      <GalleryTable initialData={initialData} pageSize={pageSize} />
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

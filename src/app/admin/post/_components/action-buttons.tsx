@@ -10,12 +10,8 @@ const ActionButtons = () => {
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-md mb-6 flex flex-wrap gap-2">
-      <Button
-        type="primary"
-        icon={<PlusOutlined />}
-        onClick={() => router.push(`/jeju-competition/info/add`)}
-      >
-        대회 등록
+      <Button type="primary" icon={<PlusOutlined />} onClick={() => router.push(`/post/add`)}>
+        게시물 등록
       </Button>
     </div>
   )
