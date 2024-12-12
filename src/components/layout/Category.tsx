@@ -26,9 +26,8 @@ const Category = ({
   defaultUrl,
 }: Props) => {
   const pathname: string = usePathname();
-  const segment = useSelectedLayoutSegment();
+  const segment = useSelectedLayoutSegment() || pathname.split("/").pop();
   const router = useRouter();
-
   if (
     pathname === defaultUrl + category1Url ||
     pathname === defaultUrl + category2Url ||

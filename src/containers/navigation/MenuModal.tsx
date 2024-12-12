@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
-import { menuList } from "@/constants/navigation";
+import { menuList, menuListType } from "@/constants/navigation";
 import { useRouter } from "next/navigation";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { logout } from "@/services/user/LoginApi";
+import { useIsStaff } from "@/hooks/useIsStaff";
 
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
@@ -14,29 +15,28 @@ type Props = {
 };
 const MenuModal = ({ setModalOpen, closeModal }: Props) => {
   const router = useRouter();
+  const isStaff = useIsStaff();
   const { setCompetitionStatusMenu } = useCompetitionStore();
   const loginButtonHandler = () => {
     setModalOpen(false);
     router.push("/login/social");
   };
   const { data: session, status: sessionStatus } = useSession();
+
   const logoutHandler = async () => {
     setModalOpen(false);
-    await logout();
-    await signOut({
-      redirectTo: process.env.NEXT_PUBLIC_API_KEY + "/login/social",
-    });
+    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" });
   };
 
   return (
-    <div className={" w-full pl-[70px] text-base sm:text-xl "}>
+    <div className={"w-full pl-16 text-base sm:text-xl "}>
       <div className={"flex flex-row justify-end text-[#9B9B9B]"}>
         <IoClose
           onClick={closeModal}
           className={"text-2xl sm:text-3xl md:text-4xl cursor-pointer"}
         />
       </div>
-      <div className={"mb-[35px]"}>
+      <div className={"mb-4"}>
         <div className={"flex flex-row"}>
           {sessionStatus === "authenticated" ? (
             <div className={"flex"}>
@@ -47,16 +47,14 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
             <p>비회원 상태</p>
           )}
         </div>
-        <p className={"mb-[5px] sm:mb-[8px] md:mb-[12px]"}>
-          JBA 방문을 환영합니다.
-        </p>
+        <p className={"mb-1 sm:mb-2 md:mb-3"}>JBA 방문을 환영합니다.</p>
         {sessionStatus === "authenticated" ? (
           <div className={"flex justify-between"}>
             <Link
               href={"/user/my-page"}
               className={
-                "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
-                "w-[70px] sm:w-[90px] md:w-[110px] " +
+                "flex justify-center items-center font-bold text-white bg-black rounded-2xl " +
+                "w-20 sm:w-24 md:w-28 " +
                 "h-5 sm:h-6 md:h-7 " +
                 "text-xs sm:text-sm md:text-base "
               }
@@ -64,10 +62,23 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
             >
               마이페이지
             </Link>
+            <Link href="/admin">
+              <button
+                className={
+                  "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
+                  "w-[70px] sm:w-[90px] md:w-[110px] " +
+                  "h-5 sm:h-6 md:h-7 " +
+                  "text-xs sm:text-sm md:text-base "
+                }
+              >
+                관리자
+              </button>
+            </Link>
+
             <button
               className={
-                "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
-                "w-[70px] sm:w-[90px] md:w-[110px] " +
+                "flex justify-center items-center font-bold text-white bg-black rounded-2xl " +
+                "w-20 sm:w-24 md:w-28 " +
                 "h-5 sm:h-6 md:h-7 " +
                 "text-xs sm:text-sm md:text-base "
               }
@@ -80,8 +91,8 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
           <div className={"flex justify-between"}>
             <button
               className={
-                "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
-                "w-[70px] sm:w-[90px] md:w-[110px] " +
+                "flex justify-center items-center font-bold text-white bg-black rounded-2xl " +
+                "w-20 sm:w-24 md:w-28 " +
                 "h-5 sm:h-6 md:h-7 " +
                 "text-xs sm:text-sm md:text-base "
               }
@@ -95,26 +106,19 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
         )}
       </div>
       <div className={"border-t border-[#D9D9D9] border-solid"}>
-        {menuList.map(
-          (
-            menu: { title: string; item: { menu: string; link: string }[] },
-            menuIndex: number,
-          ) => {
-            return (
+        {menuList.map((menu: menuListType, menuIndex: number) => {
+          return (
+            (!menu.isStaffMenu || isStaff) && (
               <div
-                className={" flex flex-row pt-[10px] sm:pt-[15px] md:pt-[20px]"}
+                className={" flex flex-row pt-2.5 sm:pt-4 md:pt-5"}
                 key={menuIndex}
               >
-                <div
-                  className={
-                    "w-[90px] sm:w-[100px] md:w-[120px] pl-[10px] mr-[10px]"
-                  }
-                >
+                <div className={"w-24 md:w-28 pl-2.5 mr-2.5"}>
                   <h3 className={"font-bold "}>{menu.title}</h3>
                 </div>
                 <div
                   className={
-                    "flex flex-col text-[#4B4B4B] w-[65%] items-start pl-[10px] " +
+                    "flex flex-col text-[#4B4B4B] w-[65%] items-start pl-2.5 " +
                     (menuList.length === menuIndex + 1
                       ? ""
                       : "border-b border-solid border-[#D9D9D9]")
@@ -125,7 +129,7 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
                       return (
                         <button
                           key={itemIndex}
-                          className={"mb-[10px] sm:mb-[15px] md:mb-[20px]"}
+                          className={"mb-2.5 sm:mb-4 md:mb-5"}
                           onClick={() => {
                             setModalOpen(false);
                             router.push(i.link);
@@ -140,9 +144,9 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
                   )}
                 </div>
               </div>
-            );
-          },
-        )}
+            )
+          );
+        })}
       </div>
     </div>
   );

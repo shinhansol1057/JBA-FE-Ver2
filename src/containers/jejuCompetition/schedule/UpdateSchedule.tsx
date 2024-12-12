@@ -4,6 +4,7 @@ import {
   addCompetitionScheduleRowType,
   addCompetitionScheduleType,
   competitionResultType,
+  divisionResponseType,
 } from "@/types/CompetitionType";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -96,20 +97,22 @@ const UpdateSchedule = ({ id }: { id: string }) => {
       <div className={"my-5"}>
         <PostTitle title={detailData?.title} />
       </div>
-      {detailData?.divisions.map((division: string, i: number) => {
-        return (
-          <AddScheduleDivisionBox
-            key={"division" + i}
-            divisionIndex={i}
-            places={detailData?.places}
-            addCompetitionScheduleList={addCompetitionScheduleList}
-            setAddCompetitionScheduleList={setAddCompetitionScheduleList}
-          />
-        );
-      })}
+      {detailData?.divisions.map(
+        (division: divisionResponseType, i: number) => {
+          return (
+            <AddScheduleDivisionBox
+              key={"division" + i}
+              divisionIndex={i}
+              places={detailData?.places}
+              addCompetitionScheduleList={addCompetitionScheduleList}
+              setAddCompetitionScheduleList={setAddCompetitionScheduleList}
+            />
+          );
+        },
+      )}
       <div className={"grid grid-cols-2 gap-2.5 md:gap-5 mb-12"}>
         <CancelBtn handler={() => router.back()} />
-        <AddBtn handler={() => submitHandler()} />
+        <AddBtn handler={() => submitHandler()} text={"수정"} />
       </div>
     </div>
   );

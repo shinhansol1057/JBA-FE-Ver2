@@ -16,7 +16,7 @@ export const CheckBox = ({ isChecked, setIsChecked, content }: Props) => {
         checked={isChecked}
         onChange={(e) => setIsChecked(e.target.checked)}
       />
-      <label className="checkbox-label" htmlFor="check">
+      <label className="text-sm md:text-lg md:ml-4" htmlFor="check">
         {content}
       </label>
     </div>

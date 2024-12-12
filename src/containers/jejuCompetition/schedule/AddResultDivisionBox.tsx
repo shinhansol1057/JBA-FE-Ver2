@@ -107,10 +107,10 @@ const AddResultDivisionBox = ({
       homeName: "",
       awayName: "",
       state5x5: true,
-      homeScore: null,
-      awayScore: null,
+      homeScore: 0,
+      awayScore: 0,
       fileName: null,
-      filePath: null,
+      fileUrl: null,
     };
     setAddCompetitionResultList((prevState) => {
       const resultList: addCompetitionResultType[] = [...prevState];

@@ -1,5 +1,5 @@
 import React from "react";
-import { competitionStatusCalculator } from "@/utils/CompetitionStatusCalculator";
+import { calculatorCompetitionStatus } from "@/utils/calculatorCompetitionStatus";
 import moment from "moment";
 import Link from "next/link";
 import useLocalStorage from "use-local-storage";
@@ -11,7 +11,7 @@ const CompetitionListCard = ({ data }: Props) => {
   const [scrollY, setScrollY] = useLocalStorage("competitionListScroll", 0);
   const startDate: string = moment(data.startDate).format("YYYY-MM-DD");
   const endDate: string = moment(data.endDate).format("YYYY-MM-DD");
-  const status: string = competitionStatusCalculator(
+  const status: string = calculatorCompetitionStatus(
     data.startDate,
     data.endDate,
   );

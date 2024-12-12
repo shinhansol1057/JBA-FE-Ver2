@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FetchGetUserInfo } from "@/services/user/UserApi";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import Category from "@/components/layout/Category";
 
 const MyPage = () => {
   const { data: session, status: sessionStatus } = useSession();
@@ -16,8 +17,14 @@ const MyPage = () => {
     enabled: sessionStatus === "authenticated",
   });
   return (
-    <div className={"flex flex-col items-center"}>
-      <PageTitle title={"마이페이지"} url={"/user/my-page"} />
+    <div className={"w-full flex flex-col items-center"}>
+      <Category
+        category1={"내정보"}
+        category1Url={"my-page"}
+        category2={"참가신청 기록"}
+        category2Url={"my-participation"}
+        defaultUrl={"/user/"}
+      />
       {data && (
         <div
           className={

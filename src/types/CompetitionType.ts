@@ -1,4 +1,4 @@
-import { getFileType } from "@/types/CommonType";
+import { getFileType, getFileWithIdType } from "@/types/CommonType";
 
 export type competitionDetailType = {
   competitionId: number;
@@ -8,9 +8,11 @@ export type competitionDetailType = {
   relatedUrl: string | null;
   content: string;
   phase: string;
+  participationStartDate: Date | null;
+  participationEndDate: Date | null;
   places: competitionPlaceType[];
-  competitionDetailAttachedFiles: competitionFileType[];
-  divisions: string[];
+  competitionDetailAttachedFiles: getFileWithIdType[];
+  divisions: divisionResponseType[];
   ckImgUrls: string[];
 };
 
@@ -20,12 +22,6 @@ export type competitionPlaceType = {
   latitude: number;
   longitude: number;
   address: string;
-};
-
-export type competitionFileType = {
-  competitionAttachedFileId: number;
-  filePath: string;
-  fileName: string;
 };
 
 export type competitionResultType = {
@@ -44,7 +40,7 @@ export type competitionResultRowType = {
   awayName: string;
   awayScore: number;
   fileName: string;
-  filePath: string | null;
+  fileUrl: string | null;
   state5x5: boolean;
 };
 
@@ -64,7 +60,7 @@ export type placeType = {
 export type competitionDetailAttachedFileType = {
   competitionAttachedFileId: number;
   fileName: string;
-  filePath: string;
+  fileUrl: string;
 };
 
 export type addCompetitionRequestType = {
@@ -72,6 +68,8 @@ export type addCompetitionRequestType = {
   divisions: string[];
   startDate: string;
   endDate: string;
+  participationStartDate: string | null;
+  participationEndDate: string | null;
   places: placeType[];
   relatedURL: string | null;
   ckData: any;
@@ -83,6 +81,8 @@ export type updateCompetitionRequestType = {
   divisions: string[] | undefined;
   startDate: string;
   endDate: string;
+  participationStartDate: string | null;
+  participationEndDate: string | null;
   updatePlaces: placeType[];
   relatedURL: string | null;
   ckData: any;
@@ -123,6 +123,11 @@ export type addCompetitionResultRowType = {
   state5x5: boolean;
   homeScore: number | null;
   awayScore: number | null;
-  filePath: string | null;
+  fileUrl: string | null;
   fileName: string | null;
+};
+
+export type divisionResponseType = {
+  divisionId: string;
+  divisionName: string;
 };

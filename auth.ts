@@ -15,6 +15,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: "/login/social",
   },
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 30,
+    updateAge: 60 * 60 * 24 * 3,
+  },
   providers: [
     Google,
     Kakao,
@@ -92,7 +97,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       try {
         return refreshTokenService(token);
       } catch (error) {
-        // console.log("error: ", error);
         await signOut({ redirectTo: "/login/social" });
         return {
           ...token,
