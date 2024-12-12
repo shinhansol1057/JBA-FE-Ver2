@@ -1,6 +1,12 @@
 import React from "react";
 
-const CancelBtn = ({ handler }: { handler: any }) => {
+const CancelBtn = ({
+  handler,
+  text = "취소",
+}: {
+  handler: any;
+  text?: string;
+}) => {
   return (
     <button
       className={
@@ -10,7 +16,7 @@ const CancelBtn = ({ handler }: { handler: any }) => {
       }
       onClick={handler}
     >
-      취소
+      {text}
     </button>
   );
 };

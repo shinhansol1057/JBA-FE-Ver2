@@ -35,6 +35,12 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="kr">
+      <head>
+        <meta
+          name="naver-site-verification"
+          content="86c0e0931b76ddbbf6b0f841867a017317a7ae39"
+        />
+      </head>
       <body className={inter.className}>
         <div className={"min-h-[100vh]"}>
           <ReactQueryProviders>

@@ -34,6 +34,12 @@ const AddCompetitionInfo = () => {
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>(getNowDateToString());
   const [endDate, setEndDate] = useState<string>(getNowDateToString());
+  const [participationStartDate, setParticipationStartDate] = useState<
+    string | null
+  >(null);
+  const [participationEndDate, setParticipationEndDate] = useState<
+    string | null
+  >(null);
   const [places, setPlaces] = useState<placeType[]>([]);
   const [relatedURL, setRelatedUrl] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
@@ -60,6 +66,8 @@ const AddCompetitionInfo = () => {
       divisions: selectedDivisions,
       startDate: startDate,
       endDate: endDate,
+      participationStartDate: participationStartDate,
+      participationEndDate: participationEndDate,
       places: places,
       relatedURL: relatedURL,
       ckData: ckData,
@@ -107,6 +115,9 @@ const AddCompetitionInfo = () => {
           onChange={(e: string[]) => setSelectedDivisions(e)}
           options={divisionList}
         />
+        <div className={"pl-2 mt-4"}>
+          <label className={"text-sm md:text-lg"}>● 대회 일정</label>
+        </div>
         <div className={"flex"}>
           <DatePicker
             placeholder={"시작일을 입력해주세요"}
@@ -125,6 +136,33 @@ const AddCompetitionInfo = () => {
             }
             locale={koreanLocale}
             value={dayjs(endDate)}
+          />
+        </div>
+        <div className={"pl-2 mt-4"}>
+          <label className={"text-sm md:text-lg"}>● 참가 기간</label>
+        </div>
+        <div className={"flex"}>
+          <DatePicker
+            placeholder={"시작일을 입력해주세요"}
+            style={{ width: "50%" }}
+            onChange={(date, dateString) =>
+              typeof dateString === "string" &&
+              setParticipationStartDate(dateString)
+            }
+            locale={koreanLocale}
+            value={
+              participationStartDate ? dayjs(participationStartDate) : null
+            }
+          />
+          <DatePicker
+            placeholder={"종료일을 입력해주세요"}
+            style={{ width: "50%" }}
+            onChange={(date, dateString) =>
+              typeof dateString === "string" &&
+              setParticipationEndDate(dateString)
+            }
+            locale={koreanLocale}
+            value={participationEndDate ? dayjs(participationEndDate) : null}
           />
         </div>
       </Space>

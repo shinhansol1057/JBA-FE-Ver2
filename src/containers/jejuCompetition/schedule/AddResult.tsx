@@ -79,7 +79,7 @@ const AddResult = ({ id }: { id: string }) => {
               state5x5: row.state5x5,
               homeScore: row.homeScore,
               awayScore: row.awayScore,
-              filePath: row.filePath,
+              fileUrl: row.fileUrl,
               fileName: row.fileName,
             };
           });

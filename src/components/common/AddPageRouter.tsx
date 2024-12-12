@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {

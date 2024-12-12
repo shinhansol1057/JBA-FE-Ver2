@@ -1,14 +1,12 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
-import { competitionDetailAttachedFileType } from "@/types/CompetitionType";
+import { getFileType } from "@/types/CommonType";
 
 type Props = {
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
-  attachedFileList: competitionDetailAttachedFileType[];
-  setAttachedFileList: React.Dispatch<
-    React.SetStateAction<competitionDetailAttachedFileType[]>
-  >;
+  attachedFileList: getFileType[];
+  setAttachedFileList: React.Dispatch<React.SetStateAction<getFileType[]>>;
 };
 const UpdateAttachedFileBox = ({
   files,
@@ -37,15 +35,11 @@ const UpdateAttachedFileBox = ({
     );
   };
 
-  const handleDeleteUploadAttachedFiles = (key: string) => {
+  const handleDeleteUploadAttachedFiles = (prevUrl: string) => {
     setAttachedFileList((prev) =>
-      prev.filter(
-        (f: competitionDetailAttachedFileType) =>
-          "prev" + f.competitionAttachedFileId !== key,
-      ),
+      prev.filter((f: getFileType) => "prev" + f.fileUrl !== prevUrl),
     );
   };
-
   return (
     <div
       className={
@@ -74,7 +68,7 @@ const UpdateAttachedFileBox = ({
         {attachedFileList?.map((item) => {
           return (
             <li
-              key={"prev" + item.competitionAttachedFileId}
+              key={"prev" + item.fileUrl}
               className={
                 "flex text-[12px] sm:text-[14px] md:text-[16px] m-[10px]"
               }
@@ -83,9 +77,7 @@ const UpdateAttachedFileBox = ({
               <IoClose
                 className={"cursor-pointer "}
                 onClick={() =>
-                  handleDeleteUploadAttachedFiles(
-                    "prev" + item.competitionAttachedFileId,
-                  )
+                  handleDeleteUploadAttachedFiles("prev" + item.fileUrl)
                 }
               />
             </li>
@@ -94,7 +86,7 @@ const UpdateAttachedFileBox = ({
         {files?.map((file: File, i: number) => {
           return (
             <li
-              key={i}
+              key={`new - ${i}`}
               className={
                 "flex text-[12px] sm:text-[14px] md:text-[16px] m-[10px]"
               }

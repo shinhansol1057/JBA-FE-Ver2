@@ -7,7 +7,6 @@ import {
   FetchGetDivisionList,
 } from "@/services/CompetitionApi";
 import {
-  competitionDetailAttachedFileType,
   divisionType,
   placeType,
   updateCompetitionRequestType,
@@ -34,13 +33,17 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
+  const [participationStartDate, setParticipationStartDate] = useState<
+    string | null
+  >(null);
+  const [participationEndDate, setParticipationEndDate] = useState<
+    string | null
+  >(null);
   const [places, setPlaces] = useState<placeType[]>([]);
   const [relatedURL, setRelatedUrl] = useState<string | null>("");
   const [files, setFiles] = useState<File[]>([]);
   const [ckData, setCkData] = useState<string>("");
-  const [attachedFileList, setAttachedFileList] = useState<
-    competitionDetailAttachedFileType[]
-  >([]);
+  const [attachedFileList, setAttachedFileList] = useState<getFileType[]>([]);
   const [newCkImgUrls, setNewCkImgUrls] = useState<getFileType[]>([]);
   const [divisionList, setDivisionList] = useState<divisionType[]>([]);
 
@@ -71,11 +74,13 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
       divisions: selectedDivisions,
       startDate: startDate,
       endDate: endDate,
+      participationStartDate: participationStartDate,
+      participationEndDate: participationEndDate,
       updatePlaces: places,
       relatedURL: relatedURL,
       ckData: ckData,
       ckImgRequests: [],
-      uploadedAttachedFiles: attachedFileList.map((item) => item.filePath),
+      uploadedAttachedFiles: attachedFileList.map((item) => item.fileUrl),
       deletedCkImgUrls: [],
     };
 
@@ -103,9 +108,16 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
 
   useEffect(() => {
     setTitle(data?.title);
-    setSelectedDivisions(data?.divisions);
+    setSelectedDivisions(
+      data?.divisions.map(
+        (item: { divisionId: string; divisionName: string }) =>
+          item.divisionName,
+      ),
+    );
     setStartDate(data?.startDate);
     setEndDate(data?.endDate);
+    setParticipationStartDate(data?.participationStartDate);
+    setParticipationEndDate(data?.participationEndDate);
     setPlaces(data?.places);
     setRelatedUrl(data?.relatedUrl);
     setCkData(data?.content);
@@ -121,7 +133,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
 
   return (
     <div className={"flex flex-col mt-5 w-[90%] md:w-[800px]"}>
-      <SubTitle title={"대회정보 등록"} />
+      <SubTitle title={"대회정보 수정"} />
       <div className={"my-5"}>
         <PostInput
           type={"text"}
@@ -140,6 +152,9 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
           options={divisionList}
           value={selectedDivisions}
         />
+        <div className={"pl-2 mt-4"}>
+          <label className={"text-sm md:text-lg"}>● 대회 일정</label>
+        </div>
         <div className={"flex"}>
           <DatePicker
             placeholder={"시작일을 입력해주세요"}
@@ -164,6 +179,33 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
             }
           />
         </div>
+        <div className={"pl-2 mt-4"}>
+          <label className={"text-sm md:text-lg"}>● 참가 기간</label>
+        </div>
+        <div className={"flex"}>
+          <DatePicker
+            placeholder={"시작일을 입력해주세요"}
+            style={{ width: "50%" }}
+            onChange={(date, dateString) =>
+              typeof dateString === "string" &&
+              setParticipationStartDate(dateString)
+            }
+            locale={koreanLocale}
+            value={
+              participationStartDate ? dayjs(participationStartDate) : null
+            }
+          />
+          <DatePicker
+            placeholder={"종료일을 입력해주세요"}
+            style={{ width: "50%" }}
+            onChange={(date, dateString) =>
+              typeof dateString === "string" &&
+              setParticipationEndDate(dateString)
+            }
+            locale={koreanLocale}
+            value={participationEndDate ? dayjs(participationEndDate) : null}
+          />
+        </div>
       </Space>
       <AddPlace places={places} setPlaces={setPlaces} />
       <PostInput
@@ -185,7 +227,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
       />
       <div className={"grid grid-cols-2 gap-[10px] md:gap-[20px] my-[20px]"}>
         <CancelBtn handler={() => router.back()} />
-        <AddBtn handler={() => formSubmitHandler()} />
+        <AddBtn handler={() => formSubmitHandler()} text={"수정"} />
       </div>
     </div>
   );

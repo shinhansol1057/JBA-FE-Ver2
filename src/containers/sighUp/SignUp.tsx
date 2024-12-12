@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signUpData } from "@/constants/sighUp";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
-import PhoneNumHandler from "@/utils/PhoneNumHandler";
+import { phoneNumHandlerWithReactHookForm } from "@/utils/PhoneNumHandlerWithReactHookForm";
 import {
   FetchCheckCertificationNum,
   FetchSendCertificationEmail,
@@ -201,7 +201,7 @@ const SignUp = () => {
           <input
             {...register("phoneNum")}
             type={"text"}
-            onChange={(e) => PhoneNumHandler(e, setValue)}
+            onChange={(e) => phoneNumHandlerWithReactHookForm(e, setValue)}
             className={
               "mt-2 mb-4 w-full h-12 rounded-2xl border-[#D9D9D9] pl-5 pr-20"
             }

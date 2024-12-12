@@ -25,9 +25,9 @@ const BannerTop = () => {
         </h1>
       </div>
       <div className="flex justify-end ">
-        <h2 lang={"en"} className={"text-xs sm:text-xl md:text-2xl"}>
-          Jeju Basketball Association
-        </h2>
+        <h1 className={"text-xs sm:text-xl md:text-2xl"}>
+          제주특별자치도농구협회
+        </h1>
       </div>
       <div className={"flex justify-end text-xs sm:text-xl md:text-text-2xl"}>
         <p>-</p>

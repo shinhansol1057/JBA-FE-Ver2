@@ -124,7 +124,7 @@ const AddResultRowBox = ({
         setAddCompetitionResultList((prevState) => {
           const resultList: addCompetitionResultType[] = [...prevState];
           rowData.fileName = res.data.data[0]?.fileName;
-          rowData.filePath = res.data.data[0]?.fileUrl;
+          rowData.fileUrl = res.data.data[0]?.fileUrl;
           return resultList;
         });
       });
@@ -299,14 +299,14 @@ const AddResultRowBox = ({
           }
         >
           <ScheduleRowInput
-            value={rowData.homeName ? rowData.homeName : undefined}
+            value={rowData.homeName}
             setValue={homeNameHandler}
             type={"text"}
             placeHolder={"HomeTeam"}
           />
           <div className={"w-[40%] ml-2.5"}>
             <ScheduleRowInput
-              value={rowData.homeScore ? rowData.homeScore : undefined}
+              value={rowData.homeScore}
               setValue={homeScoreHandler}
               type={"number"}
               placeHolder={"점수"}
@@ -315,14 +315,14 @@ const AddResultRowBox = ({
           <p className={"mx-2.5 md:mx-5 text-white"}>vs</p>
           <div className={"w-[40%] mr-2.5"}>
             <ScheduleRowInput
-              value={rowData.awayScore ? rowData.awayScore : undefined}
+              value={rowData.awayScore}
               setValue={awayScoreHandler}
               type={"number"}
               placeHolder={"점수"}
             />
           </div>
           <ScheduleRowInput
-            value={rowData.awayName ? rowData.awayName : undefined}
+            value={rowData.awayName}
             setValue={awayNameHandler}
             type={"text"}
             placeHolder={"AwayHome"}

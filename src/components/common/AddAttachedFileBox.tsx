@@ -35,7 +35,7 @@ const AddAttachedFileBox = ({ files, setFiles }: Props) => {
       <div
         className={
           "relative inline-block overflow-hidden cursor-pointer text-center " +
-          "font-bold rounded-lg bg-black hover:bg-[#4B4B4B] text-white p-2.5 " +
+          "font-bold rounded-lg bg-black hover:bg-[#4B4B4B] text-white p-2 " +
           "text-sm sm:text-base md:text-lg"
         }
       >
