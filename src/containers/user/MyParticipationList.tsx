@@ -15,7 +15,7 @@ const MyParticipationList = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ["getMyCompetitionParticipation", nextCursor],
+      queryKey: ["getMyCompetitionParticipationList", nextCursor],
       queryFn: FetchGetMyParticipationList,
       initialPageParam: 0,
       getNextPageParam: (lastPage, pages) => {

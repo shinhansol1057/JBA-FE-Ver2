@@ -1,10 +1,23 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaCircleCheck } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
-const Page = () => {
+type Props = {
+  params: {
+    id: string;
+  };
+};
+const Page = ({ params: { id } }: Props) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
+
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: ["myParticipationDetail", id],
+    });
+  }, []);
   return (
     <div
       className={"w-full h-[80vh] flex flex-col justify-center items-center"}
@@ -18,7 +31,7 @@ const Page = () => {
           className={
             "px-5 md:px-10 py-2 md:py-4 bg-black text-white rounded-[20px] md:text-xl"
           }
-          onClick={() => router.push("/jeju-competition/info")}
+          onClick={() => router.push(`/competition-participation/${id}`)}
         >
           신청내역 보기 &gt;
         </button>

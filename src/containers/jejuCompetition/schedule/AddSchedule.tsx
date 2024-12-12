@@ -9,6 +9,7 @@ import {
 import {
   addCompetitionScheduleRowType,
   addCompetitionScheduleType,
+  divisionResponseType,
 } from "@/types/CompetitionType";
 import PostTitle from "@/components/common/PostTitle";
 import AddScheduleDivisionBox from "@/containers/jejuCompetition/schedule/AddScheduleDivisionBox";
@@ -53,29 +54,31 @@ const AddSchedule = ({ id }: Props) => {
   useEffect(() => {
     if (detailData) {
       setAddCompetitionScheduleList([]);
-      detailData.divisions.map((d: string, index: number): void => {
-        const initialRow: addCompetitionScheduleRowType = {
-          gameNumber: index + 1,
-          startDate: getDateAndTimeToString(
-            new Date(
-              new Date(detailData?.startDate).getTime() + 3600000 * index,
+      detailData.divisions.map(
+        (d: divisionResponseType, index: number): void => {
+          const initialRow: addCompetitionScheduleRowType = {
+            gameNumber: index + 1,
+            startDate: getDateAndTimeToString(
+              new Date(
+                new Date(detailData?.startDate).getTime() + 3600000 * index,
+              ),
             ),
-          ),
-          floor: "",
-          place: detailData.places[0].placeName,
-          homeName: "",
-          awayName: "",
-          state5x5: true,
-        };
-        const initialData: addCompetitionScheduleType = {
-          division: d,
-          postCompetitionScheduleRow: [initialRow],
-        };
-        setAddCompetitionScheduleList((prevState) => [
-          ...prevState,
-          initialData,
-        ]);
-      });
+            floor: "",
+            place: detailData.places[0].placeName,
+            homeName: "",
+            awayName: "",
+            state5x5: true,
+          };
+          const initialData: addCompetitionScheduleType = {
+            division: d.divisionName,
+            postCompetitionScheduleRow: [initialRow],
+          };
+          setAddCompetitionScheduleList((prevState) => [
+            ...prevState,
+            initialData,
+          ]);
+        },
+      );
     }
   }, [detailData]);
 
@@ -85,17 +88,19 @@ const AddSchedule = ({ id }: Props) => {
       <div className={"my-5"}>
         <PostTitle title={detailData?.title} />
       </div>
-      {detailData?.divisions.map((division: string, i: number) => {
-        return (
-          <AddScheduleDivisionBox
-            key={"division" + i}
-            divisionIndex={i}
-            places={detailData?.places}
-            addCompetitionScheduleList={addCompetitionScheduleList}
-            setAddCompetitionScheduleList={setAddCompetitionScheduleList}
-          />
-        );
-      })}
+      {detailData?.divisions.map(
+        (division: { divisionId: string; divisionName: string }, i: number) => {
+          return (
+            <AddScheduleDivisionBox
+              key={"division" + i}
+              divisionIndex={i}
+              places={detailData?.places}
+              addCompetitionScheduleList={addCompetitionScheduleList}
+              setAddCompetitionScheduleList={setAddCompetitionScheduleList}
+            />
+          );
+        },
+      )}
       <div className={"grid grid-cols-2 gap-2.5 md:gap-5 mb-12 "}>
         <CancelBtn handler={() => router.back()} />
         <AddBtn handler={() => submitHandler()} />

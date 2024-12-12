@@ -1,23 +1,39 @@
 "use client";
 import React from "react";
-import PageTitle from "@/components/layout/PageTitle";
-import { useQuery } from "@tanstack/react-query";
-import { FetchGetCompetitionDetail } from "@/services/CompetitionApi";
-import { FetchGetParticipation } from "@/services/participationApi";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  FetchDeleteMyParticipation,
+  FetchGetParticipation,
+} from "@/services/participationApi";
 import PostTitle from "@/components/common/PostTitle";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
-import { useSession } from "next-auth/react";
 import GetFileBox from "@/components/common/GetFileBox";
+import CancelBtn from "@/components/common/CancelBtn";
+import { useRouter } from "next/navigation";
+import AddBtn from "@/components/common/AddBtn";
+import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
+import { getFileType } from "@/types/CommonType";
 
 const MyParticipationDetail = ({ id }: { id: string }) => {
-  const { data: session, status: sessionStatus } = useSession();
+  const queryClient = useQueryClient();
+  const router = useRouter();
   const { data } = useQuery({
-    queryKey: ["my-participation-detail", id],
+    queryKey: ["myParticipationDetail", id],
     queryFn: async () => await FetchGetParticipation(id),
     select: (result) => result?.data.data,
   });
+  const deleteHandler = async () => {
+    await confirmAndCancelAlertWithLoading(
+      "question",
+      "신청 취소",
+      "정말로 신청을 취소하시겠습니까?",
+    ).then(async (res) => {
+      if (res.isConfirmed) {
+        await FetchDeleteMyParticipation(id, router, queryClient);
+      }
+    });
+  };
 
-  console.log(session);
   return (
     <div className={"w-[90%] md:w-[800px] text-sm md:text-lg"}>
       <div className={"my-5"}>
@@ -89,20 +105,26 @@ const MyParticipationDetail = ({ id }: { id: string }) => {
         </div>
       </div>
       <div className={"my-2.5"}>
-        {data?.files.map(
-          (
-            file: { fileName: string; filePath: string; fileId: string },
-            i: number,
-          ) => {
-            return (
-              <GetFileBox
-                fileName={file.fileName}
-                fileUrl={file.filePath}
-                key={`my-participation-detail-${i}`}
-              />
-            );
-          },
-        )}
+        {data?.files.map((file: getFileType, i: number) => {
+          return (
+            <GetFileBox
+              fileName={file.fileName}
+              fileUrl={file.fileUrl}
+              key={`my-participation-detail-${i}`}
+            />
+          );
+        })}
+      </div>
+      <div className={"grid grid-cols-2 gap-4 mt-4"}>
+        <CancelBtn
+          handler={() =>
+            router.push(
+              `/competition-participation/update/${data.participationCompetitionId}`,
+            )
+          }
+          text={"수정"}
+        />
+        <AddBtn handler={() => deleteHandler()} text={"신청 취소"} />
       </div>
     </div>
   );

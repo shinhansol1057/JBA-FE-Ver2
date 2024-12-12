@@ -97,7 +97,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       try {
         return refreshTokenService(token);
       } catch (error) {
-        // console.log("error: ", error);
         await signOut({ redirectTo: "/login/social" });
         return {
           ...token,

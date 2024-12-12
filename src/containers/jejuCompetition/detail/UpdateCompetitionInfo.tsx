@@ -7,7 +7,6 @@ import {
   FetchGetDivisionList,
 } from "@/services/CompetitionApi";
 import {
-  competitionDetailAttachedFileType,
   divisionType,
   placeType,
   updateCompetitionRequestType,
@@ -44,9 +43,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   const [relatedURL, setRelatedUrl] = useState<string | null>("");
   const [files, setFiles] = useState<File[]>([]);
   const [ckData, setCkData] = useState<string>("");
-  const [attachedFileList, setAttachedFileList] = useState<
-    competitionDetailAttachedFileType[]
-  >([]);
+  const [attachedFileList, setAttachedFileList] = useState<getFileType[]>([]);
   const [newCkImgUrls, setNewCkImgUrls] = useState<getFileType[]>([]);
   const [divisionList, setDivisionList] = useState<divisionType[]>([]);
 
@@ -83,7 +80,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
       relatedURL: relatedURL,
       ckData: ckData,
       ckImgRequests: [],
-      uploadedAttachedFiles: attachedFileList.map((item) => item.filePath),
+      uploadedAttachedFiles: attachedFileList.map((item) => item.fileUrl),
       deletedCkImgUrls: [],
     };
 
@@ -111,7 +108,12 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
 
   useEffect(() => {
     setTitle(data?.title);
-    setSelectedDivisions(data?.divisions);
+    setSelectedDivisions(
+      data?.divisions.map(
+        (item: { divisionId: string; divisionName: string }) =>
+          item.divisionName,
+      ),
+    );
     setStartDate(data?.startDate);
     setEndDate(data?.endDate);
     setParticipationStartDate(data?.participationStartDate);
@@ -131,7 +133,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
 
   return (
     <div className={"flex flex-col mt-5 w-[90%] md:w-[800px]"}>
-      <SubTitle title={"대회정보 등록"} />
+      <SubTitle title={"대회정보 수정"} />
       <div className={"my-5"}>
         <PostInput
           type={"text"}
@@ -225,7 +227,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
       />
       <div className={"grid grid-cols-2 gap-[10px] md:gap-[20px] my-[20px]"}>
         <CancelBtn handler={() => router.back()} />
-        <AddBtn handler={() => formSubmitHandler()} />
+        <AddBtn handler={() => formSubmitHandler()} text={"수정"} />
       </div>
     </div>
   );

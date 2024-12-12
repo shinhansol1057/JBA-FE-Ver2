@@ -85,16 +85,24 @@ export const FetchAddCompetitionInfo = async (
       });
     })
     .catch((err) => {
-      if (err.response.data.detailMessage === "제목을 입력해주세요.")
+      const message = err.response.data.detailMessage;
+      if (message === "Duplication CompetitionName") {
+        confirmAlert(
+          "error",
+          "이미 등록된 대회명입니다.",
+          "다른 대회명을 입력해주세요.",
+        );
+      }
+      if (message === "제목을 입력해주세요.")
         confirmAlert("warning", "제목을 입력해주세요.");
-      else if (err.response.data.detailMessage === "종별을 선택해주세요.")
+      else if (message === "종별을 선택해주세요.")
         confirmAlert("warning", "종별을 1개 이상 선택해주세요");
       else if (
-        err.response.data.detailMessage === "시작일을 입력해주세요." ||
-        err.response.data.detailMessage === "종료일을 입력해주세요."
+        message === "시작일을 입력해주세요." ||
+        message === "종료일을 입력해주세요."
       )
         confirmAlert("warning", "시작일 또는 종료일을 선택해주세요.");
-      else if (err.response.data.detailMessage === "장소를 등록해주세요.")
+      else if (message === "장소를 등록해주세요.")
         confirmAlert("warning", "장소를 등록해주세요.");
     });
 };

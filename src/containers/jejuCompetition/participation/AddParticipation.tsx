@@ -10,6 +10,9 @@ import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
 import CancelBtn from "@/components/common/CancelBtn";
 import { useRouter } from "next/navigation";
 import AddBtn from "@/components/common/AddBtn";
+import { FetchPostParticipation } from "@/services/participationApi";
+import confirmAlert from "@/libs/alert/ConfirmAlert";
+import { addHyphenToPhoneNum } from "@/utils/PhoneNumHandlerWithReactHookForm";
 
 const AddParticipation = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -24,15 +27,21 @@ const AddParticipation = ({ id }: { id: string }) => {
     queryFn: () => FetchGetCompetitionDetail(id),
     select: (result) => result?.data.data,
   });
-
-  console.log(detailData);
-
-  const submitHandler = () => {
-    router.push("/competition-participation-complete");
+  const submitHandler = async () => {
+    if (!selectedDivision) {
+      await confirmAlert("warning", "종별을 선택해주세요.");
+      return;
+    }
+    return await FetchPostParticipation(
+      selectedDivision,
+      name,
+      phoneNum,
+      email,
+      files,
+      router,
+      id,
+    );
   };
-
-  console.log(detailData);
-  console.log(selectedDivision);
   return (
     <div className={"my-2.5 md:my-5 w-[90%] md:w-[800px]"}>
       <PostTitle title={detailData?.title} />
@@ -89,6 +98,8 @@ const AddParticipation = ({ id }: { id: string }) => {
             className={
               "pl-1 md:p-2 placeholder:text-[#B5B5B5] w-full h-4 md:h-6 text-base border-none mt-2 md:mt-4 md:text-xl"
             }
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className={"py-2.5 border-solid border-b-[1px] border-[#D9D9D9]"}>
@@ -100,10 +111,12 @@ const AddParticipation = ({ id }: { id: string }) => {
           />
           <input
             type={"text"}
-            placeholder={"'-'를 제외하고 입력해주세요."}
+            placeholder={"'-'는 자동으로 입력됩니다."}
             className={
               "pl-1 md:p-2 placeholder:text-[#B5B5B5] w-full h-4 md:h-6 text-base border-none mt-2  md:mt-4 md:text-xl"
             }
+            value={phoneNum}
+            onChange={(e) => setPhoneNum(addHyphenToPhoneNum(e.target.value))}
           />
         </div>
         <div className={"py-2.5 border-solid border-b-[1px] border-[#D9D9D9]"}>
@@ -115,10 +128,12 @@ const AddParticipation = ({ id }: { id: string }) => {
           />
           <input
             type={"email"}
-            placeholder={"이메일을 입력해주세요"}
+            placeholder={"이메일을 입력해주세요."}
             className={
               "pl-1 md:p-2 placeholder:text-[#B5B5B5] w-full h-4 md:h-6 text-base border-none mt-2 md:mt-4 md:text-xl"
             }
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
       </div>

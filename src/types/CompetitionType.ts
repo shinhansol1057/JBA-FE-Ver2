@@ -1,4 +1,4 @@
-import { getFileType } from "@/types/CommonType";
+import { getFileType, getFileWithIdType } from "@/types/CommonType";
 
 export type competitionDetailType = {
   competitionId: number;
@@ -11,8 +11,8 @@ export type competitionDetailType = {
   participationStartDate: Date | null;
   participationEndDate: Date | null;
   places: competitionPlaceType[];
-  competitionDetailAttachedFiles: competitionFileType[];
-  divisions: { divisionId: number; divisionName: string }[];
+  competitionDetailAttachedFiles: getFileWithIdType[];
+  divisions: divisionResponseType[];
   ckImgUrls: string[];
 };
 
@@ -22,12 +22,6 @@ export type competitionPlaceType = {
   latitude: number;
   longitude: number;
   address: string;
-};
-
-export type competitionFileType = {
-  competitionAttachedFileId: number;
-  filePath: string;
-  fileName: string;
 };
 
 export type competitionResultType = {
@@ -46,7 +40,7 @@ export type competitionResultRowType = {
   awayName: string;
   awayScore: number;
   fileName: string;
-  filePath: string | null;
+  fileUrl: string | null;
   state5x5: boolean;
 };
 
@@ -66,7 +60,7 @@ export type placeType = {
 export type competitionDetailAttachedFileType = {
   competitionAttachedFileId: number;
   fileName: string;
-  filePath: string;
+  fileUrl: string;
 };
 
 export type addCompetitionRequestType = {
@@ -129,6 +123,11 @@ export type addCompetitionResultRowType = {
   state5x5: boolean;
   homeScore: number | null;
   awayScore: number | null;
-  filePath: string | null;
+  fileUrl: string | null;
   fileName: string | null;
+};
+
+export type divisionResponseType = {
+  divisionId: string;
+  divisionName: string;
 };

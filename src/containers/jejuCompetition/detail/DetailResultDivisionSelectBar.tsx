@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
-import { competitionDetailType } from "@/types/CompetitionType";
+import {
+  competitionDetailType,
+  divisionResponseType,
+} from "@/types/CompetitionType";
 import { IoMenu } from "react-icons/io5";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { FetchDeleteSchedule } from "@/services/CompetitionApi";
@@ -68,20 +71,24 @@ const DetailResultDivisionSelectBar = ({
             >
               전체
             </button>
-            {detailData.divisions.map((division: string, i: number) => {
-              return (
-                <button
-                  key={i}
-                  onClick={() => setDivisionFilter(division)}
-                  className={
-                    "hover:font-bold " +
-                    (divisionFilter === division ? "text-blue-700" : "")
-                  }
-                >
-                  {division}
-                </button>
-              );
-            })}
+            {detailData.divisions.map(
+              (division: divisionResponseType, i: number) => {
+                return (
+                  <button
+                    key={i}
+                    onClick={() => setDivisionFilter(division.divisionName)}
+                    className={
+                      "hover:font-bold " +
+                      (divisionFilter === division.divisionName
+                        ? "text-blue-700"
+                        : "")
+                    }
+                  >
+                    {division.divisionName}
+                  </button>
+                );
+              },
+            )}
           </div>
         </div>
       </div>

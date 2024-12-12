@@ -69,14 +69,14 @@ const CompetitionResultRowBox = ({ data, phase }: Props) => {
             />
             <p>{data.gameNumber}</p>
           </div>
-          {phase === "FINISH" && data.filePath ? (
+          {phase === "FINISH" && data.fileUrl ? (
             <GrDocumentDownload
               className={
                 "text-base sm:text-xl md:text-3xl mr-2.5 md:mr-5 cursor-pointer"
               }
               onClick={async () => {
-                if (data.filePath) {
-                  await handleDownload(data.filePath, data.fileName);
+                if (data.fileUrl) {
+                  await handleDownload(data.fileUrl, data.fileName);
                 } else {
                   await confirmAlert("warning", "등록된 파일이 없습니다.");
                 }
