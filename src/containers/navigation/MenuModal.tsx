@@ -22,12 +22,10 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
     router.push("/login/social");
   };
   const { data: session, status: sessionStatus } = useSession();
+
   const logoutHandler = async () => {
     setModalOpen(false);
-    await logout();
-    await signOut({
-      redirectTo: process.env.NEXT_PUBLIC_API_KEY + "/login/social",
-    });
+    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_API_KEY + "/login" });
   };
 
   return (
@@ -64,6 +62,19 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
             >
               마이페이지
             </Link>
+            <Link href="/admin">
+              <button
+                className={
+                  "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
+                  "w-[70px] sm:w-[90px] md:w-[110px] " +
+                  "h-5 sm:h-6 md:h-7 " +
+                  "text-xs sm:text-sm md:text-base "
+                }
+              >
+                관리자
+              </button>
+            </Link>
+
             <button
               className={
                 "flex justify-center items-center font-bold text-white bg-black rounded-2xl " +
