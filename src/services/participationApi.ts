@@ -128,7 +128,7 @@ const FetchUpdateParticipation = async (
     await confirmAlert("warning", "종별을 선택해주세요.");
     return;
   }
-  const requestBody = { name, email, phoneNum, remainingFiles };
+  const requestBody = { divisionId, name, email, phoneNum, remainingFiles };
   const blob: Blob = new Blob([JSON.stringify(requestBody)], {
     type: "application/json",
   });
@@ -145,7 +145,7 @@ const FetchUpdateParticipation = async (
   })
     .then((res) => {
       router.push(`/competition-participation-complete/${res.data.data}`);
-      confirmAlert("success", "참가 신청 성공!");
+      confirmAlert("success", "수정 완료!");
     })
     .catch((err) => {
       const message: string = err.response.data.detailMessage;
