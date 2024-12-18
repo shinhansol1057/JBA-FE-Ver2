@@ -70,6 +70,7 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
                   "h-5 sm:h-6 md:h-7 " +
                   "text-xs sm:text-sm md:text-base "
                 }
+                onClick={() => setModalOpen(false)}
               >
                 관리자
               </button>
