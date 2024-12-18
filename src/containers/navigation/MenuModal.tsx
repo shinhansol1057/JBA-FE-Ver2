@@ -8,6 +8,7 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { logout } from "@/services/user/LoginApi";
 import { useIsStaff } from "@/hooks/useIsStaff";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
   setModalOpen: (value: ((prevState: boolean) => boolean) | boolean) => void;
@@ -16,6 +17,7 @@ type Props = {
 const MenuModal = ({ setModalOpen, closeModal }: Props) => {
   const router = useRouter();
   const isStaff = useIsStaff();
+  const isAdmin = useIsAdmin();
   const { setCompetitionStatusMenu } = useCompetitionStore();
   const loginButtonHandler = () => {
     setModalOpen(false);
@@ -62,19 +64,21 @@ const MenuModal = ({ setModalOpen, closeModal }: Props) => {
             >
               마이페이지
             </Link>
-            <Link href="/admin">
-              <button
-                className={
-                  "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
-                  "w-[70px] sm:w-[90px] md:w-[110px] " +
-                  "h-5 sm:h-6 md:h-7 " +
-                  "text-xs sm:text-sm md:text-base "
-                }
-                onClick={() => setModalOpen(false)}
-              >
-                관리자
-              </button>
-            </Link>
+            {isAdmin && (
+              <Link href="/admin">
+                <button
+                  className={
+                    "flex justify-center items-center font-bold text-white bg-black rounded-[20px] " +
+                    "w-[70px] sm:w-[90px] md:w-[110px] " +
+                    "h-5 sm:h-6 md:h-7 " +
+                    "text-xs sm:text-sm md:text-base "
+                  }
+                  onClick={() => setModalOpen(false)}
+                >
+                  관리자
+                </button>
+              </Link>
+            )}
 
             <button
               className={
