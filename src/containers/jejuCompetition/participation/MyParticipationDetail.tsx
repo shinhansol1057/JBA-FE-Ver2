@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import AddBtn from "@/components/common/AddBtn";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { getFileType } from "@/types/CommonType";
+import { calculatorParticipationDuration } from "@/utils/calculatorCompetitionStatus";
 
 const MyParticipationDetail = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
@@ -33,6 +34,7 @@ const MyParticipationDetail = ({ id }: { id: string }) => {
       }
     });
   };
+  console.log(data);
 
   return (
     <div className={"w-[90%] md:w-[800px] text-sm md:text-lg"}>
@@ -115,17 +117,27 @@ const MyParticipationDetail = ({ id }: { id: string }) => {
           );
         })}
       </div>
-      <div className={"grid grid-cols-2 gap-4 mt-4"}>
-        <CancelBtn
-          handler={() =>
-            router.push(
-              `/competition-participation/update/${data.participationCompetitionId}`,
-            )
-          }
-          text={"수정"}
-        />
-        <AddBtn handler={() => deleteHandler()} text={"신청 취소"} />
-      </div>
+      {data &&
+        (calculatorParticipationDuration(
+          data.participationStartDate,
+          data.participationEndDate,
+        ) ? (
+          <div className={"grid grid-cols-2 gap-4 mt-4"}>
+            <CancelBtn
+              handler={() =>
+                router.push(
+                  `/competition-participation/update/${data.participationCompetitionId}`,
+                )
+              }
+              text={"수정"}
+            />
+            <AddBtn handler={() => deleteHandler()} text={"신청 취소"} />
+          </div>
+        ) : (
+          <div className={"mt-4"}>
+            <AddBtn handler={() => router.back()} text={"뒤로가기"} />
+          </div>
+        ))}
     </div>
   );
 };
