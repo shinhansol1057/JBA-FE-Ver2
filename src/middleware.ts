@@ -17,12 +17,12 @@ export default auth((req) => {
 
   if (userPath && !auth) {
     // 로그인 안되어있으면 로그인 페이지로 리다이렉션
-    return Response.redirect(new URL("/login/social", req.url));
+    return Response.redirect(new URL("/login/social", req.nextUrl.origin));
   }
 
   if (adminPath && !isAdmin) {
     // 관리자 권한이 없으면 로그인 페이지로 리다이렉션
-    return Response.redirect(new URL("/login/social", req.url));
+    return Response.redirect(new URL("/login/social", req.nextUrl.origin));
   }
 
   if (
@@ -34,7 +34,7 @@ export default auth((req) => {
     url.pathname = "/login";
     url.searchParams.set("callbackUrl", req.nextUrl.pathname);
     // 로그인 페이지로 가는데 로그인이 되어있으면 메인페이지로 리다이렉션
-    return Response.redirect(new URL("/", req.url));
+    return Response.redirect(new URL("/", req.nextUrl.origin));
   }
   // return Response.next();
 });
