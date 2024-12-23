@@ -81,6 +81,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       //로그인 시도 시 토큰 정보를 token 으로 전달(이메일로그인)
       if (
         account?.provider === "credentials" &&
+        // @ts-ignore
         user.accessToken &&
         user.email
       ) {

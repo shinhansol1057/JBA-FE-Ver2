@@ -12,7 +12,16 @@ const SignUpDuplicate = () => {
 
   const linkSocial = async () => {
     if (id && email) {
-      const data = await FetchUpdateLinkSocial(id, email);
+      const data = await FetchUpdateLinkSocial(id, email).then((res) => {
+        if (res.status === 200) {
+          confirmAndCancelAlertWithLoading(
+            "success",
+            "연동 성공",
+            "연동되었습니다. 다시 로그인해주세요",
+            () => (window.location.href = "/login/social"),
+          );
+        }
+      });
     }
   };
 
