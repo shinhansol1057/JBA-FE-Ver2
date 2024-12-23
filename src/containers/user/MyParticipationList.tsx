@@ -55,13 +55,6 @@ const MyParticipationList = () => {
   }, []);
   return (
     <div className={"w-full flex flex-col items-center"}>
-      <Category
-        category1={"내정보"}
-        category1Url={"my-page"}
-        category2={"참가신청 기록"}
-        category2Url={"my-participation"}
-        defaultUrl={"/user/"}
-      />
       <LoadingText
         loading={status === "pending"}
         text={"잠시만 기다려주세요."}

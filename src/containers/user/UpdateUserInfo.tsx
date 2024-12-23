@@ -32,7 +32,7 @@ const UpdateUserInfo = () => {
       "question",
       "프로필 변경",
       "프로필을 변경하시겠습니까?",
-      async () => mutation.updateUserInfo.mutate({ name, phoneNum }),
+      async () => mutation.updateUserInfoMutation.mutate({ name, phoneNum }),
     );
   };
 

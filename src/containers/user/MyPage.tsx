@@ -17,19 +17,11 @@ const MyPage = () => {
     enabled: sessionStatus === "authenticated",
   });
   return (
-    <div className={"w-full flex flex-col items-center"}>
-      <Category
-        category1={"내정보"}
-        category1Url={"my-page"}
-        category2={"참가신청 기록"}
-        category2Url={"my-participation"}
-        defaultUrl={"/user/"}
-      />
+    <div className={"flex flex-col items-center w-[90%] md:w-[800px] "}>
       {data && (
         <div
           className={
-            "mt-7 bg-white border border-solid border-borderColor shadow-xl rounded-lg " +
-            "w-[90%] md:w-[800px] " +
+            "mt-7 bg-white border border-solid border-borderColor shadow-xl rounded-lg w-full " +
             "p-2.5 md:p-5 " +
             "grid grid-cols-1 gap-2.5 md:gap-5"
           }
@@ -44,7 +36,7 @@ const MyPage = () => {
       )}
       <div
         className={
-          `w-[90%] md:w-[800px] ${!data?.isSocial && "grid grid-cols-2 gap-2.5 md:gap-5"} mt-5 ` +
+          `w-full ${!data?.isSocial && "grid grid-cols-2 gap-2.5 md:gap-5"} mt-5 ` +
           "text-sm sm:text-base md:text-lg"
         }
       >
