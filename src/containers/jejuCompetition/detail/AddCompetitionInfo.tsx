@@ -21,7 +21,7 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import CancelBtn from "@/components/common/CancelBtn";
 import { useRouter } from "next/navigation";
 import AddBtn from "@/components/common/AddBtn";
-import { koreanLocale } from "@/constants/AntdConfig";
+import { koreanLocale } from "@/constants/antdConfig";
 import dayjs from "dayjs";
 import { getNowDateToString } from "@/utils/FormDate";
 

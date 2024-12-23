@@ -1,18 +1,16 @@
-'use client'
+"use client";
 import ShortCutCard from "@/containers/main/ShortCutCard";
 
 const ShortCuts = () => {
   return (
     <div
       className={
-        "flex flex-col w-[90%] sm:w-[80%] md:w-[70%] mx-auto -mt-[75px] sm:-mt-[50px] md:-mt-[25px]"
+        "flex flex-col w-[90%] sm:w-[80%] md:w-[70%] mx-auto -mt-20 sm:-mt-12 md:-mt-6"
       }
     >
       <div>
         <h3
-          className={
-            "text-[16px] sm:text-[22px] md:text-[32px] font-bold ml-[10px] mb-[10px]"
-          }
+          className={"text-base sm:text-xl md:text-3xl font-bold ml-2.5 mb-2.5"}
         >
           바로가기
         </h3>

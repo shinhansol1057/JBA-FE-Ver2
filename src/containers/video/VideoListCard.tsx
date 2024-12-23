@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { getVideoId } from "@/constants/Video";
 import { GetVideoType } from "@/types/videoType";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
@@ -11,6 +10,7 @@ import { FetchDeleteVideo } from "@/services/VideoApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useSession } from "next-auth/react";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { getVideoId } from "@/utils/video";
 
 type Props = {
   data: GetVideoType;
