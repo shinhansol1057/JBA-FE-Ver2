@@ -1,6 +1,6 @@
-import { getFileType, getFileWithIdType } from "@/types/CommonType";
+import { GetFileType, GetFileWithIdType } from "@/types/commonType";
 
-export type competitionDetailType = {
+export type CompetitionDetailType = {
   competitionId: number;
   title: string;
   startDate: Date;
@@ -10,13 +10,13 @@ export type competitionDetailType = {
   phase: string;
   participationStartDate: Date | null;
   participationEndDate: Date | null;
-  places: competitionPlaceType[];
-  competitionDetailAttachedFiles: getFileWithIdType[];
-  divisions: divisionResponseType[];
+  places: CompetitionPlaceType[];
+  competitionDetailAttachedFiles: GetFileWithIdType[];
+  divisions: DivisionResponseType[];
   ckImgUrls: string[];
 };
 
-export type competitionPlaceType = {
+export type CompetitionPlaceType = {
   competitionPlaceId: number;
   placeName: string;
   latitude: number;
@@ -24,12 +24,12 @@ export type competitionPlaceType = {
   address: string;
 };
 
-export type competitionResultType = {
+export type CompetitionResultType = {
   division: string;
-  getResultResponseRows: competitionResultRowType[];
+  getResultResponseRows: CompetitionResultRowType[];
 };
 
-export type competitionResultRowType = {
+export type CompetitionResultRowType = {
   competitionResultId: number;
   gameNumber: number;
   startDate: Date;
@@ -44,12 +44,12 @@ export type competitionResultRowType = {
   state5x5: boolean;
 };
 
-export type divisionType = {
+export type DivisionType = {
   value: string;
   label: string;
 };
 
-export type placeType = {
+export type PlaceType = {
   competitionPlaceId?: number;
   address: string;
   placeName: string;
@@ -57,46 +57,46 @@ export type placeType = {
   longitude: number;
 };
 
-export type competitionDetailAttachedFileType = {
+export type CompetitionDetailAttachedFileType = {
   competitionAttachedFileId: number;
   fileName: string;
   fileUrl: string;
 };
 
-export type addCompetitionRequestType = {
+export type AddCompetitionRequestType = {
   title: string;
   divisions: string[];
   startDate: string;
   endDate: string;
   participationStartDate: string | null;
   participationEndDate: string | null;
-  places: placeType[];
+  places: PlaceType[];
   relatedURL: string | null;
   ckData: any;
-  ckImgRequests: getFileType[];
+  ckImgRequests: GetFileType[];
 };
 
-export type updateCompetitionRequestType = {
+export type UpdateCompetitionRequestType = {
   title: string;
   divisions: string[] | undefined;
   startDate: string;
   endDate: string;
   participationStartDate: string | null;
   participationEndDate: string | null;
-  updatePlaces: placeType[];
+  updatePlaces: PlaceType[];
   relatedURL: string | null;
   ckData: any;
-  ckImgRequests: getFileType[];
+  ckImgRequests: GetFileType[];
   uploadedAttachedFiles: string[];
   deletedCkImgUrls: string[];
 };
 
-export type addCompetitionScheduleType = {
+export type AddCompetitionScheduleType = {
   division: string;
-  postCompetitionScheduleRow: addCompetitionScheduleRowType[];
+  postCompetitionScheduleRow: AddCompetitionScheduleRowType[];
 };
 
-export type addCompetitionScheduleRowType = {
+export type AddCompetitionScheduleRowType = {
   competitionResultId?: number;
   gameNumber: number;
   startDate: string;
@@ -107,12 +107,12 @@ export type addCompetitionScheduleRowType = {
   state5x5: boolean;
 };
 
-export type addCompetitionResultType = {
+export type AddCompetitionResultType = {
   division: string;
-  postResultRequestRows: addCompetitionResultRowType[];
+  postResultRequestRows: AddCompetitionResultRowType[];
 };
 
-export type addCompetitionResultRowType = {
+export type AddCompetitionResultRowType = {
   competitionResultId: number | null;
   gameNumber: number;
   startDate: string;
@@ -127,7 +127,7 @@ export type addCompetitionResultRowType = {
   fileName: string | null;
 };
 
-export type divisionResponseType = {
+export type DivisionResponseType = {
   divisionId: string;
   divisionName: string;
 };

@@ -3,9 +3,7 @@ import { auth } from "../auth";
 export default auth((req) => {
   const { auth } = req;
   console.log("auth: ", auth);
-  const isAdmin =
-    // @ts-ignore
-    auth?.role === "ROLE_ADMIN" || auth?.role === "ROLE_MASTER";
+  const isAdmin = auth?.role === "ROLE_ADMIN" || auth?.role === "ROLE_MASTER";
 
   const adminPath = AdminPaths.some((path) =>
     req.nextUrl.pathname.startsWith(path),

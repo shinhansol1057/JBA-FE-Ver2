@@ -83,7 +83,7 @@ const MyParticipationList = () => {
         {data?.pages.map((page, i: number) => (
           <React.Fragment key={`participation - ${i}`}>
             {page.data.data.currentScrollItems.map(
-              (item: participationCardType) => (
+              (item: ParticipationCardType) => (
                 <MyParticipationCard
                   key={item.participationCompetitionId}
                   id={item.participationCompetitionId}

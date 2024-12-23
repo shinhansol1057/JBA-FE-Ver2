@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
-  addCompetitionResultRowType,
-  addCompetitionResultType,
-  divisionType,
-  placeType,
-} from "@/types/CompetitionType";
+  AddCompetitionResultRowType,
+  AddCompetitionResultType,
+  DivisionType,
+  PlaceType,
+} from "@/types/competitionType";
 import ScheduleRowInput from "@/components/competition/ScheduleRowInput";
 import { ConfigProvider, DatePicker, Select, Space } from "antd";
 import { koreanLocale } from "@/constants/AntdConfig";
@@ -16,10 +16,10 @@ import { FetchUploadFile } from "@/services/FileUploadApi";
 type Props = {
   divisionIndex: number;
   rowIndex: number;
-  places: placeType[];
-  addCompetitionResultList: addCompetitionResultType[];
+  places: PlaceType[];
+  addCompetitionResultList: AddCompetitionResultType[];
   setAddCompetitionResultList: React.Dispatch<
-    React.SetStateAction<addCompetitionResultType[]>
+    React.SetStateAction<AddCompetitionResultType[]>
   >;
   setGameNumber: any;
 };
@@ -32,9 +32,9 @@ const AddResultRowBox = ({
   setGameNumber,
 }: Props) => {
   const [clientWidth, setClientWidth] = useState<number>(320);
-  const placeOptions: divisionType[] = [];
+  const placeOptions: DivisionType[] = [];
   if (places) {
-    places.forEach((p: placeType) =>
+    places.forEach((p: PlaceType) =>
       placeOptions.push({ value: p.placeName, label: p.placeName }),
     );
   }
@@ -43,11 +43,11 @@ const AddResultRowBox = ({
 
   const minusHandler = (): void => {
     setAddCompetitionResultList((prevState) => {
-      const resultList: addCompetitionResultType[] = [...prevState];
+      const resultList: AddCompetitionResultType[] = [...prevState];
       resultList[divisionIndex].postResultRequestRows = resultList[
         divisionIndex
       ].postResultRequestRows.filter(
-        (item: addCompetitionResultRowType, index: number) =>
+        (item: AddCompetitionResultRowType, index: number) =>
           rowIndex !== index,
       );
       return resultList;
@@ -57,7 +57,7 @@ const AddResultRowBox = ({
 
   const startDateHandler = (dateString: string) => {
     setAddCompetitionResultList((prevState) => {
-      const resultList: addCompetitionResultType[] = [...prevState];
+      const resultList: AddCompetitionResultType[] = [...prevState];
       rowData.startDate = dateString;
       return resultList;
     });
@@ -66,7 +66,7 @@ const AddResultRowBox = ({
 
   const floorHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionResultList((prevState) => {
-      const resultList: addCompetitionResultType[] = [...prevState];
+      const resultList: AddCompetitionResultType[] = [...prevState];
       rowData.floor = event.target.value;
       return resultList;
     });
@@ -74,7 +74,7 @@ const AddResultRowBox = ({
 
   const placeHandler = (value: string) => {
     setAddCompetitionResultList((prevState) => {
-      const resultList: addCompetitionResultType[] = [...prevState];
+      const resultList: AddCompetitionResultType[] = [...prevState];
       rowData.place = value;
       return resultList;
     });
@@ -83,7 +83,7 @@ const AddResultRowBox = ({
 
   const homeNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionResultList((prevState) => {
-      const resultList: addCompetitionResultType[] = [...prevState];
+      const resultList: AddCompetitionResultType[] = [...prevState];
       rowData.homeName = e.target.value;
       return resultList;
     });
@@ -91,7 +91,7 @@ const AddResultRowBox = ({
 
   const homeScoreHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionResultList((prevState) => {
-      const resultList: addCompetitionResultType[] = [...prevState];
+      const resultList: AddCompetitionResultType[] = [...prevState];
       rowData.homeScore = Number(e.target.value);
       return resultList;
     });
@@ -99,7 +99,7 @@ const AddResultRowBox = ({
 
   const awayNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionResultList((prevState) => {
-      const resultList: addCompetitionResultType[] = [...prevState];
+      const resultList: AddCompetitionResultType[] = [...prevState];
       rowData.awayName = e.target.value;
       return resultList;
     });
@@ -107,7 +107,7 @@ const AddResultRowBox = ({
 
   const awayScoreHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionResultList((prevState) => {
-      const resultList: addCompetitionResultType[] = [...prevState];
+      const resultList: AddCompetitionResultType[] = [...prevState];
       rowData.awayScore = Number(e.target.value);
       return resultList;
     });
@@ -122,7 +122,7 @@ const AddResultRowBox = ({
       files.push(e.target.files[0]);
       FetchUploadFile(files).then((res) => {
         setAddCompetitionResultList((prevState) => {
-          const resultList: addCompetitionResultType[] = [...prevState];
+          const resultList: AddCompetitionResultType[] = [...prevState];
           rowData.fileName = res.data.data[0]?.fileName;
           rowData.fileUrl = res.data.data[0]?.fileUrl;
           return resultList;

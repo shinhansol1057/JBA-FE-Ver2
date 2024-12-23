@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import {
-  competitionDetailType,
-  competitionPlaceType,
-  divisionResponseType,
-} from "@/types/CompetitionType";
+  CompetitionDetailType,
+  CompetitionPlaceType,
+  DivisionResponseType,
+} from "@/types/competitionType";
 import {
   calculatorCompetitionStatus,
   calculatorParticipationDuration,
@@ -20,7 +20,7 @@ import { FetchDeleteCompetitionInfo } from "@/services/CompetitionApi";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
-  data: competitionDetailType;
+  data: CompetitionDetailType;
 };
 const DetailInfo = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -94,7 +94,7 @@ const DetailInfo = ({ data }: Props) => {
               "grid grid-cols-4 gap-2 text-sm sm:text-base md:text-lg md:grid-cols-6"
             }
           >
-            {data.divisions.map((item: divisionResponseType, i: number) => (
+            {data.divisions.map((item: DivisionResponseType, i: number) => (
               <p key={i} className={"whitespace-nowrap"}>
                 {item.divisionName}
               </p>
@@ -131,7 +131,7 @@ const DetailInfo = ({ data }: Props) => {
           <div
             className={"flex flex-col text-sm sm:text-base md:text-lg gap-2"}
           >
-            {data.places.map((place: competitionPlaceType, i: number) => {
+            {data.places.map((place: CompetitionPlaceType, i: number) => {
               return (
                 <div key={i} className={"flex flex-col md:flex-row"}>
                   <p>{place.placeName}</p>

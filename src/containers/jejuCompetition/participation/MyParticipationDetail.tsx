@@ -12,7 +12,7 @@ import CancelBtn from "@/components/common/CancelBtn";
 import { useRouter } from "next/navigation";
 import AddBtn from "@/components/common/AddBtn";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import { getFileType } from "@/types/CommonType";
+import { GetFileType } from "@/types/commonType";
 import { calculatorParticipationDuration } from "@/utils/calculatorCompetitionStatus";
 
 const MyParticipationDetail = ({ id }: { id: string }) => {
@@ -107,7 +107,7 @@ const MyParticipationDetail = ({ id }: { id: string }) => {
         </div>
       </div>
       <div className={"my-2.5"}>
-        {data?.files.map((file: getFileType, i: number) => {
+        {data?.files.map((file: GetFileType, i: number) => {
           return (
             <GetFileBox
               fileName={file.fileName}

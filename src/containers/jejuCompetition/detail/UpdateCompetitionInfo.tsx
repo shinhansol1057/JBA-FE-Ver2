@@ -7,11 +7,11 @@ import {
   FetchGetDivisionList,
 } from "@/services/CompetitionApi";
 import {
-  divisionType,
-  placeType,
-  updateCompetitionRequestType,
-} from "@/types/CompetitionType";
-import { getFileType } from "@/types/CommonType";
+  DivisionType,
+  PlaceType,
+  UpdateCompetitionRequestType,
+} from "@/types/competitionType";
+import { GetFileType } from "@/types/commonType";
 import SubTitle from "@/components/layout/SubTitle";
 import PostInput from "@/components/common/PostInput";
 import { DatePicker, Select, Space } from "antd";
@@ -39,13 +39,13 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   const [participationEndDate, setParticipationEndDate] = useState<
     string | null
   >(null);
-  const [places, setPlaces] = useState<placeType[]>([]);
+  const [places, setPlaces] = useState<PlaceType[]>([]);
   const [relatedURL, setRelatedUrl] = useState<string | null>("");
   const [files, setFiles] = useState<File[]>([]);
   const [ckData, setCkData] = useState<string>("");
-  const [attachedFileList, setAttachedFileList] = useState<getFileType[]>([]);
-  const [newCkImgUrls, setNewCkImgUrls] = useState<getFileType[]>([]);
-  const [divisionList, setDivisionList] = useState<divisionType[]>([]);
+  const [attachedFileList, setAttachedFileList] = useState<GetFileType[]>([]);
+  const [newCkImgUrls, setNewCkImgUrls] = useState<GetFileType[]>([]);
+  const [divisionList, setDivisionList] = useState<DivisionType[]>([]);
 
   const router = useRouter();
 
@@ -69,7 +69,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   });
 
   const formSubmitHandler = async () => {
-    const requestData: updateCompetitionRequestType = {
+    const requestData: UpdateCompetitionRequestType = {
       title: title,
       divisions: selectedDivisions,
       startDate: startDate,
@@ -125,7 +125,7 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   }, [data]);
 
   useEffect(() => {
-    const list: divisionType[] = divisionData?.map((division: string) => {
+    const list: DivisionType[] = divisionData?.map((division: string) => {
       return { label: division, value: division };
     });
     setDivisionList(list);

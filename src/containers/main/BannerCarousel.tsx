@@ -7,10 +7,10 @@ import styled from "styled-components";
 import React from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import BannerCarouselCard from "@/containers/main/BannerCarouselCard";
-import { bannerAnnouncement, bannerCompetition } from "@/types/MainPageType";
+import { BannerAnnouncement, BannerCompetition } from "@/types/mainPageType";
 
 type Props = {
-  data: bannerAnnouncement[] | bannerCompetition[];
+  data: BannerAnnouncement[] | BannerCompetition[];
 };
 const BannerCarousel = ({ data }: Props) => {
   const settings = {
@@ -35,7 +35,7 @@ const BannerCarousel = ({ data }: Props) => {
   return (
     <SliderContainer display={data?.length === 0 ? "none" : "block"}>
       <StyledSlider {...settings}>
-        {data?.map((item: bannerAnnouncement | bannerCompetition) => {
+        {data?.map((item: BannerAnnouncement | BannerCompetition) => {
           return (
             <BannerCarouselCard
               key={"postId" in item ? item?.postId : item?.competitionId}

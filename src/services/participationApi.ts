@@ -3,7 +3,7 @@ import { getBearerToken } from "@/utils/getBearerToken";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { QueryClient } from "@tanstack/react-query";
-import { competitionDetailAttachedFileType } from "@/types/CompetitionType";
+import { CompetitionDetailAttachedFileType } from "@/types/competitionType";
 
 const FetchGetMyParticipationList = async ({
   pageParam,

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "@/components/common/SearchBar";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { FetchGetPostList } from "@/services/PostApi";
-import { getPostListItemType } from "@/types/PostType";
+import { GetPostListItemType } from "@/types/postType";
 import LoadingText from "@/components/common/LoadingText";
 import { useObserver } from "@/hooks/useObserver";
 import PostListCard from "@/containers/post/PostListCard";
@@ -89,7 +89,7 @@ const PostList = () => {
         {status === "success" &&
           data?.pages.map((group: any, i: number) => (
             <React.Fragment key={i}>
-              {group.data?.posts.map((item: getPostListItemType) => (
+              {group.data?.posts.map((item: GetPostListItemType) => (
                 <PostListCard
                   data={item}
                   key={item.postId}

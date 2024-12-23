@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import PostInput from "@/components/common/PostInput";
 import { Select, Space } from "antd";
-import { postCategoryOption } from "@/constants/Post";
+import { postCategoryOption } from "@/constants/post";
 import dynamic from "next/dynamic";
-import { getFileType } from "@/types/CommonType";
+import { GetFileType } from "@/types/commonType";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
@@ -22,7 +22,7 @@ const AddPost = () => {
   const [isOfficial, setIsOfficial] = useState<string>("false");
   const { postCategory, setPostCategory } = usePostStore();
   const [content, setContent] = useState<string>("");
-  const [postImgs, setPostImgs] = useState<getFileType[]>([]);
+  const [postImgs, setPostImgs] = useState<GetFileType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
   const addHandler = async () => {

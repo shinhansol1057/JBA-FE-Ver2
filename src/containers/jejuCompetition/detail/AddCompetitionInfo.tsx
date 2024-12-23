@@ -1,15 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { getFileType } from "@/types/CommonType";
+import { GetFileType } from "@/types/commonType";
 import PostInput from "@/components/common/PostInput";
 import SubTitle from "@/components/layout/SubTitle";
 import { DatePicker, Select, Space } from "antd";
 import {
-  addCompetitionRequestType,
-  divisionType,
-  placeType,
-} from "@/types/CompetitionType";
+  AddCompetitionRequestType,
+  DivisionType,
+  PlaceType,
+} from "@/types/competitionType";
 import {
   FetchAddCompetitionInfo,
   FetchGetDivisionList,
@@ -40,12 +40,12 @@ const AddCompetitionInfo = () => {
   const [participationEndDate, setParticipationEndDate] = useState<
     string | null
   >(null);
-  const [places, setPlaces] = useState<placeType[]>([]);
+  const [places, setPlaces] = useState<PlaceType[]>([]);
   const [relatedURL, setRelatedUrl] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [ckData, setCkData] = useState<string>("");
-  const [newCkImgUrls, setNewCkImgUrls] = useState<getFileType[]>([]);
-  const [divisionList, setDivisionList] = useState<divisionType[]>([]);
+  const [newCkImgUrls, setNewCkImgUrls] = useState<GetFileType[]>([]);
+  const [divisionList, setDivisionList] = useState<DivisionType[]>([]);
 
   const router = useRouter();
   const { data: divisionData } = useQuery({
@@ -61,7 +61,7 @@ const AddCompetitionInfo = () => {
   });
 
   const formSubmitHandler = async () => {
-    const requestData: addCompetitionRequestType = {
+    const requestData: AddCompetitionRequestType = {
       title: title,
       divisions: selectedDivisions,
       startDate: startDate,
@@ -90,7 +90,7 @@ const AddCompetitionInfo = () => {
   };
 
   useEffect(() => {
-    const list: divisionType[] = divisionData?.map((division: string) => {
+    const list: DivisionType[] = divisionData?.map((division: string) => {
       return { label: division, value: division };
     });
     setDivisionList(list);

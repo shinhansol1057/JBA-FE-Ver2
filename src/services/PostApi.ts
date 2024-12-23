@@ -1,7 +1,7 @@
-import { getFileType } from "@/types/CommonType";
+import { GetFileType } from "@/types/commonType";
 import { Api } from "@/services/axios/Api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
-import { findPostCategoryUrl } from "@/constants/Post";
+import { findPostCategoryUrl } from "@/constants/post";
 import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetPostList = async ({
@@ -27,7 +27,7 @@ export const FetchGetPostDetail = async (id: string, category: string) => {
 
 export const FetchAddPost = async (
   category: string,
-  body: { title: string; content: string; postImgs: getFileType[] },
+  body: { title: string; content: string; postImgs: GetFileType[] },
   files: File[],
   isOfficial: string,
 ) => {
@@ -73,8 +73,8 @@ export const FetchUpdatePost = async (
   body: {
     title: string;
     content: string;
-    postImgs: getFileType[];
-    remainingFiles: getFileType[];
+    postImgs: GetFileType[];
+    remainingFiles: GetFileType[];
   },
   files: File[],
   isOfficial: string,

@@ -7,10 +7,10 @@ import {
   FetchGetCompetitionDetail,
 } from "@/services/CompetitionApi";
 import {
-  addCompetitionScheduleRowType,
-  addCompetitionScheduleType,
-  divisionResponseType,
-} from "@/types/CompetitionType";
+  AddCompetitionScheduleRowType,
+  AddCompetitionScheduleType,
+  DivisionResponseType,
+} from "@/types/competitionType";
 import PostTitle from "@/components/common/PostTitle";
 import AddScheduleDivisionBox from "@/containers/jejuCompetition/schedule/AddScheduleDivisionBox";
 import { getDateAndTimeToString } from "@/utils/FormDate";
@@ -24,7 +24,7 @@ type Props = {
 };
 const AddSchedule = ({ id }: Props) => {
   const [addCompetitionScheduleList, setAddCompetitionScheduleList] = useState<
-    addCompetitionScheduleType[]
+    AddCompetitionScheduleType[]
   >([]);
   const router = useRouter();
 
@@ -55,8 +55,8 @@ const AddSchedule = ({ id }: Props) => {
     if (detailData) {
       setAddCompetitionScheduleList([]);
       detailData.divisions.map(
-        (d: divisionResponseType, index: number): void => {
-          const initialRow: addCompetitionScheduleRowType = {
+        (d: DivisionResponseType, index: number): void => {
+          const initialRow: AddCompetitionScheduleRowType = {
             gameNumber: index + 1,
             startDate: getDateAndTimeToString(
               new Date(
@@ -69,7 +69,7 @@ const AddSchedule = ({ id }: Props) => {
             awayName: "",
             state5x5: true,
           };
-          const initialData: addCompetitionScheduleType = {
+          const initialData: AddCompetitionScheduleType = {
             division: d.divisionName,
             postCompetitionScheduleRow: [initialRow],
           };

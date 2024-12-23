@@ -1,5 +1,5 @@
 "use client";
-import { getPostDetailType } from "@/types/PostType";
+import { GetPostDetailType } from "@/types/postType";
 import PostContent from "@/components/common/PostContent";
 import { IoMenu } from "react-icons/io5";
 import React, { useState } from "react";
@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
-  data: getPostDetailType;
+  data: GetPostDetailType;
 };
 
 const PostDetailInfo = ({ data }: Props) => {

@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {
-  addCompetitionScheduleRowType,
-  addCompetitionScheduleType,
-  competitionResultType,
-  divisionResponseType,
-} from "@/types/CompetitionType";
+  AddCompetitionScheduleRowType,
+  AddCompetitionScheduleType,
+  CompetitionResultType,
+  DivisionResponseType,
+} from "@/types/competitionType";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -23,7 +23,7 @@ import { getDateAndTimeToString } from "@/utils/FormDate";
 
 const UpdateSchedule = ({ id }: { id: string }) => {
   const [addCompetitionScheduleList, setAddCompetitionScheduleList] = useState<
-    addCompetitionScheduleType[]
+    AddCompetitionScheduleType[]
   >([]);
   const router = useRouter();
 
@@ -64,8 +64,8 @@ const UpdateSchedule = ({ id }: { id: string }) => {
 
   useEffect(() => {
     if (scheduleData) {
-      scheduleData?.map((s: competitionResultType, index: number): void => {
-        const list: addCompetitionScheduleRowType[] =
+      scheduleData?.map((s: CompetitionResultType, index: number): void => {
+        const list: AddCompetitionScheduleRowType[] =
           s?.getResultResponseRows?.map((row) => {
             return {
               gameNumber: row.gameNumber,
@@ -79,7 +79,7 @@ const UpdateSchedule = ({ id }: { id: string }) => {
               state5x5: row.state5x5,
             };
           });
-        const initialData: addCompetitionScheduleType = {
+        const initialData: AddCompetitionScheduleType = {
           division: s.division,
           postCompetitionScheduleRow: list,
         };
@@ -98,7 +98,7 @@ const UpdateSchedule = ({ id }: { id: string }) => {
         <PostTitle title={detailData?.title} />
       </div>
       {detailData?.divisions.map(
-        (division: divisionResponseType, i: number) => {
+        (division: DivisionResponseType, i: number) => {
           return (
             <AddScheduleDivisionBox
               key={"division" + i}

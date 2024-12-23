@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { getVideoId } from "@/constants/Video";
-import { getVideoType } from "@/types/VideoType";
+import { GetVideoType } from "@/types/videoType";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
@@ -13,7 +13,7 @@ import { useSession } from "next-auth/react";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
-  data: getVideoType;
+  data: GetVideoType;
 };
 const VideoListCard = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);

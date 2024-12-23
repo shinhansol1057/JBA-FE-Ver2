@@ -54,12 +54,12 @@ import translations from "ckeditor5/translations/ko.js";
 
 import "ckeditor5/ckeditor5.css";
 import { Api } from "@/services/axios/Api";
-import { getFileType } from "@/types/CommonType";
+import { GetFileType } from "@/types/commonType";
 
 type Props = {
   ckData: string;
   setCkData: React.Dispatch<React.SetStateAction<string>>;
-  setNewCkImgUrls: React.Dispatch<React.SetStateAction<getFileType[]>>;
+  setNewCkImgUrls: React.Dispatch<React.SetStateAction<GetFileType[]>>;
 };
 
 export default function CkEditor({

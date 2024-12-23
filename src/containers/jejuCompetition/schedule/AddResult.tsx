@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {
-  addCompetitionResultRowType,
-  addCompetitionResultType,
-  competitionResultType,
-} from "@/types/CompetitionType";
+  AddCompetitionResultRowType,
+  AddCompetitionResultType,
+  CompetitionResultType,
+} from "@/types/competitionType";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -22,7 +22,7 @@ import AddResultDivisionBox from "@/containers/jejuCompetition/schedule/AddResul
 
 const AddResult = ({ id }: { id: string }) => {
   const [addCompetitionResultList, setAddCompetitionResultList] = useState<
-    addCompetitionResultType[]
+    AddCompetitionResultType[]
   >([]);
   const router = useRouter();
 
@@ -63,8 +63,8 @@ const AddResult = ({ id }: { id: string }) => {
 
   useEffect(() => {
     if (scheduleData) {
-      scheduleData?.map((s: competitionResultType, index: number): void => {
-        const list: addCompetitionResultRowType[] =
+      scheduleData?.map((s: CompetitionResultType, index: number): void => {
+        const list: AddCompetitionResultRowType[] =
           s?.getResultResponseRows?.map((row) => {
             return {
               competitionResultId: row.competitionResultId,
@@ -83,7 +83,7 @@ const AddResult = ({ id }: { id: string }) => {
               fileName: row.fileName,
             };
           });
-        const initialData: addCompetitionResultType = {
+        const initialData: AddCompetitionResultType = {
           division: s.division,
           postResultRequestRows: list,
         };

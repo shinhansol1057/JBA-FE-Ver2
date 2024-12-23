@@ -1,11 +1,11 @@
 "use client";
 
-import { bannerAnnouncement, bannerCompetition } from "@/types/MainPageType";
+import { BannerAnnouncement, BannerCompetition } from "@/types/mainPageType";
 import { FormDate } from "@/utils/FormDate";
 import Link from "next/link";
 
 type Props = {
-  data: bannerAnnouncement | bannerCompetition;
+  data: BannerAnnouncement | BannerCompetition;
 };
 
 const BannerCarouselCard = ({ data }: Props) => {

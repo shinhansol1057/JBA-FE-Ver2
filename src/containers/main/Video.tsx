@@ -1,7 +1,7 @@
 import React from "react";
 import { FetchMainVideoList } from "@/services/VideoApi";
 import VideoListCard from "@/containers/video/VideoListCard";
-import { getVideoType } from "@/types/VideoType";
+import { GetVideoType } from "@/types/videoType";
 import AreaTitleAndAllContentBtn from "@/containers/main/AreaTitleAndAllContentBtn";
 
 const Video = async () => {
@@ -14,7 +14,7 @@ const Video = async () => {
       }
     >
       <AreaTitleAndAllContentBtn title={"대회영상"} url={"/media/video"} />
-      {data?.data?.content.map((video: getVideoType, index: number) => {
+      {data?.data?.content.map((video: GetVideoType, index: number) => {
         return (
           <VideoListCard data={video} key={index + "key" + video.videoId} />
         );

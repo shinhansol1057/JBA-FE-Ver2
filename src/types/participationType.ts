@@ -1,4 +1,4 @@
-type participationCardType = {
+type ParticipationCardType = {
   participationCompetitionId: number;
   competitionName: string;
   divisionName: string;

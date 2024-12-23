@@ -2,11 +2,11 @@ import { NormalApi } from "@/services/axios/NormalApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { Api } from "@/services/axios/Api";
 import {
-  addCompetitionRequestType,
-  addCompetitionResultType,
-  addCompetitionScheduleType,
-  updateCompetitionRequestType,
-} from "@/types/CompetitionType";
+  AddCompetitionRequestType,
+  AddCompetitionResultType,
+  AddCompetitionScheduleType,
+  UpdateCompetitionRequestType,
+} from "@/types/competitionType";
 import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetCompetitionList = async ({
@@ -61,7 +61,7 @@ export const FetchGetDivisionList = async () => {
 };
 
 export const FetchAddCompetitionInfo = async (
-  requestData: addCompetitionRequestType,
+  requestData: AddCompetitionRequestType,
   files: File[],
 ) => {
   const blob: Blob = new Blob([JSON.stringify(requestData)], {
@@ -131,7 +131,7 @@ export const FetchDeleteCompetitionInfo = async (id: string) => {
 
 export const FetchUpdateCompetitionInfo = async (
   id: string,
-  requestData: updateCompetitionRequestType,
+  requestData: UpdateCompetitionRequestType,
   files: File[],
 ) => {
   const blob: Blob = new Blob([JSON.stringify(requestData)], {
@@ -189,9 +189,9 @@ export const FetchUpdateCompetitionInfo = async (
 
 export const FetchAddSchedule = async (
   id: string,
-  postCompetitionScheduleList: addCompetitionScheduleType[],
+  postCompetitionScheduleList: AddCompetitionScheduleType[],
 ) => {
-  const request: { request: addCompetitionScheduleType[] } = {
+  const request: { request: AddCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
   return Api.post(`/v1/api/admin/competition/${id}/schedule`, request, {
@@ -243,9 +243,9 @@ export const FetchAddSchedule = async (
 
 export const FetchUpdateSchedule = async (
   id: string,
-  postCompetitionScheduleList: addCompetitionScheduleType[],
+  postCompetitionScheduleList: AddCompetitionScheduleType[],
 ) => {
-  const request: { request: addCompetitionScheduleType[] } = {
+  const request: { request: AddCompetitionScheduleType[] } = {
     request: postCompetitionScheduleList,
   };
   return Api.put(`/v1/api/admin/competition/${id}/schedule`, request, {
@@ -314,9 +314,9 @@ export const FetchDeleteSchedule = async (id: string) => {
 
 export const FetchAddResult = async (
   id: string,
-  requests: addCompetitionResultType[],
+  requests: AddCompetitionResultType[],
 ) => {
-  const request: { requests: addCompetitionResultType[] } = {
+  const request: { requests: AddCompetitionResultType[] } = {
     requests: requests,
   };
   return Api.post(`/v1/api/admin/competition/${id}/result`, request, {

@@ -5,7 +5,7 @@ import PostInput from "@/components/common/PostInput";
 import AddGalleryAttachedFileBox from "@/containers/gallery/AddGalleryAttachedFileBox";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
-import { getFileType } from "@/types/CommonType";
+import { GetFileType } from "@/types/commonType";
 import { useRouter } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import {
@@ -13,14 +13,14 @@ import {
   FetchUpdateGallery,
 } from "@/services/GalleryApi";
 import { useQuery } from "@tanstack/react-query";
-import { getFileWithFileIdType } from "@/types/PostType";
+import { GetFileWithFileIdType } from "@/types/postType";
 import PostTitle from "@/components/common/PostTitle";
 import { IoClose } from "react-icons/io5";
 
 const UpdateGallery = ({ id }: { id: string }) => {
   const [title, setTitle] = useState<string>("");
-  const [files, setFiles] = useState<getFileType[]>([]);
-  const [remainingFiles, setRemainingFiles] = useState<getFileType[]>([]);
+  const [files, setFiles] = useState<GetFileType[]>([]);
+  const [remainingFiles, setRemainingFiles] = useState<GetFileType[]>([]);
   const router = useRouter();
 
   const { data } = useQuery({
@@ -30,9 +30,9 @@ const UpdateGallery = ({ id }: { id: string }) => {
   });
 
   const updateGalleryHandler = async () => {
-    let fileList: getFileType[] = [];
-    remainingFiles.forEach((file: getFileType) => fileList.push(file));
-    files.forEach((file: getFileType) => fileList.push(file));
+    let fileList: GetFileType[] = [];
+    remainingFiles.forEach((file: GetFileType) => fileList.push(file));
+    files.forEach((file: GetFileType) => fileList.push(file));
 
     await confirmAndCancelAlertWithLoading(
       "question",
@@ -52,7 +52,7 @@ const UpdateGallery = ({ id }: { id: string }) => {
   useEffect(() => {
     setTitle(data?.title);
     setRemainingFiles(
-      data?.files.map((file: getFileWithFileIdType) => {
+      data?.files.map((file: GetFileWithFileIdType) => {
         return { fileName: file.fileName, fileUrl: file.fileUrl };
       }),
     );
@@ -80,7 +80,7 @@ const UpdateGallery = ({ id }: { id: string }) => {
               "p-2.5 md:p-5"
             }
           >
-            {remainingFiles?.map((file: getFileWithFileIdType, i: number) => {
+            {remainingFiles?.map((file: GetFileWithFileIdType, i: number) => {
               return (
                 <li key={file.fileId + "/" + i}>
                   <div className={"flex items-center "}>

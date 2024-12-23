@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Select, Space } from "antd";
-import { postCategoryOption } from "@/constants/Post";
+import { postCategoryOption } from "@/constants/post";
 import PostInput from "@/components/common/PostInput";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
 import CancelBtn from "@/components/common/CancelBtn";
@@ -13,7 +13,7 @@ import { usePostStore } from "@/states/PostStore";
 import dynamic from "next/dynamic";
 import PostTitle from "@/components/common/PostTitle";
 import { IoClose } from "react-icons/io5";
-import { getFileWithFileIdType } from "@/types/PostType";
+import { GetFileWithFileIdType } from "@/types/postType";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import SubTitle from "@/components/layout/SubTitle";
 
@@ -26,9 +26,9 @@ const UpdatePost = ({ id }: { id: string }) => {
   const [isOfficial, setIsOfficial] = useState<string>("false");
   const { postCategory, setPostCategory } = usePostStore();
   const [content, setContent] = useState<string>("");
-  const [postImgs, setPostImgs] = useState<getFileWithFileIdType[]>([]);
+  const [postImgs, setPostImgs] = useState<GetFileWithFileIdType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
-  const [remainingFiles, setRemainingFiles] = useState<getFileWithFileIdType[]>(
+  const [remainingFiles, setRemainingFiles] = useState<GetFileWithFileIdType[]>(
     [],
   );
   const router = useRouter();
@@ -119,7 +119,7 @@ const UpdatePost = ({ id }: { id: string }) => {
               "p-2.5 md:p-5"
             }
           >
-            {remainingFiles?.map((file: getFileWithFileIdType) => {
+            {remainingFiles?.map((file: GetFileWithFileIdType) => {
               return (
                 <li key={file.fileId}>
                   <div className={"flex items-center"}>

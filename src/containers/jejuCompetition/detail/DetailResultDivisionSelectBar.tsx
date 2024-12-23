@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import {
-  competitionDetailType,
-  divisionResponseType,
-} from "@/types/CompetitionType";
+  CompetitionDetailType,
+  DivisionResponseType,
+} from "@/types/competitionType";
 import { IoMenu } from "react-icons/io5";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { FetchDeleteSchedule } from "@/services/CompetitionApi";
@@ -13,7 +13,7 @@ import { useSession } from "next-auth/react";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
-  detailData: competitionDetailType;
+  detailData: CompetitionDetailType;
   divisionFilter: string;
   setDivisionFilter: (value: ((prevState: string) => string) | string) => void;
 };
@@ -72,7 +72,7 @@ const DetailResultDivisionSelectBar = ({
               전체
             </button>
             {detailData.divisions.map(
-              (division: divisionResponseType, i: number) => {
+              (division: DivisionResponseType, i: number) => {
                 return (
                   <button
                     key={i}
