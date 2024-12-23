@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "@/components/common/SearchBar";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { FetchGetPostList } from "@/services/PostApi";
+import { FetchGetPostList } from "@/services/postApi";
 import { GetPostListItemType } from "@/types/postType";
 import LoadingText from "@/components/common/LoadingText";
 import { useObserver } from "@/hooks/useObserver";

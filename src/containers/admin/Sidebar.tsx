@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/libs/utils/cn";
-import { FetchGetUserInfo } from "@/services/user/UserApi";
+import { FetchGetUserInfo } from "@/services/user/accountApi";
 import { useSidebarStore } from "@/states/SidebarStore";
 import { User } from "@/types/admin";
 import Link from "next/link";

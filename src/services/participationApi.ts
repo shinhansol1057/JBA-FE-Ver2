@@ -1,4 +1,4 @@
-import { Api } from "@/services/axios/Api";
+import { Api } from "@/services/axios/api";
 import { getBearerToken } from "@/utils/getBearerToken";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";

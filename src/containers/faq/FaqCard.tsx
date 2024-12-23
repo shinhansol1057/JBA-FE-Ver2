@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { MockPost } from "@/constants/FAQData";
+import { MockPost } from "@/constants";
 import { FaQuestion } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 

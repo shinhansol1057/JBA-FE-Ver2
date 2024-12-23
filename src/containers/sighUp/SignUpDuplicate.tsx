@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import { FetchUpdateLinkSocial } from "@/services/user/LoginApi";
+import { FetchUpdateLinkSocial } from "@/services/user/loginApi";
 
 const SignUpDuplicate = () => {
   const searchParams = useSearchParams();

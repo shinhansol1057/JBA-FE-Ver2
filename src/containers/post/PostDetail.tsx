@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { FetchGetPostDetail } from "@/services/PostApi";
+import { FetchGetPostDetail } from "@/services/postApi";
 import PostTitle from "@/components/common/PostTitle";
 import PostDetailInfo from "@/containers/post/PostDetailInfo";
 import { GetFileWithIdType } from "@/types/commonType";

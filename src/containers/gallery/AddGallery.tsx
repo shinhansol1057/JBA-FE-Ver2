@@ -8,7 +8,7 @@ import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import { useRouter } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import { FetchAddGallery } from "@/services/GalleryApi";
+import { FetchAddGallery } from "@/services/galleryApi";
 
 const AddGallery = () => {
   const [title, setTitle] = useState<string>("");

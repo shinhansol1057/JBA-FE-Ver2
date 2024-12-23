@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import PostTitle from "@/components/common/PostTitle";
 import { useQuery } from "@tanstack/react-query";
-import { FetchGetCompetitionDetail } from "@/services/CompetitionApi";
+import { FetchGetCompetitionDetail } from "@/services/competitionApi";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import style from "@/components/common/checkbox/CheckBox.module.css";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";

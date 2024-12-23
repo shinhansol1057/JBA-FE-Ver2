@@ -1,6 +1,6 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
-import { FetchUploadFile } from "@/services/FileUploadApi";
+import { FetchUploadFile } from "@/services/fileUploadApi";
 import { GetFileWithFileIdType } from "@/types/postType";
 import { GetFileType } from "@/types/commonType";
 type Props = {

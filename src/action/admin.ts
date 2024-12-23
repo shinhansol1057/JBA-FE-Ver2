@@ -1,6 +1,6 @@
 "use server";
 
-import { authApi } from "@/services/axios/AuthApi";
+import { authApi } from "@/services/axios/authApi";
 import { PostResponse } from "@/types/admin";
 
 type ActionType<T> = {

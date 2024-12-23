@@ -53,7 +53,7 @@ import {
 import translations from "ckeditor5/translations/ko.js";
 
 import "ckeditor5/ckeditor5.css";
-import { Api } from "@/services/axios/Api";
+import { Api } from "@/services/axios/api";
 import { GetFileType } from "@/types/commonType";
 
 type Props = {

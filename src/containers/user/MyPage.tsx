@@ -1,17 +1,17 @@
 "use client";
 import React from "react";
-import PageTitle from "@/components/layout/PageTitle";
 import MyPageRow from "@/containers/user/MyPageRow";
 import { useQuery } from "@tanstack/react-query";
-import { FetchGetUserInfo } from "@/services/user/UserApi";
+import { FetchGetUserInfo } from "@/services/user/accountApi";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import Category from "@/components/layout/Category";
+import { queryKeys } from "@/constants";
 
 const MyPage = () => {
   const { data: session, status: sessionStatus } = useSession();
   const { data } = useQuery({
-    queryKey: ["getUserInfo"],
+    queryKey: [queryKeys.GET_USER_INFO],
     queryFn: async () => await FetchGetUserInfo(),
     select: (result) => result?.data.data,
     enabled: sessionStatus === "authenticated",

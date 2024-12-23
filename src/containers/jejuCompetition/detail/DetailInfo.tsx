@@ -16,7 +16,7 @@ import { IoMenu } from "react-icons/io5";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useRouter } from "next/navigation";
-import { FetchDeleteCompetitionInfo } from "@/services/CompetitionApi";
+import { FetchDeleteCompetitionInfo } from "@/services/competitionApi";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {

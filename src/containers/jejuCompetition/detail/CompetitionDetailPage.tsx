@@ -3,7 +3,7 @@ import PostTitle from "@/components/common/PostTitle";
 import {
   FetchGetCompetitionDetail,
   FetchGetCompetitionScheduleAndResult,
-} from "@/services/CompetitionApi";
+} from "@/services/competitionApi";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import DetailCategory from "@/containers/jejuCompetition/detail/DetailCategory";

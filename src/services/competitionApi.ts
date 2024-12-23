@@ -1,6 +1,5 @@
-import { NormalApi } from "@/services/axios/NormalApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
-import { Api } from "@/services/axios/Api";
+import { Api } from "@/services/axios/api";
 import {
   AddCompetitionRequestType,
   AddCompetitionResultType,
@@ -8,6 +7,7 @@ import {
   UpdateCompetitionRequestType,
 } from "@/types/competitionType";
 import { getBearerToken } from "@/utils/getBearerToken";
+import { api } from "@/services/axios/authApi";
 
 export const FetchGetCompetitionList = async ({
   pageParam,
@@ -30,7 +30,7 @@ export const FetchGetCompetitionList = async ({
 };
 
 export const FetchGetCompetitionDetail = async (id: string) => {
-  return NormalApi.get(`/v1/api/competition/${id}`).catch((err) => {
+  return api.get(`/v1/api/competition/${id}`).catch((err) => {
     if (
       err.response.data.detailMessage ===
         "해당 아이디와 일치하는 대회를 찾을 수 없습니다." ||
@@ -47,7 +47,7 @@ export const FetchGetCompetitionDetail = async (id: string) => {
 };
 
 export const FetchGetCompetitionScheduleAndResult = async (id: string) => {
-  return NormalApi.get(`v1/api/competition/${id}/result`).catch((err) => {
+  return api.get(`v1/api/competition/${id}/result`).catch((err) => {
     if (err.response.data.detailMessage === "대회를 찾을 수 없습니다.") {
       confirmAlert("error", "대회를 찾을 수 없습니다.").then((res) => {
         if (res.isConfirmed) window.location.href = "/jeju-competition/info";
@@ -57,7 +57,7 @@ export const FetchGetCompetitionScheduleAndResult = async (id: string) => {
 };
 
 export const FetchGetDivisionList = async () => {
-  return NormalApi.get("/v1/api/competition/divisions");
+  return api.get("/v1/api/competition/divisions");
 };
 
 export const FetchAddCompetitionInfo = async (

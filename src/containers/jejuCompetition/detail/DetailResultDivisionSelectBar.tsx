@@ -6,7 +6,7 @@ import {
 } from "@/types/competitionType";
 import { IoMenu } from "react-icons/io5";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import { FetchDeleteSchedule } from "@/services/CompetitionApi";
+import { FetchDeleteSchedule } from "@/services/competitionApi";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";

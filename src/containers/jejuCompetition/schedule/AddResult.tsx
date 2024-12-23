@@ -11,7 +11,7 @@ import {
   FetchAddResult,
   FetchGetCompetitionDetail,
   FetchGetCompetitionScheduleAndResult,
-} from "@/services/CompetitionApi";
+} from "@/services/competitionApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { getDateAndTimeToString } from "@/utils/FormDate";
 import SubTitle from "@/components/layout/SubTitle";

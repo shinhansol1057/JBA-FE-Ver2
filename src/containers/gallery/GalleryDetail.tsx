@@ -1,4 +1,4 @@
-import { FetchGetGalleryDetail } from "@/services/GalleryApi";
+import { FetchGetGalleryDetail } from "@/services/galleryApi";
 import PostTitle from "@/components/common/PostTitle";
 import GalleryDetailCard from "@/containers/gallery/GalleryDetailCard";
 import { GetGalleryDetailType } from "@/types/galleryType";

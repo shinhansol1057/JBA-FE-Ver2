@@ -1,7 +1,7 @@
 import { GetFileType } from "@/types/commonType";
-import { Api } from "@/services/axios/Api";
+import { Api } from "@/services/axios/api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
-import { findPostCategoryUrl } from "@/constants/post";
+import { findPostCategoryUrl } from "@/constants";
 import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetPostList = async ({

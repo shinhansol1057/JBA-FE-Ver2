@@ -4,7 +4,7 @@ import { GetGalleryType } from "@/types/galleryType";
 import { IoMenu } from "react-icons/io5";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import { useRouter } from "next/navigation";
-import { FetchDeleteGallery } from "@/services/GalleryApi";
+import { FetchDeleteGallery } from "@/services/galleryApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useSession } from "next-auth/react";
 

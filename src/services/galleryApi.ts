@@ -1,6 +1,6 @@
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { GetFileType } from "@/types/commonType";
-import { Api } from "@/services/axios/Api";
+import { Api } from "@/services/axios/api";
 import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetGalleryList = async ({

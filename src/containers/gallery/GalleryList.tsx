@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { FetchGetGalleryList } from "@/services/GalleryApi";
+import { FetchGetGalleryList } from "@/services/galleryApi";
 import SearchBar from "@/components/common/SearchBar";
 import { useObserver } from "@/hooks/useObserver";
 import LoadingText from "@/components/common/LoadingText";

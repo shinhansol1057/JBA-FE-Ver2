@@ -6,7 +6,7 @@ import { BsFillPlayBtnFill } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import { useRouter } from "next/navigation";
-import { FetchDeleteVideo } from "@/services/VideoApi";
+import { FetchDeleteVideo } from "@/services/videoApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useSession } from "next-auth/react";
 import { useIsAdmin } from "@/hooks/useIsAdmin";

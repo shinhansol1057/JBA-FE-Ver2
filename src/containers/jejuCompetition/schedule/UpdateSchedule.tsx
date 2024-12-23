@@ -12,7 +12,7 @@ import {
   FetchGetCompetitionDetail,
   FetchGetCompetitionScheduleAndResult,
   FetchUpdateSchedule,
-} from "@/services/CompetitionApi";
+} from "@/services/competitionApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";

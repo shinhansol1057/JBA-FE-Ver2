@@ -1,5 +1,5 @@
 "use client";
-import { FetchGetVideoList } from "@/services/VideoApi";
+import { FetchGetVideoList } from "@/services/videoApi";
 import { useObserver } from "@/hooks/useObserver";
 import React, { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { menuList, menuListType } from "@/constants/navigation";
+import { menuList, menuListType } from "@/constants";
 import { useRouter } from "next/navigation";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { IoClose } from "react-icons/io5";

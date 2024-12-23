@@ -7,11 +7,11 @@ import {
 } from "@/types/competitionType";
 import ScheduleRowInput from "@/components/competition/ScheduleRowInput";
 import { ConfigProvider, DatePicker, Select, Space } from "antd";
-import { koreanLocale } from "@/constants/antdConfig";
+import { koreanLocale } from "@/constants";
 import dayjs from "dayjs";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import { IoClose } from "react-icons/io5";
-import { FetchUploadFile } from "@/services/FileUploadApi";
+import { FetchUploadFile } from "@/services/fileUploadApi";
 
 type Props = {
   divisionIndex: number;

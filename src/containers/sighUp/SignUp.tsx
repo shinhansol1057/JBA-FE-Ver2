@@ -8,7 +8,7 @@ import {
   FetchCheckCertificationNum,
   FetchSendCertificationEmail,
   FetchSignUp,
-} from "@/services/user/SignUpApi";
+} from "@/services/user/signUpApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { CheckBox } from "@/components/common/checkbox/CheckBox";
 

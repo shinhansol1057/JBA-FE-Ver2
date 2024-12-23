@@ -1,6 +1,6 @@
 import process from "process";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import { Api } from "@/services/axios/Api";
+import { Api } from "@/services/axios/api";
 
 export const postLogin = async (email: string, password: string) => {
   const data = await fetch(

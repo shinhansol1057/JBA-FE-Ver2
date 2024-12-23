@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import { ConfigProvider, DatePicker, Select, Space } from "antd";
-import { koreanLocale } from "@/constants/antdConfig";
+import { koreanLocale } from "@/constants";
 import dayjs from "dayjs";
 import {
   AddCompetitionScheduleRowType,

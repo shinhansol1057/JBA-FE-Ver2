@@ -5,7 +5,7 @@ import {
   FetchUpdateCompetitionInfo,
   FetchGetCompetitionDetail,
   FetchGetDivisionList,
-} from "@/services/CompetitionApi";
+} from "@/services/competitionApi";
 import {
   DivisionType,
   PlaceType,
@@ -15,7 +15,7 @@ import { GetFileType } from "@/types/commonType";
 import SubTitle from "@/components/layout/SubTitle";
 import PostInput from "@/components/common/PostInput";
 import { DatePicker, Select, Space } from "antd";
-import { koreanLocale } from "@/constants/antdConfig";
+import { koreanLocale } from "@/constants";
 import AddPlace from "@/containers/jejuCompetition/detail/AddPlace";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";

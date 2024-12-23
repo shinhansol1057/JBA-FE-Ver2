@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   FetchDeleteMyParticipation,
   FetchGetParticipation,
@@ -14,9 +14,9 @@ import AddBtn from "@/components/common/AddBtn";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { GetFileType } from "@/types/commonType";
 import { calculatorParticipationDuration } from "@/utils/calculatorCompetitionStatus";
+import queryClient from "@/services/queryClient";
 
 const MyParticipationDetail = ({ id }: { id: string }) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
   const { data } = useQuery({
     queryKey: ["myParticipationDetail", id],

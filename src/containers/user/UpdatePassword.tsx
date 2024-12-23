@@ -6,7 +6,7 @@ import PostInput from "@/components/common/PostInput";
 import CancelBtn from "@/components/common/CancelBtn";
 import { useRouter } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import { FetchUpdatePassword } from "@/services/user/UserApi";
+import { FetchUpdatePassword } from "@/services/user/accountApi";
 
 const UpdatePassword = () => {
   const [prevPW, setPrevPW] = useState<string>("");

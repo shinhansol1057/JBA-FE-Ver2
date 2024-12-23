@@ -13,7 +13,7 @@ import {
 import {
   FetchAddCompetitionInfo,
   FetchGetDivisionList,
-} from "@/services/CompetitionApi";
+} from "@/services/competitionApi";
 import { useQuery } from "@tanstack/react-query";
 import AddPlace from "@/containers/jejuCompetition/detail/AddPlace";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
@@ -21,9 +21,9 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import CancelBtn from "@/components/common/CancelBtn";
 import { useRouter } from "next/navigation";
 import AddBtn from "@/components/common/AddBtn";
-import { koreanLocale } from "@/constants/antdConfig";
 import dayjs from "dayjs";
 import { getNowDateToString } from "@/utils/FormDate";
+import { koreanLocale } from "@/constants";
 
 const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,

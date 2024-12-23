@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import PostInput from "@/components/common/PostInput";
 import { Select, Space } from "antd";
-import { postCategoryOption } from "@/constants/post";
+import { postCategoryOption } from "@/constants";
 import dynamic from "next/dynamic";
 import { GetFileType } from "@/types/commonType";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import { useRouter } from "next/navigation";
-import { FetchAddPost } from "@/services/PostApi";
+import { FetchAddPost } from "@/services/postApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { usePostStore } from "@/states/PostStore";
 import SubTitle from "@/components/layout/SubTitle";

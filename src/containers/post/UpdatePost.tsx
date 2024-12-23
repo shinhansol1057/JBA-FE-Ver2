@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Select, Space } from "antd";
-import { postCategoryOption } from "@/constants/post";
+import { postCategoryOption } from "@/constants";
 import PostInput from "@/components/common/PostInput";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { FetchGetPostDetail, FetchUpdatePost } from "@/services/PostApi";
+import { FetchGetPostDetail, FetchUpdatePost } from "@/services/postApi";
 import { usePostStore } from "@/states/PostStore";
 import dynamic from "next/dynamic";
 import PostTitle from "@/components/common/PostTitle";

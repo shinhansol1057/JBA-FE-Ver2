@@ -1,5 +1,5 @@
 import AddCompetitionInfo from "@/containers/jejuCompetition/detail/AddCompetitionInfo";
-import { FetchGetDivisionList } from "@/services/CompetitionApi";
+import { FetchGetDivisionList } from "@/services/competitionApi";
 
 const Page = async () => {
   return <AddCompetitionInfo />;

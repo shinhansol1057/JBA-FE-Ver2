@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { FetchGetCompetitionDetail } from "@/services/CompetitionApi";
+import { useQuery } from "@tanstack/react-query";
+import { FetchGetCompetitionDetail } from "@/services/competitionApi";
 import {
   FetchGetParticipation,
   FetchUpdateParticipation,

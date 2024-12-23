@@ -7,7 +7,7 @@ import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import { usePostStore } from "@/states/PostStore";
 import { useRouter, usePathname } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import { FetchDeletePost } from "@/services/PostApi";
+import { FetchDeletePost } from "@/services/postApi";
 import { useSession } from "next-auth/react";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 

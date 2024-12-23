@@ -1,5 +1,5 @@
 import React from "react";
-import { FetchMainVideoList } from "@/services/VideoApi";
+import { FetchMainVideoList } from "@/services/videoApi";
 import VideoListCard from "@/containers/video/VideoListCard";
 import { GetVideoType } from "@/types/videoType";
 import AreaTitleAndAllContentBtn from "@/containers/main/AreaTitleAndAllContentBtn";

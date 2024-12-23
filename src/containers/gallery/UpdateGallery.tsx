@@ -11,7 +11,7 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import {
   FetchGetGalleryDetail,
   FetchUpdateGallery,
-} from "@/services/GalleryApi";
+} from "@/services/galleryApi";
 import { useQuery } from "@tanstack/react-query";
 import { GetFileWithFileIdType } from "@/types/postType";
 import PostTitle from "@/components/common/PostTitle";

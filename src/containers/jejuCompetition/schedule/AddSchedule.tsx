@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   FetchAddSchedule,
   FetchGetCompetitionDetail,
-} from "@/services/CompetitionApi";
+} from "@/services/competitionApi";
 import {
   AddCompetitionScheduleRowType,
   AddCompetitionScheduleType,
