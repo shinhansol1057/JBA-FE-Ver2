@@ -9,10 +9,9 @@ import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import { useRouter } from "next/navigation";
-import { FetchAddPost } from "@/services/postApi";
-import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { usePostStore } from "@/states/PostStore";
 import SubTitle from "@/components/layout/SubTitle";
+import usePostMutation from "@/hooks/mutations/usePostMutation";
 
 const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
@@ -25,14 +24,11 @@ const AddPost = () => {
   const [postImgs, setPostImgs] = useState<GetFileType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
+  const { addPost } = usePostMutation();
+
   const addHandler = async () => {
     const body = { title, content, postImgs };
-    await confirmAndCancelAlertWithLoading(
-      "question",
-      "게시물을 등록하겠습니까?",
-      "",
-      async () => await FetchAddPost(postCategory, body, files, isOfficial),
-    );
+    addPost.mutate({ postCategory, body, files, isOfficial });
   };
 
   return (

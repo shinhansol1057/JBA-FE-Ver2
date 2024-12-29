@@ -10,6 +10,7 @@ import PostListCard from "@/containers/post/PostListCard";
 import { usePathname } from "next/navigation";
 import AddPageRouter from "@/components/common/AddPageRouter";
 import { usePostStore } from "@/states/PostStore";
+import { queryKeys } from "@/constants";
 
 const PostList = () => {
   const [searchKey, setSearchKey] = useState<string>("");
@@ -21,7 +22,7 @@ const PostList = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ["getPostList", category, searchKey],
+      queryKey: [queryKeys.GET_POST_LIST, category, searchKey],
       queryFn: FetchGetPostList,
       initialPageParam: 0,
       getNextPageParam: (lastPage, pages, lastPageParam) => {
@@ -44,7 +45,6 @@ const PostList = () => {
     threshold: 0.1,
   });
 
-  // 스크롤이 없을때 자동으로 다음 페이지 호출하는 로직
   useEffect(() => {
     if (status === "success" && data?.pages[0].data.totalGalleries > 0) {
       const contentHeight = document.documentElement.scrollHeight;
