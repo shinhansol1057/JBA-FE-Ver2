@@ -3,10 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { FetchGetCompetitionDetail } from "@/services/competitionApi";
-import {
-  FetchGetParticipation,
-  FetchUpdateParticipation,
-} from "@/services/participationApi";
+import { FetchUpdateParticipation } from "@/services/participationApi";
 import PostTitle from "@/components/common/PostTitle";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import style from "@/components/common/checkbox/CheckBox.module.css";
@@ -14,8 +11,15 @@ import { addHyphenToPhoneNum } from "@/utils/PhoneNumHandlerWithReactHookForm";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import UpdateAttachedFileBox from "@/containers/jejuCompetition/detail/UpdateAttachedFileBox";
+import { ParticipationDetailType } from "@/types/participationType";
+import useCompetitionParticipationMutation from "@/hooks/mutations/useCompetitionParticipationMutation";
+import { queryKeys } from "@/constants";
 
-const UpdateParticipation = ({ id }: { id: string }) => {
+const UpdateParticipation = ({
+  participationData,
+}: {
+  participationData: ParticipationDetailType;
+}) => {
   const router = useRouter();
   const [selectedDivision, setSelectedDivision] = useState<number | null>(null);
   const [name, setName] = useState<string>("");
@@ -25,53 +29,52 @@ const UpdateParticipation = ({ id }: { id: string }) => {
   const [prevFiles, setPrevFiles] = useState<
     { fileName: string; fileUrl: string }[]
   >([]);
+  const mutation = useCompetitionParticipationMutation();
 
-  const { data: myParticipationData } = useQuery({
-    queryKey: ["myParticipationDetail", id],
-    queryFn: () => FetchGetParticipation(id),
-    select: (result) => result?.data.data,
-  });
   const { data: competitionDetailData } = useQuery({
-    queryKey: ["competitionDetail", myParticipationData?.competitionId],
+    queryKey: [
+      queryKeys.GET_COMPETITION_DETAIL,
+      participationData?.competitionId,
+    ],
     queryFn: () =>
-      FetchGetCompetitionDetail(myParticipationData?.competitionId),
+      FetchGetCompetitionDetail(String(participationData?.competitionId)),
     select: (result) => result?.data.data,
-    enabled: !!myParticipationData,
+    enabled: !!participationData,
   });
 
   const submitHandler = async () => {
-    return await FetchUpdateParticipation(
-      selectedDivision,
+    mutation.updateParticipation.mutate({
+      divisionId: selectedDivision,
       name,
       phoneNum,
       email,
       files,
       router,
-      id,
-      prevFiles,
-    );
+      id: String(participationData.participationCompetitionId),
+      remainingFiles: prevFiles,
+    });
   };
 
   useEffect(() => {
-    if (myParticipationData && competitionDetailData) {
+    if (participationData && competitionDetailData) {
       setSelectedDivision(
         competitionDetailData.divisions.filter(
           (item: { divisionId: number; divisionName: string }) =>
-            item.divisionName === myParticipationData.divisionName,
+            item.divisionName === participationData.divisionName,
         )[0].divisionId,
       );
-      setName(myParticipationData.name);
-      setPhoneNum(myParticipationData.phoneNum);
-      setEmail(myParticipationData.email);
-      setPrevFiles(myParticipationData.files);
+      setName(participationData.name);
+      setPhoneNum(participationData.phoneNum);
+      setEmail(participationData.email);
+      setPrevFiles(participationData.files);
     }
-  }, [myParticipationData, competitionDetailData]);
+  }, [participationData, competitionDetailData]);
 
   return (
     <div className={"my-2.5 md:my-5 w-[90%] md:w-[800px]"}>
-      {myParticipationData && competitionDetailData && (
+      {participationData && competitionDetailData && (
         <div>
-          <PostTitle title={myParticipationData?.competitionName} />
+          <PostTitle title={participationData?.competitionName} />
           <div className={"bg-white w-full min-h-40 rounded-lg mt-5 p-2.5"}>
             <div>
               <CompetitionLabel

@@ -2,7 +2,6 @@ import { auth } from "../auth";
 
 export default auth((req) => {
   const { auth } = req;
-  console.log("auth: ", auth);
   const isAdmin = auth?.role === "ROLE_ADMIN" || auth?.role === "ROLE_MASTER";
 
   const adminPath = AdminPaths.some((path) =>

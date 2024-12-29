@@ -1,12 +1,14 @@
 import React from "react";
 import MyParticipationDetail from "@/containers/jejuCompetition/participation/MyParticipationDetail";
+import { FetchGetParticipation } from "@/services/participationApi";
 type Props = {
   params: {
     id: string;
   };
 };
-const Page = ({ params: { id } }: Props) => {
-  return <MyParticipationDetail id={id} />;
+const Page = async ({ params: { id } }: Props) => {
+  const data = await FetchGetParticipation(id);
+  return <MyParticipationDetail data={data.data} />;
 };
 
 export default Page;

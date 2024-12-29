@@ -1,10 +1,6 @@
 "use client";
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import {
-  FetchDeleteMyParticipation,
-  FetchGetParticipation,
-} from "@/services/participationApi";
+import { FetchDeleteParticipation } from "@/services/participationApi";
 import PostTitle from "@/components/common/PostTitle";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import GetFileBox from "@/components/common/GetFileBox";
@@ -15,26 +11,27 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import { GetFileType } from "@/types/commonType";
 import { calculatorParticipationDuration } from "@/utils/calculatorCompetitionStatus";
 import queryClient from "@/services/queryClient";
+import { ParticipationDetailType } from "@/types/participationType";
 
-const MyParticipationDetail = ({ id }: { id: string }) => {
+const MyParticipationDetail = ({ data }: { data: ParticipationDetailType }) => {
   const router = useRouter();
-  const { data } = useQuery({
-    queryKey: ["myParticipationDetail", id],
-    queryFn: async () => await FetchGetParticipation(id),
-    select: (result) => result?.data.data,
-  });
+
+  console.log(data);
   const deleteHandler = async () => {
     await confirmAndCancelAlertWithLoading(
       "question",
       "신청 취소",
       "정말로 신청을 취소하시겠습니까?",
     ).then(async (res) => {
-      if (res.isConfirmed) {
-        await FetchDeleteMyParticipation(id, router, queryClient);
+      if (res.isConfirmed && data?.participationCompetitionId) {
+        await FetchDeleteParticipation(
+          data.participationCompetitionId,
+          router,
+          queryClient,
+        );
       }
     });
   };
-  console.log(data);
 
   return (
     <div className={"w-[90%] md:w-[800px] text-sm md:text-lg"}>
@@ -107,20 +104,21 @@ const MyParticipationDetail = ({ id }: { id: string }) => {
         </div>
       </div>
       <div className={"my-2.5"}>
-        {data?.files.map((file: GetFileType, i: number) => {
-          return (
-            <GetFileBox
-              fileName={file.fileName}
-              fileUrl={file.fileUrl}
-              key={`my-participation-detail-${i}`}
-            />
-          );
-        })}
+        {data?.files &&
+          data?.files.map((file: GetFileType, i: number) => {
+            return (
+              <GetFileBox
+                fileName={file.fileName}
+                fileUrl={file.fileUrl}
+                key={`my-participation-detail-${i}`}
+              />
+            );
+          })}
       </div>
       {data &&
         (calculatorParticipationDuration(
-          data.participationStartDate,
-          data.participationEndDate,
+          new Date(data.participationStartDate),
+          new Date(data.participationEndDate),
         ) ? (
           <div className={"grid grid-cols-2 gap-4 mt-4"}>
             <CancelBtn

@@ -7,15 +7,16 @@ import { useObserver } from "@/hooks/useObserver";
 import LoadingText from "@/components/common/LoadingText";
 import { FetchGetMyParticipationList } from "@/services/participationApi";
 import MyParticipationCard from "@/containers/jejuCompetition/participation/MyParticipationCard";
+import { queryKeys } from "@/constants";
+import { ParticipationCardType } from "@/types/participationType";
 
 const MyParticipationList = () => {
-  const { data: session, status: sessionStatus } = useSession();
   const bottom = useRef(null);
   const [nextCursor, setNextCursor] = useState<string>("");
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ["getMyCompetitionParticipationList", nextCursor],
+      queryKey: [queryKeys.GET_MY_COMPETITION_PARTICIPATION_LIST, nextCursor],
       queryFn: FetchGetMyParticipationList,
       initialPageParam: 0,
       getNextPageParam: (lastPage, pages) => {
@@ -34,6 +35,7 @@ const MyParticipationList = () => {
     onIntersect,
     threshold: 0.1,
   });
+  console.log(data);
 
   // 스크롤이 없을때 자동으로 다음 페이지 호출하는 로직
   useEffect(() => {
@@ -69,7 +71,7 @@ const MyParticipationList = () => {
             "text-red-500 mt-5 text-base sm:text-lg md:text-xl text-center"
           }
         >
-          대회가 없습니다.
+          참가신청 내역이 없습니다.
         </p>
       )}
       <div className={"w-[90%] flex flex-col md:w-[800px] mt-4"}>
