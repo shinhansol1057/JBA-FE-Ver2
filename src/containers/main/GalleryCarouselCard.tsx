@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { gallery } from "@/types/MainPageType";
+import { Gallery } from "@/types/mainPageType";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type Props = {
-  data: gallery;
+  data: Gallery;
   key: number;
 };
 const GalleryCarouselCard = ({ data, key }: Props) => {

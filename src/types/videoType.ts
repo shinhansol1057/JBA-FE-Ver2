@@ -1,4 +1,4 @@
-export type getVideoType = {
+export type GetVideoType = {
   videoId: number;
   author: string;
   title: string;

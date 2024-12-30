@@ -1,23 +1,23 @@
 // app/admin/competition/_components/competition-card.tsx
-import { Button, Modal, message, Tag } from 'antd'
+import { Button, Modal, message, Tag } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
   TrophyOutlined,
   TeamOutlined,
   FileOutlined,
-  EyeOutlined
-} from '@ant-design/icons'
-import { useRouter } from 'next/navigation'
-import { authApi } from '@/services/axios/AuthApi'
-import { Competition } from '../type'
+  EyeOutlined,
+} from "@ant-design/icons";
+import { useRouter } from "next/navigation";
+import { authApi } from "@/services/axios/authApi";
+import { Competition } from "../type";
 
 interface Props {
-  competition: Competition
+  competition: Competition;
 }
 
 const CompetitionCard = ({ competition }: Props) => {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-md mb-4">
@@ -45,11 +45,11 @@ const CompetitionCard = ({ competition }: Props) => {
           <Tag
             className="ml-2"
             color={
-              competition.situation === '예정'
-                ? 'green'
-                : competition.situation === '진행중'
-                  ? 'blue'
-                  : 'red'
+              competition.situation === "예정"
+                ? "green"
+                : competition.situation === "진행중"
+                  ? "blue"
+                  : "red"
             }
           >
             {competition.situation}
@@ -75,7 +75,11 @@ const CompetitionCard = ({ competition }: Props) => {
               type="link"
               size="small"
               icon={<EyeOutlined />}
-              onClick={() => router.push(`/jeju-competition/info/${competition.competitionId}`)}
+              onClick={() =>
+                router.push(
+                  `/jeju-competition/info/${competition.competitionId}`,
+                )
+              }
             >
               조회
             </Button>
@@ -84,7 +88,9 @@ const CompetitionCard = ({ competition }: Props) => {
               size="small"
               icon={<EditOutlined />}
               onClick={() =>
-                router.push(`/jeju-competition/info/update/${competition.competitionId}`)
+                router.push(
+                  `/jeju-competition/info/update/${competition.competitionId}`,
+                )
               }
             >
               수정
@@ -95,21 +101,23 @@ const CompetitionCard = ({ competition }: Props) => {
               icon={<DeleteOutlined />}
               onClick={() => {
                 Modal.confirm({
-                  title: '대회 삭제',
-                  content: '정말로 이 대회를 삭제하시겠습니까?',
-                  okText: '삭제',
-                  cancelText: '취소',
+                  title: "대회 삭제",
+                  content: "정말로 이 대회를 삭제하시겠습니까?",
+                  okText: "삭제",
+                  cancelText: "취소",
                   onOk: async () => {
                     try {
-                      await authApi.delete(`/v1/api/admin/competition/${competition.competitionId}`)
-                      message.success('대회가 삭제되었습니다.')
-                      router.refresh()
+                      await authApi.delete(
+                        `/v1/api/admin/competition/${competition.competitionId}`,
+                      );
+                      message.success("대회가 삭제되었습니다.");
+                      router.refresh();
                     } catch (error) {
-                      message.error('대회 삭제 중 오류가 발생했습니다.')
-                      console.error('대회 삭제 실패:', error)
+                      message.error("대회 삭제 중 오류가 발생했습니다.");
+                      console.error("대회 삭제 실패:", error);
                     }
-                  }
-                })
+                  },
+                });
               }}
               danger
             >
@@ -120,7 +128,9 @@ const CompetitionCard = ({ competition }: Props) => {
               size="small"
               icon={<TrophyOutlined />}
               onClick={() =>
-                router.push(`/jeju-competition/result/add/${competition.competitionId}`)
+                router.push(
+                  `/jeju-competition/result/add/${competition.competitionId}`,
+                )
               }
             >
               대회결과 등록
@@ -130,7 +140,9 @@ const CompetitionCard = ({ competition }: Props) => {
               size="small"
               icon={<TeamOutlined />}
               onClick={() =>
-                router.push(`/admin/competition/participants/${competition.competitionId}`)
+                router.push(
+                  `/admin/competition/participants/${competition.competitionId}`,
+                )
               }
             >
               참가팀 관리
@@ -139,7 +151,7 @@ const CompetitionCard = ({ competition }: Props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CompetitionCard
+export default CompetitionCard;

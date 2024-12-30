@@ -1,21 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { FetchUpdateCompetitionInfo } from "@/services/competitionApi";
 import {
-  FetchUpdateCompetitionInfo,
-  FetchGetCompetitionDetail,
-  FetchGetDivisionList,
-} from "@/services/CompetitionApi";
-import {
-  divisionType,
-  placeType,
-  updateCompetitionRequestType,
-} from "@/types/CompetitionType";
-import { getFileType } from "@/types/CommonType";
+  CompetitionDetailType,
+  DivisionType,
+  PlaceType,
+  UpdateCompetitionRequestType,
+} from "@/types/competitionType";
+import { GetFileType } from "@/types/commonType";
 import SubTitle from "@/components/layout/SubTitle";
 import PostInput from "@/components/common/PostInput";
 import { DatePicker, Select, Space } from "antd";
-import { koreanLocale } from "@/constants/AntdConfig";
+import { koreanLocale } from "@/constants";
 import AddPlace from "@/containers/jejuCompetition/detail/AddPlace";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
@@ -24,11 +20,18 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import UpdateAttachedFileBox from "@/containers/jejuCompetition/detail/UpdateAttachedFileBox";
+import moment from "moment";
 
 const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
 });
-const UpdateCompetitionInfo = ({ id }: { id: string }) => {
+
+type Props = {
+  id: string;
+  detailData: CompetitionDetailType;
+  divisionData: string[];
+};
+const UpdateCompetitionInfo = ({ id, detailData, divisionData }: Props) => {
   const [title, setTitle] = useState<string>("");
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>("");
@@ -39,37 +42,17 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   const [participationEndDate, setParticipationEndDate] = useState<
     string | null
   >(null);
-  const [places, setPlaces] = useState<placeType[]>([]);
+  const [places, setPlaces] = useState<PlaceType[]>([]);
   const [relatedURL, setRelatedUrl] = useState<string | null>("");
   const [files, setFiles] = useState<File[]>([]);
   const [ckData, setCkData] = useState<string>("");
-  const [attachedFileList, setAttachedFileList] = useState<getFileType[]>([]);
-  const [newCkImgUrls, setNewCkImgUrls] = useState<getFileType[]>([]);
-  const [divisionList, setDivisionList] = useState<divisionType[]>([]);
-
+  const [attachedFileList, setAttachedFileList] = useState<GetFileType[]>([]);
+  const [newCkImgUrls, setNewCkImgUrls] = useState<GetFileType[]>([]);
+  const [divisionList, setDivisionList] = useState<DivisionType[]>([]);
   const router = useRouter();
 
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["getCompetitionDetail", id],
-    queryFn: () => FetchGetCompetitionDetail(id),
-    select: (result) => result?.data.data,
-    gcTime: 1000 * 60 * 10,
-  });
-
-  const { data: divisionData } = useQuery({
-    queryKey: ["getDivisionList"],
-    queryFn: () => FetchGetDivisionList(),
-    select: (result) => result?.data.data,
-    gcTime: 1000 * 60 * 60,
-    refetchInterval: false,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchIntervalInBackground: false,
-  });
-
   const formSubmitHandler = async () => {
-    const requestData: updateCompetitionRequestType = {
+    const requestData: UpdateCompetitionRequestType = {
       title: title,
       divisions: selectedDivisions,
       startDate: startDate,
@@ -85,9 +68,9 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
     };
 
     // 기존 ck이미지에서 삭제된 이미지 추출 -> 백엔드에서 삭제된 이미지는 DB데이터 삭제 및 버킷 파일 삭제 요청
-    for (let i: number = 0; i < data.ckImgUrls.length; i++) {
-      if (!ckData.includes(data.ckImgUrls[i])) {
-        requestData.deletedCkImgUrls.push(data.ckImgUrls[i]);
+    for (let i: number = 0; i < detailData.ckImgUrls.length; i++) {
+      if (!ckData.includes(detailData.ckImgUrls[i])) {
+        requestData.deletedCkImgUrls.push(detailData.ckImgUrls[i]);
       }
     }
     // 새로운 ck 이미지
@@ -107,25 +90,29 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
   };
 
   useEffect(() => {
-    setTitle(data?.title);
+    setTitle(detailData?.title);
     setSelectedDivisions(
-      data?.divisions.map(
+      detailData?.divisions.map(
         (item: { divisionId: string; divisionName: string }) =>
           item.divisionName,
       ),
     );
-    setStartDate(data?.startDate);
-    setEndDate(data?.endDate);
-    setParticipationStartDate(data?.participationStartDate);
-    setParticipationEndDate(data?.participationEndDate);
-    setPlaces(data?.places);
-    setRelatedUrl(data?.relatedUrl);
-    setCkData(data?.content);
-    setAttachedFileList(data?.competitionDetailAttachedFiles);
-  }, [data]);
+    setStartDate(moment(detailData?.startDate).format("YYYY-MM-DD"));
+    setEndDate(moment(detailData?.endDate).format("YYYY-MM-DD"));
+    setParticipationStartDate(
+      moment(detailData?.participationStartDate).format("YYYY-MM-DD"),
+    );
+    setParticipationEndDate(
+      moment(detailData?.participationEndDate).format("YYYY-MM-DD"),
+    );
+    setPlaces(detailData?.places);
+    setRelatedUrl(detailData?.relatedUrl);
+    setCkData(detailData?.content);
+    setAttachedFileList(detailData?.competitionDetailAttachedFiles);
+  }, [detailData]);
 
   useEffect(() => {
-    const list: divisionType[] = divisionData?.map((division: string) => {
+    const list: DivisionType[] = divisionData?.map((division: string) => {
       return { label: division, value: division };
     });
     setDivisionList(list);
@@ -164,7 +151,8 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
             }
             locale={koreanLocale}
             value={
-              dayjs(startDate) || dayjs(data?.startDate.toString().slice(0, 10))
+              dayjs(startDate) ||
+              dayjs(detailData?.startDate.toString().slice(0, 10))
             }
           />
           <DatePicker
@@ -175,7 +163,8 @@ const UpdateCompetitionInfo = ({ id }: { id: string }) => {
             }
             locale={koreanLocale}
             value={
-              dayjs(endDate) || dayjs(data?.endDate.toString().slice(0, 10))
+              dayjs(endDate) ||
+              dayjs(detailData?.endDate.toString().slice(0, 10))
             }
           />
         </div>

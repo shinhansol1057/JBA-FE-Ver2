@@ -1,5 +1,5 @@
 import BannerCarousel from "@/containers/main/BannerCarousel";
-import { getAnnouncements, getCompetitions } from "@/services/MainPageApi";
+import { getAnnouncements, getCompetitions } from "@/services/mainPageApi";
 import BannerTop from "@/containers/main/BannerTop";
 
 const Banner = async () => {

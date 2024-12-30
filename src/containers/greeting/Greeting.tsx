@@ -36,7 +36,7 @@ const Greeting = () => {
         }
       >
         <p>제주특별자치도 농구협회장</p>
-        <p className={"font-bold "}>김병주</p>
+        <p className={"font-bold "}>임병주</p>
       </div>
       <div className={"text-sm sm:text-base md:text-lg text-[#4B4B4B]"}>
         <p className={"mb-3"}>안녕하십니까, 제주특별자치도 농구협회장입니다.</p>

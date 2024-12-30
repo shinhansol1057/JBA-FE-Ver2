@@ -1,4 +1,4 @@
-export type getPostListItemType = {
+export type GetPostListItemType = {
   postId: number;
   isAnnouncement: boolean;
   title: string;
@@ -7,7 +7,7 @@ export type getPostListItemType = {
   viewCount: number;
 };
 
-export type getPostDetailType = {
+export type GetPostDetailType = {
   postId: number;
   isAnnouncement: boolean;
   title: string;
@@ -27,7 +27,7 @@ export type getPostDetailType = {
   content: string;
 };
 
-export type getFileWithFileIdType = {
+export type GetFileWithFileIdType = {
   fileId?: number;
   fileName: string;
   fileUrl: string;

@@ -3,9 +3,9 @@
 import styled from "styled-components";
 import Slider from "react-slick";
 import GalleryCarouselCard from "@/containers/main/GalleryCarouselCard";
-import { gallery } from "@/types/MainPageType";
+import { Gallery } from "@/types/mainPageType";
 type Props = {
-  galleries: gallery[];
+  galleries: Gallery[];
 };
 const GalleryCarousel = ({ galleries }: Props) => {
   const settings = {

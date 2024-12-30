@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
-  competitionDetailType,
-  competitionResultType,
-  competitionResultRowType,
-} from "@/types/CompetitionType";
+  CompetitionDetailType,
+  CompetitionResultType,
+  CompetitionResultRowType,
+} from "@/types/competitionType";
 import DetailResultDivisionSelectBar from "@/containers/jejuCompetition/detail/DetailResultDivisionSelectBar";
 import CompetitionResultRowBox from "@/components/competition/CompetitionResultRowBox";
 import { useRouter } from "next/navigation";
@@ -11,13 +11,13 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
-  detailData: competitionDetailType;
-  resultData: competitionResultType[];
+  detailData: CompetitionDetailType;
+  resultData: CompetitionResultType[];
 };
 const DetailResult = ({ detailData, resultData }: Props) => {
   const [divisionFilter, setDivisionFilter] = useState<string>("전체");
   const [filteredResultData, setFilteredResultData] = useState<
-    competitionResultType[]
+    CompetitionResultType[]
   >([]);
   const router = useRouter();
   const isAdmin = useIsAdmin();
@@ -64,7 +64,7 @@ const DetailResult = ({ detailData, resultData }: Props) => {
         divisionFilter={divisionFilter}
         setDivisionFilter={setDivisionFilter}
       />
-      {filteredResultData.map((result: competitionResultType, i: number) => {
+      {filteredResultData.map((result: CompetitionResultType, i: number) => {
         return (
           <div key={i} className={"mt-4"}>
             <div
@@ -77,7 +77,7 @@ const DetailResult = ({ detailData, resultData }: Props) => {
               <p>{result.division}</p>
             </div>
             {result.getResultResponseRows.map(
-              (row: competitionResultRowType) => {
+              (row: CompetitionResultRowType) => {
                 return (
                   <CompetitionResultRowBox
                     key={row.competitionResultId}

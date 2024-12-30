@@ -1,6 +1,5 @@
-import type { Config } from "tailwindcss";
-
 const config: {
+  mode: string;
   plugins: any[];
   theme: {
     extend: {
@@ -16,6 +15,7 @@ const config: {
   };
   content: string[];
 } = {
+  mode: "jit",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",

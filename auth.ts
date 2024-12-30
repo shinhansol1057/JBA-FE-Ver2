@@ -2,13 +2,13 @@ import NextAuth from "next-auth";
 import Google from "@auth/core/providers/google";
 import Kakao from "@auth/core/providers/kakao";
 import Credentials from "@auth/core/providers/credentials";
-import { postLogin, refreshToken, socialLogin } from "@/services/user/LoginApi";
+import { postLogin, refreshToken, socialLogin } from "@/services/user/loginApi";
 import jwt from "jsonwebtoken";
 import {
   loginCredentialsService,
   loginSocialService,
   refreshTokenService,
-} from "@/services/authService";
+} from "@/services/user/authService";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // debug: true,

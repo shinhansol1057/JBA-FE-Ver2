@@ -1,20 +1,20 @@
 import React from "react";
 import {
-  addCompetitionResultRowType,
-  addCompetitionResultType,
-  addCompetitionScheduleRowType,
-  placeType,
-} from "@/types/CompetitionType";
+  AddCompetitionResultRowType,
+  AddCompetitionResultType,
+  AddCompetitionScheduleRowType,
+  PlaceType,
+} from "@/types/competitionType";
 import { getDateAndTimeToString } from "@/utils/FormDate";
 import AddScheduleRowBox from "@/containers/jejuCompetition/schedule/AddScheduleRowBox";
 import AddResultRowBox from "@/containers/jejuCompetition/schedule/AddResultRowBox";
 
 type Props = {
   divisionIndex: number;
-  places: placeType[];
-  addCompetitionResultList: addCompetitionResultType[];
+  places: PlaceType[];
+  addCompetitionResultList: AddCompetitionResultType[];
   setAddCompetitionResultList: React.Dispatch<
-    React.SetStateAction<addCompetitionResultType[]>
+    React.SetStateAction<AddCompetitionResultType[]>
   >;
 };
 const AddResultDivisionBox = ({
@@ -23,7 +23,7 @@ const AddResultDivisionBox = ({
   addCompetitionResultList,
   setAddCompetitionResultList,
 }: Props) => {
-  let list: { place: string; rowList: addCompetitionResultRowType[] }[] = [];
+  let list: { place: string; rowList: AddCompetitionResultRowType[] }[] = [];
   const setGameNumber = () => {
     list = [];
     for (let k: number = 0; k < places.length; k++) {
@@ -35,7 +35,7 @@ const AddResultDivisionBox = ({
         j < addCompetitionResultList[i].postResultRequestRows.length;
         j++
       ) {
-        const data: addCompetitionResultRowType =
+        const data: AddCompetitionResultRowType =
           addCompetitionResultList[i].postResultRequestRows[j];
         for (let e: number = 0; e < list.length; e++) {
           if (list[e].place === data.place) {
@@ -52,7 +52,7 @@ const AddResultDivisionBox = ({
         t++
       ) {
         let num: number = 1;
-        const target: addCompetitionResultRowType =
+        const target: AddCompetitionResultRowType =
           addCompetitionResultList[r].postResultRequestRows[t];
         for (let y: number = 0; y < list.length; y++) {
           if (target.place === list[y].place) {
@@ -70,7 +70,7 @@ const AddResultDivisionBox = ({
           }
         }
         setAddCompetitionResultList((prevState) => {
-          const resultList: addCompetitionResultType[] = [...prevState];
+          const resultList: AddCompetitionResultType[] = [...prevState];
           resultList[r].postResultRequestRows[t].gameNumber = num;
           return resultList;
         });
@@ -96,7 +96,7 @@ const AddResultDivisionBox = ({
     } else {
       prevStartDate = new Date().getTime();
     }
-    const initial: addCompetitionResultRowType = {
+    const initial: AddCompetitionResultRowType = {
       competitionResultId: null,
       gameNumber: 1,
       startDate: getDateAndTimeToString(
@@ -113,7 +113,7 @@ const AddResultDivisionBox = ({
       fileUrl: null,
     };
     setAddCompetitionResultList((prevState) => {
-      const resultList: addCompetitionResultType[] = [...prevState];
+      const resultList: AddCompetitionResultType[] = [...prevState];
       resultList[divisionIndex].postResultRequestRows.push(initial);
       return resultList;
     });
@@ -131,7 +131,7 @@ const AddResultDivisionBox = ({
         <p>{addCompetitionResultList[divisionIndex]?.division}</p>
       </div>
       {addCompetitionResultList[divisionIndex]?.postResultRequestRows.map(
-        (result: addCompetitionResultRowType, i: number) => {
+        (result: AddCompetitionResultRowType, i: number) => {
           return (
             <AddResultRowBox
               key={"row" + i}

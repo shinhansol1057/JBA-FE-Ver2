@@ -1,35 +1,31 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { getFileType } from "@/types/CommonType";
+import { GetFileType } from "@/types/commonType";
 import PostInput from "@/components/common/PostInput";
 import SubTitle from "@/components/layout/SubTitle";
 import { DatePicker, Select, Space } from "antd";
 import {
-  addCompetitionRequestType,
-  divisionType,
-  placeType,
-} from "@/types/CompetitionType";
-import {
-  FetchAddCompetitionInfo,
-  FetchGetDivisionList,
-} from "@/services/CompetitionApi";
-import { useQuery } from "@tanstack/react-query";
+  AddCompetitionRequestType,
+  DivisionType,
+  PlaceType,
+} from "@/types/competitionType";
+import { FetchAddCompetitionInfo } from "@/services/competitionApi";
 import AddPlace from "@/containers/jejuCompetition/detail/AddPlace";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import CancelBtn from "@/components/common/CancelBtn";
 import { useRouter } from "next/navigation";
 import AddBtn from "@/components/common/AddBtn";
-import { koreanLocale } from "@/constants/AntdConfig";
 import dayjs from "dayjs";
 import { getNowDateToString } from "@/utils/FormDate";
+import { koreanLocale } from "@/constants";
 
 const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
 });
 
-const AddCompetitionInfo = () => {
+const AddCompetitionInfo = ({ divisionData }: { divisionData: string[] }) => {
   const [title, setTitle] = useState<string>("");
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>(getNowDateToString());
@@ -40,28 +36,17 @@ const AddCompetitionInfo = () => {
   const [participationEndDate, setParticipationEndDate] = useState<
     string | null
   >(null);
-  const [places, setPlaces] = useState<placeType[]>([]);
+  const [places, setPlaces] = useState<PlaceType[]>([]);
   const [relatedURL, setRelatedUrl] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [ckData, setCkData] = useState<string>("");
-  const [newCkImgUrls, setNewCkImgUrls] = useState<getFileType[]>([]);
-  const [divisionList, setDivisionList] = useState<divisionType[]>([]);
+  const [newCkImgUrls, setNewCkImgUrls] = useState<GetFileType[]>([]);
+  const [divisionList, setDivisionList] = useState<DivisionType[]>([]);
 
   const router = useRouter();
-  const { data: divisionData } = useQuery({
-    queryKey: ["getDivisionList"],
-    queryFn: () => FetchGetDivisionList(),
-    select: (result) => result?.data.data,
-    gcTime: 1000 * 60 * 60,
-    refetchInterval: false,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchIntervalInBackground: false,
-  });
 
   const formSubmitHandler = async () => {
-    const requestData: addCompetitionRequestType = {
+    const requestData: AddCompetitionRequestType = {
       title: title,
       divisions: selectedDivisions,
       startDate: startDate,
@@ -90,7 +75,7 @@ const AddCompetitionInfo = () => {
   };
 
   useEffect(() => {
-    const list: divisionType[] = divisionData?.map((division: string) => {
+    const list: DivisionType[] = divisionData?.map((division: string) => {
       return { label: division, value: division };
     });
     setDivisionList(list);

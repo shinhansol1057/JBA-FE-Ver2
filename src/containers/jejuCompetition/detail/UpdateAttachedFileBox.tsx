@@ -1,12 +1,12 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
-import { getFileType } from "@/types/CommonType";
+import { GetFileType } from "@/types/commonType";
 
 type Props = {
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
-  attachedFileList: getFileType[];
-  setAttachedFileList: React.Dispatch<React.SetStateAction<getFileType[]>>;
+  attachedFileList: GetFileType[];
+  setAttachedFileList: React.Dispatch<React.SetStateAction<GetFileType[]>>;
 };
 const UpdateAttachedFileBox = ({
   files,
@@ -37,7 +37,7 @@ const UpdateAttachedFileBox = ({
 
   const handleDeleteUploadAttachedFiles = (prevUrl: string) => {
     setAttachedFileList((prev) =>
-      prev.filter((f: getFileType) => "prev" + f.fileUrl !== prevUrl),
+      prev.filter((f: GetFileType) => "prev" + f.fileUrl !== prevUrl),
     );
   };
   return (

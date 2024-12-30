@@ -1,18 +1,18 @@
 import React from "react";
 import {
-  addCompetitionScheduleRowType,
-  addCompetitionScheduleType,
-  placeType,
-} from "@/types/CompetitionType";
+  AddCompetitionScheduleRowType,
+  AddCompetitionScheduleType,
+  PlaceType,
+} from "@/types/competitionType";
 import AddScheduleRowBox from "@/containers/jejuCompetition/schedule/AddScheduleRowBox";
 import { getDateAndTimeToString } from "@/utils/FormDate";
 
 type Props = {
   divisionIndex: number;
-  places: placeType[];
-  addCompetitionScheduleList: addCompetitionScheduleType[];
+  places: PlaceType[];
+  addCompetitionScheduleList: AddCompetitionScheduleType[];
   setAddCompetitionScheduleList: React.Dispatch<
-    React.SetStateAction<addCompetitionScheduleType[]>
+    React.SetStateAction<AddCompetitionScheduleType[]>
   >;
 };
 const AddScheduleDivisionBox = ({
@@ -21,7 +21,7 @@ const AddScheduleDivisionBox = ({
   addCompetitionScheduleList,
   setAddCompetitionScheduleList,
 }: Props) => {
-  let list: { place: string; rowList: addCompetitionScheduleRowType[] }[] = [];
+  let list: { place: string; rowList: AddCompetitionScheduleRowType[] }[] = [];
   const setGameNumber = () => {
     list = [];
     for (let k: number = 0; k < places.length; k++) {
@@ -33,7 +33,7 @@ const AddScheduleDivisionBox = ({
         j < addCompetitionScheduleList[i].postCompetitionScheduleRow.length;
         j++
       ) {
-        const data: addCompetitionScheduleRowType =
+        const data: AddCompetitionScheduleRowType =
           addCompetitionScheduleList[i].postCompetitionScheduleRow[j];
         for (let e: number = 0; e < list.length; e++) {
           if (list[e].place === data.place) {
@@ -50,7 +50,7 @@ const AddScheduleDivisionBox = ({
         t++
       ) {
         let num: number = 1;
-        const target: addCompetitionScheduleRowType =
+        const target: AddCompetitionScheduleRowType =
           addCompetitionScheduleList[r].postCompetitionScheduleRow[t];
         for (let y: number = 0; y < list.length; y++) {
           if (target.place === list[y].place) {
@@ -68,7 +68,7 @@ const AddScheduleDivisionBox = ({
           }
         }
         setAddCompetitionScheduleList((prevState) => {
-          const scheduleList: addCompetitionScheduleType[] = [...prevState];
+          const scheduleList: AddCompetitionScheduleType[] = [...prevState];
           scheduleList[r].postCompetitionScheduleRow[t].gameNumber = num;
           return scheduleList;
         });
@@ -95,7 +95,7 @@ const AddScheduleDivisionBox = ({
     } else {
       prevStartDate = new Date().getTime();
     }
-    const initial: addCompetitionScheduleRowType = {
+    const initial: AddCompetitionScheduleRowType = {
       gameNumber: 1,
       startDate: getDateAndTimeToString(
         new Date(prevStartDate ?? new Date().getTime()),
@@ -107,7 +107,7 @@ const AddScheduleDivisionBox = ({
       state5x5: true,
     };
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
       scheduleList[divisionIndex].postCompetitionScheduleRow.push(initial);
       return scheduleList;
     });
@@ -128,7 +128,7 @@ const AddScheduleDivisionBox = ({
       {addCompetitionScheduleList[
         divisionIndex
       ]?.postCompetitionScheduleRow.map(
-        (schedule: addCompetitionScheduleRowType, i: number) => {
+        (schedule: AddCompetitionScheduleRowType, i: number) => {
           return (
             <AddScheduleRowBox
               key={"row" + i}

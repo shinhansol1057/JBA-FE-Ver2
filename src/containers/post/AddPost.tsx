@@ -2,17 +2,16 @@
 import React, { useState } from "react";
 import PostInput from "@/components/common/PostInput";
 import { Select, Space } from "antd";
-import { postCategoryOption } from "@/constants/Post";
+import { postCategoryOption } from "@/constants";
 import dynamic from "next/dynamic";
-import { getFileType } from "@/types/CommonType";
+import { GetFileType } from "@/types/commonType";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import { useRouter } from "next/navigation";
-import { FetchAddPost } from "@/services/PostApi";
-import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { usePostStore } from "@/states/PostStore";
 import SubTitle from "@/components/layout/SubTitle";
+import usePostMutation from "@/hooks/mutations/usePostMutation";
 
 const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
@@ -22,17 +21,14 @@ const AddPost = () => {
   const [isOfficial, setIsOfficial] = useState<string>("false");
   const { postCategory, setPostCategory } = usePostStore();
   const [content, setContent] = useState<string>("");
-  const [postImgs, setPostImgs] = useState<getFileType[]>([]);
+  const [postImgs, setPostImgs] = useState<GetFileType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
+  const { addPost } = usePostMutation();
+
   const addHandler = async () => {
     const body = { title, content, postImgs };
-    await confirmAndCancelAlertWithLoading(
-      "question",
-      "게시물을 등록하겠습니까?",
-      "",
-      async () => await FetchAddPost(postCategory, body, files, isOfficial),
-    );
+    addPost.mutate({ postCategory, body, files, isOfficial });
   };
 
   return (

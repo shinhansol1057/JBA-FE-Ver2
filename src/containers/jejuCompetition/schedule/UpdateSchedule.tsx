@@ -1,18 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {
-  addCompetitionScheduleRowType,
-  addCompetitionScheduleType,
-  competitionResultType,
-  divisionResponseType,
-} from "@/types/CompetitionType";
+  AddCompetitionScheduleRowType,
+  AddCompetitionScheduleType,
+  CompetitionDetailType,
+  CompetitionResultType,
+  DivisionResponseType,
+} from "@/types/competitionType";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import {
-  FetchGetCompetitionDetail,
-  FetchGetCompetitionScheduleAndResult,
-  FetchUpdateSchedule,
-} from "@/services/CompetitionApi";
+import { FetchUpdateSchedule } from "@/services/competitionApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
@@ -21,35 +17,16 @@ import PostTitle from "@/components/common/PostTitle";
 import AddScheduleDivisionBox from "@/containers/jejuCompetition/schedule/AddScheduleDivisionBox";
 import { getDateAndTimeToString } from "@/utils/FormDate";
 
-const UpdateSchedule = ({ id }: { id: string }) => {
+type Props = {
+  id: string;
+  detailData: CompetitionDetailType;
+  resultData: CompetitionResultType[];
+};
+const UpdateSchedule = ({ id, detailData, resultData }: Props) => {
   const [addCompetitionScheduleList, setAddCompetitionScheduleList] = useState<
-    addCompetitionScheduleType[]
+    AddCompetitionScheduleType[]
   >([]);
   const router = useRouter();
-
-  const { data: detailData } = useQuery({
-    queryKey: ["getCompetitionDetail", id],
-    queryFn: () => FetchGetCompetitionDetail(id),
-    select: (result) => result?.data.data,
-    gcTime: 1000 * 60 * 10,
-    refetchOnMount: false,
-    refetchInterval: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-    refetchIntervalInBackground: false,
-  });
-
-  const { data: scheduleData } = useQuery({
-    queryKey: ["getSchedule", id],
-    queryFn: () => FetchGetCompetitionScheduleAndResult(id),
-    select: (result) => result?.data.data,
-    gcTime: 1000 * 60 * 10,
-    refetchOnMount: false,
-    refetchInterval: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-    refetchIntervalInBackground: false,
-  });
 
   const submitHandler = () => {
     confirmAndCancelAlertWithLoading(
@@ -63,9 +40,9 @@ const UpdateSchedule = ({ id }: { id: string }) => {
   };
 
   useEffect(() => {
-    if (scheduleData) {
-      scheduleData?.map((s: competitionResultType, index: number): void => {
-        const list: addCompetitionScheduleRowType[] =
+    if (resultData) {
+      resultData?.map((s: CompetitionResultType): void => {
+        const list: AddCompetitionScheduleRowType[] =
           s?.getResultResponseRows?.map((row) => {
             return {
               gameNumber: row.gameNumber,
@@ -79,7 +56,7 @@ const UpdateSchedule = ({ id }: { id: string }) => {
               state5x5: row.state5x5,
             };
           });
-        const initialData: addCompetitionScheduleType = {
+        const initialData: AddCompetitionScheduleType = {
           division: s.division,
           postCompetitionScheduleRow: list,
         };
@@ -90,7 +67,7 @@ const UpdateSchedule = ({ id }: { id: string }) => {
         ]);
       });
     }
-  }, [scheduleData]);
+  }, [resultData]);
   return (
     <div className={"flex flex-col mt-5 w-[90%] md:w-[800px]"}>
       <SubTitle title={"대회일정 수정"} />
@@ -98,7 +75,7 @@ const UpdateSchedule = ({ id }: { id: string }) => {
         <PostTitle title={detailData?.title} />
       </div>
       {detailData?.divisions.map(
-        (division: divisionResponseType, i: number) => {
+        (division: DivisionResponseType, i: number) => {
           return (
             <AddScheduleDivisionBox
               key={"division" + i}

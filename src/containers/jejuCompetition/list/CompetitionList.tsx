@@ -3,13 +3,14 @@
 import React, { useEffect, useRef } from "react";
 import CompetitionStatus from "@/containers/jejuCompetition/list/CompetitionStatus";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { FetchGetCompetitionList } from "@/services/CompetitionApi";
+import { FetchGetCompetitionList } from "@/services/competitionApi";
 import CompetitionListCard from "@/containers/jejuCompetition/list/CompetitionListCard";
 import { useObserver } from "@/hooks/useObserver";
 import LoadingText from "@/components/common/LoadingText";
 import { useCompetitionStore } from "@/states/CompetitionStore";
-import { getVideoType } from "@/types/VideoType";
+import { GetVideoType } from "@/types/videoType";
 import AddPageRouter from "@/components/common/AddPageRouter";
+import { queryKeys } from "@/constants";
 
 const CompetitionList = () => {
   const bottom = useRef(null);
@@ -17,7 +18,7 @@ const CompetitionList = () => {
     useCompetitionStore();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ["getCompetitionList", competitionStatusMenu],
+      queryKey: [queryKeys.GET_COMPETITION_LIST, competitionStatusMenu],
       queryFn: FetchGetCompetitionList,
       initialPageParam: 0,
       getNextPageParam: (lastPage, pages) => {
@@ -78,7 +79,7 @@ const CompetitionList = () => {
       {status === "success" &&
         data?.pages.map((group: any, i: number) => (
           <React.Fragment key={i}>
-            {group.data?.content.map((item: getVideoType, i: number) => (
+            {group.data?.content.map((item: GetVideoType, i: number) => (
               <CompetitionListCard data={item} key={i} />
             ))}
           </React.Fragment>

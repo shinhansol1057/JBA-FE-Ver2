@@ -1,5 +1,5 @@
 import GalleryCarousel from "@/containers/main/GalleryCarousel";
-import { getGalleries } from "@/services/MainPageApi";
+import { getGalleries } from "@/services/mainPageApi";
 import AreaTitleAndAllContentBtn from "@/containers/main/AreaTitleAndAllContentBtn";
 
 const Gallery = async () => {
