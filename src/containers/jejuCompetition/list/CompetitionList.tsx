@@ -10,6 +10,7 @@ import LoadingText from "@/components/common/LoadingText";
 import { useCompetitionStore } from "@/states/CompetitionStore";
 import { GetVideoType } from "@/types/videoType";
 import AddPageRouter from "@/components/common/AddPageRouter";
+import { queryKeys } from "@/constants";
 
 const CompetitionList = () => {
   const bottom = useRef(null);
@@ -17,7 +18,7 @@ const CompetitionList = () => {
     useCompetitionStore();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ["getCompetitionList", competitionStatusMenu],
+      queryKey: [queryKeys.GET_COMPETITION_LIST, competitionStatusMenu],
       queryFn: FetchGetCompetitionList,
       initialPageParam: 0,
       getNextPageParam: (lastPage, pages) => {

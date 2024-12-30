@@ -30,34 +30,22 @@ export const FetchGetCompetitionList = async ({
 };
 
 export const FetchGetCompetitionDetail = async (id: string) => {
-  return api.get(`/v1/api/competition/${id}`).catch((err) => {
-    if (
-      err.response.data.detailMessage ===
-        "해당 아이디와 일치하는 대회를 찾을 수 없습니다." ||
-      err.response.data.detailMessage === "대회 조회가 불가능합니다."
-    )
-      confirmAlert(
-        "warning",
-        "대회를 찾을 수 없습니다.",
-        "관리자에게 문의해주세요.",
-      ).then((res) => {
-        if (res.isConfirmed) window.location.href = "/jeju-competition/info";
-      });
-  });
+  const url = process.env.NEXT_PUBLIC_API_KEY + "/v1/api/competition/" + id;
+  const res = await fetch(url, { cache: "no-store" });
+  return await res.json();
 };
 
 export const FetchGetCompetitionScheduleAndResult = async (id: string) => {
-  return api.get(`v1/api/competition/${id}/result`).catch((err) => {
-    if (err.response.data.detailMessage === "대회를 찾을 수 없습니다.") {
-      confirmAlert("error", "대회를 찾을 수 없습니다.").then((res) => {
-        if (res.isConfirmed) window.location.href = "/jeju-competition/info";
-      });
-    }
-  });
+  const url =
+    process.env.NEXT_PUBLIC_API_KEY + `/v1/api/competition/${id}/result`;
+  const res = await fetch(url, { cache: "no-store" });
+  return await res.json();
 };
 
 export const FetchGetDivisionList = async () => {
-  return api.get("/v1/api/competition/divisions");
+  const url = process.env.NEXT_PUBLIC_API_KEY + `/v1/api/competition/divisions`;
+  const res = await fetch(url, { cache: "no-store" });
+  return await res.json();
 };
 
 export const FetchAddCompetitionInfo = async (

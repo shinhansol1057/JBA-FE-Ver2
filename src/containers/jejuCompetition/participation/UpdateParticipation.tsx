@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { FetchGetCompetitionDetail } from "@/services/competitionApi";
-import { FetchUpdateParticipation } from "@/services/participationApi";
 import PostTitle from "@/components/common/PostTitle";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import style from "@/components/common/checkbox/CheckBox.module.css";
@@ -13,15 +10,19 @@ import AddBtn from "@/components/common/AddBtn";
 import UpdateAttachedFileBox from "@/containers/jejuCompetition/detail/UpdateAttachedFileBox";
 import { ParticipationDetailType } from "@/types/participationType";
 import useCompetitionParticipationMutation from "@/hooks/mutations/useCompetitionParticipationMutation";
-import { queryKeys } from "@/constants";
+import {
+  CompetitionDetailType,
+  DivisionResponseType,
+} from "@/types/competitionType";
 
-const UpdateParticipation = ({
-  participationData,
-}: {
+type Props = {
   participationData: ParticipationDetailType;
-}) => {
+  detailData: CompetitionDetailType;
+};
+const UpdateParticipation = ({ participationData, detailData }: Props) => {
   const router = useRouter();
-  const [selectedDivision, setSelectedDivision] = useState<number | null>(null);
+
+  const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
   const [phoneNum, setPhoneNum] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -30,17 +31,6 @@ const UpdateParticipation = ({
     { fileName: string; fileUrl: string }[]
   >([]);
   const mutation = useCompetitionParticipationMutation();
-
-  const { data: competitionDetailData } = useQuery({
-    queryKey: [
-      queryKeys.GET_COMPETITION_DETAIL,
-      participationData?.competitionId,
-    ],
-    queryFn: () =>
-      FetchGetCompetitionDetail(String(participationData?.competitionId)),
-    select: (result) => result?.data.data,
-    enabled: !!participationData,
-  });
 
   const submitHandler = async () => {
     mutation.updateParticipation.mutate({
@@ -56,10 +46,10 @@ const UpdateParticipation = ({
   };
 
   useEffect(() => {
-    if (participationData && competitionDetailData) {
+    if (participationData && detailData) {
       setSelectedDivision(
-        competitionDetailData.divisions.filter(
-          (item: { divisionId: number; divisionName: string }) =>
+        detailData.divisions.filter(
+          (item: DivisionResponseType) =>
             item.divisionName === participationData.divisionName,
         )[0].divisionId,
       );
@@ -68,11 +58,11 @@ const UpdateParticipation = ({
       setEmail(participationData.email);
       setPrevFiles(participationData.files);
     }
-  }, [participationData, competitionDetailData]);
+  }, [participationData, detailData]);
 
   return (
     <div className={"my-2.5 md:my-5 w-[90%] md:w-[800px]"}>
-      {participationData && competitionDetailData && (
+      {participationData && detailData && (
         <div>
           <PostTitle title={participationData?.competitionName} />
           <div className={"bg-white w-full min-h-40 rounded-lg mt-5 p-2.5"}>
@@ -88,11 +78,8 @@ const UpdateParticipation = ({
                   "grid grid-cols-3 gap-4 py-4 border-solid border-b-[1px] border-[#D9D9D9]"
                 }
               >
-                {competitionDetailData?.divisions.map(
-                  (
-                    item: { divisionId: number; divisionName: string },
-                    i: number,
-                  ) => (
+                {detailData?.divisions.map(
+                  (item: DivisionResponseType, i: number) => (
                     <div className={style.checkbox} key={i}>
                       <input
                         id={`check-${i}`}

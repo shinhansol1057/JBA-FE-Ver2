@@ -15,3 +15,13 @@ type SearchUserData = {
   lockAt: string | null;
   failureCount: number;
 };
+
+type signUpData = {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  name: string;
+  phoneNum: string;
+};
+
+export type { SearchUserData, signUpData };

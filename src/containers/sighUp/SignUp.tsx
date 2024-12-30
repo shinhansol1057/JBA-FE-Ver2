@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { signUpData } from "@/constants/sighUp";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { phoneNumHandlerWithReactHookForm } from "@/utils/PhoneNumHandlerWithReactHookForm";
 import {
@@ -11,6 +10,7 @@ import {
 } from "@/services/user/signUpApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { CheckBox } from "@/components/common/checkbox/CheckBox";
+import { signUpData } from "@/types/user";
 
 const SignUp = () => {
   const [certificating, setCertificating] = useState<boolean>(false);

@@ -3,6 +3,7 @@ const queryKeys = {
 
   GET_MY_COMPETITION_PARTICIPATION_LIST: "getMyCompetitionParticipationList",
 
+  GET_COMPETITION_LIST: "getCompetitionList",
   GET_COMPETITION_DETAIL: "getCompetitionDetail",
 
   GET_POST_LIST: "getPostList",

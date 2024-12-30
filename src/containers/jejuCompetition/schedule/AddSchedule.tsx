@@ -1,14 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import SubTitle from "@/components/layout/SubTitle";
-import { useQuery } from "@tanstack/react-query";
-import {
-  FetchAddSchedule,
-  FetchGetCompetitionDetail,
-} from "@/services/competitionApi";
+import { FetchAddSchedule } from "@/services/competitionApi";
 import {
   AddCompetitionScheduleRowType,
   AddCompetitionScheduleType,
+  CompetitionDetailType,
   DivisionResponseType,
 } from "@/types/competitionType";
 import PostTitle from "@/components/common/PostTitle";
@@ -21,24 +18,13 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   id: string;
+  detailData: CompetitionDetailType;
 };
-const AddSchedule = ({ id }: Props) => {
+const AddSchedule = ({ id, detailData }: Props) => {
   const [addCompetitionScheduleList, setAddCompetitionScheduleList] = useState<
     AddCompetitionScheduleType[]
   >([]);
   const router = useRouter();
-
-  const { data: detailData } = useQuery({
-    queryKey: ["getCompetitionDetail", id],
-    queryFn: () => FetchGetCompetitionDetail(id),
-    select: (result) => result?.data.data,
-    gcTime: 1000 * 60 * 10,
-    refetchOnMount: false,
-    refetchInterval: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-    refetchIntervalInBackground: false,
-  });
 
   const submitHandler = async () => {
     await confirmAndCancelAlertWithLoading(

@@ -10,11 +10,7 @@ import {
   DivisionType,
   PlaceType,
 } from "@/types/competitionType";
-import {
-  FetchAddCompetitionInfo,
-  FetchGetDivisionList,
-} from "@/services/competitionApi";
-import { useQuery } from "@tanstack/react-query";
+import { FetchAddCompetitionInfo } from "@/services/competitionApi";
 import AddPlace from "@/containers/jejuCompetition/detail/AddPlace";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
@@ -29,7 +25,7 @@ const DynamicCkEditor = dynamic(() => import("@/libs/ckEditor/CkEditor"), {
   ssr: false,
 });
 
-const AddCompetitionInfo = () => {
+const AddCompetitionInfo = ({ divisionData }: { divisionData: string[] }) => {
   const [title, setTitle] = useState<string>("");
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>(getNowDateToString());
@@ -48,17 +44,6 @@ const AddCompetitionInfo = () => {
   const [divisionList, setDivisionList] = useState<DivisionType[]>([]);
 
   const router = useRouter();
-  const { data: divisionData } = useQuery({
-    queryKey: ["getDivisionList"],
-    queryFn: () => FetchGetDivisionList(),
-    select: (result) => result?.data.data,
-    gcTime: 1000 * 60 * 60,
-    refetchInterval: false,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchIntervalInBackground: false,
-  });
 
   const formSubmitHandler = async () => {
     const requestData: AddCompetitionRequestType = {

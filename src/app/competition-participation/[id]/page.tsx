@@ -8,6 +8,7 @@ type Props = {
 };
 const Page = async ({ params: { id } }: Props) => {
   const data = await FetchGetParticipation(id);
+  console.log(data);
   return <MyParticipationDetail data={data.data} />;
 };
 

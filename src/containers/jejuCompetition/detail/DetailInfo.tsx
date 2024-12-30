@@ -27,7 +27,7 @@ const DetailInfo = ({ data }: Props) => {
   const status = calculatorCompetitionStatus(data.startDate, data.endDate);
   const startDate: string = moment(data.startDate).format("YYYY-MM-DD");
   const endDate: string = moment(data.endDate).format("YYYY-MM-DD");
-  const cleanHtml = DOMPurify.sanitize(data.content);
+  const cleanHtml = data.content ? DOMPurify.sanitize(data.content) : "";
   const router = useRouter();
   const isAdmin = useIsAdmin();
   return (

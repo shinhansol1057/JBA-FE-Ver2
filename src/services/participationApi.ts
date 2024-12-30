@@ -43,7 +43,7 @@ const FetchGetParticipation = async (id: string) => {
 };
 
 const FetchPostParticipation = async (
-  divisionId: number | null,
+  divisionId: string | null,
   name: string,
   phoneNum: string,
   email: string,
@@ -119,7 +119,7 @@ const FetchDeleteParticipation = async (
 };
 
 const FetchUpdateParticipation = async (request: {
-  divisionId: number | null;
+  divisionId: string | null;
   name: string;
   phoneNum: string;
   email: string;

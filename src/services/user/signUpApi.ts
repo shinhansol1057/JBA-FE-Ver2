@@ -1,6 +1,6 @@
 import confirmAlert from "@/libs/alert/ConfirmAlert";
-import { signUpData } from "@/constants/sighUp";
 import { Api } from "@/services/axios/api";
+import { signUpData } from "@/types/user";
 
 export const FetchSignUp = async (data: signUpData) => {
   return Api.post("v1/api/auth/sign-up", data)
