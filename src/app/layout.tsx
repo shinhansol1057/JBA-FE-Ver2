@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta
           name="naver-site-verification"
-          content="86c0e0931b76ddbbf6b0f841867a017317a7ae39"
+          content="9f574bbc7e2631f63d9c1c587bc0353578a32637"
         />
       </head>
       <body className={inter.className}>
