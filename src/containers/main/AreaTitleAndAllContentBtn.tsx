@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import LinkBtn from "@/components/common/LinkBtn";
 
 const AreaTitleAndAllContentBtn = ({
   title,
@@ -11,21 +12,11 @@ const AreaTitleAndAllContentBtn = ({
 }) => {
   const router = useRouter();
   return (
-    <div className={"w-full flex justify-between items-center mb-2.5"}>
-      <h3 className={"text-base sm:text-lg md:text-3xl font-bold ml-2.5"}>
+    <div className={"w-full flex justify-between items-center mb-1.5"}>
+      <h3 className={"text-base sm:text-lg md:text-3xl font-bold ml-1.5"}>
         {title}
       </h3>
-      <button
-        className={
-          "rounded-md bg-black text-white " +
-          "text-sm sm:text-base md:text-xl " +
-          "py-2 md:py-3 " +
-          "px-2 md:px-3"
-        }
-        onClick={() => router.push(url)}
-      >
-        전체보기
-      </button>
+      <LinkBtn content="전체보기" linkUrl={url} />
     </div>
   );
 };

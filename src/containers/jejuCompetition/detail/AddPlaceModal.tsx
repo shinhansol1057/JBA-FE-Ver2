@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { placeType } from "@/types/CompetitionType";
+import { PlaceType } from "@/types/competitionType";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
 import DaumPostcode, { Address } from "react-daum-postcode";
@@ -11,8 +11,8 @@ import confirmAlert from "@/libs/alert/ConfirmAlert";
 type Props = {
   modalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  places: placeType[];
-  setPlaces: React.Dispatch<React.SetStateAction<placeType[]>>;
+  places: PlaceType[];
+  setPlaces: React.Dispatch<React.SetStateAction<PlaceType[]>>;
 };
 const AddPlaceModal = ({
   modalOpen,
@@ -49,7 +49,7 @@ const AddPlaceModal = ({
       await confirmAlert("error", "주소를 검색해주세요.");
       return;
     }
-    let place: placeType = {
+    let place: PlaceType = {
       placeName: placeName,
       address: address,
       latitude: latitude,

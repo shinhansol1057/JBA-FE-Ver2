@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import PostTitle from "@/components/common/PostTitle";
-import { useQuery } from "@tanstack/react-query";
-import { FetchGetCompetitionDetail } from "@/services/CompetitionApi";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import style from "@/components/common/checkbox/CheckBox.module.css";
 import AddAttachedFileBox from "@/components/common/AddAttachedFileBox";
@@ -13,20 +11,23 @@ import AddBtn from "@/components/common/AddBtn";
 import { FetchPostParticipation } from "@/services/participationApi";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
 import { addHyphenToPhoneNum } from "@/utils/PhoneNumHandlerWithReactHookForm";
+import {
+  CompetitionDetailType,
+  DivisionResponseType,
+} from "@/types/competitionType";
 
-const AddParticipation = ({ id }: { id: string }) => {
+type Props = {
+  id: string;
+  detailData: CompetitionDetailType;
+};
+const AddParticipation = ({ id, detailData }: Props) => {
   const router = useRouter();
-  const [selectedDivision, setSelectedDivision] = useState<number | null>(null);
+  const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
   const [phoneNum, setPhoneNum] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
 
-  const { data: detailData } = useQuery({
-    queryKey: ["competitionDetail", id],
-    queryFn: () => FetchGetCompetitionDetail(id),
-    select: (result) => result?.data.data,
-  });
   const submitHandler = async () => {
     if (!selectedDivision) {
       await confirmAlert("warning", "종별을 선택해주세요.");
@@ -59,10 +60,7 @@ const AddParticipation = ({ id }: { id: string }) => {
             }
           >
             {detailData?.divisions.map(
-              (
-                item: { divisionId: number; divisionName: string },
-                i: number,
-              ) => (
+              (item: DivisionResponseType, i: number) => (
                 <div className={style.checkbox} key={i}>
                   <input
                     id={`check-${i}`}

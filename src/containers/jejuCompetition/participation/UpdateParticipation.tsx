@@ -1,12 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { FetchGetCompetitionDetail } from "@/services/CompetitionApi";
-import {
-  FetchGetParticipation,
-  FetchUpdateParticipation,
-} from "@/services/participationApi";
 import PostTitle from "@/components/common/PostTitle";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import style from "@/components/common/checkbox/CheckBox.module.css";
@@ -14,10 +8,21 @@ import { addHyphenToPhoneNum } from "@/utils/PhoneNumHandlerWithReactHookForm";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import UpdateAttachedFileBox from "@/containers/jejuCompetition/detail/UpdateAttachedFileBox";
+import { ParticipationDetailType } from "@/types/participationType";
+import useCompetitionParticipationMutation from "@/hooks/mutations/useCompetitionParticipationMutation";
+import {
+  CompetitionDetailType,
+  DivisionResponseType,
+} from "@/types/competitionType";
 
-const UpdateParticipation = ({ id }: { id: string }) => {
+type Props = {
+  participationData: ParticipationDetailType;
+  detailData: CompetitionDetailType;
+};
+const UpdateParticipation = ({ participationData, detailData }: Props) => {
   const router = useRouter();
-  const [selectedDivision, setSelectedDivision] = useState<number | null>(null);
+
+  const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
   const [phoneNum, setPhoneNum] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -25,53 +30,41 @@ const UpdateParticipation = ({ id }: { id: string }) => {
   const [prevFiles, setPrevFiles] = useState<
     { fileName: string; fileUrl: string }[]
   >([]);
-
-  const { data: myParticipationData } = useQuery({
-    queryKey: ["myParticipationDetail", id],
-    queryFn: () => FetchGetParticipation(id),
-    select: (result) => result?.data.data,
-  });
-  const { data: competitionDetailData } = useQuery({
-    queryKey: ["competitionDetail", myParticipationData?.competitionId],
-    queryFn: () =>
-      FetchGetCompetitionDetail(myParticipationData?.competitionId),
-    select: (result) => result?.data.data,
-    enabled: !!myParticipationData,
-  });
+  const mutation = useCompetitionParticipationMutation();
 
   const submitHandler = async () => {
-    return await FetchUpdateParticipation(
-      selectedDivision,
+    mutation.updateParticipation.mutate({
+      divisionId: selectedDivision,
       name,
       phoneNum,
       email,
       files,
       router,
-      id,
-      prevFiles,
-    );
+      id: String(participationData.participationCompetitionId),
+      remainingFiles: prevFiles,
+    });
   };
 
   useEffect(() => {
-    if (myParticipationData && competitionDetailData) {
+    if (participationData && detailData) {
       setSelectedDivision(
-        competitionDetailData.divisions.filter(
-          (item: { divisionId: number; divisionName: string }) =>
-            item.divisionName === myParticipationData.divisionName,
+        detailData.divisions.filter(
+          (item: DivisionResponseType) =>
+            item.divisionName === participationData.divisionName,
         )[0].divisionId,
       );
-      setName(myParticipationData.name);
-      setPhoneNum(myParticipationData.phoneNum);
-      setEmail(myParticipationData.email);
-      setPrevFiles(myParticipationData.files);
+      setName(participationData.name);
+      setPhoneNum(participationData.phoneNum);
+      setEmail(participationData.email);
+      setPrevFiles(participationData.files);
     }
-  }, [myParticipationData, competitionDetailData]);
+  }, [participationData, detailData]);
 
   return (
     <div className={"my-2.5 md:my-5 w-[90%] md:w-[800px]"}>
-      {myParticipationData && competitionDetailData && (
+      {participationData && detailData && (
         <div>
-          <PostTitle title={myParticipationData?.competitionName} />
+          <PostTitle title={participationData?.competitionName} />
           <div className={"bg-white w-full min-h-40 rounded-lg mt-5 p-2.5"}>
             <div>
               <CompetitionLabel
@@ -85,11 +78,8 @@ const UpdateParticipation = ({ id }: { id: string }) => {
                   "grid grid-cols-3 gap-4 py-4 border-solid border-b-[1px] border-[#D9D9D9]"
                 }
               >
-                {competitionDetailData?.divisions.map(
-                  (
-                    item: { divisionId: number; divisionName: string },
-                    i: number,
-                  ) => (
+                {detailData?.divisions.map(
+                  (item: DivisionResponseType, i: number) => (
                     <div className={style.checkbox} key={i}>
                       <input
                         id={`check-${i}`}

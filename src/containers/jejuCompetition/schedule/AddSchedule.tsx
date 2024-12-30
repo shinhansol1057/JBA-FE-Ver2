@@ -1,16 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import SubTitle from "@/components/layout/SubTitle";
-import { useQuery } from "@tanstack/react-query";
+import { FetchAddSchedule } from "@/services/competitionApi";
 import {
-  FetchAddSchedule,
-  FetchGetCompetitionDetail,
-} from "@/services/CompetitionApi";
-import {
-  addCompetitionScheduleRowType,
-  addCompetitionScheduleType,
-  divisionResponseType,
-} from "@/types/CompetitionType";
+  AddCompetitionScheduleRowType,
+  AddCompetitionScheduleType,
+  CompetitionDetailType,
+  DivisionResponseType,
+} from "@/types/competitionType";
 import PostTitle from "@/components/common/PostTitle";
 import AddScheduleDivisionBox from "@/containers/jejuCompetition/schedule/AddScheduleDivisionBox";
 import { getDateAndTimeToString } from "@/utils/FormDate";
@@ -21,24 +18,13 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   id: string;
+  detailData: CompetitionDetailType;
 };
-const AddSchedule = ({ id }: Props) => {
+const AddSchedule = ({ id, detailData }: Props) => {
   const [addCompetitionScheduleList, setAddCompetitionScheduleList] = useState<
-    addCompetitionScheduleType[]
+    AddCompetitionScheduleType[]
   >([]);
   const router = useRouter();
-
-  const { data: detailData } = useQuery({
-    queryKey: ["getCompetitionDetail", id],
-    queryFn: () => FetchGetCompetitionDetail(id),
-    select: (result) => result?.data.data,
-    gcTime: 1000 * 60 * 10,
-    refetchOnMount: false,
-    refetchInterval: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-    refetchIntervalInBackground: false,
-  });
 
   const submitHandler = async () => {
     await confirmAndCancelAlertWithLoading(
@@ -55,8 +41,8 @@ const AddSchedule = ({ id }: Props) => {
     if (detailData) {
       setAddCompetitionScheduleList([]);
       detailData.divisions.map(
-        (d: divisionResponseType, index: number): void => {
-          const initialRow: addCompetitionScheduleRowType = {
+        (d: DivisionResponseType, index: number): void => {
+          const initialRow: AddCompetitionScheduleRowType = {
             gameNumber: index + 1,
             startDate: getDateAndTimeToString(
               new Date(
@@ -69,7 +55,7 @@ const AddSchedule = ({ id }: Props) => {
             awayName: "",
             state5x5: true,
           };
-          const initialData: addCompetitionScheduleType = {
+          const initialData: AddCompetitionScheduleType = {
             division: d.divisionName,
             postCompetitionScheduleRow: [initialRow],
           };

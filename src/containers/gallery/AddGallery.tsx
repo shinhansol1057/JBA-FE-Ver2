@@ -1,18 +1,18 @@
 "use client";
 import React, { useState } from "react";
 import AddGalleryAttachedFileBox from "@/containers/gallery/AddGalleryAttachedFileBox";
-import { getFileType } from "@/types/CommonType";
+import { GetFileType } from "@/types/commonType";
 import SubTitle from "@/components/layout/SubTitle";
 import PostInput from "@/components/common/PostInput";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
 import { useRouter } from "next/navigation";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
-import { FetchAddGallery } from "@/services/GalleryApi";
+import { FetchAddGallery } from "@/services/galleryApi";
 
 const AddGallery = () => {
   const [title, setTitle] = useState<string>("");
-  const [files, setFiles] = useState<getFileType[]>([]);
+  const [files, setFiles] = useState<GetFileType[]>([]);
   const router = useRouter();
 
   const addGalleryHandler = async () => {

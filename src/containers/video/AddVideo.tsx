@@ -4,7 +4,7 @@ import PostInput from "@/components/common/PostInput";
 import PostLabel from "@/components/common/PostLabel";
 import AddBtn from "@/components/common/AddBtn";
 import CancelBtn from "@/components/common/CancelBtn";
-import { FetchAddVideo } from "@/services/VideoApi";
+import { FetchAddVideo } from "@/services/videoApi";
 import { useRouter } from "next/navigation";
 import SubTitle from "@/components/layout/SubTitle";
 

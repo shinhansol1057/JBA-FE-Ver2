@@ -1,5 +1,3 @@
-export const postCategory = ["notice", "library", "news"];
-
 export const postCategoryOption = [
   {
     value: "notice",

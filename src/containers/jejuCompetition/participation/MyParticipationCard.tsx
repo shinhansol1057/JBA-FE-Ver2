@@ -27,8 +27,8 @@ const MyParticipationCard = ({
   return (
     <div
       className={
-        "w-full px-2 md:p-4 flex flex-col justify-between mb-2 rounded-lg min-h-24" +
-        " md:min-h-32 cursor-pointer shadow-2xl text-sm md:text-xl " +
+        "w-full p-2 md:p-4 flex flex-col justify-between mb-2 rounded-lg " +
+        " cursor-pointer shadow-2xl text-sm md:text-xl " +
         (isApplicationDuration
           ? "bg-black text-white hover:bg-[#4B4B4B]"
           : "bg-white text-black hover:bg-[#B5B5B5]")
@@ -37,7 +37,7 @@ const MyParticipationCard = ({
     >
       <div
         className={
-          "flex flex-row justify-between font-bold py-2 border-solid border-b-[1px] " +
+          "flex flex-row justify-between font-bold pb-1 border-solid border-b-[1px] " +
           (isApplicationDuration ? "border-white " : "border-[#D9D9D9] ")
         }
       >
@@ -59,7 +59,7 @@ const MyParticipationCard = ({
           &nbsp;&nbsp;&nbsp;{applicationStartDate} ~ {applicationEndDate}
         </p>
       </div>
-      <div className={"py-2 flex items-center"}>
+      <div className={"pt-2 flex items-center"}>
         <p
           className={isApplicationDuration ? "text-white " : "text-[#4B4B4B] "}
         >

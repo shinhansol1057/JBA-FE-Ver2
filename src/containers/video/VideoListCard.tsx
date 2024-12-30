@@ -1,19 +1,19 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { getVideoId } from "@/constants/Video";
-import { getVideoType } from "@/types/VideoType";
+import { GetVideoType } from "@/types/videoType";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
 import UpdateDeleteModal from "@/components/common/UpdateDeleteModal";
 import { useRouter } from "next/navigation";
-import { FetchDeleteVideo } from "@/services/VideoApi";
+import { FetchDeleteVideo } from "@/services/videoApi";
 import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlertWithLoading";
 import { useSession } from "next-auth/react";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { getVideoId } from "@/utils/video";
 
 type Props = {
-  data: getVideoType;
+  data: GetVideoType;
 };
 const VideoListCard = ({ data }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);

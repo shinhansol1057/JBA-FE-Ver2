@@ -1,6 +1,6 @@
 import confirmAlert from "@/libs/alert/ConfirmAlert";
-import { getFileType } from "@/types/CommonType";
-import { Api } from "@/services/axios/Api";
+import { GetFileType } from "@/types/commonType";
+import { Api } from "@/services/axios/api";
 import { getBearerToken } from "@/utils/getBearerToken";
 
 export const FetchGetGalleryList = async ({
@@ -31,10 +31,10 @@ export const FetchGetGalleryDetail = async (id: string) => {
 
 export const FetchAddGallery = async (
   title: string,
-  files: getFileType[],
+  files: GetFileType[],
   isOfficial: boolean,
 ) => {
-  const request: { title: string; imgs: getFileType[] } = {
+  const request: { title: string; imgs: GetFileType[] } = {
     title: title,
     imgs: files,
   };
@@ -76,10 +76,10 @@ export const FetchDeleteGallery = async (id: string) => {
 export const FetchUpdateGallery = async (
   id: string,
   title: string,
-  files: getFileType[],
+  files: GetFileType[],
   isOfficial: boolean,
 ) => {
-  const request: { title: string; imgs: getFileType[] } = {
+  const request: { title: string; imgs: GetFileType[] } = {
     title: title,
     imgs: files,
   };

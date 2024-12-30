@@ -1,4 +1,4 @@
-import { FAQMockData, MockPost } from "@/constants/FAQData";
+import { FAQMockData, MockPost } from "@/constants";
 import FaqCard from "@/containers/faq/FaqCard";
 
 const Faq = () => {

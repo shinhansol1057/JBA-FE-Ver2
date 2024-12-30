@@ -45,4 +45,4 @@ import {
   Underline,
   Undo,
 } from "ckeditor5";
-import { Api } from "@/services/axios/Api";
+import { Api } from "@/services/axios/api";

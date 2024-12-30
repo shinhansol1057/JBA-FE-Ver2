@@ -1,7 +1,7 @@
-import { Api } from "@/services/axios/Api";
+import { Api } from "@/services/axios/api";
 import confirmAlert from "@/libs/alert/ConfirmAlert";
-import { NormalApi } from "@/services/axios/NormalApi";
 import { getBearerToken } from "@/utils/getBearerToken";
+import { api } from "@/services/axios/authApi";
 
 export const FetchAddVideo = async (
   title: string,
@@ -60,7 +60,7 @@ export const FetchGetVideoList = async ({
 };
 
 export const FetchGetVideoDetail = async (id: string) => {
-  return NormalApi.get(`v1/api/video/${id}`);
+  return api.get(`v1/api/video/${id}`);
 };
 
 export const FetchDeleteVideo = async (id: string) => {

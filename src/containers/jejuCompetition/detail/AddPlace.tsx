@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { placeType } from "@/types/CompetitionType";
+import { PlaceType } from "@/types/competitionType";
 import Modal from "react-modal";
 import AddPlaceModal from "@/containers/jejuCompetition/detail/AddPlaceModal";
 import { IoClose } from "react-icons/io5";
 
 type Props = {
-  places: placeType[];
-  setPlaces: React.Dispatch<React.SetStateAction<placeType[]>>;
+  places: PlaceType[];
+  setPlaces: React.Dispatch<React.SetStateAction<PlaceType[]>>;
 };
 const AddPlace = ({ places, setPlaces }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const deletePlaceHandler = (i: number) => {
     setPlaces((prevState) => {
-      return prevState.filter((_: placeType, index: number) => index !== i);
+      return prevState.filter((_: PlaceType, index: number) => index !== i);
     });
   };
 
@@ -33,7 +33,7 @@ const AddPlace = ({ places, setPlaces }: Props) => {
         장소 찾기
       </button>
       <ul>
-        {places?.map((place: placeType, i: number) => {
+        {places?.map((place: PlaceType, i: number) => {
           return (
             <li
               key={i}

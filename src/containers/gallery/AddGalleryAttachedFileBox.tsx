@@ -1,11 +1,11 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
-import { FetchUploadFile } from "@/services/FileUploadApi";
-import { getFileWithFileIdType } from "@/types/PostType";
-import { getFileType } from "@/types/CommonType";
+import { FetchUploadFile } from "@/services/fileUploadApi";
+import { GetFileWithFileIdType } from "@/types/postType";
+import { GetFileType } from "@/types/commonType";
 type Props = {
-  files: getFileType[];
-  setFiles: React.Dispatch<React.SetStateAction<getFileType[]>>;
+  files: GetFileType[];
+  setFiles: React.Dispatch<React.SetStateAction<GetFileType[]>>;
 };
 const AddGalleryAttachedFileBox = ({ files, setFiles }: Props) => {
   const handleUploadFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,7 +17,7 @@ const AddGalleryAttachedFileBox = ({ files, setFiles }: Props) => {
       }
       FetchUploadFile(fileList).then((res) => {
         const fileResponses = res?.data.data;
-        const request = fileResponses.map((item: getFileWithFileIdType) => {
+        const request = fileResponses.map((item: GetFileWithFileIdType) => {
           return { fileName: item.fileName, fileUrl: item.fileUrl };
         });
         setFiles(request);
@@ -28,7 +28,7 @@ const AddGalleryAttachedFileBox = ({ files, setFiles }: Props) => {
   // 추가된 파일 삭제 로직
   const handleDeleteUploadFiles = (indexToRemove: number) => {
     setFiles((prev) =>
-      prev.filter((f: getFileType, index: number) => index !== indexToRemove),
+      prev.filter((f: GetFileType, index: number) => index !== indexToRemove),
     );
   };
   return (
@@ -56,7 +56,7 @@ const AddGalleryAttachedFileBox = ({ files, setFiles }: Props) => {
         />
       </div>
       <ul>
-        {files?.map((files: getFileType, i: number) => {
+        {files?.map((files: GetFileType, i: number) => {
           return (
             <li
               key={i}

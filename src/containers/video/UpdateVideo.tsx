@@ -4,7 +4,7 @@ import PostLabel from "@/components/common/PostLabel";
 import PostInput from "@/components/common/PostInput";
 import CancelBtn from "@/components/common/CancelBtn";
 import AddBtn from "@/components/common/AddBtn";
-import { FetchGetVideoDetail, updateVideo } from "@/services/VideoApi";
+import { FetchGetVideoDetail, updateVideo } from "@/services/videoApi";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import SubTitle from "@/components/layout/SubTitle";

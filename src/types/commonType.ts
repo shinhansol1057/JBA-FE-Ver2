@@ -1,10 +1,10 @@
-export type paginationResponse = {
+export type PaginationResponse = {
   code: number;
   message: string;
   data: any;
 };
 
-export type paginationType = {
+export type PaginationType = {
   content: any;
   pageable: {
     pageNumber: number;
@@ -33,13 +33,13 @@ export type paginationType = {
   empty: boolean;
 };
 
-export type getFileWithIdType = {
+export type GetFileWithIdType = {
   fileId: number;
   fileUrl: string;
   fileName: string;
 };
 
-export type getFileType = {
+export type GetFileType = {
   fileUrl: string;
   fileName: string;
 };

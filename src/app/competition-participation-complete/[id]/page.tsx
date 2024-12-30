@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { FaCircleCheck } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
+import queryClient from "@/services/queryClient";
 
 type Props = {
   params: {
@@ -10,7 +10,6 @@ type Props = {
   };
 };
 const Page = ({ params: { id } }: Props) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
   useEffect(() => {

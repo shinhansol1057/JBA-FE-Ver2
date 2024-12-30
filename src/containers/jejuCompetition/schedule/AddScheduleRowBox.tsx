@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import CompetitionLabel from "@/components/competition/CompetitionLabel";
 import { ConfigProvider, DatePicker, Select, Space } from "antd";
-import { koreanLocale } from "@/constants/AntdConfig";
+import { koreanLocale } from "@/constants";
 import dayjs from "dayjs";
 import {
-  addCompetitionScheduleRowType,
-  addCompetitionScheduleType,
-  divisionType,
-  placeType,
-} from "@/types/CompetitionType";
+  AddCompetitionScheduleRowType,
+  AddCompetitionScheduleType,
+  DivisionType,
+  PlaceType,
+} from "@/types/competitionType";
 import ScheduleRowInput from "@/components/competition/ScheduleRowInput";
 import { IoClose } from "react-icons/io5";
 
 type Props = {
   divisionIndex: number;
   rowIndex: number;
-  places: placeType[];
-  addCompetitionScheduleList: addCompetitionScheduleType[];
+  places: PlaceType[];
+  addCompetitionScheduleList: AddCompetitionScheduleType[];
   setAddCompetitionScheduleList: React.Dispatch<
-    React.SetStateAction<addCompetitionScheduleType[]>
+    React.SetStateAction<AddCompetitionScheduleType[]>
   >;
   setGameNumber: any;
 };
@@ -31,9 +31,9 @@ const AddScheduleRowBox = ({
   setGameNumber,
 }: Props) => {
   const [clientWidth, setClientWidth] = useState<number>(320);
-  const placeOptions: divisionType[] = [];
+  const placeOptions: DivisionType[] = [];
   if (places) {
-    places.forEach((p: placeType) =>
+    places.forEach((p: PlaceType) =>
       placeOptions.push({ value: p.placeName, label: p.placeName }),
     );
   }
@@ -44,11 +44,11 @@ const AddScheduleRowBox = ({
 
   const minusHandler = (): void => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
       scheduleList[divisionIndex].postCompetitionScheduleRow = scheduleList[
         divisionIndex
       ].postCompetitionScheduleRow.filter(
-        (item: addCompetitionScheduleRowType, index: number) =>
+        (item: AddCompetitionScheduleRowType, index: number) =>
           rowIndex !== index,
       );
       return scheduleList;
@@ -58,7 +58,7 @@ const AddScheduleRowBox = ({
 
   const startDateHandler = (dateString: string) => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
       rowData.startDate = dateString;
       return scheduleList;
     });
@@ -67,7 +67,7 @@ const AddScheduleRowBox = ({
 
   const floorHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
       rowData.floor = event.target.value;
       return scheduleList;
     });
@@ -75,7 +75,7 @@ const AddScheduleRowBox = ({
 
   const placeHandler = (value: string) => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
       rowData.place = value;
       return scheduleList;
     });
@@ -84,7 +84,7 @@ const AddScheduleRowBox = ({
 
   const homeNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
       rowData.homeName = e.target.value;
       return scheduleList;
     });
@@ -92,7 +92,7 @@ const AddScheduleRowBox = ({
 
   const awayNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddCompetitionScheduleList((prevState) => {
-      const scheduleList: addCompetitionScheduleType[] = [...prevState];
+      const scheduleList: AddCompetitionScheduleType[] = [...prevState];
       rowData.awayName = e.target.value;
       return scheduleList;
     });

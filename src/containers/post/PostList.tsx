@@ -2,14 +2,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "@/components/common/SearchBar";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { FetchGetPostList } from "@/services/PostApi";
-import { getPostListItemType } from "@/types/PostType";
+import { FetchGetPostList } from "@/services/postApi";
+import { GetPostListItemType } from "@/types/postType";
 import LoadingText from "@/components/common/LoadingText";
 import { useObserver } from "@/hooks/useObserver";
 import PostListCard from "@/containers/post/PostListCard";
 import { usePathname } from "next/navigation";
 import AddPageRouter from "@/components/common/AddPageRouter";
 import { usePostStore } from "@/states/PostStore";
+import { queryKeys } from "@/constants";
 
 const PostList = () => {
   const [searchKey, setSearchKey] = useState<string>("");
@@ -21,7 +22,7 @@ const PostList = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ["getPostList", category, searchKey],
+      queryKey: [queryKeys.GET_POST_LIST, category, searchKey],
       queryFn: FetchGetPostList,
       initialPageParam: 0,
       getNextPageParam: (lastPage, pages, lastPageParam) => {
@@ -44,7 +45,6 @@ const PostList = () => {
     threshold: 0.1,
   });
 
-  // 스크롤이 없을때 자동으로 다음 페이지 호출하는 로직
   useEffect(() => {
     if (status === "success" && data?.pages[0].data.totalGalleries > 0) {
       const contentHeight = document.documentElement.scrollHeight;
@@ -89,7 +89,7 @@ const PostList = () => {
         {status === "success" &&
           data?.pages.map((group: any, i: number) => (
             <React.Fragment key={i}>
-              {group.data?.posts.map((item: getPostListItemType) => (
+              {group.data?.posts.map((item: GetPostListItemType) => (
                 <PostListCard
                   data={item}
                   key={item.postId}

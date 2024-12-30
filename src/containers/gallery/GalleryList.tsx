@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { FetchGetGalleryList } from "@/services/GalleryApi";
+import { FetchGetGalleryList } from "@/services/galleryApi";
 import SearchBar from "@/components/common/SearchBar";
 import { useObserver } from "@/hooks/useObserver";
 import LoadingText from "@/components/common/LoadingText";
-import { paginationResponse, paginationType } from "@/types/CommonType";
-import { getGalleryType } from "@/types/GalleryType";
+import { PaginationResponse, PaginationType } from "@/types/commonType";
+import { GetGalleryType } from "@/types/galleryType";
 import GalleryCard from "@/containers/gallery/GalleryCard";
 import AddPageRouter from "@/components/common/AddPageRouter";
 
@@ -73,8 +73,8 @@ const GalleryList = () => {
       )}
       <div className={"grid grid-cols-2 gap-2.5 md:gap-5 mt-8"}>
         {status === "success" &&
-          data?.pages.map((group: paginationResponse) => {
-            return group?.data.galleries.map((gallery: getGalleryType) => {
+          data?.pages.map((group: PaginationResponse) => {
+            return group?.data.galleries.map((gallery: GetGalleryType) => {
               return <GalleryCard key={gallery.galleryId} data={gallery} />;
             });
           })}

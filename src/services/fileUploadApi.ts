@@ -1,4 +1,4 @@
-import { Api } from "@/services/axios/Api";
+import { Api } from "@/services/axios/api";
 
 export const FetchUploadFile = (files: File[]) => {
   const formData: FormData = new FormData();

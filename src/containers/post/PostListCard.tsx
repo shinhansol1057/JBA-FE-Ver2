@@ -1,11 +1,11 @@
 import React from "react";
-import { getPostListItemType } from "@/types/PostType";
+import { GetPostListItemType } from "@/types/postType";
 import { TiPin } from "react-icons/ti";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 type Props = {
-  data: getPostListItemType;
+  data: GetPostListItemType;
   category: string;
 };
 const PostListCard = ({ data, category }: Props) => {
