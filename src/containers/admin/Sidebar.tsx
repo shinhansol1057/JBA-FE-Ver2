@@ -30,7 +30,6 @@ export const Sidebar = () => {
     (async () => {
       const res = await FetchGetUserInfo();
       setUserData(res.data.data);
-      console.log(res.data);
     })();
   }, []);
 
