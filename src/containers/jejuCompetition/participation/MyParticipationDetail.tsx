@@ -16,7 +16,6 @@ import { ParticipationDetailType } from "@/types/participationType";
 const MyParticipationDetail = ({ data }: { data: ParticipationDetailType }) => {
   const router = useRouter();
 
-  console.log(data);
   const deleteHandler = async () => {
     await confirmAndCancelAlertWithLoading(
       "question",

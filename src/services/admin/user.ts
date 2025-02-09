@@ -14,7 +14,6 @@ export interface GetUsersParams {
 export const getUsers = async (params: GetUsersParams) => {
   try {
     const token = await getBearerToken();
-    console.log(token);
     const response = await Api.get("/v1/api/admin/user", {
       params,
       headers: {

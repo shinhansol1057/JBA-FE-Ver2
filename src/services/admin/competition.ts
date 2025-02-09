@@ -35,7 +35,6 @@ export const getCompetitions = async (params: GetCompetitionsParams) => {
         Authorization: token,
       },
     });
-    console.log(token);
     return response.data.data;
   } catch (error) {}
 };

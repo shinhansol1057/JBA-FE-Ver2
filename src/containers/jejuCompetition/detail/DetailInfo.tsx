@@ -18,6 +18,8 @@ import confirmAndCancelAlertWithLoading from "@/libs/alert/ConfirmAndCancelAlert
 import { useRouter } from "next/navigation";
 import { FetchDeleteCompetitionInfo } from "@/services/competitionApi";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { useSession } from "next-auth/react";
+import confirmAlert from "@/libs/alert/ConfirmAlert";
 
 type Props = {
   data: CompetitionDetailType;
@@ -30,6 +32,23 @@ const DetailInfo = ({ data }: Props) => {
   const cleanHtml = data.content ? DOMPurify.sanitize(data.content) : "";
   const router = useRouter();
   const isAdmin = useIsAdmin();
+  const { data: session, status: sessionStatus } = useSession();
+  console.log("session", session);
+
+  const handleApplicationParticipation = async () => {
+    if (session) {
+      router.push(`/competition-participation/add/${data.competitionId}`);
+    } else {
+      await confirmAndCancelAlertWithLoading(
+        "question",
+        "로그인이 필요한 서비스입니다.",
+        "로그인 페이지로 이동하시겠습니까?",
+        () => {
+          router.push("/login/social");
+        },
+      );
+    }
+  };
   return (
     <div>
       <div className={"px-2 bg-white rounded-lg shadow-xl "}>
@@ -59,11 +78,7 @@ const DetailInfo = ({ data }: Props) => {
                 className={
                   "bg-black px-4 py-1 text-white text-sm md:text-lg rounded-[20px] font-bold text-center"
                 }
-                onClick={() =>
-                  router.push(
-                    `/competition-participation/add/${data.competitionId}`,
-                  )
-                }
+                onClick={handleApplicationParticipation}
               >
                 참가신청 &gt;
               </button>
