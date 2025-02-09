@@ -52,7 +52,7 @@ export const AdminPaths = [
   "/admin",
 ];
 
-export const UserPaths = ["/user/my-page"];
+export const UserPaths = ["/user/my-page", "/competition-participation/add"];
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
