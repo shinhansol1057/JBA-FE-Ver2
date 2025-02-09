@@ -6,6 +6,7 @@ import { DownloadOutlined } from '@ant-design/icons'
 import * as XLSX from 'xlsx'
 import GalleryCard from './gallery-card'
 import { Gallery } from '../api'
+import Link from 'next/link'
 
 interface Props {
   initialData: {
@@ -40,9 +41,11 @@ const GalleryTable = ({ initialData, pageSize }: Props) => {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <span>총 {initialData.totalGalleries}건</span>
-        <Button icon={<DownloadOutlined />} onClick={() => {}}>
-          미디어 등록
-        </Button>
+        <Link href="/media/gallery/add">
+          <Button icon={<DownloadOutlined />} onClick={() => {}}>
+            미디어 등록
+          </Button>
+        </Link>
         <Button icon={<DownloadOutlined />} onClick={handleExcelDownload}>
           엑셀 다운로드
         </Button>
