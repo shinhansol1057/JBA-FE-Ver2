@@ -18,7 +18,6 @@ interface Props {
 
 const CompetitionCard = ({ competition }: Props) => {
   const router = useRouter();
-
   return (
     <div className="bg-white p-4 rounded-lg shadow-md mb-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -29,14 +28,15 @@ const CompetitionCard = ({ competition }: Props) => {
 
         <div className="flex items-center">
           <span className="font-semibold shrink-0">부문:</span>
-          <div className="overflow-x-auto">
-            <div className="flex gap-1 ml-2">
-              {competition.divisions.map((division) => (
-                <Tag key={division} color="blue">
-                  {division}
-                </Tag>
-              ))}
-            </div>
+          <div className="flex flex-wrap gap-1 ml-2">
+            {competition.divisions.map((division: string, index: number) => (
+              <Tag
+                key={competition.competitionId + ":_" + division + index}
+                color="blue"
+              >
+                {division}
+              </Tag>
+            ))}
           </div>
         </div>
 
@@ -67,6 +67,13 @@ const CompetitionCard = ({ competition }: Props) => {
         <div className="lg:col-span-1">
           <span className="font-semibold">작성자:</span>
           <span className="ml-2">{competition.userEmail}</span>
+        </div>
+
+        <div className="lg:col-span-1">
+          <span className="font-semibold">등록일:</span>
+          <span className="ml-2">
+            {new Date(competition.createAt).toLocaleDateString()}
+          </span>
         </div>
 
         <div className="col-span-full">
