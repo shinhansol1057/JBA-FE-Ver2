@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import Navigation from "@/containers/navigation/navigation";
 import ReactQueryProviders from "@/hooks/useReactQuery";
 import AuthProvider from "@/libs/next-auth/AuthProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -65,6 +66,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {children}
             </AuthProvider>
           </ReactQueryProviders>
+          <Analytics />
         </div>
       </body>
     </html>
