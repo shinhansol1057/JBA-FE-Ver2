@@ -5,6 +5,7 @@ import Navigation from "@/containers/navigation/navigation";
 import ReactQueryProviders from "@/hooks/useReactQuery";
 import AuthProvider from "@/libs/next-auth/AuthProvider";
 import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,6 +53,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="kr">
       <head>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-K8RLJQGN45"
+        ></Script>
+        <Script id="google-analytics">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-K8RLJQGN45');`}
+        </Script>
         <meta
           name="naver-site-verification"
           content="9f574bbc7e2631f63d9c1c587bc0353578a32637"
