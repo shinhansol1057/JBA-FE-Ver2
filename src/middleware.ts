@@ -5,7 +5,7 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
 
   // ✅ API 프리픽스는 전부 통과
-  if (pathname.startsWith("/v1/api") || pathname.startsWith("/api")) {
+  if (pathname.startsWith("/v1/api")) {
     return NextResponse.next();
   }
 
