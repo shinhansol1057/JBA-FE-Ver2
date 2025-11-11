@@ -1,6 +1,14 @@
 import { auth } from "../auth";
+import { NextResponse } from "next/server";
 
 export default auth((req) => {
+  const { pathname } = req.nextUrl;
+
+  // ✅ API 프리픽스는 전부 통과
+  if (pathname.startsWith("/v1/api") || pathname.startsWith("/api")) {
+    return NextResponse.next();
+  }
+
   const { auth } = req;
   const isAdmin = auth?.role === "ROLE_ADMIN" || auth?.role === "ROLE_MASTER";
 
@@ -33,7 +41,7 @@ export default auth((req) => {
     // 로그인 페이지로 가는데 로그인이 되어있으면 메인페이지로 리다이렉션
     return Response.redirect(new URL("/", req.nextUrl.origin));
   }
-  // return Response.next();
+  return NextResponse.next();
 });
 
 export const AdminPaths = [
