@@ -1,15 +1,21 @@
 export const getAnnouncements = async () => {
   const url = process.env.NEXT_PUBLIC_API_KEY + "/v1/api/post/notice?size=3";
-  return await fetch(url).then((res) => res.json());
+  return await fetch(url)
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 };
 
 export const getCompetitions = async () => {
   const url = process.env.NEXT_PUBLIC_API_KEY + "/v1/api/competition/main";
-  return await fetch(url).then((res) => res.json());
+  return await fetch(url)
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 };
 
 export const getGalleries = async () => {
   const url =
     process.env.NEXT_PUBLIC_API_KEY + "/v1/api/gallery?official=false&size=5";
-  return await fetch(url).then((res) => res.json());
+  return await fetch(url)
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 };
